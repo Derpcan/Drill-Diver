@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://s3d4wjd0wc53"]
+
+[ext_resource type="Script" uid="uid://ctam7jqxtlve3" path="res://scenes/components/json_loader.gd" id="1_oehm6"]
+[ext_resource type="JSON" path="res://assets/JSON/Player.JSON" id="2_1kwnt"]
+
+[node name="JSONLoader" type="Node"]
+script = ExtResource("1_oehm6")
+json_file = ExtResource("2_1kwnt")

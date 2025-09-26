@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://bylp3hel486as"]
+
+[ext_resource type="Script" uid="uid://cy7b4s83g7j7d" path="res://scenes/player/player.gd" id="1_0owmy"]
+[ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
+[ext_resource type="PackedScene" uid="uid://s3d4wjd0wc53" path="res://scenes/components/json_loader.tscn" id="2_gmlin"]
+[ext_resource type="PackedScene" uid="uid://bc2f56sqxrqqk" path="res://scenes/animation play/animation_play.tscn" id="3_gmlin"]
+[ext_resource type="PackedScene" uid="uid://boi6rio4dyg2u" path="res://scenes/components/state_machine.tscn" id="4_lvxji"]
+[ext_resource type="PackedScene" uid="uid://p5hoechujg26" path="res://scenes/components/movement_component.tscn" id="5_p47bc"]
+[ext_resource type="PackedScene" uid="uid://b34ldb1ryno6p" path="res://scenes/components/input_component.tscn" id="6_75vfm"]
+[ext_resource type="PackedScene" uid="uid://dxclr2mjdivfx" path="res://scenes/components/gravity_component.tscn" id="8_qek5x"]
+[ext_resource type="PackedScene" uid="uid://df8id4wkcp6q" path="res://scenes/components/jump_component.tscn" id="9_5gtgg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qek5x"]
+radius = 7.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component")]
+script = ExtResource("1_0owmy")
+movement_component = NodePath("MovementComponent")
+jump_component = NodePath("JumpComponent")
+input_component = NodePath("InputComponent")
+animated_sprite = NodePath("AnimationSprite")
+state_machine = NodePath("StateMachine")
+gravity_component = NodePath("GravityComponent")
+
+[node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
+json_loaded = NodePath("../JSONLoader")
+creature_name = "player"
+
+[node name="JSONLoader" parent="." instance=ExtResource("2_gmlin")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+zoom = Vector2(4, 4)
+
+[node name="AnimationPlay" parent="." node_paths=PackedStringArray("json_loader", "animation_sprite", "state_machine") instance=ExtResource("3_gmlin")]
+json_loader = NodePath("../JSONLoader")
+animation_sprite = NodePath("../AnimationSprite")
+state_machine = NodePath("../StateMachine")
+
+[node name="StateMachine" parent="." instance=ExtResource("4_lvxji")]
+
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("5_p47bc")]
+friction = 1.0
+accel = 600.0
+max_speed = 80.0
+parent = NodePath("..")
+
+[node name="InputComponent" parent="." instance=ExtResource("6_75vfm")]
+
+[node name="GravityComponent" parent="." node_paths=PackedStringArray("character_body", "movement_component") instance=ExtResource("8_qek5x")]
+character_body = NodePath("..")
+movement_component = NodePath("../MovementComponent")
+
+[node name="JumpComponent" parent="." node_paths=PackedStringArray("charcter_body") instance=ExtResource("9_5gtgg")]
+charcter_body = NodePath("..")
+jump_speed = 270.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_qek5x")
