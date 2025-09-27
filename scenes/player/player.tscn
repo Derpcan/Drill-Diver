@@ -1,14 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=13 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://cy7b4s83g7j7d" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
 [ext_resource type="PackedScene" uid="uid://s3d4wjd0wc53" path="res://scenes/components/json_loader.tscn" id="2_gmlin"]
 [ext_resource type="PackedScene" uid="uid://bc2f56sqxrqqk" path="res://scenes/animation play/animation_play.tscn" id="3_gmlin"]
+[ext_resource type="JSON" path="res://assets/JSON/Player.JSON" id="4_h17s1"]
 [ext_resource type="PackedScene" uid="uid://boi6rio4dyg2u" path="res://scenes/components/state_machine.tscn" id="4_lvxji"]
 [ext_resource type="PackedScene" uid="uid://p5hoechujg26" path="res://scenes/components/movement_component.tscn" id="5_p47bc"]
 [ext_resource type="PackedScene" uid="uid://b34ldb1ryno6p" path="res://scenes/components/input_component.tscn" id="6_75vfm"]
 [ext_resource type="PackedScene" uid="uid://dxclr2mjdivfx" path="res://scenes/components/gravity_component.tscn" id="8_qek5x"]
 [ext_resource type="PackedScene" uid="uid://df8id4wkcp6q" path="res://scenes/components/jump_component.tscn" id="9_5gtgg"]
+[ext_resource type="PackedScene" uid="uid://ckhybymqyomrx" path="res://scenes/components/player_stat_loader_component.tscn" id="11_je7p5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qek5x"]
 radius = 7.0
@@ -27,6 +29,7 @@ json_loaded = NodePath("../JSONLoader")
 creature_name = "player"
 
 [node name="JSONLoader" parent="." instance=ExtResource("2_gmlin")]
+json_file = ExtResource("4_h17s1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
@@ -58,3 +61,7 @@ jump_speed = 270.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_qek5x")
+
+[node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component") instance=ExtResource("11_je7p5")]
+movement_component = NodePath("../MovementComponent")
+jump_component = NodePath("../JumpComponent")

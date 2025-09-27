@@ -5,7 +5,6 @@ class_name StateMachine
 var state_dict:Dictionary = {}
 var states:Array = []
 
-@export var animation_player:AnimationPlay
 
 signal enter_state(state_name:String, state_index:int)
 

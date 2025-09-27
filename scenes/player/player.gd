@@ -24,6 +24,10 @@ func _choose_state(dir:Vector2, pressed:bool=false, delta:float=0.0) -> void:
 	elif dir.x < 0:
 		animated_sprite.flip_h = true
 	
+	# If the speed is greater than 0 in the y direction
+	if abs(velocity.y) > 0:
+		pass
+	
 	# If the character is falling or jumping, enter the jump state
 	if abs(dir.y) > 0 or abs(velocity.y) > 0:
 		state_machine._enter_state("jump")
