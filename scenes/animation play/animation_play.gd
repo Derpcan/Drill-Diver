@@ -80,14 +80,14 @@ func create_animations(lib:AnimationLibrary, creature_name:String) -> void:
 		var time_length:float = json_animation["time_length"]
 		
 		# Set the should_loop variable to loop if loop is true in JSON and loop_none if loop is false in JSON
-		var should_loop:int = Animation.LOOP_LINEAR if json_animation["loop"] else Animation.LOOP_NONE
+		var should_loop: = Animation.LOOP_LINEAR if json_animation["loop"] else Animation.LOOP_NONE
 		
 		# Add each animation to the library
 		add_animation_to_library(anim_name, lib, time_length, should_loop)
 
 
 # Make an animation and add it to the library
-func add_animation_to_library(animation_name:String, lib:AnimationLibrary, time_length:float, should_loop:int) -> void:
+func add_animation_to_library(animation_name:String, lib:AnimationLibrary, time_length:float, should_loop) -> void:
 	# Create an animation to store new data
 	var anim:Animation = Animation.new()
 	

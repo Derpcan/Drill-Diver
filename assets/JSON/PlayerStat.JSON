@@ -9,6 +9,10 @@
 			"jump": {
 				"jump_height": 270.0,
 				"input_jump_delay_forgiveness": 0.3
+			},
+			"dash": {
+				"dash_speed": 200.0,
+				"dash_time": 0.25
 			}
 		}
 	}

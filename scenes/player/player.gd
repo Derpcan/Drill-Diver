@@ -7,6 +7,9 @@ class_name Player
 @export var animated_sprite:AnimationSprite
 @export var state_machine:StateMachine
 @export var gravity_component:GravityComponent
+@export var dash_component:DashComponent
+
+signal on_floor()
 
 func _ready() -> void:
 	input_component.movement_inputs.connect(movement_component._accelerate_in_direction)
@@ -16,8 +19,19 @@ func _ready() -> void:
 	input_component.jump_input.connect(jump_component._calculate_jump)
 	jump_component.change_gravity_scale.connect(gravity_component._change_gravity_scale)
 	jump_component.jump.connect(movement_component.force_velocity_y)
+	
+	input_component.dash_inputs.connect(dash_component._calculate_dash)
+	dash_component.dash_start.connect(movement_component.force_velocity)
+	dash_component.dash_start.connect(movement_component._disable_vel_x_clamp)
+	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
+	
+	on_floor.connect(dash_component._enable_dash)
 
-func _choose_state(dir:Vector2, pressed:bool=false, delta:float=0.0) -> void:
+func _physics_process(delta: float) -> void:
+	if is_on_floor():
+		emit_signal("on_floor")
+
+func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
 	# Flip the character Sprite depending on which direction is being pressed
 	if dir.x > 0:
 		animated_sprite.flip_h = false

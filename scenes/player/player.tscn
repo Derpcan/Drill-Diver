@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=14 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://cy7b4s83g7j7d" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
@@ -11,11 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://dxclr2mjdivfx" path="res://scenes/components/gravity_component.tscn" id="8_qek5x"]
 [ext_resource type="PackedScene" uid="uid://df8id4wkcp6q" path="res://scenes/components/jump_component.tscn" id="9_5gtgg"]
 [ext_resource type="PackedScene" uid="uid://ckhybymqyomrx" path="res://scenes/components/player_stat_loader_component.tscn" id="11_je7p5"]
+[ext_resource type="PackedScene" uid="uid://b3o1n8eur5oq2" path="res://scenes/components/dash_component.tscn" id="12_fm80t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qek5x"]
 radius = 7.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component")]
 script = ExtResource("1_0owmy")
 movement_component = NodePath("MovementComponent")
 jump_component = NodePath("JumpComponent")
@@ -23,6 +24,7 @@ input_component = NodePath("InputComponent")
 animated_sprite = NodePath("AnimationSprite")
 state_machine = NodePath("StateMachine")
 gravity_component = NodePath("GravityComponent")
+dash_component = NodePath("DashComponent")
 
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
 json_loaded = NodePath("../JSONLoader")
@@ -62,6 +64,9 @@ jump_speed = 270.0
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_qek5x")
 
-[node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component") instance=ExtResource("11_je7p5")]
+[node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component", "dash_component") instance=ExtResource("11_je7p5")]
 movement_component = NodePath("../MovementComponent")
 jump_component = NodePath("../JumpComponent")
+dash_component = NodePath("../DashComponent")
+
+[node name="DashComponent" parent="." instance=ExtResource("12_fm80t")]

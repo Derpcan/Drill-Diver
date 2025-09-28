@@ -6,7 +6,7 @@ class_name PlayerStatLoaderComponent
 
 @export var movement_component:MovementComponent
 @export var jump_component:JumpComponent
-
+@export var dash_component:DashComponent
 
 func _ready() -> void:
 	# Check if the JSON file exists
@@ -16,6 +16,8 @@ func _ready() -> void:
 	load_movement_data()
 	
 	load_jump_data()
+	
+	load_dash_data()
 
 
 func load_movement_data() -> void:
@@ -49,3 +51,19 @@ func load_jump_data() -> void:
 	
 	
 	print("Successfully loaded Jump Data from JSON file.")
+
+func load_dash_data() -> void:
+	# Get the dictionary from the JSON file that contains data for dash component
+	var dash_dict:Dictionary = json_loader.json_file.data["player"]["stats"]["dash"]
+	
+	# Get each data value from the dictionary
+	var dash_speed:float = dash_dict["dash_speed"]
+	var dash_time:float = dash_dict["dash_time"]
+	
+	
+	# Assign the data to the movement component
+	dash_component.dash_speed = dash_speed
+	dash_component.dash_time = dash_time
+	
+	
+	print("Successfully loaded Dash Data from JSON file.")
