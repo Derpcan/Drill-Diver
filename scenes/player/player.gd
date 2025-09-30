@@ -9,6 +9,8 @@ class_name Player
 @export var gravity_component:GravityComponent
 @export var dash_component:DashComponent
 
+@onready var terrain := get_tree().get_first_node_in_group("Terrain") as TileMapLayer
+
 signal on_floor()
 
 func _ready() -> void:
@@ -57,6 +59,30 @@ func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
 		state_machine._enter_state("run")
 		return
 	
+# test harness for terrain API
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_select"):
+		_dev_drill()
+	if event.is_action_pressed("ui_focus_next"):
+		_dev_super()
+
+func _aim_dir() -> Vector2:
+	return Vector2(
+		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
+		Input.get_action_strength("ui_down")
+	)
+
+func _dev_drill():
+	if terrain == null: return
+	var dir := _aim_dir(); if dir == Vector2.ZERO: dir = Vector2.RIGHT
+	for c in terrain.forward_cells(global_position, dir, 2):
+		terrain.drill_normal(c)
 	
+func _dev_super():
+	if terrain == null: return
+	var dir := _aim_dir(); if dir == Vector2.ZERO: dir = Vector2.RIGHT
+	var front = terrain.forward_cells(global_position, dir, 1)
+	if front.is_empty(): return
+	terrain.drill_super_one(front[0])
 	
 	
