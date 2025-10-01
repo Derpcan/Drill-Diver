@@ -8,10 +8,17 @@ class_name Player
 @export var state_machine:StateMachine
 @export var gravity_component:GravityComponent
 @export var dash_component:DashComponent
+@export var drill_detector:Area2D
+@export var drill_component:DrillComponent
 
-@onready var terrain := get_tree().get_first_node_in_group("Terrain") as TileMapLayer
+
+@onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
 
 signal on_floor()
+signal rotate
+
+
+
 
 func _ready() -> void:
 	input_component.movement_inputs.connect(movement_component._accelerate_in_direction)
@@ -25,19 +32,24 @@ func _ready() -> void:
 	input_component.dash_inputs.connect(dash_component._calculate_dash)
 	dash_component.dash_start.connect(movement_component.force_velocity)
 	dash_component.dash_start.connect(movement_component._disable_vel_x_clamp)
+	dash_component.dash_start.connect(_enable_drill_detector)
 	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
-	
+	dash_component.dash_end.connect(_disable_drill_detector)
 	on_floor.connect(dash_component._enable_dash)
+	input_component.drill_inputs.connect(drill_component._calulate_rotation)
+	drill_component.rotate.connect(movement_component._rotate_player)
+
 
 func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		emit_signal("on_floor")
 
+
 func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
 	# Flip the character Sprite depending on which direction is being pressed
-	if dir.x > 0:
+	if dir.x > 0 and not movement_component.isdrilling:
 		animated_sprite.flip_h = false
-	elif dir.x < 0:
+	elif dir.x < 0 and not movement_component.isdrilling:
 		animated_sprite.flip_h = true
 	
 	# If the speed is greater than 0 in the y direction
@@ -60,11 +72,11 @@ func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
 		return
 	
 # test harness for terrain API
-func _unhandled_input(event):
-	if event.is_action_pressed("ui_select"):
-		_dev_drill()
-	if event.is_action_pressed("ui_focus_next"):
-		_dev_super()
+#func _unhandled_input(event):
+	#if event.is_action_pressed("ui_select"):
+		#_dev_drill()
+	#if event.is_action_pressed("ui_focus_next"):
+		#_dev_super()
 
 func _aim_dir() -> Vector2:
 	return Vector2(
@@ -72,11 +84,6 @@ func _aim_dir() -> Vector2:
 		Input.get_action_strength("ui_down")
 	)
 
-func _dev_drill():
-	if terrain == null: return
-	var dir := _aim_dir(); if dir == Vector2.ZERO: dir = Vector2.RIGHT
-	for c in terrain.forward_cells(global_position, dir, 2):
-		terrain.drill_normal(c)
 	
 func _dev_super():
 	if terrain == null: return
@@ -85,4 +92,57 @@ func _dev_super():
 	if front.is_empty(): return
 	terrain.drill_super_one(front[0])
 	
+
+func _on_area_2d_body_entered(body):
+	if !movement_component.isdrilling:
+		print("Drill")
+		set_collision_layer_value(1, false)
+		set_collision_mask_value(1, false)
+		movement_component.isdrilling = true
+		var shape:CollisionShape2D = drill_detector.get_child(0)
+		animated_sprite.flip_h = false
+		
+
+func _disable_drill_detector():
+	if !movement_component.isdrilling:
+		var collision: CollisionShape2D = drill_detector.get_child(0)
+		collision.set_deferred("disabled", true)
+		collision.position.y = 1.0
+		
+		print("Collision Disabled")
+
+func _enable_drill_detector(_vel:Vector2):
+	var collision: CollisionShape2D = drill_detector.get_child(0)
+	collision.disabled = false
+	_vel = _vel.normalized()
+	collision.rotation = _vel.angle() + PI/2
+	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
+		collision.rotation += PI
+		collision.position.y = -1.0
+	print(collision.rotation)
+	
+
+
+
+
+
+func _on_drill_detector_body_exited(body):
+		set_collision_layer_value(1, true)
+		set_collision_mask_value(1, true)
+		movement_component.isdrilling = false
+		var momentum = rotation
+		rotation=0
+		var collision: CollisionShape2D = drill_detector.get_child(0)
+		_disable_drill_detector()
+		collision.rotation = 0
+		velocity.x += 500*cos(momentum)
+		velocity.y += 300*sin(momentum)
+		movement_component.force_velocity(Vector2(velocity.x, velocity.y))
+		print("exit")
+		dash_component.can_dash = true
+		
+		
+	
+			
+
 	

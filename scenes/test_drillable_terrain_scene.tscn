@@ -5,12 +5,15 @@
 
 [node name="LevelTutorial" type="Node2D"]
 
-[node name="TileMapTerrain" type="TileMap" parent="."]
-position = Vector2(2284, 1151)
-format = 2
-
-[node name="TileMapLayer" type="TileMapLayer" parent="TileMapTerrain" groups=["Terrain"]]
+[node name="TileMapLayer" type="TileMapLayer" parent="." groups=["Terrain"]]
 use_parent_material = true
+position = Vector2(1779, -351)
 tile_map_data = PackedByteArray("AACr/9T/AQAAAAAAAACb/zcAAQAAAAAAAACc/zcAAQAAAAAAAACd/zcAAQAAAAAAAACe/zcAAQAAAAAAAACf/zcAAQAAAAAAAACg/zcAAQAAAAAAAACh/zcAAQAAAAAAAACx/zcAAgAAAAAAAACy/zcAAgAAAAAAAACz/zcAAgAAAAAAAAC0/zcAAgAAAAAAAAC1/zcAAgAAAAAAAAC2/zcAAgAAAAAAAAC3/zcAAgAAAAAAAADE/zcAAAAAAAAAAADF/zcAAAAAAAAAAADG/zcAAAAAAAAAAADH/zcAAAAAAAAAAADI/zcAAAAAAAAAAADJ/zcAAAAAAAAAAADK/zcAAAAAAAAAAADL/zcAAAAAAAAAAACj/y8AAgAAAAAAAAA=")
 tile_set = ExtResource("1_xyrsk")
 script = ExtResource("2_meeqt")
+
+[node name="TileMapTerrain" type="TileMap" parent="."]
+visible = false
+position = Vector2(2284, 1151)
+tile_set = ExtResource("1_xyrsk")
+format = 2
