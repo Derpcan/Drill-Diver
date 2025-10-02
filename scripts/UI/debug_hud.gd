@@ -1,15 +1,5 @@
 extends Control
 
-signal start_timer
-signal stop_timer
-signal set_timer(time: int)
-
-signal fill_meter(value: int)
-signal deplete_meter(value: int)
-signal set_meter(value: int)
-
-signal set_record(time: int)
-
 var debug_signal_map = {
 	"TEST_TIMER_START": "start_timer",
 	"TEST_TIMER_STOP": "stop_timer",
@@ -38,21 +28,21 @@ func _on_press_emit_signal(button_name: String) -> void:
 	
 	match signal_name:
 		"start_timer":
-			start_timer.emit()
+			GameManager.start_timer.emit()
 		"stop_timer":
-			stop_timer.emit()
+			GameManager.stop_timer.emit()
 		"set_timer":
-			set_timer.emit(0)
+			GameManager.set_timer_to(100.55)
 #----------------------------
 		"fill_meter":
-			fill_meter.emit(10)
+			GameManager.fill_meter.emit(10)
 		"deplete_meter":
-			deplete_meter.emit(10)
+			GameManager.deplete_meter.emit(20)
 		"set_meter":
-			set_meter.emit(50)
+			GameManager.set_meter.emit(50)
 #----------------------------
 		"set_record":
-			set_record.emit(0)
+			GameManager.update_record.emit(GameManager.get_current_time())
 #----------------------------
 		_:
 			return
