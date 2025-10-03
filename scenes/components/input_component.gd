@@ -5,6 +5,7 @@ class_name InputComponent
 signal movement_inputs(direction:Vector2, delta:float)
 signal jump_input(dir:Vector2, is_pressed:bool)
 signal dash_inputs(direction:Vector2)
+signal drill_inputs(direction:Vector2)
 
 # Get inputs during each physics process frame
 func _physics_process(delta: float) -> void:
@@ -24,10 +25,13 @@ func _physics_process(delta: float) -> void:
 		
 		dash_dir = turn_vector_into_8_directions(Vector2(round_to_8_directions(dir_x), round_to_8_directions(dir_y)))
 		print("Dash direction: ",dash_dir)
-	
+	var drill_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
+	var drill_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
+	var drill_dir:Vector2 = Vector2(drill_x, drill_y)
 	dash_inputs.emit(dash_dir)
 	jump_input.emit(jump_direction, is_jump_pressed)
 	movement_inputs.emit(dir, delta)
+	drill_inputs.emit(drill_dir)
 
 
 func round_to_8_directions(value:float) -> float:

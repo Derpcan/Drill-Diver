@@ -1,6 +1,6 @@
 # TerrainDrill.gd
 extends TileMapLayer
-
+class_name Terrain
 # essentially an APi for the drill mechanic to query terrain tiles
 # dirt (hardness of 0) normal drill insta deletes
 # rock (hardness of 1) only superdrill can delete
@@ -38,7 +38,7 @@ func is_drillable(cell: Vector2i) -> bool:
 func hardness_at(cell: Vector2i) -> int:
 	var td := tiledata_at(cell)
 	return 2 if td == null else int(td.get_custom_data("hardness"))
-
+	
 # delete tile actions
 # drill_nromal: given a dirt tile, instantly erases tile, returns true if tile deleted
 func drill_normal(cell: Vector2i) -> bool:
