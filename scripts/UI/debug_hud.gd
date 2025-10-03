@@ -9,7 +9,7 @@ var debug_signal_map = {
 	"TEST_METER_DEPLETE": "deplete_meter",
 	"TEST_METER_SET": "set_meter",
 	
-	"TEST_RECORD_SET": "set_record"
+	"TEST_RECORD_SET": "update_record"
 }
 
 func _ready():
@@ -24,7 +24,7 @@ func _on_press_emit_signal(button_name: String) -> void:
 		return
 	
 	var signal_name = debug_signal_map[button_name]
-	print("HUD: Emitting signal: ", signal_name)
+	print("DEBUG: UI/HUD: ", signal_name)
 	
 	match signal_name:
 		"start_timer":
@@ -41,7 +41,7 @@ func _on_press_emit_signal(button_name: String) -> void:
 		"set_meter":
 			GameManager.set_meter.emit(50)
 #----------------------------
-		"set_record":
+		"update_record":
 			GameManager.update_record.emit(GameManager.get_current_time())
 #----------------------------
 		_:

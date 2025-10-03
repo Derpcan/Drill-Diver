@@ -41,56 +41,56 @@ script = ExtResource("1_c4vmg")
 
 [node name="TEST_TIMER_START" type="Button" parent="DEBUG_HUD"]
 layout_mode = 0
-offset_left = 358.0
-offset_top = 454.0
-offset_right = 466.0
-offset_bottom = 485.0
+offset_left = 1035.0
+offset_top = 159.0
+offset_right = 1143.0
+offset_bottom = 190.0
 text = "START TIMER"
 
 [node name="TEST_TIMER_STOP" type="Button" parent="DEBUG_HUD"]
 layout_mode = 0
-offset_left = 361.0
-offset_top = 504.0
-offset_right = 462.0
-offset_bottom = 535.0
+offset_left = 1035.0
+offset_top = 200.0
+offset_right = 1136.0
+offset_bottom = 231.0
 text = "STOP TIMER"
 
 [node name="TEST_TIMER_SET" type="Button" parent="DEBUG_HUD"]
 layout_mode = 0
-offset_left = 358.0
-offset_top = 552.0
-offset_right = 465.0
-offset_bottom = 583.0
+offset_left = 1035.0
+offset_top = 240.0
+offset_right = 1122.0
+offset_bottom = 271.0
 text = "SET TIMER"
 
 [node name="TEST_METER_FILL" type="Button" parent="DEBUG_HUD"]
 layout_mode = 0
-offset_left = 513.0
-offset_top = 454.0
-offset_right = 608.0
-offset_bottom = 485.0
+offset_left = 19.0
+offset_top = 62.0
+offset_right = 114.0
+offset_bottom = 93.0
 text = "FILL METER"
 
 [node name="TEST_METER_DEPLETE" type="Button" parent="DEBUG_HUD"]
 layout_mode = 0
-offset_left = 497.0
-offset_top = 504.0
-offset_right = 628.0
-offset_bottom = 535.0
+offset_left = 19.0
+offset_top = 99.0
+offset_right = 150.0
+offset_bottom = 130.0
 text = "DEPLETE METER"
 
 [node name="TEST_METER_SET" type="Button" parent="DEBUG_HUD"]
 layout_mode = 0
-offset_left = 497.0
-offset_top = 552.0
-offset_right = 628.0
-offset_bottom = 583.0
+offset_left = 19.0
+offset_top = 140.0
+offset_right = 110.0
+offset_bottom = 171.0
 text = "SET METER"
 
 [node name="TEST_RECORD_SET" type="Button" parent="DEBUG_HUD"]
 layout_mode = 0
-offset_left = 667.0
-offset_top = 454.0
-offset_right = 806.0
-offset_bottom = 485.0
+offset_left = 1035.0
+offset_top = 279.0
+offset_right = 1138.0
+offset_bottom = 310.0
 text = "SET RECORD"
