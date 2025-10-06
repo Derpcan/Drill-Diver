@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=19 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://cy7b4s83g7j7d" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://ckhybymqyomrx" path="res://scenes/components/player_stat_loader_component.tscn" id="11_je7p5"]
 [ext_resource type="PackedScene" uid="uid://b3o1n8eur5oq2" path="res://scenes/components/dash_component.tscn" id="12_fm80t"]
 [ext_resource type="Script" uid="uid://cm48rinbqpxsf" path="res://scenes/components/drill_component.gd" id="12_gx1jg"]
+[ext_resource type="PackedScene" uid="uid://dbmv1rqx5nlbt" path="res://scenes/components/health_component.tscn" id="13_ugbui"]
+[ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_fcs02"]
 
 [sub_resource type="JSON" id="JSON_je7p5"]
 data = {
@@ -55,6 +57,9 @@ radius = 7.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fm80t"]
 radius = 3.0
 height = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_myrg7"]
+radius = 6.08276
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component")]
 collision_layer = 9
@@ -131,6 +136,18 @@ disabled = true
 script = ExtResource("12_gx1jg")
 turn_raduis = 0.08
 metadata/_custom_type_script = "uid://cm48rinbqpxsf"
+
+[node name="HealthComponent" parent="." instance=ExtResource("13_ugbui")]
+
+[node name="HurtBox" parent="." node_paths=PackedStringArray("health_component", "collision_shape") instance=ExtResource("14_fcs02")]
+collision_layer = 2
+health_component = NodePath("../HealthComponent")
+collision_shape = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_myrg7")
+debug_color = Color(0.966623, 0.104227, 0.384273, 0.42)
 
 [connection signal="body_entered" from="DrillDetector" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="DrillDetector" to="." method="_on_drill_detector_body_exited"]

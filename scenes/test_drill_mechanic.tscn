@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=4 uid="uid://bdp5m4irffwyo"]
+[gd_scene load_steps=6 format=4 uid="uid://bdp5m4irffwyo"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_pp2b6"]
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="2_3lgsv"]
 [ext_resource type="Script" uid="uid://cyunk6h3or5vy" path="res://scripts/terrain/TerrainDrill.gd" id="2_ben6t"]
+[ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="4_ajg3a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_irohn"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -12,3 +15,10 @@ tile_set = ExtResource("2_3lgsv")
 script = ExtResource("2_ben6t")
 
 [node name="Player" parent="." instance=ExtResource("1_pp2b6")]
+
+[node name="HitBox" parent="." instance=ExtResource("4_ajg3a")]
+position = Vector2(108, 2)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_irohn")
