@@ -14,7 +14,18 @@ var velocity:Vector2 = Vector2.ZERO
 
 var prevent_vel_x_clamp:bool = false
 
-var isdrilling:bool = false
+var disable_movement_component:bool = false:
+	set(new_val):
+		disable_movement_component = new_val
+		if disable_movement_component:
+			print("Movement Component is Disabled")
+		else:
+			print("Movement Component is Enabled")
+		
+		# Enable or disable physics process depending on if the component is enabled
+		set_physics_process(not disable_movement_component)
+
+
 
 var instrot: bool = false
 
@@ -23,32 +34,27 @@ func _ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	if parent && !isdrilling:
+	if parent and not disable_movement_component:
 		instrot = false
 		if not prevent_vel_x_clamp:
 			# Clamp the X Velocity so the character doesn't speed up really fast
 			velocity.x = clampf(velocity.x, -max_speed, max_speed)
+		
+		# If the character body hits the ceiling, it will set the y velocity to zero
+		# So the character will fall after hitting the ceiling instead of attaching to it for a bit
+		if parent.is_on_ceiling() and velocity.y < 0:
+			velocity.y = 0
+		
+		# Update the parent's velocity
 		parent.velocity = velocity
-		#print("Velocity.x:",velocity.x)
-		#print("Velocity.y:",velocity.y)
-		parent.move_and_slide()
-	elif parent:
 		
-		var turn_speed = 150
-		if parent.get_node("AnimationSprite").flip_h == true :
-			turn_speed*=-1
-		
-		var direction = Vector2(cos(parent.rotation), sin(parent.rotation))
-		parent.velocity = direction * turn_speed
-		
-		
+		# Move the parent
 		parent.move_and_slide()
 		
 
-		
 
 func _accelerate_in_direction(dir:Vector2, delta:float) -> void:
-	if prevent_vel_x_clamp || isdrilling:
+	if prevent_vel_x_clamp or disable_movement_component:
 		return
 	if dir != Vector2.ZERO:
 		velocity += dir * accel * delta
@@ -56,7 +62,7 @@ func _accelerate_in_direction(dir:Vector2, delta:float) -> void:
 		velocity = velocity.lerp(Vector2(0, velocity.y), friction)
 
 func _accelerate_in_direction_with_accel(acceleration:Vector2, dir:Vector2, delta:float) -> void:
-	if prevent_vel_x_clamp || isdrilling:
+	if prevent_vel_x_clamp or disable_movement_component:
 		return
 	if dir != Vector2.ZERO:
 		velocity += dir * acceleration * delta
@@ -76,18 +82,3 @@ func _enable_vel_x_clamp() -> void:
 	prevent_vel_x_clamp = false
 	velocity.x *= 0.2
 	velocity.y *= 0.2
-
-func _rotate_player(rot:float):
-	if isdrilling:
-		print("rotation")
-		
-		print(parent.rotation)
-		if parent.get_node("AnimationSprite").flip_h == true :
-			rot = -1 *(PI-rot)
-		#print(rot)
-		
-		
-		parent.rotation = lerp_angle(parent.rotation, rot, 0.1)
-			
-		#print("rotating", parent.rotation)
-		

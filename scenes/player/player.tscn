@@ -118,9 +118,10 @@ jump_component = NodePath("../JumpComponent")
 dash_component = NodePath("../DashComponent")
 
 [node name="DrillBounceRay" type="RayCast2D" parent="."]
+position = Vector2(-5.202, 3.254)
 rotation = -1.5708
-scale = Vector2(9.45, 9.45)
-target_position = Vector2(0, 16)
+scale = Vector2(13.53, 9.6389)
+target_position = Vector2(0, 2.822)
 collision_mask = 16
 
 [node name="BounceTimer" type="Timer" parent="."]
@@ -151,8 +152,9 @@ scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
 
-[node name="DrillComponent" type="Node" parent="."]
+[node name="DrillComponent" type="Node" parent="." node_paths=PackedStringArray("parent")]
 script = ExtResource("12_gx1jg")
+parent = NodePath("..")
 turn_raduis = 0.08
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]

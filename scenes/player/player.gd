@@ -40,7 +40,8 @@ func _ready() -> void:
 	dash_component.dash_end.connect(_disable_drill_detector)
 	on_floor.connect(dash_component._enable_dash)
 	input_component.drill_inputs.connect(drill_component._calulate_rotation)
-	drill_component.rotate.connect(movement_component._rotate_player)
+	
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -50,9 +51,9 @@ func _physics_process(delta: float) -> void:
 
 func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
 	# Flip the character Sprite depending on which direction is being pressed
-	if dir.x > 0 and not movement_component.isdrilling:
+	if dir.x > 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = false
-	elif dir.x < 0 and not movement_component.isdrilling:
+	elif dir.x < 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = true
 	
 	# If the speed is greater than 0 in the y direction
@@ -60,7 +61,7 @@ func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
 		pass
 	
 	# If the character is falling or jumping, enter the jump state
-	if abs(dir.y) > 0 and !movement_component.isdrilling or abs(velocity.y) > 0 and !movement_component.isdrilling :
+	if (abs(dir.y) > 0 and (!drill_component.drill_enabled)) or abs(velocity.y) > 0 and (!drill_component.drill_enabled) :
 		state_machine._enter_state("jump")
 		return
 	
@@ -97,7 +98,8 @@ func _dev_super():
 	
 
 func _on_area_2d_body_entered(body):
-	if !movement_component.isdrilling:
+	if not drill_component.drill_enabled:
+		
 		print("Drill")
 		set_collision_layer_value(1, false)
 		set_collision_mask_value(1, false)
@@ -114,22 +116,25 @@ func _on_area_2d_body_entered(body):
 		
 		move_and_slide()
 		print("Last dash: ",last_dash)
-		movement_component.isdrilling = true
 		
 		var shape:CollisionShape2D = drill_detector.get_child(0)
 		var bump: CollisionShape2D = bump_detector.get_child(0)
 		bump.set_deferred("disabled", false)
 		
+		drill_component.drill_enabled = true
+		movement_component.disable_movement_component = true
 		
 
+
 func _disable_drill_detector():
-	if !movement_component.isdrilling:
+	if not drill_component.drill_enabled:
 		var collision: CollisionShape2D = drill_detector.get_child(0)
 		collision.set_deferred("disabled", true)
 		
 		collision.position.y = 1.0
 		
 		print("Collision Disabled")
+
 
 func _enable_drill_detector(_vel:Vector2):
 	var collision: CollisionShape2D = drill_detector.get_child(0)
@@ -152,7 +157,10 @@ func _enable_drill_detector(_vel:Vector2):
 func _on_drill_detector_body_exited(body):
 		set_collision_layer_value(1, true)
 		set_collision_mask_value(1, true)
-		movement_component.isdrilling = false
+		
+		drill_component.drill_enabled = false
+		movement_component.disable_movement_component = false
+		
 		var momentum = rotation
 		rotation=0
 		var collision: CollisionShape2D = drill_detector.get_child(0)
@@ -172,14 +180,18 @@ func _on_drill_detector_body_exited(body):
 		var bump: CollisionShape2D = bump_detector.get_child(0)
 		bump.set_deferred("disabled", true)
 		
+		
+
+
 func _set_last_dash(dir: Vector2):
 	if dir != Vector2.ZERO:
 		last_dash = dir
 
-func _on_bump_detector_body_entered(body):
-	if not movement_component.isdrilling:
-		return
 
+func _on_bump_detector_body_entered(body):
+	if not drill_component.drill_enabled:
+		return
+	
 	var ray = $DrillBounceRay
 	ray.force_raycast_update()
 
@@ -202,10 +214,15 @@ func _on_bump_detector_body_entered(body):
 			rotation = velocity.angle()
 			velocity *= 0.8
 		drill_component.canmove = false
+		var bump: CollisionShape2D = bump_detector.get_child(0)
+		bump.set_deferred("disabled", true)
+		bump.call_deferred("set_deferred", "disabled", false)
 		bounce_timer.start(0.2)
 	
 	
 
 
 func _on_bounce_timer_timeout():
+	var bump: CollisionShape2D = bump_detector.get_child(0)
 	drill_component.canmove = true
+	
