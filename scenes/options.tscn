@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://xvhmd2g8ebjj"]
+
+[ext_resource type="Script" uid="uid://cj1uoehvt0dbw" path="res://scripts/UI/menus/escape_options_button.gd" id="1_c2u1v"]
+
+[node name="Options" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 33.0
+offset_top = 33.0
+offset_right = 73.0
+offset_bottom = 56.0
+text = "Options"
+
+[node name="BackButton" type="Button" parent="."]
+offset_left = 442.0
+offset_top = 407.0
+offset_right = 541.0
+offset_bottom = 438.0
+text = "Back"
+script = ExtResource("1_c2u1v")

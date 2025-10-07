@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://vofyhq2pi6dc"]
+
+[ext_resource type="Script" uid="uid://cpynp5hce3wao" path="res://scripts/UI/menus/test_level_button.gd" id="1_3shnc"]
+[ext_resource type="Script" uid="uid://bif3lw721as3v" path="res://scripts/UI/menus/escape_level_select_button.gd" id="2_p0wlc"]
+
+[node name="LevelSelect" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 33.0
+offset_top = 33.0
+offset_right = 73.0
+offset_bottom = 56.0
+text = "Level Select"
+
+[node name="TestLevelButton" type="Button" parent="."]
+offset_left = 442.0
+offset_top = 407.0
+offset_right = 541.0
+offset_bottom = 438.0
+text = "Test Level"
+script = ExtResource("1_3shnc")
+
+[node name="BackButton" type="Button" parent="."]
+offset_left = 577.0
+offset_top = 407.0
+offset_right = 676.0
+offset_bottom = 438.0
+text = "Back"
+script = ExtResource("2_p0wlc")

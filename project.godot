@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Drill Diver"
-run/main_scene="uid://ddquepw4fqyuw"
+run/main_scene="uid://dyg4ajothat7g"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameManager="*res://scripts/system/game_manager.gd"
+SceneManager="*res://scripts/system/scene_manager.gd"
 
 [display]
 
