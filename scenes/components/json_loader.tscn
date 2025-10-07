@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dilhr54g3cgc0"]
 
-[ext_resource type="Script" path="res://scenes/components/json_loader.gd" id="1_oehm6"]
+[ext_resource type="Script" uid="uid://ctam7jqxtlve3" path="res://scenes/components/json_loader.gd" id="1_oehm6"]
 
 [node name="JSONLoader" type="Node"]
 script = ExtResource("1_oehm6")
