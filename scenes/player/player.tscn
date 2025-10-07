@@ -1,16 +1,16 @@
 [gd_scene load_steps=17 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
-[ext_resource type="PackedScene" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
+[ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
 [ext_resource type="PackedScene" path="res://scenes/components/json_loader.tscn" id="2_gmlin"]
-[ext_resource type="PackedScene" path="res://scenes/animation play/animation_play.tscn" id="3_gmlin"]
-[ext_resource type="PackedScene" path="res://scenes/components/state_machine.tscn" id="4_lvxji"]
+[ext_resource type="PackedScene" uid="uid://bc2f56sqxrqqk" path="res://scenes/animation play/animation_play.tscn" id="3_gmlin"]
+[ext_resource type="PackedScene" uid="uid://boi6rio4dyg2u" path="res://scenes/components/state_machine.tscn" id="4_lvxji"]
 [ext_resource type="PackedScene" uid="uid://dqp5bgps30vvg" path="res://scenes/components/movement_component.tscn" id="5_p47bc"]
-[ext_resource type="PackedScene" path="res://scenes/components/input_component.tscn" id="6_75vfm"]
-[ext_resource type="PackedScene" path="res://scenes/components/gravity_component.tscn" id="8_qek5x"]
-[ext_resource type="PackedScene" path="res://scenes/components/jump_component.tscn" id="9_5gtgg"]
+[ext_resource type="PackedScene" uid="uid://b34ldb1ryno6p" path="res://scenes/components/input_component.tscn" id="6_75vfm"]
+[ext_resource type="PackedScene" uid="uid://dxclr2mjdivfx" path="res://scenes/components/gravity_component.tscn" id="8_qek5x"]
+[ext_resource type="PackedScene" uid="uid://0tn1mjy43bu" path="res://scenes/components/jump_component.tscn" id="9_5gtgg"]
 [ext_resource type="PackedScene" path="res://scenes/components/player_stat_loader_component.tscn" id="11_je7p5"]
-[ext_resource type="PackedScene" path="res://scenes/components/dash_component.tscn" id="12_fm80t"]
+[ext_resource type="PackedScene" uid="uid://b3o1n8eur5oq2" path="res://scenes/components/dash_component.tscn" id="12_fm80t"]
 [ext_resource type="Script" uid="uid://b8mmd73gut507" path="res://scenes/components/drill_component.gd" id="12_gx1jg"]
 
 [sub_resource type="JSON" id="JSON_je7p5"]
@@ -76,8 +76,8 @@ bump_detector = NodePath("BumpDetector")
 bounce_timer = NodePath("BounceTimer")
 
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
-json_loaded = NodePath("../JSONLoader")
 creature_name = "player"
+json_loaded = NodePath("../JSONLoader")
 
 [node name="JSONLoader" parent="." instance=ExtResource("2_gmlin")]
 json_file = SubResource("JSON_je7p5")
@@ -154,7 +154,6 @@ disabled = true
 [node name="DrillComponent" type="Node" parent="."]
 script = ExtResource("12_gx1jg")
 turn_raduis = 0.08
-metadata/_custom_type_script = "uid://cm48rinbqpxsf"
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]

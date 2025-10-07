@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=4 uid="uid://bp0nsdqn8obpq"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_xyrsk"]
-[ext_resource type="Script" path="res://scripts/terrain/TerrainDrill.gd" id="2_meeqt"]
+[ext_resource type="Script" uid="uid://cyunk6h3or5vy" path="res://scripts/terrain/TerrainDrill.gd" id="2_meeqt"]
 
 [node name="LevelTutorial" type="Node2D"]
 

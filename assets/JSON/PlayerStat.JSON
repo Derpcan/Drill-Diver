@@ -1,0 +1,19 @@
+{
+	"player": {
+		"stats": {
+			"movement": {
+				"max_speed": 60.0,
+				"acceleration": 600.0,
+				"friction": 1.0
+			},
+			"jump": {
+				"jump_height": 270.0,
+				"input_jump_delay_forgiveness": 0.3
+			},
+			"dash": {
+				"dash_speed": 200.0,
+				"dash_time": 0.25
+			}
+		}
+	}
+}

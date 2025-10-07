@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_pp2b6"]
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="2_3lgsv"]
-[ext_resource type="Script" path="res://scripts/terrain/TerrainDrill.gd" id="2_ben6t"]
+[ext_resource type="Script" uid="uid://cyunk6h3or5vy" path="res://scripts/terrain/TerrainDrill.gd" id="2_ben6t"]
 
 [node name="Node2D" type="Node2D"]
 
