@@ -10,7 +10,7 @@ class_name Player
 @export var dash_component:DashComponent
 @export var drill_detector:Area2D
 @export var drill_component:DrillComponent
-
+@export var health_component:HealthComponent
 
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
 
@@ -38,6 +38,15 @@ func _ready() -> void:
 	on_floor.connect(dash_component._enable_dash)
 	input_component.drill_inputs.connect(drill_component._calulate_rotation)
 	drill_component.rotate.connect(movement_component._rotate_player)
+	
+	health_component.died.connect(input_component._disable_input_component)
+	health_component.died.connect(_stop_movement)
+
+
+func _stop_movement() -> void:
+	movement_component.velocity = Vector2.ZERO
+	velocity = Vector2.ZERO
+	_choose_state()
 
 
 func _physics_process(delta: float) -> void:
@@ -45,7 +54,7 @@ func _physics_process(delta: float) -> void:
 		emit_signal("on_floor")
 
 
-func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
+func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
 	# Flip the character Sprite depending on which direction is being pressed
 	if dir.x > 0 and not movement_component.isdrilling:
 		animated_sprite.flip_h = false

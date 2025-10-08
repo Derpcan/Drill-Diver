@@ -61,7 +61,7 @@ height = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_myrg7"]
 radius = 6.08276
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "health_component")]
 collision_layer = 9
 collision_mask = 9
 script = ExtResource("1_0owmy")
@@ -74,6 +74,7 @@ gravity_component = NodePath("GravityComponent")
 dash_component = NodePath("DashComponent")
 drill_detector = NodePath("DrillDetector")
 drill_component = NodePath("DrillComponent")
+health_component = NodePath("HealthComponent")
 
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
 json_loaded = NodePath("../JSONLoader")

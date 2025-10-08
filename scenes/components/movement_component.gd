@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		parent.velocity = 150*Vector2(cos(parent.rotation), sin(parent.rotation))
 		parent.move_and_slide()
 
-		
+
 
 func _accelerate_in_direction(dir:Vector2, delta:float) -> void:
 	if prevent_vel_x_clamp || isdrilling:
