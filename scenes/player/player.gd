@@ -14,8 +14,10 @@ class_name Player
 @export var bounce_timer:Timer
 @export var health_component:HealthComponent
 @export var animation_play:AnimationPlay
+@export var ray:ShapeCast2D
 
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
+
 
 signal on_floor()
 signal rotate
@@ -25,6 +27,9 @@ signal rotate
 var last_dash = null
 
 func _ready() -> void:
+	
+
+
 	input_component.movement_inputs.connect(movement_component._accelerate_in_direction)
 	input_component.movement_inputs.connect(_choose_state)
 	input_component.jump_input.connect(_choose_state)
@@ -38,6 +43,7 @@ func _ready() -> void:
 	dash_component.dash_start.connect(movement_component.force_velocity)
 	dash_component.dash_start.connect(movement_component._disable_vel_x_clamp)
 	dash_component.dash_start.connect(_enable_drill_detector)
+	dash_component.dash_start.connect(movement_component._not_exiting_ground)
 	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
 	dash_component.dash_end.connect(_disable_drill_detector)
 	on_floor.connect(dash_component._enable_dash)
@@ -125,12 +131,11 @@ func _on_area_2d_body_entered(body):
 		set_collision_mask_value(1, false)
 		var speed = 150
 		var angle = last_dash.angle()
-		var ray = $DrillBounceRay
-		ray.rotation_degrees = -90
+		
 		if animated_sprite.flip_h == true:
 			speed *=-1
 			angle = (PI-angle)*-1
-			ray.rotation_degrees = 90
+			
 		rotation = lerp_angle(rotation, angle, 1)
 		velocity = speed*Vector2.from_angle(angle)
 		
@@ -180,28 +185,37 @@ func _on_drill_detector_body_exited(body):
 		set_collision_mask_value(1, true)
 		
 		drill_component.drill_enabled = false
-		rotation=0
+		
 		var collision: CollisionShape2D = drill_detector.get_child(0)
 		_disable_drill_detector()
 		collision.rotation = 0
 		if health_component.current_hp > 0:
-			movement_component.disable_movement_component = false
-	
+			movement_component._enable_movement()
+			gravity_component._enable_gravity()
 		var momentum = rotation
 		
 		var delta_y = 300
+		var delta_x = 500
 		if animated_sprite.flip_h == true:
 			delta_y *=-1
-		velocity.x += 500*cos(momentum)
-		velocity.y += delta_y*sin(momentum)
-		velocity.x *= 0.5
-		velocity.y *= 0.7
-		movement_component.force_velocity_y(velocity)
+			delta_x *=-1
+		print(momentum)
 		
+		velocity.x += delta_x*cos(momentum)
+		velocity.y += delta_y*sin(momentum)
+		velocity.x *= 0.4
+		velocity.y *= 0.6
+		print(velocity.x, velocity.y)
+		movement_component.max_speed = abs(velocity.x)
+		movement_component.exiting_ground = true
+		movement_component.force_velocity(velocity)
+		
+		rotation=0
+	
 		print("exit")
 		dash_component.can_dash = true
-		var bump: CollisionShape2D = bump_detector.get_child(0)
-		bump.set_deferred("disabled", true)
+		
+		
 		
 		
 
@@ -215,19 +229,30 @@ func _on_bump_detector_body_entered(body):
 	if not drill_component.drill_enabled:
 		return
 	
-	var ray = $DrillBounceRay
-	ray.force_raycast_update()
+	
+	# Perform a raycast from the Area2D's position to the body
+	
 
+	
+	
+		# Do something with the normal
+	ray.force_shapecast_update()
+	print(ray.is_colliding())
 	if ray.is_colliding():
-		var normal = ray.get_collision_normal()
-		print("Bounce normal: ", normal)
+		
+		var normal = ray.get_collision_normal(0)
+		
 
 		if abs(normal.x) > abs(normal.y):
 			# Wall: reverse X
 			velocity.x *= -1
-		else:
+		elif abs(normal.x) < abs(normal.y):
 			# Floor or ceiling: reverse Y
 			velocity.y *= -1
+		elif abs(abs(normal.x) - abs(normal.y)) <1 :
+			velocity *=-1
+			
+		
 
 		
 		if animated_sprite.flip_h == true:
@@ -236,11 +261,13 @@ func _on_bump_detector_body_entered(body):
 		else:
 			rotation = velocity.angle()
 			velocity *= 0.8
-		drill_component.canmove = false
+		move_and_slide()
 		var bump: CollisionShape2D = bump_detector.get_child(0)
 		bump.set_deferred("disabled", true)
+		drill_component.canmove = false
 		bump.call_deferred("set_deferred", "disabled", false)
 		bounce_timer.start(0.2)
+		
 	
 	
 
@@ -248,4 +275,6 @@ func _on_bump_detector_body_entered(body):
 func _on_bounce_timer_timeout():
 	var bump: CollisionShape2D = bump_detector.get_child(0)
 	drill_component.canmove = true
+	
+
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=21 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
@@ -19,6 +19,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_qek5x"]
 radius = 7.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_fcs02"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_fm80t"]
 radius = 9.44444
 
@@ -29,7 +31,7 @@ height = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ugbui"]
 radius = 8.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray")]
 collision_layer = 9
 collision_mask = 9
 script = ExtResource("1_0owmy")
@@ -46,6 +48,7 @@ bump_detector = NodePath("BumpDetector")
 bounce_timer = NodePath("BounceTimer")
 health_component = NodePath("HealthComponent")
 animation_play = NodePath("AnimationPlay")
+ray = NodePath("ShapeCast2D")
 
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
 json_loaded = NodePath("../JSONLoader")
@@ -90,11 +93,13 @@ movement_component = NodePath("../MovementComponent")
 jump_component = NodePath("../JumpComponent")
 dash_component = NodePath("../DashComponent")
 
-[node name="DrillBounceRay" type="RayCast2D" parent="."]
-position = Vector2(-5.202, 3.254)
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, 2)
 rotation = -1.5708
-scale = Vector2(13.53, 9.6389)
-target_position = Vector2(0, 2.822)
+scale = Vector2(1.1, 1.1)
+shape = SubResource("CircleShape2D_fcs02")
+target_position = Vector2(0, 0)
 collision_mask = 16
 
 [node name="BounceTimer" type="Timer" parent="."]
@@ -108,7 +113,6 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BumpDetector"]
-position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_fm80t")
 disabled = true
 
