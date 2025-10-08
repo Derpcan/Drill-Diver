@@ -7,6 +7,18 @@ class_name GravityComponent
 ## The movement component that will be used to accelerate character with gravity
 @export var movement_component:MovementComponent
 
+var disabled_gravity:bool = false:
+	set(new_val):
+		disabled_gravity = new_val
+		
+		set_physics_process(not disabled_gravity)
+
+func _disable_gravity() -> void:
+	disabled_gravity = true
+
+func _enable_gravity() -> void:
+	disabled_gravity = false
+
 var gravity_scale:float = 1.0
 
 func _physics_process(delta: float) -> void:

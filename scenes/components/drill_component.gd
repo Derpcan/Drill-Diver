@@ -17,21 +17,28 @@ var drill_enabled:bool = false:
 	set(new_val):
 		drill_enabled = new_val
 		if drill_enabled:
-			print("Drill Enabled")
+			#print("Drill Enabled")
+			print_rich("[color=#42ED59]Drill Enabled", "[/color]")
 			
 		else:
-			print("Drill Disabled")
+			#print("Drill Disabled")
+			print_rich("[color=#EDA451]Drill Disabled", "[/color]")
 		
 		# Enable or disable the physics_process call depending on 
 		# if the character is in the drilling state
 		set_physics_process(drill_enabled)
 
+func _disable_drill() -> void:
+	drill_enabled = false
+
+
+func _enable_drill() -> void:
+	drill_enabled = true
 
 
 func _physics_process(delta: float) -> void:
 	# If the parent exists and is in the drilling state
 	if parent and drill_enabled:
-		
 		var turn_speed = 150
 		if parent.get_node("AnimationSprite").flip_h == true :
 			turn_speed*=-1

@@ -4,6 +4,7 @@ class_name HealthComponent
 
 signal died()
 signal took_damage(new_health_value:int)
+signal healed_fully()
 
 ## The max hp the object or character should have
 @export var max_hp:int = 1
@@ -26,3 +27,8 @@ var current_hp:int = 0:
 # Sets health to max at start
 func _ready() -> void:
 	current_hp = max_hp
+
+# Heals to max health
+func _heal_fully() -> void:
+	current_hp = max_hp
+	emit_signal("healed_fully")

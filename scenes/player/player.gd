@@ -12,6 +12,8 @@ class_name Player
 @export var drill_component:DrillComponent
 @export var bump_detector:Area2D
 @export var bounce_timer:Timer
+@export var health_component:HealthComponent
+@export var animation_play:AnimationPlay
 
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
 
@@ -42,6 +44,19 @@ func _ready() -> void:
 	input_component.drill_inputs.connect(drill_component._calulate_rotation)
 	
 	
+	health_component.died.connect(input_component._disable_inputs)
+	health_component.died.connect(movement_component._disable_movement)
+	health_component.died.connect(drill_component._disable_drill)
+	health_component.died.connect(_choose_state)
+	
+	
+	health_component.healed_fully.connect(input_component._enable_inputs)
+	health_component.healed_fully.connect(movement_component._enable_movement)
+
+
+
+
+
 
 
 func _physics_process(delta: float) -> void:
@@ -49,7 +64,12 @@ func _physics_process(delta: float) -> void:
 		emit_signal("on_floor")
 
 
-func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
+func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
+	
+	if health_component.current_hp == 0:
+		state_machine._enter_state("death")
+		return
+	
 	# Flip the character Sprite depending on which direction is being pressed
 	if dir.x > 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = false
@@ -98,7 +118,7 @@ func _dev_super():
 	
 
 func _on_area_2d_body_entered(body):
-	if not drill_component.drill_enabled:
+	if not drill_component.drill_enabled and health_component.current_hp > 0:
 		
 		print("Drill")
 		set_collision_layer_value(1, false)
@@ -155,17 +175,20 @@ func _enable_drill_detector(_vel:Vector2):
 
 
 func _on_drill_detector_body_exited(body):
+	
 		set_collision_layer_value(1, true)
 		set_collision_mask_value(1, true)
 		
 		drill_component.drill_enabled = false
-		movement_component.disable_movement_component = false
-		
-		var momentum = rotation
 		rotation=0
 		var collision: CollisionShape2D = drill_detector.get_child(0)
 		_disable_drill_detector()
 		collision.rotation = 0
+		if health_component.current_hp > 0:
+			movement_component.disable_movement_component = false
+	
+		var momentum = rotation
+		
 		var delta_y = 300
 		if animated_sprite.flip_h == true:
 			delta_y *=-1
