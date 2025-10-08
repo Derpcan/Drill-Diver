@@ -7,16 +7,6 @@ signal jump_input(dir:Vector2, is_pressed:bool)
 signal dash_inputs(direction:Vector2)
 signal drill_inputs(direction:Vector2)
 
-# Variable to disable inputs during instances where movement or anything should be used
-var disable_inputs:bool = false:
-	set(new_val):
-		disable_inputs = new_val
-		
-		set_physics_process(not disable_inputs)
-
-func _disable_input_component() -> void:
-	disable_inputs = true
-
 # Get inputs during each physics process frame
 func _physics_process(delta: float) -> void:
 	# Get the direction of the characters input
