@@ -84,6 +84,8 @@ func _camera_returned_restart() -> void:
 	
 	# Heal the player and re-enable input
 	player.health_component._heal_fully()
+	player.velocity = Vector2.ZERO
+	player.movement_component.velocity = Vector2.ZERO
 	
 	# Attach the camera back to the player
 	game_camera.reparent(player)

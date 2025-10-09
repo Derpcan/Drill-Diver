@@ -62,15 +62,16 @@ func _physics_process(delta: float) -> void:
 			max_speed = temp
 			exiting_ground = false
 		
+		
 		if exiting_ground == true:
 			if velocity.x > 0:
-				print("Positive")
+				#print("Positive")
 				velocity.x -= lerp(0.0 , parent.velocity.x, 0.1)
-				print(velocity.x) 
+				#print(velocity.x) 
 			elif velocity.x < 0:
-					print("Negative")
-					velocity.x += lerp(0.0 , abs(parent.velocity.x), 0.1)
-					print(velocity.x)
+				#print("Negative")
+				velocity.x += lerp(0.0 , abs(parent.velocity.x), 0.1)
+				#print(velocity.x)
 			if velocity.x == 0.0:
 				exiting_ground == false
 				max_speed = temp
