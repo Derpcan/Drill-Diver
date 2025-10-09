@@ -2,7 +2,8 @@ extends Node
 
 const DEFAULT_SCENE = "res://scenes/main_menu.tscn"
 
-var scene_stack: Array = []
+var scene_stack: Array[Node] = []
+
 
 func _ready():
 	print("Scene Manager running...")
@@ -10,56 +11,52 @@ func _ready():
 	# Set the main menu as the starting scene
 	change_scene(DEFAULT_SCENE)
 
-# Immediately switches to the given scene, overriding the scene stack
-func change_scene(scene: String) -> bool:
-	_clear_stack()
-	return _load_scene(scene)
+## Immediately switches to the given scene, overriding the scene stack
+func change_scene(scene: String) -> void:
+	# We no longer need to track the layering of scenes (they'll be freed by change_scene_to_packed())
+	scene_stack.clear()
+	
+	# Load the new scene, track it, and switch to it
+	get_tree().change_scene_to_file.call_deferred(scene)
+	scene_stack.push_back(get_tree().current_scene)
+	print("----------------------")
+	print(scene_stack)
+	print("----------------------")
 
-# Pushes the given scene onto the scene stack, rendering all scenes
-func push_scene(scene: String) -> bool:
+## Pushes the given scene onto the scene stack, rendering all scenes
+func push_scene(scene: String) -> void:
 	if scene_stack.size() > 0:
-		# If we are rendering multiple scenes, disable the previous scene
-		var previous_scene = scene_stack[-1] # the most recently-added scene
-		previous_scene.process_mode = Node.PROCESS_MODE_DISABLED
-		#previous_scene.paused = true
-		previous_scene.visible = false
+		# If we are rendering multiple scenes, disable all previous scenes
+		for s in scene_stack:
+			_pause_scene(s)
 		
-	return _load_scene(scene)
+	# Load the scene and attach it to the stack root
+	var overlay_scene = load(scene).instantiate()
+	var root: Node = scene_stack.front()
+	
+	
+	scene_stack.push_back(overlay_scene)
+	root.add_child(overlay_scene)
 
-# Pops the last scene off of the stack, unrendering it
+## Pops the last scene off of the stack, unrendering it
 func pop_scene() -> void:
 	if scene_stack.is_empty():
 		return
 	
-	var current_scene = scene_stack.pop_back()
-	current_scene.queue_free()
+	# remove and free sceen from root
+	#_remove_scene(scene_stack.pop_back())
 	
 	if scene_stack.size() > 0:
 		# If we just disabled a scene, we need to reenable it when we pop the blocking scene
-		var previous_scene = scene_stack[-1]
-		previous_scene.process_mode = Node.PROCESS_MODE_INHERIT
-		#previous_scene.paused = false
-		previous_scene.visible = true
+		var previous_scene = scene_stack.back()
+		_unpause_scene(previous_scene)
 
-# Free and clear the scene stack if it needs to be overridden
-func _clear_stack() -> void:
-	for scene in scene_stack:
-		print("Previous Scene Stack:------------")
-		print(scene)
-		print("---------------------------------")
-		scene.queue_free()
-	scene_stack.clear()
+## Pauses a given scene (disabling input and process steps)
+func _pause_scene(scene: Node) -> void:
+	scene.process_mode = Node.PROCESS_MODE_DISABLED
+	scene.visible = false
 
-# Load and instantiate a specific scene
-func _load_scene(scene: String) -> bool:
-	var new_scene = load(scene)
-	if not new_scene:
-		# Something went wrong, give error message and return
-		print("ERROR: SCENE MANAGER: failed to load scene " + scene)
-		return false
-	
-	var scene_instance = new_scene.instantiate()
-	get_tree().root.add_child.call_deferred(scene_instance)
-	scene_stack.push_back(scene_instance)
-	
-	return true
+## Unpauses a given scene (reenabling input and processing)
+func _unpause_scene(scene: Node) -> void:
+	scene.process_mode = Node.PROCESS_MODE_INHERIT
+	scene.visible = true
