@@ -32,8 +32,8 @@ height = 16.0
 radius = 8.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray")]
-collision_layer = 9
-collision_mask = 9
+collision_layer = 25
+collision_mask = 25
 script = ExtResource("1_0owmy")
 movement_component = NodePath("MovementComponent")
 jump_component = NodePath("JumpComponent")
@@ -94,12 +94,12 @@ jump_component = NodePath("../JumpComponent")
 dash_component = NodePath("../DashComponent")
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
-visible = false
-position = Vector2(0, 2)
+position = Vector2(0, 1)
 rotation = -1.5708
 scale = Vector2(1.1, 1.1)
 shape = SubResource("CircleShape2D_fcs02")
 target_position = Vector2(0, 0)
+margin = 0.8
 collision_mask = 16
 
 [node name="BounceTimer" type="Timer" parent="."]
@@ -109,8 +109,10 @@ wait_time = 0.2
 
 [node name="BumpDetector" type="Area2D" parent="."]
 position = Vector2(0, 1)
+scale = Vector2(1.1, 1.1)
 collision_layer = 0
 collision_mask = 16
+priority = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BumpDetector"]
 shape = SubResource("CircleShape2D_fm80t")
@@ -148,5 +150,6 @@ debug_color = Color(0.871002, 0.294912, 0.489399, 0.42)
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]
+[connection signal="body_exited" from="BumpDetector" to="." method="_on_bump_detector_body_exited"]
 [connection signal="body_entered" from="DrillDetector" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="DrillDetector" to="." method="_on_drill_detector_body_exited"]
