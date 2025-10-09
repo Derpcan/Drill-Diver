@@ -1,8 +1,8 @@
 extends Node
 class_name KeyLogLoader
 
-@export var json_loader:JSONLoader
 
+@export var json_name:String = "keylog0.JSON"
 
 signal movement_inputs(direction:Vector2, delta:float)
 signal jump_input(dir:Vector2, is_pressed:bool)
@@ -18,7 +18,7 @@ func _ready() -> void:
 func _load_key_log_json() -> void:
 	# Create variables to store path of folders and the saved animation file
 	var folder_path:String = "res://save_info"
-	var save_path:String = folder_path + "/" + "keylog.JSON"
+	var save_path:String = folder_path + "/" + json_name
 	
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ)

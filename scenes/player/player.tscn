@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=22 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://b8mmd73gut507" path="res://scenes/components/drill_component.gd" id="12_gx1jg"]
 [ext_resource type="PackedScene" uid="uid://dbmv1rqx5nlbt" path="res://scenes/components/health_component.tscn" id="13_ugbui"]
 [ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_fcs02"]
+[ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/key_logger.tscn" id="16_myrg7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qek5x"]
 radius = 7.0
@@ -145,6 +146,9 @@ collision_shape = NodePath("CollisionShape2D")
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_ugbui")
 debug_color = Color(0.871002, 0.294912, 0.489399, 0.42)
+
+[node name="KeyLogger" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("16_myrg7")]
+input_component = NodePath("../InputComponent")
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]
