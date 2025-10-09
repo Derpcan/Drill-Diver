@@ -50,8 +50,9 @@ health_component = NodePath("HealthComponent")
 animation_play = NodePath("AnimationPlay")
 ray = NodePath("ShapeCast2D")
 
-[node name="AnimationSprite" parent="." instance=ExtResource("1_bg0qk")]
+[node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_bg0qk")]
 self_modulate = Color(1, 1, 1, 0.5)
+json_loaded = NodePath("../JSONLoader")
 creature_name = "player"
 
 [node name="JSONLoader" parent="." instance=ExtResource("2_dowl3")]

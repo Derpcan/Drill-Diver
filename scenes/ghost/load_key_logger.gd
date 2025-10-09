@@ -17,7 +17,7 @@ func _ready() -> void:
 
 func _load_key_log_json() -> void:
 	# Create variables to store path of folders and the saved animation file
-	var folder_path:String = "res://save_info"
+	var folder_path:String = "user://test_data/keylogs"
 	var save_path:String = folder_path + "/" + json_name
 	
 	if FileAccess.file_exists(save_path):
