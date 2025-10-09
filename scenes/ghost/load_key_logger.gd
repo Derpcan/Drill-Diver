@@ -52,7 +52,13 @@ func _enable_inputs() -> void:
 func _physics_process(delta: float) -> void:
 	if len(key_array) <= 0:
 		return
-	var dict:Dictionary = key_array.pop_front()
+	var dict:Dictionary = key_array[0]
+	
+	if (dict["frame"] == Engine.get_physics_frames()):
+		#print("Frame is correct")
+		key_array.pop_front()
+	else:
+		return
 	
 	# Get the direction of the characters input
 	var dir:Vector2 = dict["move_dir"]

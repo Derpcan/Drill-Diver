@@ -74,6 +74,8 @@ accel = 600.0
 max_speed = 80.0
 parent = NodePath("..")
 
+[node name="LoadKeyLogger" parent="." instance=ExtResource("16_qauis")]
+
 [node name="GravityComponent" parent="." node_paths=PackedStringArray("character_body", "movement_component") instance=ExtResource("8_f2264")]
 character_body = NodePath("..")
 movement_component = NodePath("../MovementComponent")
@@ -143,8 +145,6 @@ collision_shape = NodePath("CollisionShape2D")
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_nogql")
 debug_color = Color(0.871002, 0.294912, 0.489399, 0.42)
-
-[node name="LoadKeyLogger" parent="." instance=ExtResource("16_qauis")]
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]

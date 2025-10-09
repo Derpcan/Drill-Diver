@@ -40,12 +40,14 @@ func _physics_process(delta: float) -> void:
 	var drill_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
 	var drill_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
 	var drill_dir:Vector2 = Vector2(drill_x, drill_y)
+	
+	log_key_input(dir, jump_direction, is_jump_pressed, dash_dir, drill_dir)
 	dash_inputs.emit(dash_dir)
 	jump_input.emit(jump_direction, is_jump_pressed)
 	movement_inputs.emit(dir, delta)
 	drill_inputs.emit(drill_dir)
 	
-	log_key_input(dir, jump_direction, is_jump_pressed, dash_dir, drill_dir)
+	
 
 
 func round_to_8_directions(value:float) -> float:
@@ -100,7 +102,8 @@ func _set_up_key_logger() -> void:
 		if json != null:
 			var native = JSON.to_native(json["D"])
 			for dict in native:
-				print("move_dir = ",dict["move_dir"])
+				#print("move_dir = ",dict["move_dir"])
+				pass
 		file.close()
 	#get_tree().quit.call_deferred()
 	#return
@@ -124,6 +127,7 @@ func log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_pressed
 	keys_pressed_dict["is_jump_pressed"] = is_jump_pressed
 	keys_pressed_dict["dash_dir"] = dash_dir
 	keys_pressed_dict["drill_dir"] = drill_vector
+	keys_pressed_dict["frame"] = Engine.get_physics_frames()
 	
 	
 	file.store_string(JSON.stringify(JSON.from_native(keys_pressed_dict), "\t", true) + ",\n")
