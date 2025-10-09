@@ -3,3 +3,5 @@
 /android/
 .DS_Store
 ._*
+export/
+export_presets.cfg
