@@ -2,10 +2,10 @@
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_ben6t"]
 [ext_resource type="PackedScene" uid="uid://bsv71f851sdj3" path="res://scenes/checkpoint/checkpoint_manager.tscn" id="1_irohn"]
-[ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_pp2b6"]
 [ext_resource type="Script" uid="uid://cyunk6h3or5vy" path="res://scripts/terrain/TerrainDrill.gd" id="2_ben6t"]
 [ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="4_ajg3a"]
 [ext_resource type="PackedScene" uid="uid://ckobqg36uilxm" path="res://scenes/Camera/game_camera.tscn" id="6_3lu30"]
+[ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="6_8ayoj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3lu30"]
 
@@ -19,9 +19,8 @@ tile_set = ExtResource("1_ben6t")
 script = ExtResource("2_ben6t")
 
 [node name="GameCamera" parent="." instance=ExtResource("6_3lu30")]
-zoom = Vector2(4, 4)
-
-[node name="Player" parent="." instance=ExtResource("1_pp2b6")]
+position = Vector2(164, 5)
+zoom = Vector2(2, 2)
 
 [node name="HitBox" parent="." instance=ExtResource("4_ajg3a")]
 collision_mask = 2
@@ -29,3 +28,5 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(309, 1)
 shape = SubResource("CircleShape2D_3lu30")
+
+[node name="Ghost" parent="." instance=ExtResource("6_8ayoj")]

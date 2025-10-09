@@ -26,6 +26,7 @@ signal player_death_animation_ended(previous_checkpoint_pos:Vector2)
 
 
 func _ready() -> void:
+	return
 	# If the player is not set before startup
 	if not player:
 		# Attempt to find player in the current scene
