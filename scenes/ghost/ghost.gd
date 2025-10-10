@@ -22,7 +22,7 @@ class_name Ghost
 
 signal on_floor()
 signal rotate
-
+signal on_floor_dirt
 
 
 var last_dash = null
@@ -48,6 +48,7 @@ func _ready() -> void:
 	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
 	dash_component.dash_end.connect(_disable_drill_detector)
 	on_floor.connect(dash_component._enable_dash)
+	on_floor_dirt.connect(_on_bump_detector_body_entered)
 	input_component.drill_inputs.connect(drill_component._calulate_rotation)
 	
 	
@@ -59,6 +60,8 @@ func _ready() -> void:
 	
 	health_component.healed_fully.connect(input_component._enable_inputs)
 	health_component.healed_fully.connect(movement_component._enable_movement)
+	
+	
 
 
 
@@ -67,8 +70,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if (is_on_floor() or is_on_wall()) and drill_component.drill_enabled :
+		emit_signal("on_floor_dirt",null)
 	if is_on_floor():
 		emit_signal("on_floor")
+		
 
 
 func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
@@ -88,17 +94,17 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		pass
 	
 	# If the character is falling or jumping, enter the jump state
-	if (abs(dir.y) > 0 and (!drill_component.drill_enabled)) or abs(velocity.y) > 0 and (!drill_component.drill_enabled) :
+	if (abs(dir.y) > 0 and not drill_component.drill_enabled) or abs(velocity.y) > 0 and (!drill_component.drill_enabled) :
 		state_machine._enter_state("jump")
 		return
 	
 	# If the character is not moving on the x-axis and is not moving on y-axis enter idle state
-	if velocity.x == 0:
+	if velocity.x == 0 and not drill_component.drill_enabled:
 		state_machine._enter_state("idle")
 		return 
 	
 	# If the character is moving on the x-axis and not the y-axis enter the run state
-	if abs(dir.x) > 0:
+	if abs(dir.x) > 0 and not drill_component.drill_enabled:
 		state_machine._enter_state("run")
 		return
 	
@@ -132,6 +138,7 @@ func _on_area_2d_body_entered(body):
 		set_collision_mask_value(1, false)
 		var speed = 150
 		var angle = last_dash.angle()
+		var collision_shape = $CollisionShape2D
 		
 		if animated_sprite.flip_h == true:
 			speed *=-1
@@ -145,10 +152,26 @@ func _on_area_2d_body_entered(body):
 		
 		var shape:CollisionShape2D = drill_detector.get_child(0)
 		var bump: CollisionShape2D = bump_detector.get_child(0)
-		bump.set_deferred("disabled", false)
+		
+		
 		
 		drill_component.drill_enabled = true
 		movement_component.disable_movement_component = true
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		
+		
+		ray.enabled = true
+		ray.scale = Vector2(1.1,1.1)
+		bump_detector.scale  = Vector2(1.1,1.1)
+		bump.set_deferred("disabled", false)
 		
 
 
@@ -178,10 +201,11 @@ func _enable_drill_detector(_vel:Vector2):
 
 
 
-
-
 func _on_drill_detector_body_exited(body):
-	
+		ray.enabled = false
+		bump_detector.set_deferred("disabled", false)
+		ray.scale = Vector2(0.2,0.2)
+		bump_detector.scale  = Vector2(0.2,0.2)
 		#set_collision_layer_value(1, true)
 		set_collision_mask_value(1, true)
 		
@@ -212,13 +236,8 @@ func _on_drill_detector_body_exited(body):
 		movement_component.force_velocity(velocity)
 		
 		rotation=0
-	
 		print("exit")
 		dash_component.can_dash = true
-		
-		
-		
-		
 
 
 func _set_last_dash(dir: Vector2):
@@ -230,80 +249,53 @@ func _on_bump_detector_body_entered(body):
 	if not drill_component.drill_enabled:
 		return
 	
-	
+	print("bump!")
 	# Perform a raycast from the Area2D's position to the body
-	
-
-	
 	
 		# Do something with the normal
 	ray.force_shapecast_update()
+	
 	print(ray.is_colliding())
 	if ray.is_colliding():
 		
 		var normal = ray.get_collision_normal(0)
 		
 
-		if abs(normal.x) > abs(normal.y):
-			# Wall: reverse X
-			velocity.x *= -1
-		elif abs(normal.x) < abs(normal.y):
-			# Floor or ceiling: reverse Y
-			velocity.y *= -1
-		elif abs(abs(normal.x) - abs(normal.y)) <1 :
-			velocity *=-1
-			
-		
-
+		velocity = velocity.bounce(normal) * 0.8  # 0.8 for energy loss
 		
 		if animated_sprite.flip_h == true:
 			rotation = -1* (PI-velocity.angle())
-			velocity *= -0.8
 		else:
 			rotation = velocity.angle()
-			velocity *= 0.8
-		move_and_slide()
-		var bump: CollisionShape2D = bump_detector.get_child(0)
-		bump.set_deferred("disabled", true)
-		drill_component.canmove = false
-		bump.call_deferred("set_deferred", "disabled", false)
-		bounce_timer.start(0.2)
 		
-	
-	
+		print(velocity)
+		
+		print(velocity)
+		
+		drill_component.canmove = false
+		bounce_timer.start(0.2)
+		ray.force_shapecast_update()
+		if ray.is_colliding():
+			print("Chanign rot")
+			print(velocity)
+			var rot = (PI/2 +get_angle_to(ray.get_collision_point(0)))
+			drill_component.rotate_player(rot)
+			if velocity.y == 0.0:
+				rot = (PI -get_angle_to(ray.get_collision_point(0)))
+				drill_component.rotate_player(rot)
+
 
 
 func _on_bounce_timer_timeout():
 	var bump: CollisionShape2D = bump_detector.get_child(0)
 	drill_component.canmove = true
-	
 
-	
+
+
+func _on_bump_detector_body_exited(body):
+	print("body exited")
 
 
 func _on_drill_detector_body_entered(body: Node2D) -> void:
-	if not drill_component.drill_enabled and health_component.current_hp > 0:
-		
-		print("Drill")
-		set_collision_layer_value(1, false)
-		set_collision_mask_value(1, false)
-		var speed = 150
-		var angle = last_dash.angle()
-		
-		if animated_sprite.flip_h == true:
-			speed *=-1
-			angle = (PI-angle)*-1
-			
-		rotation = lerp_angle(rotation, angle, 1)
-		velocity = speed*Vector2.from_angle(angle)
-		
-		move_and_slide()
-		print("Last dash: ",last_dash)
-		
-		var shape:CollisionShape2D = drill_detector.get_child(0)
-		var bump: CollisionShape2D = bump_detector.get_child(0)
-		bump.set_deferred("disabled", false)
-		
-		drill_component.drill_enabled = true
-		movement_component.disable_movement_component = true
-		
+	_on_area_2d_body_entered(body)
+	

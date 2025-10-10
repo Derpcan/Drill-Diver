@@ -32,7 +32,5 @@ position = Vector2(309, 1)
 shape = SubResource("CircleShape2D_3lu30")
 
 [node name="Ghost" parent="." instance=ExtResource("6_8ayoj")]
-collision_layer = 0
 
 [node name="Player" parent="." instance=ExtResource("7_8ayoj")]
-collision_layer = 0

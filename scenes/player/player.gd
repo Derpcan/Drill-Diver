@@ -199,8 +199,6 @@ func _enable_drill_detector(_vel:Vector2):
 
 
 
-
-
 func _on_drill_detector_body_exited(body):
 		ray.enabled = false
 		bump_detector.set_deferred("disabled", false)
@@ -236,13 +234,8 @@ func _on_drill_detector_body_exited(body):
 		movement_component.force_velocity(velocity)
 		
 		rotation=0
-	
 		print("exit")
 		dash_component.can_dash = true
-		
-		
-		
-		
 
 
 func _set_last_dash(dir: Vector2):
@@ -256,9 +249,6 @@ func _on_bump_detector_body_entered(body):
 	
 	print("bump!")
 	# Perform a raycast from the Area2D's position to the body
-	
-
-	
 	
 		# Do something with the normal
 	ray.force_shapecast_update()
@@ -280,10 +270,6 @@ func _on_bump_detector_body_entered(body):
 		
 		print(velocity)
 		
-		
-		
-		
-		
 		drill_component.canmove = false
 		bounce_timer.start(0.2)
 		ray.force_shapecast_update()
@@ -295,28 +281,14 @@ func _on_bump_detector_body_entered(body):
 			if velocity.y == 0.0:
 				rot = (PI -get_angle_to(ray.get_collision_point(0)))
 				drill_component.rotate_player(rot)
-			
-			
-	
-			
-		
-		
-	
-	
+
 
 
 func _on_bounce_timer_timeout():
 	var bump: CollisionShape2D = bump_detector.get_child(0)
 	drill_component.canmove = true
-	
 
-	
 
 
 func _on_bump_detector_body_exited(body):
 	print("body exited")
-	
-	
-		
-		
-		

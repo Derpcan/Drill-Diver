@@ -32,8 +32,8 @@ height = 16.0
 radius = 8.0
 
 [node name="Ghost" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray")]
-collision_layer = 8
-collision_mask = 9
+collision_layer = 0
+collision_mask = 25
 script = ExtResource("1_dowl3")
 movement_component = NodePath("MovementComponent")
 jump_component = NodePath("JumpComponent")
@@ -95,12 +95,12 @@ jump_component = NodePath("../JumpComponent")
 dash_component = NodePath("../DashComponent")
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
-visible = false
-position = Vector2(0, 2)
+position = Vector2(0, 1)
 rotation = -1.5708
-scale = Vector2(1.1, 1.1)
+scale = Vector2(0.1, 0.1)
 shape = SubResource("CircleShape2D_l63w6")
 target_position = Vector2(0, 0)
+margin = 0.8
 collision_mask = 16
 
 [node name="BounceTimer" type="Timer" parent="."]
@@ -110,8 +110,10 @@ wait_time = 0.2
 
 [node name="BumpDetector" type="Area2D" parent="."]
 position = Vector2(0, 1)
+scale = Vector2(0.1, 0.1)
 collision_layer = 0
 collision_mask = 16
+priority = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BumpDetector"]
 shape = SubResource("CircleShape2D_3ii6o")
