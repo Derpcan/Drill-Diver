@@ -54,23 +54,40 @@ func _physics_process(delta: float) -> void:
 		return
 	var dict:Dictionary = key_array[0]
 	
+	var dir:Vector2 = Vector2.ZERO
+	var is_jump_pressed:bool = false
+	var jump_direction:Vector2 = Vector2.ZERO
+	var dash_dir:Vector2 = Vector2.ZERO
+	var drill_dir:Vector2 = Vector2.ZERO
+	
 	if (dict["frame"] == Engine.get_physics_frames()):
 		#print("Frame is correct")
 		key_array.pop_front()
-		if dict["frame"] % 60 == 0:
+		if dict["frame"] % 30 == 0:
 			var parent = get_parent() as CharacterBody2D
 			parent.rotation = dict["rot"]
 			parent.position = dict["pos"]
 			parent.velocity = dict["vel"]
 	else:
+		dash_inputs.emit(dash_dir)
+		jump_input.emit(jump_direction, is_jump_pressed)
+		movement_inputs.emit(dir, delta)
+		drill_inputs.emit(drill_dir)
 		return
 	
+	
+	
 	# Get the direction of the characters input
-	var dir:Vector2 = dict["move_dir"]
-	var is_jump_pressed:bool = dict["is_jump_pressed"]
-	var jump_direction:Vector2 = dict["jump_dir"]
-	var dash_dir:Vector2 = dict["dash_dir"]
-	var drill_dir:Vector2 = dict["drill_dir"]
+	if dict.has("move_dir"):
+		dir = dict["move_dir"] as Vector2
+	if dict.has("is_jump_pressed"):
+		is_jump_pressed = dict["is_jump_pressed"] as bool
+	if dict.has("jump_dir"):
+		jump_direction = dict["jump_dir"] as Vector2
+	if dict.has("dash_dir"):
+		dash_dir = dict["dash_dir"] as Vector2
+	if dict.has("drill_dir"):
+		drill_dir = dict["drill_dir"] as Vector2
 	
 	dash_inputs.emit(dash_dir)
 	jump_input.emit(jump_direction, is_jump_pressed)

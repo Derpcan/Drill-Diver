@@ -13,7 +13,7 @@ func _ready() -> void:
 	if not input_component:
 		return
 	
-
+	print("Test Data is found in: ", OS.get_user_data_dir() + "/test_data/")
 	
 	# Connect the input components inputs
 	input_component.all_inputs.connect(_log_key_input)
@@ -49,21 +49,31 @@ func _set_up_key_logger() -> void:
 func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_pressed:bool, dash_dir:Vector2, drill_vector:Vector2) -> void:
 	# Save the keys pressed each frame into a dictionary to save into JSON
 	var keys_pressed_dict:Dictionary = {}
-	keys_pressed_dict["move_dir"] = movement_dir
-	keys_pressed_dict["jump_dir"] = jump_direction
-	keys_pressed_dict["is_jump_pressed"] = is_jump_pressed
-	keys_pressed_dict["dash_dir"] = dash_dir
-	keys_pressed_dict["drill_dir"] = drill_vector
-	keys_pressed_dict["frame"] = Engine.get_physics_frames()
+	if movement_dir != Vector2.ZERO:
+		keys_pressed_dict["move_dir"] = movement_dir
 	
-	if keys_pressed_dict["frame"] % 60 == 0:
+	if jump_direction != Vector2.ZERO:
+		keys_pressed_dict["jump_dir"] = jump_direction
+	if is_jump_pressed != false:
+		keys_pressed_dict["is_jump_pressed"] = is_jump_pressed
+	if dash_dir != Vector2.ZERO:
+		keys_pressed_dict["dash_dir"] = dash_dir
+	if drill_vector != Vector2.ZERO:
+		keys_pressed_dict["drill_dir"] = drill_vector
+	
+	if not keys_pressed_dict.is_empty() or Engine.get_physics_frames() % 30 == 0:
+		keys_pressed_dict["frame"] = Engine.get_physics_frames()
+	
+	if not keys_pressed_dict.is_empty() and keys_pressed_dict["frame"] % 30 == 0:
 		var parent = get_parent() as CharacterBody2D
 		keys_pressed_dict["rot"] = parent.rotation
 		keys_pressed_dict["pos"] = parent.position
 		keys_pressed_dict["vel"] = parent.velocity
 	
-	# Store the data with proper JSON syntax
-	file.store_string(JSON.stringify(JSON.from_native(keys_pressed_dict), "\t", true) + ",\n")
+	# only store in the JSON if the key script isnt empty
+	if not keys_pressed_dict.is_empty():
+		# Store the data with proper JSON syntax
+		file.store_string(JSON.stringify(JSON.from_native(keys_pressed_dict), "\t", true) + ",\n")
 
 
 # When the game is being closed we end the JSON string and then close the file
