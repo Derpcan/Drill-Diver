@@ -64,7 +64,7 @@ func _ready() -> void:
 		else:
 			# Throw an error about not finding the Camera
 			printerr("No Camera was found in scene tree.")
-			assert(game_camera != null, "ERROR: No Camera was found.")
+			#assert(game_camera != null, "ERROR: No Camera was found.")
 			
 	if player:
 		connect_player_signals()
@@ -77,6 +77,7 @@ func _ready() -> void:
 # Connects the camera to the player
 func connect_camera_to_player() -> void:
 	game_camera.call_deferred("reparent", player)
+	game_camera.position = player.position
 	
 
 # Connects the camera's necessary signals to this manager

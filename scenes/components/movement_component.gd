@@ -8,7 +8,10 @@ var velocity:Vector2 = Vector2.ZERO
 @export var accel:float
 
 ## Determines the max speed of the character
-@export var max_speed:float
+@export var max_speed:float:
+	set(new_val):
+		max_speed = new_val
+
 var temp:float
 
 @export var parent:CharacterBody2D
