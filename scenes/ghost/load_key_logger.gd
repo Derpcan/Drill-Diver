@@ -57,6 +57,11 @@ func _physics_process(delta: float) -> void:
 	if (dict["frame"] == Engine.get_physics_frames()):
 		#print("Frame is correct")
 		key_array.pop_front()
+		if dict["frame"] % 60 == 0:
+			var parent = get_parent() as CharacterBody2D
+			parent.rotation = dict["rot"]
+			parent.position = dict["pos"]
+			parent.velocity = dict["vel"]
 	else:
 		return
 	

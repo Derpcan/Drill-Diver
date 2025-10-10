@@ -7,8 +7,6 @@ class_name KeyLogger
 var folder_path:String = "user://test_data/keylogs"
 var save_path:String = folder_path + "/keylog.JSON"
 
-# Variable to keep track of the keys pressed this frame
-var keys_pressed_current_frame_dict:Dictionary = {}
 
 
 func _ready() -> void:
@@ -57,6 +55,12 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 	keys_pressed_dict["dash_dir"] = dash_dir
 	keys_pressed_dict["drill_dir"] = drill_vector
 	keys_pressed_dict["frame"] = Engine.get_physics_frames()
+	
+	if keys_pressed_dict["frame"] % 60 == 0:
+		var parent = get_parent() as CharacterBody2D
+		keys_pressed_dict["rot"] = parent.rotation
+		keys_pressed_dict["pos"] = parent.position
+		keys_pressed_dict["vel"] = parent.velocity
 	
 	# Store the data with proper JSON syntax
 	file.store_string(JSON.stringify(JSON.from_native(keys_pressed_dict), "\t", true) + ",\n")
