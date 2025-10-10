@@ -68,11 +68,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if (is_on_floor() or is_on_wall()) and drill_component.drill_enabled :
+		emit_signal("on_floor_dirt",null)
 	if is_on_floor():
-		if drill_component.drill_enabled:
-			emit_signal("on_floor_dirt",null)
-		else:
-			emit_signal("on_floor")
+		emit_signal("on_floor")
 		
 
 
@@ -151,10 +150,26 @@ func _on_area_2d_body_entered(body):
 		
 		var shape:CollisionShape2D = drill_detector.get_child(0)
 		var bump: CollisionShape2D = bump_detector.get_child(0)
-		bump.set_deferred("disabled", false)
-		collision_shape.scale = Vector2(1.2,1.2)
+		
+		
+		
 		drill_component.drill_enabled = true
 		movement_component.disable_movement_component = true
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		
+		
+		ray.enabled = true
+		ray.scale = Vector2(1.1,1.1)
+		bump_detector.scale  = Vector2(1.1,1.1)
+		bump.set_deferred("disabled", false)
 		
 
 
@@ -187,7 +202,10 @@ func _enable_drill_detector(_vel:Vector2):
 
 
 func _on_drill_detector_body_exited(body):
-	
+		ray.enabled = false
+		bump_detector.set_deferred("disabled", false)
+		ray.scale = Vector2(0.2,0.2)
+		bump_detector.scale  = Vector2(0.2,0.2)
 		#set_collision_layer_value(1, true)
 		set_collision_mask_value(1, true)
 		
@@ -272,8 +290,11 @@ func _on_bump_detector_body_entered(body):
 		if ray.is_colliding():
 			print("Chanign rot")
 			print(velocity)
-			var rot = (PI+get_angle_to(ray.get_collision_point(0)))
+			var rot = (PI/2 +get_angle_to(ray.get_collision_point(0)))
 			drill_component.rotate_player(rot)
+			if velocity.y == 0.0:
+				rot = (PI -get_angle_to(ray.get_collision_point(0)))
+				drill_component.rotate_player(rot)
 			
 			
 	
