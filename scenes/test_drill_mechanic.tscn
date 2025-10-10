@@ -20,8 +20,7 @@ tile_set = ExtResource("1_ben6t")
 script = ExtResource("2_ben6t")
 
 [node name="GameCamera" parent="." instance=ExtResource("6_3lu30")]
-position = Vector2(164, 5)
-zoom = Vector2(2, 2)
+zoom = Vector2(4, 4)
 
 [node name="HitBox" parent="." instance=ExtResource("4_ajg3a")]
 collision_mask = 2
