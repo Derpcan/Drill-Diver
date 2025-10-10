@@ -33,7 +33,7 @@ height = 16.0
 radius = 8.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray")]
-collision_layer = 9
+collision_layer = 8
 collision_mask = 9
 script = ExtResource("1_0owmy")
 movement_component = NodePath("MovementComponent")

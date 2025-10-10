@@ -10,6 +10,10 @@ signal player_death_animation_ended(previous_checkpoint_pos:Vector2)
 ## If not assigned, will try to be found in _ready()
 @export var player:Player
 
+## Keep track of the ghost in the level.
+## If not assigned, will try to be found in _ready()
+@export var ghost:Ghost
+
 
 @export_category("Start Position")
 ## Keep track of the last position of the checkpoint, to start should make it the spawnpoint for the level.
@@ -26,7 +30,18 @@ signal player_death_animation_ended(previous_checkpoint_pos:Vector2)
 
 
 func _ready() -> void:
-	return
+	# If the ghost is not set before startup
+	if not ghost:
+		# Attempt to find ghost in the current scene
+		ghost = get_tree().current_scene.find_child("Ghost")
+		
+		if ghost: # If the player is successfully found
+			print_rich("[color=#DDFF00]Found: ", ghost, "[/color]")
+		else:
+			# Throw an error about not finding the Player
+			printerr("No Ghost was found in scene tree.")
+			
+	
 	# If the player is not set before startup
 	if not player:
 		# Attempt to find player in the current scene
@@ -37,7 +52,7 @@ func _ready() -> void:
 		else:
 			# Throw an error about not finding the Player
 			printerr("No Player was found in scene tree.")
-			assert(player != null, "ERROR: No Player was found.")
+			#assert(player != null, "ERROR: No Player was found.")
 	
 	# If the camera is not set before startup
 	if not game_camera:
@@ -51,10 +66,12 @@ func _ready() -> void:
 			printerr("No Camera was found in scene tree.")
 			assert(game_camera != null, "ERROR: No Camera was found.")
 			
-	
-	connect_player_signals()
-	connect_camera_to_player()
-	connect_camera_signals()
+	if player:
+		connect_player_signals()
+		connect_camera_to_player()
+		connect_camera_signals()
+	if ghost:
+		connect_ghost_signals()
 
 
 # Connects the camera to the player
@@ -110,4 +127,40 @@ func _player_animation_finished(animation_name:String) -> void:
 
 func _player_died() -> void:
 	print("Player died")
+	
+
+
+
+# Will connect the ghost's necessary signals to this manager
+func connect_ghost_signals() -> void:
+	ghost.health_component.died.connect(_ghost_died)
+	ghost.animation_play.animation_finished.connect(_ghost_animation_finished)
+
+
+# When the ghost's aniamtion finished, check specifically death animation being finished
+func _ghost_animation_finished(animation_name:String) -> void:
+	if animation_name == "default/death":
+		print_rich("[color=#ED6868]Death Caught", "[/color]")
+		_respawn_ghost()
+
+func _ghost_died() -> void:
+	print("Ghost died")
+
+func _respawn_ghost() -> void:
+	ghost.state_machine._enter_state("idle")
+	ghost.global_position = last_checkpoint_position
+	
+	
+	# Tween the modulation for the player to show up overtime
+	var tween:Tween = create_tween()
+	ghost.modulate.a = 0
+	tween.tween_property(ghost, "modulate:a", 0.5, 1.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.play()
+	
+	await tween.finished
+
+	# Heal the ghost and re-enable input
+	ghost.health_component._heal_fully()
+	ghost.velocity = Vector2.ZERO
+	ghost.movement_component.velocity = Vector2.ZERO
 	

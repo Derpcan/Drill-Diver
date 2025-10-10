@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://bdp5m4irffwyo"]
+[gd_scene load_steps=9 format=4 uid="uid://bdp5m4irffwyo"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_ben6t"]
 [ext_resource type="PackedScene" uid="uid://bsv71f851sdj3" path="res://scenes/checkpoint/checkpoint_manager.tscn" id="1_irohn"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="4_ajg3a"]
 [ext_resource type="PackedScene" uid="uid://ckobqg36uilxm" path="res://scenes/Camera/game_camera.tscn" id="6_3lu30"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="6_8ayoj"]
+[ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="7_8ayoj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3lu30"]
 
@@ -30,3 +31,7 @@ position = Vector2(309, 1)
 shape = SubResource("CircleShape2D_3lu30")
 
 [node name="Ghost" parent="." instance=ExtResource("6_8ayoj")]
+collision_layer = 0
+
+[node name="Player" parent="." instance=ExtResource("7_8ayoj")]
+collision_layer = 0

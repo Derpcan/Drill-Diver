@@ -181,7 +181,7 @@ func _enable_drill_detector(_vel:Vector2):
 
 func _on_drill_detector_body_exited(body):
 	
-		set_collision_layer_value(1, true)
+		#set_collision_layer_value(1, true)
 		set_collision_mask_value(1, true)
 		
 		drill_component.drill_enabled = false
