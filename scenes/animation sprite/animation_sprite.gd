@@ -60,6 +60,7 @@ func create_animations() -> void:
 	# Set the current spriteframes to the new sprite frames
 	sprite_frames = new_sprite_frames
 	
+	
 
 # Creates the individual animations.
 func create_individual_animation(json_file:JSON, animation_key:String, new_sprite_frames:SpriteFrames) -> void:
@@ -90,4 +91,5 @@ func create_individual_animation(json_file:JSON, animation_key:String, new_sprit
 			# Add the frame to the animation
 			new_sprite_frames.add_frame(animation_key, atlas_texture)
 	
-	print("Added animation " + str(animation_key))
+	#print("Added animation to AnimationSprite " + str(animation_key))
+	print_rich("[color=#8CFF90]Added animation to AnimationSprite: ", str(animation_key), "[/color]")

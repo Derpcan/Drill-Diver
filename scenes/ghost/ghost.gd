@@ -1,9 +1,10 @@
 extends CharacterBody2D
-class_name Player
+class_name Ghost
+
 
 @export var movement_component:MovementComponent
 @export var jump_component:JumpComponent
-@export var input_component:InputComponent
+@export var input_component:KeyLogLoader
 @export var animated_sprite:AnimationSprite
 @export var state_machine:StateMachine
 @export var gravity_component:GravityComponent
@@ -20,9 +21,8 @@ class_name Player
 
 
 signal on_floor()
-signal on_floor_dirt()
 signal rotate
-
+signal on_floor_dirt
 
 
 var last_dash = null
@@ -60,6 +60,8 @@ func _ready() -> void:
 	
 	health_component.healed_fully.connect(input_component._enable_inputs)
 	health_component.healed_fully.connect(movement_component._enable_movement)
+	
+	
 
 
 
@@ -292,3 +294,8 @@ func _on_bounce_timer_timeout():
 
 func _on_bump_detector_body_exited(body):
 	print("body exited")
+
+
+func _on_drill_detector_body_entered(body: Node2D) -> void:
+	_on_area_2d_body_entered(body)
+	

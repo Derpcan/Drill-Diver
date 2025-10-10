@@ -1,6 +1,10 @@
 extends AnimationPlayer
 class_name AnimationPlay
 
+# Contains inherent signals
+# animation_changed(old_anim_name, new_anim_name). Emitted when the animation changes
+# animation_finished(anim_name). Emitted when the animation ends
+
 @export var json_loader:JSONLoader
 @export var animation_sprite:AnimationSprite
 @export var state_machine:StateMachine
@@ -50,7 +54,8 @@ func _ready() -> void:
 
 # Is connected to the state machines enter_state so it will start the animation for the state
 func _start_state_animation(state_name:String, state_index:int) -> void:
-	print("Started the State " + state_name)
+	print_rich("[color=#E4ED98]Started the State ", state_name, "[/color]")
+	#print("Started the State " + state_name)
 	play("default/"+state_name)
 
 
@@ -71,19 +76,24 @@ func save_animation_library(lib:AnimationLibrary, save_path:String, folder_path:
 
 # Creates all the animations for the AnimationLibrary
 func create_animations(lib:AnimationLibrary, creature_name:String) -> void:
+	
 	# Go through the animations in the animation sprite, which were parsed from JSON earlier
-	for anim_name in animation_sprite.sprite_frames.get_animation_names().slice(1):
-		# Get the JSON animation dictionary
-		var json_animation:Dictionary = json_loader.json_file.data[creature_name]["sprites"][anim_name]
+	for anim_name in animation_sprite.sprite_frames.get_animation_names():
 		
-		# Parse from the json how long the animation should take
-		var time_length:float = json_animation["time_length"]
-		
-		# Set the should_loop variable to loop if loop is true in JSON and loop_none if loop is false in JSON
-		var should_loop: = Animation.LOOP_LINEAR if json_animation["loop"] else Animation.LOOP_NONE
-		
-		# Add each animation to the library
-		add_animation_to_library(anim_name, lib, time_length, should_loop)
+		# if there is an animation named default just skip
+		if anim_name != "default":
+			
+			# Get the JSON animation dictionary
+			var json_animation:Dictionary = json_loader.json_file.data[creature_name]["sprites"][anim_name]
+			
+			# Parse from the json how long the animation should take
+			var time_length:float = json_animation["time_length"]
+			
+			# Set the should_loop variable to loop if loop is true in JSON and loop_none if loop is false in JSON
+			var should_loop: = Animation.LOOP_LINEAR if json_animation["loop"] else Animation.LOOP_NONE
+			
+			# Add each animation to the library
+			add_animation_to_library(anim_name, lib, time_length, should_loop)
 
 
 # Make an animation and add it to the library
@@ -128,6 +138,8 @@ func add_animation_to_library(animation_name:String, lib:AnimationLibrary, time_
 	
 	# Add the animation to the library
 	lib.add_animation(animation_name, anim)
+	
+	
 	
 	
 	

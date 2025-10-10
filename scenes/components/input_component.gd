@@ -6,6 +6,19 @@ signal movement_inputs(direction:Vector2, delta:float)
 signal jump_input(dir:Vector2, is_pressed:bool)
 signal dash_inputs(direction:Vector2)
 signal drill_inputs(direction:Vector2)
+signal all_inputs(move_dir:Vector2, jump_dir:Vector2, is_jump_pressed:bool, dash_dir:Vector2, drill_dir:Vector2)
+
+var disabled_inputs:bool = false:
+	set(new_val):
+		disabled_inputs = new_val
+		
+		set_physics_process(not disabled_inputs)
+
+func _disable_inputs() -> void:
+	disabled_inputs = true
+
+func _enable_inputs() -> void:
+	disabled_inputs = false
 
 # Get inputs during each physics process frame
 func _physics_process(delta: float) -> void:
@@ -28,10 +41,14 @@ func _physics_process(delta: float) -> void:
 	var drill_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
 	var drill_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
 	var drill_dir:Vector2 = Vector2(drill_x, drill_y)
+	
+	all_inputs.emit(dir, jump_direction, is_jump_pressed, dash_dir, drill_dir)
 	dash_inputs.emit(dash_dir)
 	jump_input.emit(jump_direction, is_jump_pressed)
 	movement_inputs.emit(dir, delta)
 	drill_inputs.emit(drill_dir)
+	
+
 
 
 func round_to_8_directions(value:float) -> float:
@@ -63,5 +80,3 @@ func turn_vector_into_8_directions(vec:Vector2) -> Vector2:
 		vec.y = half
 	
 	return vec
-	
-	

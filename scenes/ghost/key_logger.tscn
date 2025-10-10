@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5lra8levgvlk"]
+
+[ext_resource type="Script" uid="uid://chk1b7uhr3hrn" path="res://scenes/ghost/key_logger.gd" id="1_83yhy"]
+
+[node name="KeyLogger" type="Node"]
+script = ExtResource("1_83yhy")
