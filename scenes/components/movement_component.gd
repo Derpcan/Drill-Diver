@@ -12,7 +12,7 @@ var velocity:Vector2 = Vector2.ZERO
 	set(new_val):
 		max_speed = new_val
 
-var temp:float
+var og_max_speed:float
 
 @export var parent:CharacterBody2D
 
@@ -46,7 +46,7 @@ var instrot: bool = false
 
 
 func _ready() -> void:
-	temp = max_speed
+	og_max_speed = max_speed
 
 func _physics_process(delta: float) -> void:
 	if parent and not disable_movement_component:
@@ -61,8 +61,8 @@ func _physics_process(delta: float) -> void:
 			velocity.y = 0
 			
 	
-		if parent.is_on_floor() and max_speed != temp:
-			max_speed = temp
+		if parent.is_on_floor() and max_speed != og_max_speed:
+			max_speed = og_max_speed
 			exiting_ground = false
 		
 		
@@ -77,7 +77,7 @@ func _physics_process(delta: float) -> void:
 				#print(velocity.x)
 			if velocity.x == 0.0:
 				exiting_ground == false
-				max_speed = temp
+				max_speed = og_max_speed
 		
 			
 		

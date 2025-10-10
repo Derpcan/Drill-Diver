@@ -26,7 +26,7 @@ signal rotate
 
 
 var last_dash = null
-
+var canbounce:bool = false
 func _ready() -> void:
 	
 
@@ -76,10 +76,23 @@ func _physics_process(delta: float) -> void:
 
 
 func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
-	
+	animated_sprite.scale = Vector2(1,1)
+	animated_sprite.rotation = 0
 	if health_component.current_hp == 0:
 		state_machine._enter_state("death")
 		return
+	
+	# Drill state
+	if drill_component.drill_enabled:
+		state_machine._enter_state("drill")
+		
+		# Set scale of the animated sprite for the drill so it's normal size
+		animated_sprite.scale = Vector2(0.5, 0.5)
+		# Correct the drill angle depending on sprite flip
+		if animated_sprite.flip_h == false:
+			animated_sprite.rotation = PI/4
+		else:
+			animated_sprite.rotation = -PI/4
 	
 	# Flip the character Sprite depending on which direction is being pressed
 	if dir.x > 0 and (not drill_component.drill_enabled):
@@ -146,7 +159,7 @@ func _on_area_2d_body_entered(body):
 		velocity = speed*Vector2.from_angle(angle)
 		
 		move_and_slide()
-		print("Last dash: ",last_dash)
+		#print("Last dash: ",last_dash)
 		
 		var shape:CollisionShape2D = drill_detector.get_child(0)
 		var bump: CollisionShape2D = bump_detector.get_child(0)
@@ -155,22 +168,19 @@ func _on_area_2d_body_entered(body):
 		
 		drill_component.drill_enabled = true
 		movement_component.disable_movement_component = true
-		await get_tree().physics_frame
-		await get_tree().physics_frame
-		await get_tree().physics_frame
-		await get_tree().physics_frame
-		await get_tree().physics_frame
-		await get_tree().physics_frame
-		await get_tree().physics_frame
-		await get_tree().physics_frame
-		await get_tree().physics_frame
 		
+		for i in range(9):
+			await get_tree().physics_frame
 		
 		ray.enabled = true
 		ray.scale = Vector2(1.1,1.1)
 		bump_detector.scale  = Vector2(1.1,1.1)
 		bump.set_deferred("disabled", false)
-		
+	
+		for i in range(5):
+			await get_tree().physics_frame
+			
+		canbounce = true
 
 
 func _disable_drill_detector():
@@ -180,7 +190,7 @@ func _disable_drill_detector():
 		
 		collision.position.y = 1.0
 		
-		print("Collision Disabled")
+		#print("Collision Disabled")
 
 
 func _enable_drill_detector(_vel:Vector2):
@@ -194,12 +204,13 @@ func _enable_drill_detector(_vel:Vector2):
 		collision.rotation += PI
 		collision.position.y = -1.0
 	
-	print(collision.rotation)
+	#print(collision.rotation)
 	
 
 
 
 func _on_drill_detector_body_exited(body):
+		canbounce = false
 		ray.enabled = false
 		bump_detector.set_deferred("disabled", false)
 		ray.scale = Vector2(0.2,0.2)
@@ -222,19 +233,19 @@ func _on_drill_detector_body_exited(body):
 		if animated_sprite.flip_h == true:
 			delta_y *=-1
 			delta_x *=-1
-		print(momentum)
+		#print(momentum)
 		
 		velocity.x += delta_x*cos(momentum)
 		velocity.y += delta_y*sin(momentum)
 		velocity.x *= 0.4
 		velocity.y *= 0.6
-		print(velocity.x, velocity.y)
+		#print(velocity.x, velocity.y)
 		movement_component.max_speed = abs(velocity.x)
 		movement_component.exiting_ground = true
 		movement_component.force_velocity(velocity)
 		
 		rotation=0
-		print("exit")
+		#print("exit")
 		dash_component.can_dash = true
 
 
@@ -247,14 +258,14 @@ func _on_bump_detector_body_entered(body):
 	if not drill_component.drill_enabled:
 		return
 	
-	print("bump!")
+	#print("bump!")
 	# Perform a raycast from the Area2D's position to the body
 	
 		# Do something with the normal
 	ray.force_shapecast_update()
 	
-	print(ray.is_colliding())
-	if ray.is_colliding():
+	#print(ray.is_colliding())
+	if ray.is_colliding() and canbounce:
 		
 		var normal = ray.get_collision_normal(0)
 		
@@ -266,20 +277,24 @@ func _on_bump_detector_body_entered(body):
 		else:
 			rotation = velocity.angle()
 		
-		print(velocity)
+		#print(velocity)
 		
-		print(velocity)
+		#print(velocity)
 		
 		drill_component.canmove = false
 		bounce_timer.start(0.2)
 		ray.force_shapecast_update()
 		if ray.is_colliding():
-			print("Chanign rot")
-			print(velocity)
+			#print("Chanign rot")
+			#print(velocity)
 			var rot = (PI/2 +get_angle_to(ray.get_collision_point(0)))
 			drill_component.rotate_player(rot)
+			if animated_sprite.flip_h == true:
+				rot *= -1
 			if velocity.y == 0.0:
 				rot = (PI -get_angle_to(ray.get_collision_point(0)))
+				if animated_sprite.flip_h == true:
+					rot *= -1
 				drill_component.rotate_player(rot)
 
 
@@ -291,4 +306,4 @@ func _on_bounce_timer_timeout():
 
 
 func _on_bump_detector_body_exited(body):
-	print("body exited")
+	pass
