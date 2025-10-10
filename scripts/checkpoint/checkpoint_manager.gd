@@ -145,6 +145,11 @@ func _ghost_animation_finished(animation_name:String) -> void:
 
 func _ghost_died() -> void:
 	print("Ghost died")
+	
+	# Make the ghost fade out, temporary to look a bit nicer
+	var tween:Tween = create_tween()
+	tween.tween_property(ghost, "modulate:a", 0, 0.6).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.play()
 
 func _respawn_ghost() -> void:
 	ghost.state_machine._enter_state("idle")
