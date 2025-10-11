@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=17 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
 [ext_resource type="PackedScene" uid="uid://by6028i8q3uht" path="res://scenes/UI/hud.tscn" id="2_j8ivh"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bsv71f851sdj3" path="res://scenes/checkpoint/checkpoint_manager.tscn" id="5_3qnke"]
 [ext_resource type="Texture2D" uid="uid://bslqw4xdrn6wr" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/runner-asset-sheet-with-transparency.png" id="7_wtsjf"]
 [ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="8_rnaij"]
+[ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="9_h3xc6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h3xc6"]
 texture = ExtResource("3_3qnke")
@@ -375,3 +376,5 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(648, 432)
 shape = SubResource("RectangleShape2D_h3xc6")
+
+[node name="Ghost" parent="." instance=ExtResource("9_h3xc6")]

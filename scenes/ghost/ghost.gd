@@ -78,7 +78,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
-	
 	animated_sprite.scale = Vector2(1,1)
 	animated_sprite.rotation = 0
 	if health_component.current_hp == 0:
@@ -147,7 +146,7 @@ func _dev_super():
 func _on_area_2d_body_entered(body):
 	if not drill_component.drill_enabled and health_component.current_hp > 0:
 		
-		#print("Drill")
+		print("Drill")
 		set_collision_layer_value(1, false)
 		set_collision_mask_value(1, false)
 		var speed = 150
@@ -175,12 +174,11 @@ func _on_area_2d_body_entered(body):
 		for i in range(9):
 			await get_tree().physics_frame
 		
-		
 		ray.enabled = true
 		ray.scale = Vector2(1.1,1.1)
 		bump_detector.scale  = Vector2(1.1,1.1)
 		bump.set_deferred("disabled", false)
-		
+	
 		for i in range(5):
 			await get_tree().physics_frame
 			
@@ -292,9 +290,9 @@ func _on_bump_detector_body_entered(body):
 			#print("Chanign rot")
 			#print(velocity)
 			var rot = (PI/2 +get_angle_to(ray.get_collision_point(0)))
-			if animated_sprite.flip_h == true:
-					rot *= -1
 			drill_component.rotate_player(rot)
+			if animated_sprite.flip_h == true:
+				rot *= -1
 			if velocity.y == 0.0:
 				rot = (PI -get_angle_to(ray.get_collision_point(0)))
 				if animated_sprite.flip_h == true:
