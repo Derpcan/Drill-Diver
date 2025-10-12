@@ -82,16 +82,16 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 	#keys_pressed_dict["vel"] = parent.velocity
 	#keys_pressed_dict["state"] = (parent as Player).state_machine.get_state_name()
 	
-	#if not keys_pressed_dict.is_empty() or current_frame % 30 == 0:
+	#if not keys_pressed_dict.is_empty() or current_frame % 6 == 0:
 		#keys_pressed_dict["frame"] = current_frame
-		#
-	#
-	if not keys_pressed_dict.is_empty() and current_frame % 2 == 0:
+		
+	
+	if not keys_pressed_dict.is_empty() or current_frame % 15 == 0:
 		#var parent = get_parent() as CharacterBody2D
 		keys_pressed_dict["rot"] = parent.rotation
 		keys_pressed_dict["pos"] = parent.position
 		keys_pressed_dict["vel"] = parent.velocity
-		keys_pressed_dict["state"] = (parent as Player).state_machine.current_state
+		keys_pressed_dict["state"] = (parent.state_machine as StateMachine).states[(parent as Player).state_machine.current_state]
 	
 	# only store in the JSON if the key script isnt empty
 	if not keys_pressed_dict.is_empty():

@@ -76,14 +76,32 @@ func _physics_process(delta: float) -> void:
 		#movement_inputs.emit(dir, delta)
 		#drill_inputs.emit(drill_dir)
 		#return
-	if dict["elapsed_time"] <= elapsed_time and dict["frame"] <= Engine.get_physics_frames():
+	if dict["frame"] <= Engine.get_physics_frames():#dict["elapsed_time"] <= elapsed_time :#and dict["frame"] <= Engine.get_physics_frames():
+		#while dict["elapsed_time"] <= elapsed_time: #and dict["frame"] <= Engine.get_physics_frames():
+		#	check_dict = dict
 		dict = key_array.pop_front()
+		#print(dict["elapsed_time"], " : ", elapsed_time)
+		#print(check_dict["elapsed_time"], " : ", elapsed_time)
+		#key_array.insert(0, dict)
+		#dict = check_dict
+		
 		#if "rot" in dict.keys():# and dict["frame"] % 30 == 0:#"rot" in dict.keys():#dict["frame"] % 1 == 0:
 		var parent = get_parent() as CharacterBody2D
 		if "rot" in dict:
 			parent.rotation = dict["rot"]
 			parent.position = dict["pos"]
 			parent.velocity = dict["vel"]
+			
+			var drill:DrillComponent = (parent.drill_component as DrillComponent)
+			var state_machine:StateMachine = (parent.state_machine as StateMachine)
+			state_machine._enter_state(dict["state"])
+			if dict["state"] == "drill":
+				state_machine._enter_state("drill")
+				drill._enter_drill_state(null)
+			else:
+				#state_machine._enter_state("jump")
+				if drill.drill_enabled:
+					drill._exit_drill_state(null)
 		
 		# Get the direction of the characters input
 		if dict.has("move_dir"):
@@ -96,6 +114,7 @@ func _physics_process(delta: float) -> void:
 			dash_dir = dict["dash_dir"] as Vector2
 		if dict.has("drill_dir"):
 			drill_dir = dict["drill_dir"] as Vector2
+	
 	
 	dash_inputs.emit(dash_dir)
 	jump_input.emit(jump_direction, is_jump_pressed)
