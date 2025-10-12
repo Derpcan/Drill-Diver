@@ -201,7 +201,7 @@ func _enter_drill_state(_body) -> void:
 		var angle:float = 0
 		
 		# Check if the parent has a last_dash variable
-		if "last_dash" in parent:
+		if last_dash:
 			angle = last_dash.angle() # if it does set it to the angle
 		
 		# Check if the parent has an animated sprite, and see if it is flipped
