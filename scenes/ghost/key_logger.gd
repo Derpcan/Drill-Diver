@@ -11,8 +11,8 @@ var elapsed_time:float = 0.0:
 	set(new_val):
 		if int(elapsed_time) != int(new_val):
 			pass
-			#var mins:int = int((600-new_val)/60.0)
-			#var secs:int = int(60*(10-mins) - new_val)
+			#var mins:int = int((180-new_val)/60.0)
+			#var secs:int = int(60*(3-mins) - new_val)
 			#print_rich("[color=#34eb71]Time Left: [/color][color=#f28395]", mins, ":", secs)
 		elapsed_time = new_val
 
@@ -98,9 +98,9 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 		keys_pressed_dict["elapsed_time"] = elapsed_time
 		keys_pressed_dict["frame"] = current_frame
 		# Store the data with proper JSON syntax
-		file.store_string(JSON.stringify(JSON.from_native(keys_pressed_dict), "\t", true) + ",\n")
+		file.store_string(JSON.stringify(JSON.from_native(keys_pressed_dict), "", true) + ",")
 	
-	
+
 
 
 # When the game is being closed we end the JSON string and then close the file
