@@ -4,8 +4,19 @@ class_name KeyLogger
 
 
 @export var input_component:InputComponent
-var folder_path:String = "user://test_data/keylogs"
-var save_path:String = folder_path + "/keylog.JSON"
+var folder_path:String = "user://test_data/inputlogs"
+var save_path:String = folder_path + "/intputlog.json"
+
+var elapsed_time:float = 0.0:
+	set(new_val):
+		if int(elapsed_time) != int(new_val):
+			
+			var mins:int = int((600-new_val)/60.0)
+			var secs:int = int(60*(10-mins) - new_val)
+			print_rich("[color=#34eb71]Time Left: [/color][color=#f28395]", mins, ":", secs)
+		elapsed_time = new_val
+
+var file:FileAccess
 
 
 
@@ -23,20 +34,19 @@ func _ready() -> void:
 
 
 
-var file:FileAccess
 
 func _set_up_key_logger() -> void:
 	# Create the directories needed to save the file
 	DirAccess.make_dir_recursive_absolute(folder_path)
 	
 	# Create variables to store path of folders and the saved keylog
-	var temp_name:String = "keylog"
+	var temp_name:String = "inputlog"
 	var value:int = 0
 	
-	while FileAccess.file_exists(folder_path + "/" + temp_name + str(value) + ".JSON"):
+	while FileAccess.file_exists(folder_path + "/" + temp_name + str(value) + ".json"):
 		value += 1
 	
-	save_path = folder_path + "/" + temp_name + str(value) + ".JSON"
+	save_path = folder_path + "/" + temp_name + str(value) + ".json"
 	
 	# Open the file for writing
 	file = FileAccess.open(save_path, FileAccess.WRITE)
@@ -47,11 +57,17 @@ func _set_up_key_logger() -> void:
 
 # Log the keys this frame from the InputComponent
 func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_pressed:bool, dash_dir:Vector2, drill_vector:Vector2) -> void:
+	elapsed_time += get_physics_process_delta_time()
+	var current_frame:int = Engine.get_physics_frames()
 	# Save the keys pressed each frame into a dictionary to save into JSON
 	var keys_pressed_dict:Dictionary = {}
+	#keys_pressed_dict["move_dir"] = movement_dir
+	#keys_pressed_dict["jump_dir"] = jump_direction
+	#keys_pressed_dict["is_jump_pressed"] = is_jump_pressed
+	#keys_pressed_dict["dash_dir"] = dash_dir
+	#keys_pressed_dict["drill_dir"] = drill_vector
 	if movement_dir != Vector2.ZERO:
 		keys_pressed_dict["move_dir"] = movement_dir
-	
 	if jump_direction != Vector2.ZERO:
 		keys_pressed_dict["jump_dir"] = jump_direction
 	if is_jump_pressed != false:
@@ -60,20 +76,33 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 		keys_pressed_dict["dash_dir"] = dash_dir
 	if drill_vector != Vector2.ZERO:
 		keys_pressed_dict["drill_dir"] = drill_vector
+	var parent = get_parent() as CharacterBody2D
+	#keys_pressed_dict["rot"] = parent.rotation
+	#keys_pressed_dict["pos"] = parent.position
+	#keys_pressed_dict["vel"] = parent.velocity
+	#keys_pressed_dict["state"] = (parent as Player).state_machine.get_state_name()
 	
-	if not keys_pressed_dict.is_empty() or Engine.get_physics_frames() % 30 == 0:
-		keys_pressed_dict["frame"] = Engine.get_physics_frames()
-	
-	if not keys_pressed_dict.is_empty() and keys_pressed_dict["frame"] % 30 == 0:
-		var parent = get_parent() as CharacterBody2D
+	#if not keys_pressed_dict.is_empty() or current_frame % 30 == 0:
+		#keys_pressed_dict["frame"] = current_frame
+		#
+	#
+	if not keys_pressed_dict.is_empty() and current_frame % 2 == 0:
+		#var parent = get_parent() as CharacterBody2D
 		keys_pressed_dict["rot"] = parent.rotation
 		keys_pressed_dict["pos"] = parent.position
 		keys_pressed_dict["vel"] = parent.velocity
+		keys_pressed_dict["state"] = (parent as Player).state_machine.current_state
 	
 	# only store in the JSON if the key script isnt empty
 	if not keys_pressed_dict.is_empty():
+		keys_pressed_dict["elapsed_time"] = elapsed_time
+		keys_pressed_dict["frame"] = current_frame
 		# Store the data with proper JSON syntax
 		file.store_string(JSON.stringify(JSON.from_native(keys_pressed_dict), "\t", true) + ",\n")
+	
+	
+	if elapsed_time > 600:
+		get_tree().quit()
 
 
 # When the game is being closed we end the JSON string and then close the file

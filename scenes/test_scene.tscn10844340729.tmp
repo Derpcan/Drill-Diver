@@ -379,4 +379,3 @@ shape = SubResource("RectangleShape2D_h3xc6")
 
 [node name="Ghost" parent="." instance=ExtResource("9_h3xc6")]
 position = Vector2(204, 150)
-input_log_file_name = "inputlog0.json"

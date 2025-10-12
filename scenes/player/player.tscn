@@ -133,10 +133,13 @@ scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
 
-[node name="DrillComponent" type="Node" parent="." node_paths=PackedStringArray("parent")]
+[node name="DrillComponent" type="Node" parent="." node_paths=PackedStringArray("parent", "drill_detector", "drill_shape_cast", "bump_detector")]
 script = ExtResource("12_gx1jg")
 parent = NodePath("..")
 turn_raduis = 0.08
+drill_detector = NodePath("../DrillDetector")
+drill_shape_cast = NodePath("../ShapeCast2D")
+bump_detector = NodePath("../BumpDetector")
 
 [node name="HealthComponent" parent="." instance=ExtResource("13_ugbui")]
 

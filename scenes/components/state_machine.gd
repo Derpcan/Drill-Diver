@@ -25,6 +25,12 @@ func _add_state(state_name:String) -> void:
 	#print("Added State " + state_name)
 	print_rich("[color=#FF7A9E]Added State: ", state_name, "[/color]")
 
+func get_state_name() -> String:
+	if current_state >= 0:
+		return state_dict[current_state]
+	else:
+		return "Invalid State, value: " + str(current_state)
+
 # Enter the state that is passed through
 func _enter_state(new_state:String) -> void:
 	if new_state == states[current_state]:

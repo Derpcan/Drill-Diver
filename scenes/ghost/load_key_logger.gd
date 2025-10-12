@@ -2,7 +2,7 @@ extends Node
 class_name KeyLogLoader
 
 
-@export var json_name:String = "keylog0.JSON"
+@export var json_name:String = "inputlog0.json"
 
 signal movement_inputs(direction:Vector2, delta:float)
 signal jump_input(dir:Vector2, is_pressed:bool)
@@ -10,19 +10,26 @@ signal dash_inputs(direction:Vector2)
 signal drill_inputs(direction:Vector2)
 
 var key_array:Array = []
+var elapsed_time:float = 0.0
 
 func _ready() -> void:
+	var parent = get_parent() as Ghost
+	json_name = parent.input_log_file_name
 	_load_key_log_json()
 
 
 func _load_key_log_json() -> void:
 	# Create variables to store path of folders and the saved animation file
-	var folder_path:String = "user://test_data/keylogs"
+	var folder_path:String = "user://test_data/inputlogs"
 	var save_path:String = folder_path + "/" + json_name
 	
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ)
 		var json_string = file.get_as_text()
+		
+		if json_string == "": # See if the file is empty
+			return
+		
 		var json = JSON.parse_string(json_string)
 		if json != null:
 			var native = JSON.to_native(json["D"])
@@ -50,8 +57,10 @@ func _enable_inputs() -> void:
 
 # Get inputs during each physics process frame
 func _physics_process(delta: float) -> void:
+	elapsed_time += delta
 	if len(key_array) <= 0:
 		return
+	var check_dict:Dictionary = key_array[0]
 	var dict:Dictionary = key_array[0]
 	
 	var dir:Vector2 = Vector2.ZERO
@@ -60,34 +69,33 @@ func _physics_process(delta: float) -> void:
 	var dash_dir:Vector2 = Vector2.ZERO
 	var drill_dir:Vector2 = Vector2.ZERO
 	
-	if (dict["frame"] == Engine.get_physics_frames()):
-		#print("Frame is correct")
-		key_array.pop_front()
-		if dict["frame"] % 30 == 0:
-			var parent = get_parent() as CharacterBody2D
+	# Check if it is the right time to play the inputs
+	#if (dict["elapsed_time"] >= elapsed_time):
+		#dash_inputs.emit(dash_dir)
+		#jump_input.emit(jump_direction, is_jump_pressed)
+		#movement_inputs.emit(dir, delta)
+		#drill_inputs.emit(drill_dir)
+		#return
+	if dict["elapsed_time"] <= elapsed_time and dict["frame"] <= Engine.get_physics_frames():
+		dict = key_array.pop_front()
+		#if "rot" in dict.keys():# and dict["frame"] % 30 == 0:#"rot" in dict.keys():#dict["frame"] % 1 == 0:
+		var parent = get_parent() as CharacterBody2D
+		if "rot" in dict:
 			parent.rotation = dict["rot"]
 			parent.position = dict["pos"]
 			parent.velocity = dict["vel"]
-	else:
-		dash_inputs.emit(dash_dir)
-		jump_input.emit(jump_direction, is_jump_pressed)
-		movement_inputs.emit(dir, delta)
-		drill_inputs.emit(drill_dir)
-		return
-	
-	
-	
-	# Get the direction of the characters input
-	if dict.has("move_dir"):
-		dir = dict["move_dir"] as Vector2
-	if dict.has("is_jump_pressed"):
-		is_jump_pressed = dict["is_jump_pressed"] as bool
-	if dict.has("jump_dir"):
-		jump_direction = dict["jump_dir"] as Vector2
-	if dict.has("dash_dir"):
-		dash_dir = dict["dash_dir"] as Vector2
-	if dict.has("drill_dir"):
-		drill_dir = dict["drill_dir"] as Vector2
+		
+		# Get the direction of the characters input
+		if dict.has("move_dir"):
+			dir = dict["move_dir"] as Vector2
+		if dict.has("is_jump_pressed"):
+			is_jump_pressed = dict["is_jump_pressed"] as bool
+		if dict.has("jump_dir"):
+			jump_direction = dict["jump_dir"] as Vector2
+		if dict.has("dash_dir"):
+			dash_dir = dict["dash_dir"] as Vector2
+		if dict.has("drill_dir"):
+			drill_dir = dict["drill_dir"] as Vector2
 	
 	dash_inputs.emit(dash_dir)
 	jump_input.emit(jump_direction, is_jump_pressed)

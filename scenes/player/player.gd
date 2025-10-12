@@ -16,6 +16,7 @@ class_name Player
 @export var animation_play:AnimationPlay
 @export var ray:ShapeCast2D
 
+
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
 
 
@@ -26,7 +27,7 @@ signal rotate
 
 
 var last_dash = null
-var canbounce:bool = false
+
 func _ready() -> void:
 	
 
@@ -43,13 +44,15 @@ func _ready() -> void:
 	input_component.dash_inputs.connect(_set_last_dash)
 	dash_component.dash_start.connect(movement_component.force_velocity)
 	dash_component.dash_start.connect(movement_component._disable_vel_x_clamp)
-	dash_component.dash_start.connect(_enable_drill_detector)
+	
+	
+	
 	dash_component.dash_start.connect(movement_component._not_exiting_ground)
 	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
-	dash_component.dash_end.connect(_disable_drill_detector)
+	
 	on_floor.connect(dash_component._enable_dash)
-	on_floor_dirt.connect(_on_bump_detector_body_entered)
-	input_component.drill_inputs.connect(drill_component._calulate_rotation)
+	
+	
 	
 	
 	health_component.died.connect(input_component._disable_inputs)
@@ -60,9 +63,23 @@ func _ready() -> void:
 	
 	health_component.healed_fully.connect(input_component._enable_inputs)
 	health_component.healed_fully.connect(movement_component._enable_movement)
-
-
-
+	
+	
+	# Drill Connections
+	#dash_component.dash_start.connect(_enable_drill_detector)
+	#dash_component.dash_end.connect(_disable_drill_detector)
+	#on_floor_dirt.connect(_on_bump_detector_body_entered)
+	
+	input_component.drill_inputs.connect(drill_component._calulate_rotation)
+	on_floor_dirt.connect(drill_component._start_bump)
+	dash_component.dash_start.connect(drill_component._enable_drill_detector)
+	dash_component.dash_end.connect(drill_component._disable_drill_detector)
+	drill_detector.body_entered.connect(drill_component._enter_drill_state)
+	drill_detector.body_exited.connect(drill_component._exit_drill_state)
+	bump_detector.body_entered.connect(drill_component._start_bump)
+	bounce_timer.timeout.connect(drill_component._enable_movement_after_bounce)
+	drill_component.entered_drill_mode.connect(movement_component._disable_movement)
+	input_component.dash_inputs.connect(drill_component._set_last_dash)
 
 
 
@@ -141,169 +158,8 @@ func _dev_super():
 	terrain.drill_super_one(front[0])
 	
 
-func _on_area_2d_body_entered(body):
-	if not drill_component.drill_enabled and health_component.current_hp > 0:
-		
-		print("Drill")
-		set_collision_layer_value(1, false)
-		set_collision_mask_value(1, false)
-		var speed = 150
-		var angle = last_dash.angle()
-		var collision_shape = $CollisionShape2D
-		
-		if animated_sprite.flip_h == true:
-			speed *=-1
-			angle = (PI-angle)*-1
-			
-		rotation = lerp_angle(rotation, angle, 1)
-		velocity = speed*Vector2.from_angle(angle)
-		
-		move_and_slide()
-		#print("Last dash: ",last_dash)
-		
-		var shape:CollisionShape2D = drill_detector.get_child(0)
-		var bump: CollisionShape2D = bump_detector.get_child(0)
-		
-		
-		
-		drill_component.drill_enabled = true
-		movement_component.disable_movement_component = true
-		
-		for i in range(9):
-			await get_tree().physics_frame
-		
-		ray.enabled = true
-		ray.scale = Vector2(1.1,1.1)
-		bump_detector.scale  = Vector2(1.1,1.1)
-		bump.set_deferred("disabled", false)
-	
-		for i in range(5):
-			await get_tree().physics_frame
-			
-		canbounce = true
-
-
-func _disable_drill_detector():
-	if not drill_component.drill_enabled:
-		var collision: CollisionShape2D = drill_detector.get_child(0)
-		collision.set_deferred("disabled", true)
-		
-		collision.position.y = 1.0
-		
-		#print("Collision Disabled")
-
-
-func _enable_drill_detector(_vel:Vector2):
-	var collision: CollisionShape2D = drill_detector.get_child(0)
-	
-	collision.disabled = false
-	
-	_vel = _vel.normalized()
-	collision.rotation = _vel.angle() + PI/2
-	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
-		collision.rotation += PI
-		collision.position.y = -1.0
-	
-	#print(collision.rotation)
-	
-
-
-
-func _on_drill_detector_body_exited(body):
-		canbounce = false
-		ray.enabled = false
-		bump_detector.set_deferred("disabled", false)
-		ray.scale = Vector2(0.2,0.2)
-		bump_detector.scale  = Vector2(0.2,0.2)
-		#set_collision_layer_value(1, true)
-		set_collision_mask_value(1, true)
-		
-		drill_component.drill_enabled = false
-		
-		var collision: CollisionShape2D = drill_detector.get_child(0)
-		_disable_drill_detector()
-		collision.rotation = 0
-		if health_component.current_hp > 0:
-			movement_component._enable_movement()
-			gravity_component._enable_gravity()
-		var momentum = rotation
-		
-		var delta_y = 300
-		var delta_x = 500
-		if animated_sprite.flip_h == true:
-			delta_y *=-1
-			delta_x *=-1
-		#print(momentum)
-		
-		velocity.x += delta_x*cos(momentum)
-		velocity.y += delta_y*sin(momentum)
-		velocity.x *= 0.4
-		velocity.y *= 0.6
-		#print(velocity.x, velocity.y)
-		movement_component.max_speed = abs(velocity.x)
-		movement_component.exiting_ground = true
-		movement_component.force_velocity(velocity)
-		
-		rotation=0
-		#print("exit")
-		dash_component.can_dash = true
 
 
 func _set_last_dash(dir: Vector2):
 	if dir != Vector2.ZERO:
 		last_dash = dir
-
-
-func _on_bump_detector_body_entered(body):
-	if not drill_component.drill_enabled:
-		return
-	
-	#print("bump!")
-	# Perform a raycast from the Area2D's position to the body
-	
-		# Do something with the normal
-	ray.force_shapecast_update()
-	
-	#print(ray.is_colliding())
-	if ray.is_colliding() and canbounce:
-		
-		var normal = ray.get_collision_normal(0)
-		
-
-		velocity = velocity.bounce(normal) * 0.8  # 0.8 for energy loss
-		
-		if animated_sprite.flip_h == true:
-			rotation = -1* (PI-velocity.angle())
-		else:
-			rotation = velocity.angle()
-		
-		#print(velocity)
-		
-		#print(velocity)
-		
-		drill_component.canmove = false
-		bounce_timer.start(0.2)
-		ray.force_shapecast_update()
-		if ray.is_colliding():
-			#print("Chanign rot")
-			#print(velocity)
-			var rot = (PI/2 +get_angle_to(ray.get_collision_point(0)))
-			drill_component.rotate_player(rot)
-			if animated_sprite.flip_h == true:
-				rot *= -1
-			if velocity.y == 0.0:
-				rot = (PI -get_angle_to(ray.get_collision_point(0)))
-				if animated_sprite.flip_h == true:
-					rot *= -1
-				drill_component.rotate_player(rot)
-
-
-
-func _on_bounce_timer_timeout():
-	var bump: CollisionShape2D = bump_detector.get_child(0)
-	drill_component.canmove = true
-
-
-
-func _on_bump_detector_body_exited(body):
-	pass
