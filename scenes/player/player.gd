@@ -16,9 +16,6 @@ class_name Player
 @export var animation_play:AnimationPlay
 @export var ray:ShapeCast2D
 
-# Variables for stationary dashing
-var is_dashing: bool = false
-var dash_animation_direction: Vector2 = Vector2.ZERO
 
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
 
@@ -45,9 +42,12 @@ func _ready() -> void:
 	
 	input_component.dash_inputs.connect(dash_component._calculate_dash)
 	input_component.dash_inputs.connect(_set_last_dash)
+	dash_component.dash_start.connect(movement_component.force_velocity)
+	dash_component.dash_start.connect(movement_component._disable_vel_x_clamp)
 	
-	dash_component.dash_start.connect(_on_dash_start)
-	dash_component.dash_end.connect(_on_dash_end)
+	
+	
+	dash_component.dash_start.connect(movement_component._not_exiting_ground)
 	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
 	
 	on_floor.connect(dash_component._enable_dash)
@@ -82,22 +82,7 @@ func _ready() -> void:
 	input_component.dash_inputs.connect(drill_component._set_last_dash)
 
 
-func _on_dash_start(new_velocity: Vector2, dash_direction: Vector2) -> void:
-	# Animation
-	is_dashing = true
-	dash_animation_direction = dash_direction
-	
-	# Movement and velocity
-	movement_component.force_velocity(new_velocity)
-	movement_component._disable_vel_x_clamp()
-	movement_component._not_exiting_ground(new_velocity)
-	
-	_choose_state()
 
-func _on_dash_end() -> void:
-	is_dashing = false
-	dash_animation_direction = Vector2.ZERO
-	_choose_state()
 
 func _physics_process(delta: float) -> void:
 	if (is_on_floor() or is_on_wall()) and drill_component.drill_enabled :
@@ -112,15 +97,6 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 	animated_sprite.rotation = 0
 	if health_component.current_hp == 0:
 		state_machine._enter_state("death")
-		return
-		
-	if is_dashing:
-		state_machine._enter_state("run")
-		# Flip the sprite based on the direction stored when the dash started
-		if dash_animation_direction.x > 0:
-			animated_sprite.flip_h = false
-		elif dash_animation_direction.x < 0:
-			animated_sprite.flip_h = true
 		return
 	
 	# Drill state

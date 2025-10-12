@@ -9,7 +9,7 @@ var dash_timer:Timer
 @export var dash_time:float = 0.25
 var can_dash:bool = true
 
-signal dash_start(new_velocity:Vector2, dash_direction:Vector2)
+signal dash_start(new_velocity:Vector2)
 signal dash_end
 
 func _ready() -> void:
@@ -24,7 +24,7 @@ func _ready() -> void:
 func _calculate_dash(direction:Vector2) -> void:
 	if can_dash and direction != Vector2.ZERO and dash_timer.is_stopped():
 		var new_vel:Vector2 = direction * dash_speed
-		emit_signal("dash_start", new_vel, direction)
+		emit_signal("dash_start", new_vel)
 		# Timer is connected to movement component and will stop gravity from applying during the time the dash is active
 		dash_timer.start(dash_time) 
 		can_dash = false
