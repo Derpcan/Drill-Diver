@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c82ds1yobrg78"]
+
+[ext_resource type="Script" uid="uid://cvg0p7861t33g" path="res://scripts/checkpoint/checkpoint.gd" id="1_qopk8"]
+[ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="2_2kgby"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sg1lo"]
+
+[node name="Checkpoint" type="Area2D" groups=["checkpoint"]]
+script = ExtResource("1_qopk8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sg1lo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("2_2kgby")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
