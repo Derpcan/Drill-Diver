@@ -25,19 +25,17 @@ func change_scene(scene: String) -> void:
 func push_scene(scene: String) -> void:
 	if scene_stack.size() > 0:
 		# If we are rendering multiple scenes, disable all previous scenes
-		for s in scene_stack:
-			if is_instance_valid(s):
-				_pause_scene(s)
+		get_tree().paused = true
+		#for s in scene_stack:
+			#if is_instance_valid(s):
+				#_pause_scene(s)
 		
 	# Load the scene and attach it to the stack root
 	var overlay_scene = load(scene).instantiate()
-	var root: Node = scene_stack.front()
+	overlay_scene.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	
 	scene_stack.push_back(overlay_scene)
-	print("------------")
-	print(scene_stack)
-	print("------------")
-	root.add_child(overlay_scene)
+	get_tree().root.add_child(overlay_scene)
 
 ## Pops the last scene off of the stack, unrendering it
 func pop_scene() -> void:
@@ -49,8 +47,7 @@ func pop_scene() -> void:
 	
 	if scene_stack.size() > 0:
 		# If we just disabled a scene, we need to reenable it when we pop the blocking scene
-		var previous_scene = scene_stack.back()
-		_unpause_scene(previous_scene)
+		_unpause_scene(scene_stack.back())
 
 ## Pauses a given scene (disabling input and process steps)
 func _pause_scene(scene: Node) -> void:
