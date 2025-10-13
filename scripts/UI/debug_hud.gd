@@ -42,7 +42,7 @@ func _on_press_emit_signal(button_name: String) -> void:
 			GameManager.set_meter.emit(50)
 #----------------------------
 		"update_record":
-			GameManager.update_record.emit(GameManager.get_current_time())
+			GameManager.set_record_to(GameManager.get_current_time())
 #----------------------------
 		_:
 			return
