@@ -27,11 +27,11 @@ height = 12.0
 radius = 9.44444
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fm80t"]
-radius = 3.37079
-height = 12.0
+radius = 4.49438
+height = 12.3596
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kvlxm"]
-radius = 3.37079
+radius = 4.49438
 height = 12.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray") groups=["player"]]
@@ -90,6 +90,7 @@ jump_speed = 270.0
 position = Vector2(0, 2)
 scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_myrg7")
+debug_color = Color(0.662585, 0.513306, 0, 0.42)
 
 [node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component", "dash_component") instance=ExtResource("11_je7p5")]
 movement_component = NodePath("../MovementComponent")
@@ -131,6 +132,7 @@ input_pickable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DrillDetector"]
 physics_interpolation_mode = 2
 position = Vector2(0, 1)
+rotation = -1.5708
 scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
@@ -153,8 +155,10 @@ health_component = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 physics_interpolation_mode = 2
 position = Vector2(0, 2)
+rotation = -1.5708
 scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_fm80t")
+debug_color = Color(2.21401e-06, 0.624765, 0.526161, 0.42)
 
 [node name="KeyLogger" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("16_myrg7")]
 input_component = NodePath("../InputComponent")
@@ -168,6 +172,7 @@ position = Vector2(1.90735e-06, 2)
 scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_kvlxm")
 disabled = true
+debug_color = Color(0.968203, 0, 0.469374, 0.42)
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]
