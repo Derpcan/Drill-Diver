@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7yg6ow7ysjaj"]
+
+[ext_resource type="Script" uid="uid://h3l2bp5ub3us" path="res://scenes/items/meter_item.gd" id="1_4t7bh"]
+[ext_resource type="Texture2D" uid="uid://cu2183edopvth" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/Diamond.png" id="1_6vpu5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_322vi"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_322vi"]
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_4t7bh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_322vi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_322vi")
+texture = ExtResource("1_6vpu5")

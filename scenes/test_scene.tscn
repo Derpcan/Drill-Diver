@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=18 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
 [ext_resource type="PackedScene" uid="uid://by6028i8q3uht" path="res://scenes/UI/hud.tscn" id="2_j8ivh"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bslqw4xdrn6wr" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/runner-asset-sheet-with-transparency.png" id="7_wtsjf"]
 [ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="8_rnaij"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="9_h3xc6"]
+[ext_resource type="PackedScene" uid="uid://b7yg6ow7ysjaj" path="res://scenes/items/MeterItem.tscn" id="10_s36qc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h3xc6"]
 texture = ExtResource("3_3qnke")
@@ -309,7 +310,6 @@ size = Vector2(112, 34)
 [node name="TestScene" type="Node2D"]
 
 [node name="Hud" parent="." instance=ExtResource("2_j8ivh")]
-visible = false
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 visible = false
@@ -384,3 +384,6 @@ shape = SubResource("RectangleShape2D_h3xc6")
 [node name="Ghost" parent="." instance=ExtResource("9_h3xc6")]
 position = Vector2(204, 150)
 input_log_file_name = "inputlog0.json"
+
+[node name="Area2D" parent="." instance=ExtResource("10_s36qc")]
+position = Vector2(271, 145)
