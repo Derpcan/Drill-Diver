@@ -75,7 +75,7 @@ func die():
 	hurtbox.monitorable = false
 	
 	# Play death animation
-	sprite.play("die")
+	sprite.play("death")
 	
 	# Wait for the animation to finish and then remove the enemy
 	await sprite.animation_finished

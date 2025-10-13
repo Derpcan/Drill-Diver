@@ -19,7 +19,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_myrg7"]
 radius = 3.37079
-height = 14.0
+height = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fcs02"]
 
@@ -28,11 +28,11 @@ radius = 9.44444
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fm80t"]
 radius = 3.37079
-height = 14.0
+height = 12.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kvlxm"]
-radius = 3.93258
-height = 14.0
+radius = 3.37079
+height = 12.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray") groups=["player"]]
 collision_mask = 25
@@ -160,9 +160,8 @@ shape = SubResource("CapsuleShape2D_fm80t")
 input_component = NodePath("../InputComponent")
 
 [node name="DashHitbox" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 8
-monitorable = false
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashHitbox"]
 position = Vector2(1.90735e-06, 2)

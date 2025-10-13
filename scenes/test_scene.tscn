@@ -390,7 +390,12 @@ input_log_file_name = "inputlog0.json"
 [node name="Checkpoint" parent="." instance=ExtResource("10_s36qc")]
 position = Vector2(64, 354)
 
-[node name="Enemy" parent="." instance=ExtResource("11_6qxox")]
+[node name="Enemy1" parent="." instance=ExtResource("11_6qxox")]
 position = Vector2(345, 152)
+speed = 20.0
+patrol_distance = 75.0
+
+[node name="Enemy2" parent="." instance=ExtResource("11_6qxox")]
+position = Vector2(661, 312)
 speed = 20.0
 patrol_distance = 75.0
