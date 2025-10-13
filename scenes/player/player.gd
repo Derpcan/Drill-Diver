@@ -98,7 +98,7 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 	if health_component.current_hp == 0:
 		state_machine._enter_state("death")
 		return
-	
+		
 	# Drill state
 	if drill_component.drill_enabled:
 		state_machine._enter_state("drill")
@@ -116,6 +116,11 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		animated_sprite.flip_h = false
 	elif dir.x < 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = true
+		
+	# Drill transition lags when this logic is running
+	#if dash_component.is_dashing():            
+		#state_machine._enter_state("run") 
+		#return
 	
 	# If the speed is greater than 0 in the y direction
 	if abs(velocity.y) > 0:

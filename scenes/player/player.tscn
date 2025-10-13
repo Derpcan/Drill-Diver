@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=22 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
@@ -17,8 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_fcs02"]
 [ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/key_logger.tscn" id="16_myrg7"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qek5x"]
-radius = 7.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_myrg7"]
+radius = 3.37079
+height = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fcs02"]
 
@@ -26,8 +27,12 @@ radius = 7.0
 radius = 9.44444
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fm80t"]
-radius = 2.24719
-height = 16.0
+radius = 3.37079
+height = 14.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kvlxm"]
+radius = 3.93258
+height = 14.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray") groups=["player"]]
 collision_mask = 25
@@ -82,8 +87,9 @@ charcter_body = NodePath("..")
 jump_speed = 270.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_qek5x")
+position = Vector2(0, 2)
+scale = Vector2(1.78, 1)
+shape = SubResource("CapsuleShape2D_myrg7")
 
 [node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component", "dash_component") instance=ExtResource("11_je7p5")]
 movement_component = NodePath("../MovementComponent")
@@ -152,6 +158,17 @@ shape = SubResource("CapsuleShape2D_fm80t")
 
 [node name="KeyLogger" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("16_myrg7")]
 input_component = NodePath("../InputComponent")
+
+[node name="DashHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DashHitbox"]
+position = Vector2(1.90735e-06, 2)
+scale = Vector2(1.78, 1)
+shape = SubResource("CapsuleShape2D_kvlxm")
+disabled = true
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]

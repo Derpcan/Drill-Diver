@@ -1,4 +1,3 @@
-# InputComponent.gd
 extends Node
 class_name InputComponent
 

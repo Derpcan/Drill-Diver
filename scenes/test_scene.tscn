@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=19 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
 [ext_resource type="PackedScene" uid="uid://by6028i8q3uht" path="res://scenes/UI/hud.tscn" id="2_j8ivh"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="8_rnaij"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="9_h3xc6"]
 [ext_resource type="PackedScene" uid="uid://c82ds1yobrg78" path="res://scenes/checkpoint/checkpoint.tscn" id="10_s36qc"]
+[ext_resource type="PackedScene" uid="uid://d1qjh238xsdgr" path="res://scenes/enemy/enemy.tscn" id="11_6qxox"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h3xc6"]
 texture = ExtResource("3_3qnke")
@@ -388,3 +389,8 @@ input_log_file_name = "inputlog0.json"
 
 [node name="Checkpoint" parent="." instance=ExtResource("10_s36qc")]
 position = Vector2(64, 354)
+
+[node name="Enemy" parent="." instance=ExtResource("11_6qxox")]
+position = Vector2(345, 152)
+speed = 20.0
+patrol_distance = 75.0
