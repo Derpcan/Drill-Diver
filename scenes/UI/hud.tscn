@@ -44,6 +44,7 @@ text = "Pause"
 script = ExtResource("4_0jeyp")
 
 [node name="DEBUG_HUD" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_c4vmg")

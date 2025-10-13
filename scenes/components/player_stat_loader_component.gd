@@ -31,6 +31,7 @@ func load_movement_data() -> void:
 	
 	# Assign the data to the movement component
 	movement_component.max_speed = max_speed
+	movement_component.og_max_speed = max_speed
 	movement_component.accel = accel
 	movement_component.friction = friction
 	

@@ -10,17 +10,28 @@ class_name Player
 @export var dash_component:DashComponent
 @export var drill_detector:Area2D
 @export var drill_component:DrillComponent
+@export var bump_detector:Area2D
+@export var bounce_timer:Timer
+@export var health_component:HealthComponent
+@export var animation_play:AnimationPlay
+@export var ray:ShapeCast2D
 
 
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
 
+
 signal on_floor()
+signal on_floor_dirt()
 signal rotate
 
 
 
+var last_dash = null
 
 func _ready() -> void:
+	
+
+
 	input_component.movement_inputs.connect(movement_component._accelerate_in_direction)
 	input_component.movement_inputs.connect(_choose_state)
 	input_component.jump_input.connect(_choose_state)
@@ -30,26 +41,80 @@ func _ready() -> void:
 	jump_component.jump.connect(movement_component.force_velocity_y)
 	
 	input_component.dash_inputs.connect(dash_component._calculate_dash)
+	input_component.dash_inputs.connect(_set_last_dash)
 	dash_component.dash_start.connect(movement_component.force_velocity)
 	dash_component.dash_start.connect(movement_component._disable_vel_x_clamp)
-	dash_component.dash_start.connect(_enable_drill_detector)
+	
+	
+	
+	dash_component.dash_start.connect(movement_component._not_exiting_ground)
 	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
-	dash_component.dash_end.connect(_disable_drill_detector)
+	
 	on_floor.connect(dash_component._enable_dash)
+	
+	
+	
+	
+	health_component.died.connect(input_component._disable_inputs)
+	health_component.died.connect(movement_component._disable_movement)
+	health_component.died.connect(drill_component._disable_drill)
+	health_component.died.connect(_choose_state)
+	
+	
+	health_component.healed_fully.connect(input_component._enable_inputs)
+	health_component.healed_fully.connect(movement_component._enable_movement)
+	
+	
+	# Drill Connections
+	#dash_component.dash_start.connect(_enable_drill_detector)
+	#dash_component.dash_end.connect(_disable_drill_detector)
+	#on_floor_dirt.connect(_on_bump_detector_body_entered)
+	
 	input_component.drill_inputs.connect(drill_component._calulate_rotation)
-	drill_component.rotate.connect(movement_component._rotate_player)
+	on_floor_dirt.connect(drill_component._start_bump)
+	dash_component.dash_start.connect(drill_component._enable_drill_detector)
+	dash_component.dash_end.connect(drill_component._disable_drill_detector)
+	drill_detector.body_entered.connect(drill_component._enter_drill_state)
+	drill_detector.body_exited.connect(drill_component._exit_drill_state)
+	bump_detector.body_entered.connect(drill_component._start_bump)
+	bounce_timer.timeout.connect(drill_component._enable_movement_after_bounce)
+	drill_component.entered_drill_mode.connect(movement_component._disable_movement)
+	input_component.dash_inputs.connect(drill_component._set_last_dash)
+
+
 
 
 func _physics_process(delta: float) -> void:
+	if (is_on_floor() or is_on_wall()) and drill_component.drill_enabled :
+		emit_signal("on_floor_dirt",null)
 	if is_on_floor():
 		emit_signal("on_floor")
+		
 
 
-func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
+func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
+	animated_sprite.scale = Vector2(1,1)
+	animated_sprite.rotation = 0
+	if health_component.current_hp == 0:
+		state_machine._enter_state("death")
+		return
+	
+	# Drill state
+	if drill_component.drill_enabled:
+		state_machine._enter_state("drill")
+		
+		# Set scale of the animated sprite for the drill so it's normal size
+		animated_sprite.scale = Vector2(0.5, 0.5)
+		# Correct the drill angle depending on sprite flip
+		if animated_sprite.flip_h == false:
+			animated_sprite.rotation = PI/4
+		else:
+			animated_sprite.rotation = -PI/4
+	
 	# Flip the character Sprite depending on which direction is being pressed
-	if dir.x > 0 and not movement_component.isdrilling:
+	if dir.x > 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = false
-	elif dir.x < 0 and not movement_component.isdrilling:
+	elif dir.x < 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = true
 	
 	# If the speed is greater than 0 in the y direction
@@ -57,17 +122,17 @@ func _choose_state(dir:Vector2, _pressed:bool=false, _delta:float=0.0) -> void:
 		pass
 	
 	# If the character is falling or jumping, enter the jump state
-	if abs(dir.y) > 0 or abs(velocity.y) > 0:
+	if (abs(dir.y) > 0 and not drill_component.drill_enabled) or abs(velocity.y) > 0 and (!drill_component.drill_enabled) :
 		state_machine._enter_state("jump")
 		return
 	
 	# If the character is not moving on the x-axis and is not moving on y-axis enter idle state
-	if velocity.x == 0:
+	if velocity.x == 0 and not drill_component.drill_enabled:
 		state_machine._enter_state("idle")
 		return 
 	
 	# If the character is moving on the x-axis and not the y-axis enter the run state
-	if abs(dir.x) > 0:
+	if abs(dir.x) > 0 and not drill_component.drill_enabled:
 		state_machine._enter_state("run")
 		return
 	
@@ -93,56 +158,8 @@ func _dev_super():
 	terrain.drill_super_one(front[0])
 	
 
-func _on_area_2d_body_entered(body):
-	if !movement_component.isdrilling:
-		print("Drill")
-		set_collision_layer_value(1, false)
-		set_collision_mask_value(1, false)
-		movement_component.isdrilling = true
-		var shape:CollisionShape2D = drill_detector.get_child(0)
-		animated_sprite.flip_h = false
-		
-
-func _disable_drill_detector():
-	if !movement_component.isdrilling:
-		var collision: CollisionShape2D = drill_detector.get_child(0)
-		collision.set_deferred("disabled", true)
-		collision.position.y = 1.0
-		
-		print("Collision Disabled")
-
-func _enable_drill_detector(_vel:Vector2):
-	var collision: CollisionShape2D = drill_detector.get_child(0)
-	collision.disabled = false
-	_vel = _vel.normalized()
-	collision.rotation = _vel.angle() + PI/2
-	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
-		collision.rotation += PI
-		collision.position.y = -1.0
-	print(collision.rotation)
-	
 
 
-
-
-
-func _on_drill_detector_body_exited(body):
-		set_collision_layer_value(1, true)
-		set_collision_mask_value(1, true)
-		movement_component.isdrilling = false
-		var momentum = rotation
-		rotation=0
-		var collision: CollisionShape2D = drill_detector.get_child(0)
-		_disable_drill_detector()
-		collision.rotation = 0
-		velocity.x += 500*cos(momentum)
-		velocity.y += 300*sin(momentum)
-		movement_component.force_velocity(Vector2(velocity.x, velocity.y))
-		print("exit")
-		dash_component.can_dash = true
-		
-		
-	
-			
-
-	
+func _set_last_dash(dir: Vector2):
+	if dir != Vector2.ZERO:
+		last_dash = dir

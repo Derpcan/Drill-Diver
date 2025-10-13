@@ -1,64 +1,40 @@
-[gd_scene load_steps=16 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=22 format=3 uid="uid://bylp3hel486as"]
 
-[ext_resource type="Script" uid="uid://cy7b4s83g7j7d" path="res://scenes/player/player.gd" id="1_0owmy"]
+[ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
 [ext_resource type="PackedScene" uid="uid://s3d4wjd0wc53" path="res://scenes/components/json_loader.tscn" id="2_gmlin"]
 [ext_resource type="PackedScene" uid="uid://bc2f56sqxrqqk" path="res://scenes/animation play/animation_play.tscn" id="3_gmlin"]
+[ext_resource type="JSON" path="res://assets/JSON/Player.JSON" id="4_fcs02"]
 [ext_resource type="PackedScene" uid="uid://boi6rio4dyg2u" path="res://scenes/components/state_machine.tscn" id="4_lvxji"]
-[ext_resource type="PackedScene" uid="uid://p5hoechujg26" path="res://scenes/components/movement_component.tscn" id="5_p47bc"]
+[ext_resource type="PackedScene" uid="uid://dqp5bgps30vvg" path="res://scenes/components/movement_component.tscn" id="5_p47bc"]
 [ext_resource type="PackedScene" uid="uid://b34ldb1ryno6p" path="res://scenes/components/input_component.tscn" id="6_75vfm"]
 [ext_resource type="PackedScene" uid="uid://dxclr2mjdivfx" path="res://scenes/components/gravity_component.tscn" id="8_qek5x"]
 [ext_resource type="PackedScene" uid="uid://df8id4wkcp6q" path="res://scenes/components/jump_component.tscn" id="9_5gtgg"]
 [ext_resource type="PackedScene" uid="uid://ckhybymqyomrx" path="res://scenes/components/player_stat_loader_component.tscn" id="11_je7p5"]
 [ext_resource type="PackedScene" uid="uid://b3o1n8eur5oq2" path="res://scenes/components/dash_component.tscn" id="12_fm80t"]
-[ext_resource type="Script" uid="uid://cm48rinbqpxsf" path="res://scenes/components/drill_component.gd" id="12_gx1jg"]
-
-[sub_resource type="JSON" id="JSON_je7p5"]
-data = {
-"player": {
-"sprites": {
-"drill": {
-"frames_x": 5.0,
-"frames_y": 1.0,
-"loop": true,
-"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Jump.png",
-"time_length": 0.8
-},
-"idle": {
-"frames_x": 6.0,
-"frames_y": 1.0,
-"loop": true,
-"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Idle.png",
-"time_length": 0.8
-},
-"jump": {
-"frames_x": 5.0,
-"frames_y": 1.0,
-"loop": true,
-"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Jump.png",
-"time_length": 0.8
-},
-"run": {
-"frames_x": 6.0,
-"frames_y": 1.0,
-"loop": true,
-"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Run.png",
-"time_length": 0.8
-}
-}
-}
-}
+[ext_resource type="Script" uid="uid://b8mmd73gut507" path="res://scenes/components/drill_component.gd" id="12_gx1jg"]
+[ext_resource type="PackedScene" uid="uid://dbmv1rqx5nlbt" path="res://scenes/components/health_component.tscn" id="13_ugbui"]
+[ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_fcs02"]
+[ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/key_logger.tscn" id="16_myrg7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qek5x"]
 radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fcs02"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fm80t"]
+radius = 9.44444
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fm80t"]
 radius = 3.0
 height = 16.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component")]
-collision_layer = 9
-collision_mask = 9
+[sub_resource type="CircleShape2D" id="CircleShape2D_ugbui"]
+radius = 8.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray")]
+collision_layer = 128
+collision_mask = 25
 script = ExtResource("1_0owmy")
 movement_component = NodePath("MovementComponent")
 jump_component = NodePath("JumpComponent")
@@ -69,15 +45,21 @@ gravity_component = NodePath("GravityComponent")
 dash_component = NodePath("DashComponent")
 drill_detector = NodePath("DrillDetector")
 drill_component = NodePath("DrillComponent")
+bump_detector = NodePath("BumpDetector")
+bounce_timer = NodePath("BounceTimer")
+health_component = NodePath("HealthComponent")
+animation_play = NodePath("AnimationPlay")
+ray = NodePath("ShapeCast2D")
 
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
 json_loaded = NodePath("../JSONLoader")
 creature_name = "player"
 
 [node name="JSONLoader" parent="." instance=ExtResource("2_gmlin")]
-json_file = SubResource("JSON_je7p5")
+json_file = ExtResource("4_fcs02")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
 zoom = Vector2(4, 4)
 
 [node name="AnimationPlay" parent="." node_paths=PackedStringArray("json_loader", "animation_sprite", "state_machine") instance=ExtResource("3_gmlin")]
@@ -112,7 +94,31 @@ movement_component = NodePath("../MovementComponent")
 jump_component = NodePath("../JumpComponent")
 dash_component = NodePath("../DashComponent")
 
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+position = Vector2(0, 1)
+rotation = -1.5708
+scale = Vector2(0.1, 0.1)
+enabled = false
+shape = SubResource("CircleShape2D_fcs02")
+target_position = Vector2(0, 0)
+margin = 0.8
+collision_mask = 16
+
+[node name="BounceTimer" type="Timer" parent="."]
+wait_time = 0.2
+
 [node name="DashComponent" parent="." instance=ExtResource("12_fm80t")]
+
+[node name="BumpDetector" type="Area2D" parent="."]
+position = Vector2(0, 1)
+scale = Vector2(0.1, 0.1)
+collision_layer = 0
+collision_mask = 16
+priority = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BumpDetector"]
+shape = SubResource("CircleShape2D_fm80t")
+disabled = true
 
 [node name="DrillDetector" type="Area2D" parent="."]
 position = Vector2(0, 1)
@@ -127,10 +133,31 @@ scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
 
-[node name="DrillComponent" type="Node" parent="."]
+[node name="DrillComponent" type="Node" parent="." node_paths=PackedStringArray("parent", "drill_detector", "drill_shape_cast", "bump_detector")]
 script = ExtResource("12_gx1jg")
+parent = NodePath("..")
 turn_raduis = 0.08
-metadata/_custom_type_script = "uid://cm48rinbqpxsf"
+drill_detector = NodePath("../DrillDetector")
+drill_shape_cast = NodePath("../ShapeCast2D")
+bump_detector = NodePath("../BumpDetector")
 
+[node name="HealthComponent" parent="." instance=ExtResource("13_ugbui")]
+
+[node name="HurtBox" parent="." node_paths=PackedStringArray("health_component", "collision_shape") instance=ExtResource("14_fcs02")]
+collision_layer = 2
+health_component = NodePath("../HealthComponent")
+collision_shape = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_ugbui")
+debug_color = Color(0.871002, 0.294912, 0.489399, 0.42)
+
+[node name="KeyLogger" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("16_myrg7")]
+input_component = NodePath("../InputComponent")
+
+[connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
+[connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]
+[connection signal="body_exited" from="BumpDetector" to="." method="_on_bump_detector_body_exited"]
 [connection signal="body_entered" from="DrillDetector" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="DrillDetector" to="." method="_on_drill_detector_body_exited"]

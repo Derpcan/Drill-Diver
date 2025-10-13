@@ -28,6 +28,20 @@
 				"frames_y": 1.0,
 				"loop": true,
 				"time_length": 0.8
+			},
+			"death": {
+				"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Death.png",
+				"frames_x": 4.0,
+				"frames_y": 1.0,
+				"loop": false,
+				"time_length": 0.8
+			},
+			"drill": {
+				"path": "res://assets/development assets (temporary)/Drill.png",
+				"frames_x": 1.0,
+				"frames_y": 1.0,
+				"loop": true,
+				"time_length": 0.8
 			}
 		}
 	}
