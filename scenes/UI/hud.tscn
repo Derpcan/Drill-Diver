@@ -35,6 +35,7 @@ offset_bottom = 45.0
 script = ExtResource("1_rd3kb")
 
 [node name="DEBUG_HUD" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_c4vmg")
