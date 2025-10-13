@@ -192,7 +192,6 @@ position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_cwlon")
 
 [node name="HitBox" parent="." instance=ExtResource("6_cwlon")]
-collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
@@ -200,9 +199,8 @@ position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_nbhyu")
 
 [node name="EnemyHurtbox" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 0
-monitoring = false
+collision_layer = 0
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHurtbox"]
 position = Vector2(0.5, -1)

@@ -120,7 +120,7 @@ func _start_bump(_body):
 	drill_shape_cast.force_shapecast_update()
 	
 	# Check if the shape cast is colliding with anything
-	if drill_shape_cast.is_colliding() and can_bounce:
+	if drill_shape_cast.is_colliding(): #and can_bounce:
 		
 		var normal = drill_shape_cast.get_collision_normal(0)
 		
@@ -137,13 +137,19 @@ func _start_bump(_body):
 		drill_shape_cast.force_shapecast_update()
 		if drill_shape_cast.is_colliding():
 			var rot = (PI/2 + parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
-			rotate_player(rot)
+			
 			if parent.animated_sprite.flip_h == true:
-				rot *= -1
+				rot = PI - rot
+			
+			rotate_player(rot)
+			
+			
+				
 			if parent.velocity.y == 0.0:
-				rot = (PI - parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
+				rot -= (PI - parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
 				if parent.animated_sprite.flip_h == true:
-					rot *= -1
+					rot = (PI/2 + parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
+					rot += (PI + parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
 				rotate_player(rot)
 	
 
@@ -201,7 +207,7 @@ func _enter_drill_state(_body) -> void:
 		var angle:float = 0
 		
 		# Check if the parent has a last_dash variable
-		if "last_dash" in parent:
+		if last_dash:
 			angle = last_dash.angle() # if it does set it to the angle
 		
 		# Check if the parent has an animated sprite, and see if it is flipped
