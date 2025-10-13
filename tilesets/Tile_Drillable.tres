@@ -1,9 +1,0 @@
-[gd_resource type="GradientTexture2D" load_steps=2 format=3 uid="uid://ceq16jm0wq8vl"]
-
-[sub_resource type="Gradient" id="Gradient_kamo6"]
-
-[resource]
-gradient = SubResource("Gradient_kamo6")
-width = 16
-height = 16
-fill_to = Vector2(0.0149573, 0.017094)
