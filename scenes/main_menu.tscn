@@ -27,7 +27,7 @@ func _copy_path_to_clipboard() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if ghost.global_position.y > 750:
+	if ghost and ghost.global_position.y > 750:
 		
 		ghost.queue_free()
 		return 

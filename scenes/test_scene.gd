@@ -20,6 +20,7 @@ func _physics_process(delta: float) -> void:
 	time += delta # Update time passed
 
 func _ready() -> void:
+	GameManager.set_meter.emit(0)
 	player = get_tree().get_nodes_in_group("player")[0] as Player
 	player.drill_component.entered_drill_mode.connect(_increment_times_drilled)
 	player.dash_component.dash_start.connect(_increment_times_dashed)
