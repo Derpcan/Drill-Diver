@@ -11,6 +11,8 @@ signal dash_inputs(direction:Vector2)
 signal drill_inputs(direction:Vector2)
 signal super_drill_inputs(direction:Vector2)
 
+@export var remove_up_to_frame:int = 0
+
 var key_array:Array = []
 var elapsed_time:float = 0.0
 
@@ -18,6 +20,7 @@ func _ready() -> void:
 	var parent = get_parent() as Ghost
 	json_name = parent.input_log_file_name
 	folder_path = parent.input_log_folder_path
+	remove_up_to_frame = parent.remove_up_to_frame
 	_load_key_log_json()
 
 
@@ -42,6 +45,16 @@ func _load_key_log_json() -> void:
 				#print("move_dir = ",dict["move_dir"])
 				pass
 		file.close()
+	
+	var frame:int = 0
+	
+	if len(key_array) > 0:
+		var dict:Dictionary = key_array[0]
+		frame = dict["frame"]
+		while frame < remove_up_to_frame:
+			key_array.pop_front()
+			dict = key_array[0]
+			frame = dict["frame"]
 	#file.close()
 
 
@@ -79,7 +92,7 @@ func _physics_process(delta: float) -> void:
 		#movement_inputs.emit(dir, delta)
 		#drill_inputs.emit(drill_dir)
 		#return
-	if dict["frame"] <= Engine.get_physics_frames():#dict["elapsed_time"] <= elapsed_time :#and dict["frame"] <= Engine.get_physics_frames():
+	if dict["frame"] <= remove_up_to_frame + Engine.get_physics_frames():#dict["elapsed_time"] <= elapsed_time :#and dict["frame"] <= Engine.get_physics_frames():
 		#while dict["elapsed_time"] <= elapsed_time: #and dict["frame"] <= Engine.get_physics_frames():
 		#	check_dict = dict
 		dict = key_array.pop_front()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=24 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
 [ext_resource type="Script" uid="uid://dko13chblqbea" path="res://scenes/test_scene.gd" id="1_gthg3"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://d1qjh238xsdgr" path="res://scenes/enemy/enemy.tscn" id="11_6qxox"]
 [ext_resource type="PackedScene" uid="uid://bjlp87podhpig" path="res://scenes/system/OnLevelLoaded.tscn" id="13_ntc4i"]
 [ext_resource type="PackedScene" uid="uid://b7yg6ow7ysjaj" path="res://scenes/items/MeterItem.tscn" id="14_u0xbq"]
+[ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="15_pln1h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h3xc6"]
 texture = ExtResource("3_3qnke")
@@ -468,3 +469,13 @@ offset_right = 537.0
 offset_bottom = 129.0
 scale = Vector2(0.5, 0.5)
 text = "Press \"Esc\" or \"+\" to open Pause Menu and view Controls"
+
+[node name="Ghost" parent="." instance=ExtResource("15_pln1h")]
+position = Vector2(204, 149)
+input_log_file_name = "inputlog135.json"
+remove_up_to_frame = 1750
+
+[node name="CollisionShape2D" parent="Ghost/HurtBox" index="0"]
+disabled = true
+
+[editable path="Ghost"]
