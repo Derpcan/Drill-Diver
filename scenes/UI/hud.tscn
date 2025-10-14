@@ -8,11 +8,41 @@
 
 [node name="Hud" type="CanvasLayer"]
 
+[node name="StaticLabels" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="StaticLabels"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 45.0
+offset_right = 177.0
+offset_bottom = 68.0
+text = "Super Drill Charge"
+
+[node name="Label2" type="Label" parent="StaticLabels"]
+layout_mode = 0
+offset_left = 919.0
+offset_top = 19.0
+offset_right = 996.0
+offset_bottom = 42.0
+text = "Best Time"
+
+[node name="Label3" type="Label" parent="StaticLabels"]
+layout_mode = 0
+offset_left = 919.0
+offset_top = 68.0
+offset_right = 996.0
+offset_bottom = 91.0
+text = "Time"
+
 [node name="ActiveTimeLabel" type="Label" parent="."]
 offset_left = 932.0
-offset_top = 87.0
+offset_top = 68.0
 offset_right = 1091.0
-offset_bottom = 140.0
+offset_bottom = 121.0
 text = "00:00.00"
 horizontal_alignment = 1
 vertical_alignment = 1

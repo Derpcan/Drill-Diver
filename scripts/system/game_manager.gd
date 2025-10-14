@@ -27,6 +27,7 @@ signal update_meter(amount: int)
 ## Game Data and Stats ---------------------------------------------------------
 # Game Timer
 var _timer_running: bool = false
+var _timer_can_be_started: bool = true
 var _current_time: float = 0.0 # Time elapsed in seconds
 var _best_time: float = 0.0 # The current record best time in seconds (temporary)
 
@@ -65,6 +66,14 @@ func set_record_to(seconds: float) -> void:
 # Public accessor for the current timer value in seconds
 func get_current_time():
 	return _current_time
+
+# Public utility for locking out timer-starting nodes
+func timer_can_start() -> bool:
+	return _timer_can_be_started and (not _timer_running)
+
+# Public setter of the timer lockout flag
+func set_timer_can_start(flag: bool) -> void:
+	_timer_can_be_started = flag
 
 # Utility function for getting a string-formatted timer value
 func convert_to_readable_time(seconds: float):

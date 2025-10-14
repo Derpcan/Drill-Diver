@@ -2,19 +2,32 @@
 
 [ext_resource type="Script" uid="uid://cvfnylfjoajta" path="res://scripts/UI/menus/escape_pause_button.gd" id="1_n87rw"]
 
-[node name="PauseMenu" type="Node2D"]
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 2
+
+[node name="BlockUI" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 332.0
+offset_top = 133.0
+offset_right = 821.0
+offset_bottom = 490.0
+color = Color(0, 0, 0, 0.313726)
 
 [node name="Label" type="Label" parent="."]
-offset_left = 33.0
-offset_top = 33.0
-offset_right = 73.0
-offset_bottom = 56.0
+offset_left = 531.0
+offset_top = 176.0
+offset_right = 626.0
+offset_bottom = 199.0
 text = "Pause Menu"
 
 [node name="BackButton" type="Button" parent="."]
-offset_left = 442.0
-offset_top = 407.0
-offset_right = 541.0
-offset_bottom = 438.0
-text = "Back"
+offset_left = 531.0
+offset_top = 424.0
+offset_right = 630.0
+offset_bottom = 455.0
+text = "Resume"
 script = ExtResource("1_n87rw")

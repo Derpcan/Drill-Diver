@@ -13,6 +13,13 @@ offset_right = 73.0
 offset_bottom = 56.0
 text = "Main Menu"
 
+[node name="Label2" type="Label" parent="."]
+offset_left = 538.0
+offset_top = 231.0
+offset_right = 633.0
+offset_bottom = 254.0
+text = "DRILL DIVER"
+
 [node name="OptionButton" type="Button" parent="."]
 offset_left = 554.0
 offset_top = 408.0

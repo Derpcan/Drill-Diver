@@ -4,7 +4,6 @@ const DEFAULT_SCENE = "res://scenes/main_menu.tscn"
 
 var scene_stack: Array[Node] = []
 
-
 func _ready():
 	print("Scene Manager running...")
 	
@@ -25,11 +24,9 @@ func change_scene(scene: String) -> void:
 func push_scene(scene: String) -> void:
 	if scene_stack.size() > 0:
 		# If we are rendering multiple scenes, disable all previous scenes
-		get_tree().paused = true
-		#for s in scene_stack:
-			#if is_instance_valid(s):
-				#_pause_scene(s)
-		
+		_pause_scene()
+		scene_stack.back().process_mode = Node.PROCESS_MODE_PAUSABLE
+	
 	# Load the scene and attach it to the stack root
 	var overlay_scene = load(scene).instantiate()
 	overlay_scene.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
@@ -42,17 +39,19 @@ func pop_scene() -> void:
 	if scene_stack.is_empty():
 		return
 	
-	# remove and free sceen from root
-	#_remove_scene(scene_stack.pop_back())
+	# Remove and free the last scene from the root
+	var previous_scene = scene_stack.pop_back()
+	get_tree().root.remove_child(previous_scene)
+	previous_scene.queue_free()
 	
 	if scene_stack.size() > 0:
 		# If we just disabled a scene, we need to reenable it when we pop the blocking scene
-		_unpause_scene(scene_stack.back())
+		_unpause_scene()
 
 ## Pauses a given scene (disabling input and process steps)
-func _pause_scene(scene: Node) -> void:
-	scene.process_mode = Node.PROCESS_MODE_DISABLED
+func _pause_scene() -> void:
+	get_tree().paused = true
 
 ## Unpauses a given scene (reenabling input and processing)
-func _unpause_scene(scene: Node) -> void:
-	scene.process_mode = Node.PROCESS_MODE_INHERIT
+func _unpause_scene() -> void:
+	get_tree().paused = false
