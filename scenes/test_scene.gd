@@ -14,6 +14,8 @@ var dash_dict:Dictionary[int,Dictionary] = {}
 var folder_path:String = "user://test_data"
 var save_path:String = folder_path + "/testing_data.json"
 
+var time_to_complete_level:float = 0
+
 var time:float = 0
 
 func _physics_process(delta: float) -> void:
@@ -32,6 +34,16 @@ func _ready() -> void:
 		(enemy as Enemy).died.connect(_increment_enemies_killed)
 	
 	tree_exiting.connect(_save_all_data)
+	
+	$FinishLevel.body_entered.connect(_finish_level_set_time)
+
+
+func _finish_level_set_time(_body) -> void:
+	GameManager.stop_timer.emit()
+	time_to_complete_level = GameManager.get_current_time()
+	$CanvasLayer/Label.show()
+	$CanvasLayer/Label.text = "Level Complete\nTime = " + str(time_to_complete_level) + "\nEsc to Pause and go to Main Menu"
+
 
 
 func _increment_times_dashed(value:Vector2 = Vector2.ZERO) -> void:
@@ -125,6 +137,12 @@ func _save_all_data() -> void:
 	# Store the dash extra information
 	file.store_string("\n\"Dash_Dictionary\":[\n") 
 	file.store_string(JSON.stringify(JSON.from_native(dash_dict), "\t", true) + "\n") 
+	
+	file.store_string("],") # End this set of data
+	
+	# Store the time it took to beat the level
+	file.store_string("\n\"Level_Complete_Time\":[\n") 
+	file.store_string(JSON.stringify(JSON.from_native(time_to_complete_level), "\t", true) + "\n") 
 	
 	file.store_string("]\n}") # End this set of data
 	

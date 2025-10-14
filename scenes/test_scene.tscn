@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=23 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
 [ext_resource type="Script" uid="uid://dko13chblqbea" path="res://scenes/test_scene.gd" id="1_gthg3"]
@@ -309,7 +309,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h3xc6"]
-size = Vector2(112, 34)
+size = Vector2(108, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0xbq"]
+size = Vector2(20, 113)
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_gthg3")
@@ -387,7 +390,7 @@ centered = false
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(648, 432)
+position = Vector2(648, 435.5)
 shape = SubResource("RectangleShape2D_h3xc6")
 
 [node name="Checkpoint" parent="." instance=ExtResource("10_s36qc")]
@@ -438,3 +441,22 @@ position = Vector2(249, 352)
 
 [node name="MeterItem10" parent="." instance=ExtResource("14_u0xbq")]
 position = Vector2(64, 332)
+
+[node name="FinishLevel" type="Area2D" parent="."]
+position = Vector2(824, 432)
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishLevel"]
+position = Vector2(0, -40.5)
+shape = SubResource("RectangleShape2D_u0xbq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 506.0
+offset_top = 187.0
+offset_right = 583.0
+offset_bottom = 210.0
+text = "Best Time"
