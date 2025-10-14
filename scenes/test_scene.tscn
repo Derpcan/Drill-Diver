@@ -460,3 +460,11 @@ offset_top = 187.0
 offset_right = 583.0
 offset_bottom = 210.0
 text = "Best Time"
+
+[node name="PauseMenuAlertLabel" type="Label" parent="."]
+offset_left = 99.0
+offset_top = 106.0
+offset_right = 537.0
+offset_bottom = 129.0
+scale = Vector2(0.5, 0.5)
+text = "Press \"Esc\" or \"+\" to open Pause Menu and view Controls"

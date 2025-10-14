@@ -142,7 +142,11 @@ func _save_all_data() -> void:
 	
 	# Store the time it took to beat the level
 	file.store_string("\n\"Level_Complete_Time\":[\n") 
-	file.store_string(JSON.stringify(JSON.from_native(time_to_complete_level), "\t", true) + "\n") 
+	if time_to_complete_level == 0:
+		file.store_string(JSON.stringify(JSON.from_native("Not Completed"), "\t", true) + ",\n") 
+		file.store_string(JSON.stringify(JSON.from_native(GameManager.get_current_time()), "\t", true) + "\n") 
+	else:
+		file.store_string(JSON.stringify(JSON.from_native(time_to_complete_level), "\t", true) + "\n") 
 	
 	file.store_string("]\n}") # End this set of data
 	
