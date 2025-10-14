@@ -83,6 +83,9 @@ func _ready() -> void:
 func _update_checkpoint_position(new_position: Vector2) -> void:
 	last_checkpoint_position = new_position
 	print_rich("[color=#66FF66]RESPAWN POSITION UPDATED to: ", last_checkpoint_position, "[/color]")
+	
+	# Charlie: Save the current timer value when we reach a new checkpoint
+	GameManager.save_time_at_checkpoint()
 
 
 # Connects the camera to the player
@@ -136,11 +139,17 @@ func _player_animation_finished(animation_name:String) -> void:
 		game_camera.reparent(get_tree().current_scene)
 		print_rich("[color=#ED6868]Death Caught", "[/color]")
 		emit_signal("player_death_animation_ended", last_checkpoint_position)
+		
+		# Charlie: When the death animation is finished, stop the timer and reenable it to start again
+		GameManager.set_timer_to(GameManager.get_time_at_checkpoint())
+		GameManager.set_timer_can_start(true)
 
 
 func _player_died() -> void:
 	print("Player died")
 	
+	# Charlie: When the player dies, we want to stop the timer
+	GameManager.stop_timer.emit()
 
 
 
