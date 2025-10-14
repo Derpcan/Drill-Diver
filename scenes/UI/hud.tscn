@@ -1,17 +1,48 @@
-[gd_scene load_steps=5 format=3 uid="uid://by6028i8q3uht"]
+[gd_scene load_steps=6 format=3 uid="uid://by6028i8q3uht"]
 
-[ext_resource type="Script" uid="uid://ddmm324xbjdkn" path="res://scripts/UI/debug_hud.gd" id="1_c4vmg"]
-[ext_resource type="Script" uid="uid://bxaitjv03valo" path="res://scripts/UI/super_drill_meter.gd" id="1_rd3kb"]
-[ext_resource type="Script" uid="uid://c7p3uhsb0f1pu" path="res://scripts/UI/active_time_label.gd" id="1_y5tme"]
-[ext_resource type="Script" uid="uid://dxfdih56foglv" path="res://scripts/UI/best_time_label.gd" id="2_18exe"]
+[ext_resource type="Script" uid="uid://ddmm324xbjdkn" path="res://scripts/UI/HUD/debug_hud.gd" id="1_c4vmg"]
+[ext_resource type="Script" uid="uid://bxaitjv03valo" path="res://scripts/UI/HUD/super_drill_meter.gd" id="1_rd3kb"]
+[ext_resource type="Script" uid="uid://c7p3uhsb0f1pu" path="res://scripts/UI/HUD/active_time_label.gd" id="1_y5tme"]
+[ext_resource type="Script" uid="uid://dxfdih56foglv" path="res://scripts/UI/HUD/best_time_label.gd" id="2_18exe"]
+[ext_resource type="Script" uid="uid://dgqwosol42b3a" path="res://scripts/UI/menus/pause_button.gd" id="4_0jeyp"]
 
 [node name="Hud" type="CanvasLayer"]
 
+[node name="StaticLabels" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="StaticLabels"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 45.0
+offset_right = 177.0
+offset_bottom = 68.0
+text = "Super Drill Charge"
+
+[node name="Label2" type="Label" parent="StaticLabels"]
+layout_mode = 0
+offset_left = 919.0
+offset_top = 19.0
+offset_right = 996.0
+offset_bottom = 42.0
+text = "Best Time"
+
+[node name="Label3" type="Label" parent="StaticLabels"]
+layout_mode = 0
+offset_left = 919.0
+offset_top = 68.0
+offset_right = 996.0
+offset_bottom = 91.0
+text = "Time"
+
 [node name="ActiveTimeLabel" type="Label" parent="."]
 offset_left = 932.0
-offset_top = 87.0
+offset_top = 68.0
 offset_right = 1091.0
-offset_bottom = 140.0
+offset_bottom = 121.0
 text = "00:00.00"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -33,6 +64,14 @@ offset_top = 18.0
 offset_right = 238.0
 offset_bottom = 45.0
 script = ExtResource("1_rd3kb")
+
+[node name="PauseButton" type="Button" parent="."]
+offset_left = 19.0
+offset_top = 597.0
+offset_right = 74.0
+offset_bottom = 628.0
+text = "Pause"
+script = ExtResource("4_0jeyp")
 
 [node name="DEBUG_HUD" type="Control" parent="."]
 visible = false

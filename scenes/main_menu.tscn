@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyg4ajothat7g"]
+
+[ext_resource type="Script" uid="uid://tf8is18n6kq" path="res://scripts/UI/menus/option_button.gd" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://ci8mvuro6jqfh" path="res://scripts/UI/menus/level_select_button.gd" id="2_ekxnf"]
+[ext_resource type="Script" uid="uid://bxj8xb4x6rpdq" path="res://scripts/UI/menus/quit_button.gd" id="3_bqqt6"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 33.0
+offset_top = 33.0
+offset_right = 73.0
+offset_bottom = 56.0
+text = "Main Menu"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 538.0
+offset_top = 231.0
+offset_right = 633.0
+offset_bottom = 254.0
+text = "DRILL DIVER"
+
+[node name="OptionButton" type="Button" parent="."]
+offset_left = 554.0
+offset_top = 408.0
+offset_right = 624.0
+offset_bottom = 439.0
+text = "Options"
+script = ExtResource("1_l6cm7")
+
+[node name="LevelSelectButton" type="Button" parent="."]
+offset_left = 387.0
+offset_top = 408.0
+offset_right = 486.0
+offset_bottom = 439.0
+text = "Level Select"
+script = ExtResource("2_ekxnf")
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = 686.0
+offset_top = 408.0
+offset_right = 728.0
+offset_bottom = 439.0
+text = "Quit"
+script = ExtResource("3_bqqt6")
