@@ -28,6 +28,7 @@ signal update_meter(amount: int)
 # Game Timer
 var _timer_running: bool = false
 var _timer_can_be_started: bool = true
+var _time_at_last_checkpoint: float = 0.0 # The timer value when the last checkpoint was reached
 var _current_time: float = 0.0 # Time elapsed in seconds
 var _best_time: float = 0.0 # The current record best time in seconds (temporary)
 
@@ -74,6 +75,14 @@ func timer_can_start() -> bool:
 # Public setter of the timer lockout flag
 func set_timer_can_start(flag: bool) -> void:
 	_timer_can_be_started = flag
+	
+# Instantaneously saves the current timer value when a checkpoint is reached
+func save_time_at_checkpoint() -> void:
+	_time_at_last_checkpoint = _current_time
+
+# Public accessor for the time at last checkpoint
+func get_time_at_checkpoint() -> float:
+	return _time_at_last_checkpoint
 
 # Utility function for getting a string-formatted timer value
 func convert_to_readable_time(seconds: float):
