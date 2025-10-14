@@ -77,11 +77,7 @@ height = 12.3596
 radius = 4.49438
 height = 12.0
 
-<<<<<<< HEAD
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray") groups=["player"]]
-=======
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray", "super_drill_component") groups=["player"]]
->>>>>>> a6d8265b63c7f63548db22bf7c9a9ca9cc5bcac8
 collision_layer = 0
 collision_mask = 25
 script = ExtResource("1_0owmy")
