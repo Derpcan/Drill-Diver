@@ -6,6 +6,7 @@ signal movement_inputs(direction:Vector2, delta:float)
 signal jump_input(dir:Vector2, is_pressed:bool)
 signal dash_inputs(direction:Vector2)
 signal drill_inputs(direction:Vector2)
+signal super_drill_inputs(direction:Vector2)
 signal all_inputs(move_dir:Vector2, jump_dir:Vector2, is_jump_pressed:bool, dash_dir:Vector2, drill_dir:Vector2)
 
 var disabled_inputs:bool = false:
@@ -38,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	var is_jump_pressed:bool = false
 	var jump_direction:Vector2 = Vector2.ZERO
 	var dash_dir:Vector2 = Vector2.ZERO
-	
+	var super_drill_dir:Vector2 = Vector2.ZERO
 	if Input.is_action_pressed("jump"):
 		is_jump_pressed = true
 		jump_direction = Vector2.UP
@@ -61,6 +62,24 @@ func _physics_process(delta: float) -> void:
 		print("Dash direction: ", dash_dir)
 		# ---------------------------
 		
+	if Input.is_action_just_pressed("super_drill"):
+			
+		# Get explicit directional inputs for the super drill
+		var super_drill_dir_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
+		var super_drill_dir_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
+		
+		var raw_super_drill_dir:Vector2 = Vector2(super_drill_dir_x, super_drill_dir_y)
+		
+		# --- MODIFIED SUPER DRILL LOGIC ---
+		if raw_super_drill_dir == Vector2.ZERO:
+			# If no directional input is being held, use the last horizontal direction
+			super_drill_dir = last_facing_direction 
+		else:
+			# Otherwise, use the input provided, converted to 8-directions
+			super_drill_dir = turn_vector_into_8_directions(Vector2(round_to_8_directions(super_drill_dir_x), round_to_8_directions(super_drill_dir_y)))
+			
+		print("Dash direction: ", dash_dir)
+		
 	var drill_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
 	var drill_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
 	var drill_dir:Vector2 = Vector2(drill_x, drill_y)
@@ -70,6 +89,7 @@ func _physics_process(delta: float) -> void:
 	jump_input.emit(jump_direction, is_jump_pressed)
 	movement_inputs.emit(dir, delta)
 	drill_inputs.emit(drill_dir)
+	super_drill_inputs.emit(super_drill_dir)
 	
 
 

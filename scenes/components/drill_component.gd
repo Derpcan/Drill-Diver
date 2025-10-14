@@ -99,7 +99,7 @@ func _enable_drill_detector(_vel:Vector2):
 	_vel = _vel.normalized()
 	collision.rotation = _vel.angle() + PI/2
 	
-	# Allows drilling from dash at weird angles
+	# Allows drilling from   at weird angles
 	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
 		collision.rotation += PI
 		collision.position.y = -1.0
@@ -120,8 +120,8 @@ func _start_bump(_body):
 	drill_shape_cast.force_shapecast_update()
 	
 	# Check if the shape cast is colliding with anything
-	if drill_shape_cast.is_colliding(): #and can_bounce:
-		
+	if drill_shape_cast.is_colliding() and can_bounce:
+	
 		var normal = drill_shape_cast.get_collision_normal(0)
 		
 		parent.velocity = parent.velocity.bounce(normal) * 0.8  # 0.8 for energy loss
@@ -157,6 +157,7 @@ func _start_bump(_body):
 
 # Exits the drill state.
 func _exit_drill_state(_body) -> void:
+	
 	can_bounce = false
 	
 	drill_shape_cast.enabled = false
@@ -193,6 +194,7 @@ func _exit_drill_state(_body) -> void:
 	
 	parent.rotation=0
 	parent.dash_component.can_dash = true
+	parent.super_drill_component.can_super_drill = true 
 
 
 # Enters the drill state. Called by the drill detector _on_body_entered signal. Connected in player script
