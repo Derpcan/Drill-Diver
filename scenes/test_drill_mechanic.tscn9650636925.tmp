@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://bdp5m4irffwyo"]
+[gd_scene load_steps=11 format=4 uid="uid://bdp5m4irffwyo"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_ben6t"]
 [ext_resource type="PackedScene" uid="uid://bsv71f851sdj3" path="res://scenes/checkpoint/checkpoint_manager.tscn" id="1_irohn"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c82ds1yobrg78" path="res://scenes/checkpoint/checkpoint.tscn" id="8_0bkm0"]
 [ext_resource type="PackedScene" uid="uid://nv87e5t72j7o" path="res://scenes/hitbox/agents/spikes.tscn" id="9_beum1"]
 [ext_resource type="PackedScene" uid="uid://blprm7a3unni2" path="res://scenes/hitbox/agents/OOB.tscn" id="9_bjlek"]
+[ext_resource type="PackedScene" uid="uid://dxhj6or77tx0q" path="res://scenes/hitbox/agents/enemy.tscn" id="10_bjlek"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -38,3 +39,9 @@ position = Vector2(140, 288)
 scale = Vector2(75, 1)
 collision_layer = 2
 collision_mask = 2
+
+[node name="Enemy" parent="." instance=ExtResource("10_bjlek")]
+position = Vector2(221, 2)
+speed = 150.0
+gravity = 800.0
+loop_duration = 5.0

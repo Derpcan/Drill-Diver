@@ -32,3 +32,7 @@ func _ready() -> void:
 func _heal_fully() -> void:
 	current_hp = max_hp
 	emit_signal("healed_fully")
+	
+func take_damage(amount: int) -> void:
+	# Set the new health value, which triggers the setter logic
+	current_hp -= amount

@@ -15,6 +15,7 @@ class_name Player
 @export var health_component:HealthComponent
 @export var animation_play:AnimationPlay
 @export var ray:ShapeCast2D
+@export var super_drill_component:SuperDrillComponent
 
 
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
@@ -49,11 +50,18 @@ func _ready() -> void:
 	
 	dash_component.dash_start.connect(movement_component._not_exiting_ground)
 	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
-	
 	on_floor.connect(dash_component._enable_dash)
 	
+	input_component.super_drill_inputs.connect(super_drill_component._calculate_dash)
+	input_component.super_drill_inputs.connect(_set_last_dash)
+	super_drill_component.super_drill_start.connect(movement_component.force_velocity)
+	super_drill_component.super_drill_start.connect(movement_component._disable_vel_x_clamp)
 	
 	
+	
+	super_drill_component.super_drill_start.connect(movement_component._not_exiting_ground)
+	super_drill_component.super_drill_end.connect(movement_component._enable_vel_x_clamp)
+	on_floor.connect(super_drill_component._enable_dash)
 	
 	health_component.died.connect(input_component._disable_inputs)
 	health_component.died.connect(movement_component._disable_movement)
@@ -74,18 +82,21 @@ func _ready() -> void:
 	on_floor_dirt.connect(drill_component._start_bump)
 	dash_component.dash_start.connect(drill_component._enable_drill_detector)
 	dash_component.dash_end.connect(drill_component._disable_drill_detector)
+	super_drill_component.super_drill_start.connect(drill_component._enable_drill_detector)
+	super_drill_component.super_drill_end.connect(drill_component._disable_drill_detector)
 	drill_detector.body_entered.connect(drill_component._enter_drill_state)
 	drill_detector.body_exited.connect(drill_component._exit_drill_state)
 	bump_detector.body_entered.connect(drill_component._start_bump)
 	bounce_timer.timeout.connect(drill_component._enable_movement_after_bounce)
 	drill_component.entered_drill_mode.connect(movement_component._disable_movement)
 	input_component.dash_inputs.connect(drill_component._set_last_dash)
-
+	input_component.super_drill_inputs.connect(drill_component._set_last_dash)
 
 
 
 func _physics_process(delta: float) -> void:
-	if (is_on_floor() or is_on_wall()) and drill_component.drill_enabled :
+	if (is_on_floor() or is_on_wall() or is_on_ceiling()) and drill_component.drill_enabled:
+	
 		emit_signal("on_floor_dirt",null)
 	if is_on_floor():
 		emit_signal("on_floor")
@@ -98,7 +109,7 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 	if health_component.current_hp == 0:
 		state_machine._enter_state("death")
 		return
-	
+		
 	# Drill state
 	if drill_component.drill_enabled:
 		state_machine._enter_state("drill")
@@ -116,6 +127,11 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		animated_sprite.flip_h = false
 	elif dir.x < 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = true
+		
+	# Drill transition lags when this logic is running
+	#if dash_component.is_dashing():            
+		#state_machine._enter_state("run") 
+		#return
 	
 	# If the speed is greater than 0 in the y direction
 	if abs(velocity.y) > 0:

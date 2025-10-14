@@ -1,10 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=23 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
 [ext_resource type="PackedScene" uid="uid://s3d4wjd0wc53" path="res://scenes/components/json_loader.tscn" id="2_gmlin"]
 [ext_resource type="PackedScene" uid="uid://bc2f56sqxrqqk" path="res://scenes/animation play/animation_play.tscn" id="3_gmlin"]
-[ext_resource type="JSON" path="res://assets/JSON/Player.JSON" id="4_fcs02"]
 [ext_resource type="PackedScene" uid="uid://boi6rio4dyg2u" path="res://scenes/components/state_machine.tscn" id="4_lvxji"]
 [ext_resource type="PackedScene" uid="uid://dqp5bgps30vvg" path="res://scenes/components/movement_component.tscn" id="5_p47bc"]
 [ext_resource type="PackedScene" uid="uid://b34ldb1ryno6p" path="res://scenes/components/input_component.tscn" id="6_75vfm"]
@@ -15,10 +14,55 @@
 [ext_resource type="Script" uid="uid://b8mmd73gut507" path="res://scenes/components/drill_component.gd" id="12_gx1jg"]
 [ext_resource type="PackedScene" uid="uid://dbmv1rqx5nlbt" path="res://scenes/components/health_component.tscn" id="13_ugbui"]
 [ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_fcs02"]
+[ext_resource type="Script" uid="uid://ca2j7t2iuei5m" path="res://super_drill_component.gd" id="16_kvlxm"]
 [ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/key_logger.tscn" id="16_myrg7"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qek5x"]
-radius = 7.0
+[sub_resource type="JSON" id="JSON_fcs02"]
+data = {
+"player": {
+"sprites": {
+"death": {
+"frames_x": 4.0,
+"frames_y": 1.0,
+"loop": false,
+"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Death.png",
+"time_length": 0.8
+},
+"drill": {
+"frames_x": 1.0,
+"frames_y": 1.0,
+"loop": true,
+"path": "res://assets/development assets (temporary)/Drill.png",
+"time_length": 0.8
+},
+"idle": {
+"frames_x": 6.0,
+"frames_y": 1.0,
+"loop": true,
+"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Idle.png",
+"time_length": 0.8
+},
+"jump": {
+"frames_x": 5.0,
+"frames_y": 1.0,
+"loop": true,
+"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Jump.png",
+"time_length": 0.8
+},
+"run": {
+"frames_x": 6.0,
+"frames_y": 1.0,
+"loop": true,
+"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Run.png",
+"time_length": 0.8
+}
+}
+}
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_myrg7"]
+radius = 3.37079
+height = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fcs02"]
 
@@ -26,13 +70,14 @@ radius = 7.0
 radius = 9.44444
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fm80t"]
-radius = 3.0
-height = 16.0
+radius = 4.49438
+height = 12.3596
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ugbui"]
-radius = 8.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kvlxm"]
+radius = 4.49438
+height = 12.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray", "super_drill_component") groups=["player"]]
 collision_layer = 128
 collision_mask = 25
 script = ExtResource("1_0owmy")
@@ -50,13 +95,14 @@ bounce_timer = NodePath("BounceTimer")
 health_component = NodePath("HealthComponent")
 animation_play = NodePath("AnimationPlay")
 ray = NodePath("ShapeCast2D")
+super_drill_component = NodePath("SuperDrillComponent")
 
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
 json_loaded = NodePath("../JSONLoader")
 creature_name = "player"
 
 [node name="JSONLoader" parent="." instance=ExtResource("2_gmlin")]
-json_file = ExtResource("4_fcs02")
+json_file = SubResource("JSON_fcs02")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
@@ -86,8 +132,10 @@ charcter_body = NodePath("..")
 jump_speed = 270.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_qek5x")
+position = Vector2(0, 2)
+scale = Vector2(1.78, 1)
+shape = SubResource("CapsuleShape2D_myrg7")
+debug_color = Color(0.662585, 0.513306, 0, 0.42)
 
 [node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component", "dash_component") instance=ExtResource("11_je7p5")]
 movement_component = NodePath("../MovementComponent")
@@ -119,6 +167,7 @@ priority = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BumpDetector"]
 shape = SubResource("CircleShape2D_fm80t")
 disabled = true
+debug_color = Color(0.729596, 0.235627, 1, 0.42)
 
 [node name="DrillDetector" type="Area2D" parent="."]
 position = Vector2(0, 1)
@@ -129,7 +178,8 @@ input_pickable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DrillDetector"]
 physics_interpolation_mode = 2
 position = Vector2(0, 1)
-scale = Vector2(1.78, 1)
+rotation = 1.5708
+scale = Vector2(1.8, 1.011)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
 
@@ -143,18 +193,36 @@ bump_detector = NodePath("../BumpDetector")
 
 [node name="HealthComponent" parent="." instance=ExtResource("13_ugbui")]
 
-[node name="HurtBox" parent="." node_paths=PackedStringArray("health_component", "collision_shape") instance=ExtResource("14_fcs02")]
+[node name="HurtBox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("14_fcs02")]
 collision_layer = 2
+collision_mask = 2
 health_component = NodePath("../HealthComponent")
-collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_ugbui")
-debug_color = Color(0.871002, 0.294912, 0.489399, 0.42)
+physics_interpolation_mode = 2
+position = Vector2(0, 2)
+rotation = -1.5708
+scale = Vector2(1.78, 1)
+shape = SubResource("CapsuleShape2D_fm80t")
+debug_color = Color(2.21401e-06, 0.624765, 0.526161, 0.42)
 
 [node name="KeyLogger" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("16_myrg7")]
 input_component = NodePath("../InputComponent")
+
+[node name="DashHitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DashHitbox"]
+position = Vector2(1.90735e-06, 2)
+scale = Vector2(1.78, 1)
+shape = SubResource("CapsuleShape2D_kvlxm")
+disabled = true
+debug_color = Color(0.968203, 0, 0.469374, 0.42)
+
+[node name="SuperDrillComponent" type="Node" parent="."]
+script = ExtResource("16_kvlxm")
+metadata/_custom_type_script = "uid://ca2j7t2iuei5m"
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]

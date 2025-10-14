@@ -20,10 +20,6 @@ signal player_death_animation_ended(previous_checkpoint_pos:Vector2)
 @export var last_checkpoint_position:Vector2
 
 
-@export_category("Checkpoints")
-## An array of the checkpoints in the level. Can change type to be Checkpoints once they are made.
-@export var checkpoints:Array[Vector2]
-
 @export_category("Camera")
 ## Keep track of the game camera to have control over moving it back to respawn
 @export var game_camera:GameCamera
@@ -35,10 +31,10 @@ func _ready() -> void:
 		# Attempt to find ghost in the current scene
 		ghost = get_tree().current_scene.find_child("Ghost")
 		
-		if ghost: # If the player is successfully found
+		if ghost: # If the ghost is successfully found
 			print_rich("[color=#DDFF00]Found: ", ghost, "[/color]")
 		else:
-			# Throw an error about not finding the Player
+			# Throw an error about not finding the Ghost
 			printerr("No Ghost was found in scene tree.")
 			
 	
@@ -72,6 +68,21 @@ func _ready() -> void:
 		connect_camera_signals()
 	if ghost:
 		connect_ghost_signals()
+		
+	
+	# Find all nodes belonging to the 'checkpoint' group
+	var checkpoint_nodes = get_tree().get_nodes_in_group("checkpoint")
+	for checkpoint in checkpoint_nodes:
+		# Check if the node has the expected signal before trying to connect
+		if checkpoint.has_signal("checkpoint_activated"):
+			# Connect the checkpoint's activation signal to our update function
+			checkpoint.checkpoint_activated.connect(_update_checkpoint_position)
+			print_rich("[color=#66CCFF]Manager Connected to Checkpoint at: ", checkpoint.global_position, "[/color]")
+
+# Receives the new position from an activated checkpoint and updates the respawn position.
+func _update_checkpoint_position(new_position: Vector2) -> void:
+	last_checkpoint_position = new_position
+	print_rich("[color=#66FF66]RESPAWN POSITION UPDATED to: ", last_checkpoint_position, "[/color]")
 
 
 # Connects the camera to the player
@@ -89,6 +100,7 @@ func connect_camera_signals() -> void:
 # When the camera returns to the checkpoint
 func _camera_returned_restart() -> void:
 	player.state_machine._enter_state("idle")
+	# Use the dynamically updated last_checkpoint_position for respawn
 	player.global_position = last_checkpoint_position
 	
 	
@@ -154,6 +166,7 @@ func _ghost_died() -> void:
 
 func _respawn_ghost() -> void:
 	ghost.state_machine._enter_state("idle")
+	# Use the dynamically updated last_checkpoint_position for respawn
 	ghost.global_position = last_checkpoint_position
 	
 	
@@ -169,4 +182,3 @@ func _respawn_ghost() -> void:
 	ghost.health_component._heal_fully()
 	ghost.velocity = Vector2.ZERO
 	ghost.movement_component.velocity = Vector2.ZERO
-	
