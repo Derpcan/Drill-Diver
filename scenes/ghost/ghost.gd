@@ -1,7 +1,8 @@
 extends CharacterBody2D
 class_name Ghost
 
-@export var input_log_file_name:String = "inputlog1"
+@export var input_log_file_name:String = "inputlog1.json"
+@export var input_log_folder_path:String = "user://test_data/inputlogs"
 
 @export var movement_component:MovementComponent
 @export var jump_component:JumpComponent
