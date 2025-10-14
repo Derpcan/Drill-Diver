@@ -14,12 +14,13 @@ signal super_drill_start(new_velocity:Vector2)
 signal super_drill_end
 
 func _ready() -> void:
-	super_drill_timer = Timer.new()
-	super_drill_timer.autostart = false
-	super_drill_timer.one_shot = true
-	super_drill_timer.connect("timeout", _emit_super_drill_end_signal)
-	super_hitbox.body_entered.connect(_on_super_hitbox_body_entered)
-	add_child(super_drill_timer )
+	if get_parent() is Player:
+		super_drill_timer = Timer.new()
+		super_drill_timer.autostart = false
+		super_drill_timer.one_shot = true
+		super_drill_timer.connect("timeout", _emit_super_drill_end_signal)
+		super_hitbox.body_entered.connect(_on_super_hitbox_body_entered)
+		add_child(super_drill_timer )
 
 # Calculates the dash velocity given the direction.
 # Starts a timer that lasts for the duration of the dash
