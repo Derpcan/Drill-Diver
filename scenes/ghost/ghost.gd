@@ -17,6 +17,7 @@ class_name Ghost
 @export var health_component:HealthComponent
 @export var animation_play:AnimationPlay
 @export var ray:ShapeCast2D
+@export var super_drill_component:SuperDrillComponent
 
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
 
@@ -69,6 +70,16 @@ func _ready() -> void:
 	health_component.died.connect(drill_component._disable_drill)
 	input_component.dash_inputs.connect(drill_component._set_last_dash)
 	
+	# Super Drill Connections
+	input_component.super_drill_inputs.connect(drill_component._set_last_dash)
+	super_drill_component.super_drill_start.connect(drill_component._enable_drill_detector)
+	super_drill_component.super_drill_end.connect(drill_component._disable_drill_detector)
+	super_drill_component.super_drill_start.connect(movement_component._not_exiting_ground)
+	super_drill_component.super_drill_end.connect(movement_component._enable_vel_x_clamp)
+	super_drill_component.super_drill_start.connect(movement_component.force_velocity)
+	super_drill_component.super_drill_start.connect(movement_component._disable_vel_x_clamp)
+	input_component.super_drill_inputs.connect(super_drill_component._calculate_dash)
+	input_component.super_drill_inputs.connect(_set_last_dash)
 
 
 

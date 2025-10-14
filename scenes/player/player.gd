@@ -52,15 +52,12 @@ func _ready() -> void:
 	dash_component.dash_end.connect(movement_component._enable_vel_x_clamp)
 	on_floor.connect(dash_component._enable_dash)
 	
-	input_component.super_drill_inputs.connect(super_drill_component._calculate_dash)
-	input_component.super_drill_inputs.connect(_set_last_dash)
-	super_drill_component.super_drill_start.connect(movement_component.force_velocity)
-	super_drill_component.super_drill_start.connect(movement_component._disable_vel_x_clamp)
+
 	
 	
 	
-	super_drill_component.super_drill_start.connect(movement_component._not_exiting_ground)
-	super_drill_component.super_drill_end.connect(movement_component._enable_vel_x_clamp)
+	
+	
 	on_floor.connect(super_drill_component._enable_dash)
 	
 	health_component.died.connect(input_component._disable_inputs)
@@ -82,15 +79,23 @@ func _ready() -> void:
 	on_floor_dirt.connect(drill_component._start_bump)
 	dash_component.dash_start.connect(drill_component._enable_drill_detector)
 	dash_component.dash_end.connect(drill_component._disable_drill_detector)
-	super_drill_component.super_drill_start.connect(drill_component._enable_drill_detector)
-	super_drill_component.super_drill_end.connect(drill_component._disable_drill_detector)
 	drill_detector.body_entered.connect(drill_component._enter_drill_state)
 	drill_detector.body_exited.connect(drill_component._exit_drill_state)
 	bump_detector.body_entered.connect(drill_component._start_bump)
 	bounce_timer.timeout.connect(drill_component._enable_movement_after_bounce)
 	drill_component.entered_drill_mode.connect(movement_component._disable_movement)
 	input_component.dash_inputs.connect(drill_component._set_last_dash)
+	
+	# Super Drill Connections
 	input_component.super_drill_inputs.connect(drill_component._set_last_dash)
+	super_drill_component.super_drill_start.connect(drill_component._enable_drill_detector)
+	super_drill_component.super_drill_end.connect(drill_component._disable_drill_detector)
+	super_drill_component.super_drill_start.connect(movement_component._not_exiting_ground)
+	super_drill_component.super_drill_end.connect(movement_component._enable_vel_x_clamp)
+	super_drill_component.super_drill_start.connect(movement_component.force_velocity)
+	super_drill_component.super_drill_start.connect(movement_component._disable_vel_x_clamp)
+	input_component.super_drill_inputs.connect(super_drill_component._calculate_dash)
+	input_component.super_drill_inputs.connect(_set_last_dash)
 
 
 

@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://b8mmd73gut507" path="res://scenes/components/drill_component.gd" id="12_gx1jg"]
 [ext_resource type="PackedScene" uid="uid://dbmv1rqx5nlbt" path="res://scenes/components/health_component.tscn" id="13_ugbui"]
 [ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_fcs02"]
-[ext_resource type="Script" uid="uid://ca2j7t2iuei5m" path="res://super_drill_component.gd" id="16_kvlxm"]
+[ext_resource type="Script" path="res://super_drill_component.gd" id="16_kvlxm"]
 [ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/key_logger.tscn" id="16_myrg7"]
 
 [sub_resource type="JSON" id="JSON_fcs02"]
@@ -222,7 +222,6 @@ debug_color = Color(0.968203, 0, 0.469374, 0.42)
 
 [node name="SuperDrillComponent" type="Node" parent="."]
 script = ExtResource("16_kvlxm")
-metadata/_custom_type_script = "uid://ca2j7t2iuei5m"
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]

@@ -8,6 +8,7 @@ signal movement_inputs(direction:Vector2, delta:float)
 signal jump_input(dir:Vector2, is_pressed:bool)
 signal dash_inputs(direction:Vector2)
 signal drill_inputs(direction:Vector2)
+signal super_drill_inputs(direction:Vector2)
 
 var key_array:Array = []
 var elapsed_time:float = 0.0
@@ -68,7 +69,7 @@ func _physics_process(delta: float) -> void:
 	var jump_direction:Vector2 = Vector2.ZERO
 	var dash_dir:Vector2 = Vector2.ZERO
 	var drill_dir:Vector2 = Vector2.ZERO
-	
+	var super_drill_dir:Vector2 = Vector2.ZERO
 	# Check if it is the right time to play the inputs
 	#if (dict["elapsed_time"] >= elapsed_time):
 		#dash_inputs.emit(dash_dir)
@@ -114,10 +115,13 @@ func _physics_process(delta: float) -> void:
 			dash_dir = dict["dash_dir"] as Vector2
 		if dict.has("drill_dir"):
 			drill_dir = dict["drill_dir"] as Vector2
+		if dict.has("super_drill_dir"):
+			super_drill_dir = dict["super_drill_dir"] as Vector2
 	
 	
 	dash_inputs.emit(dash_dir)
 	jump_input.emit(jump_direction, is_jump_pressed)
 	movement_inputs.emit(dir, delta)
 	drill_inputs.emit(drill_dir)
+	super_drill_inputs.emit(super_drill_dir)
 	
