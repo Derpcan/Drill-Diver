@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=20 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
+[ext_resource type="Script" uid="uid://dko13chblqbea" path="res://scenes/test_scene.gd" id="1_gthg3"]
 [ext_resource type="PackedScene" uid="uid://by6028i8q3uht" path="res://scenes/UI/hud.tscn" id="2_j8ivh"]
 [ext_resource type="Texture2D" uid="uid://cfjggk5f6sk0p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Tiles/RunnerTileSet.png" id="3_3qnke"]
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="3_nd71p"]
@@ -309,6 +310,7 @@ animations = [{
 size = Vector2(112, 34)
 
 [node name="TestScene" type="Node2D"]
+script = ExtResource("1_gthg3")
 
 [node name="Hud" parent="." instance=ExtResource("2_j8ivh")]
 visible = false
@@ -390,12 +392,12 @@ input_log_file_name = "inputlog0.json"
 [node name="Checkpoint" parent="." instance=ExtResource("10_s36qc")]
 position = Vector2(64, 354)
 
-[node name="Enemy1" parent="." instance=ExtResource("11_6qxox")]
+[node name="Enemy1" parent="." groups=["enemy"] instance=ExtResource("11_6qxox")]
 position = Vector2(345, 152)
 speed = 20.0
 patrol_distance = 75.0
 
-[node name="Enemy2" parent="." instance=ExtResource("11_6qxox")]
+[node name="Enemy2" parent="." groups=["enemy"] instance=ExtResource("11_6qxox")]
 position = Vector2(661, 312)
 speed = 20.0
 patrol_distance = 75.0

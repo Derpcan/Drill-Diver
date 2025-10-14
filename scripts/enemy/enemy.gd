@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name Enemy
 # 1. MOVEMENT PROPERTIES
 @export var speed: float
 @export var patrol_distance: float # How far the enemy walks from its start point
@@ -13,6 +13,8 @@ var is_dead: bool = false # State variable for death
 @onready var sprite = $AnimatedSprite2D
 @onready var damage_area = $HitBox
 @onready var hurtbox = $EnemyHurtbox
+
+signal died(enemy)
 
 func _ready():
 	initial_x = global_position.x # Record the starting X position
@@ -51,6 +53,7 @@ func _on_enemy_hurtbox_area_entered(area: Area2D) -> void:
 	if area.name == "DashHitbox": # Checks for the specific Area2D name
 		if not is_dead:
 			die()
+			emit_signal("died", self)
 
 func die():
 	is_dead = true
