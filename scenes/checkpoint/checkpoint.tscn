@@ -6,6 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sg1lo"]
 
 [node name="Checkpoint" type="Area2D" groups=["checkpoint"]]
+collision_layer = 0
+collision_mask = 128
 script = ExtResource("1_qopk8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
