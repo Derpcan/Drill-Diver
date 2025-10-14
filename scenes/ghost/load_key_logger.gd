@@ -3,6 +3,7 @@ class_name KeyLogLoader
 
 
 @export var json_name:String = "inputlog0.json"
+var folder_path:String = "user://test_data/inputlogs"
 
 signal movement_inputs(direction:Vector2, delta:float)
 signal jump_input(dir:Vector2, is_pressed:bool)
@@ -16,12 +17,13 @@ var elapsed_time:float = 0.0
 func _ready() -> void:
 	var parent = get_parent() as Ghost
 	json_name = parent.input_log_file_name
+	folder_path = parent.input_log_folder_path
 	_load_key_log_json()
 
 
 func _load_key_log_json() -> void:
 	# Create variables to store path of folders and the saved animation file
-	var folder_path:String = "user://test_data/inputlogs"
+	
 	var save_path:String = folder_path + "/" + json_name
 	
 	if FileAccess.file_exists(save_path):
