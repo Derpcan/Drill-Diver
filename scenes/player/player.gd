@@ -18,12 +18,14 @@ class_name Player
 @export var super_drill_component:SuperDrillComponent
 
 
+
 @onready var terrain :Terrain = get_tree().get_first_node_in_group("Terrain") as Terrain
 
 
 signal on_floor()
 signal on_floor_dirt()
 signal rotate
+signal super_drill_tile()
 
 
 
@@ -90,12 +92,15 @@ func _ready() -> void:
 	input_component.super_drill_inputs.connect(drill_component._set_last_dash)
 	super_drill_component.super_drill_start.connect(drill_component._enable_drill_detector)
 	super_drill_component.super_drill_end.connect(drill_component._disable_drill_detector)
+	super_drill_component.super_drill_start.connect(super_drill_component._enable_super_drill_hitbox)
+	super_drill_component.super_drill_end.connect(super_drill_component._disable_super_drill_hitbox)
 	super_drill_component.super_drill_start.connect(movement_component._not_exiting_ground)
 	super_drill_component.super_drill_end.connect(movement_component._enable_vel_x_clamp)
 	super_drill_component.super_drill_start.connect(movement_component.force_velocity)
 	super_drill_component.super_drill_start.connect(movement_component._disable_vel_x_clamp)
 	input_component.super_drill_inputs.connect(super_drill_component._calculate_dash)
 	input_component.super_drill_inputs.connect(_set_last_dash)
+	
 
 
 

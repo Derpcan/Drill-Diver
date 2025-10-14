@@ -18,6 +18,7 @@ texture = ExtResource("2_qcckd")
 0:0/0/modulate = Color(0.501961, 0.501961, 0.501961, 1)
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8, -8, -8, -8, -8)
 0:0/0/physics_layer_2/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0/physics_layer_4/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:0/0/custom_data_0 = true
 0:0/0/custom_data_1 = 1
 
@@ -36,6 +37,8 @@ physics_layer_2/collision_layer = 9
 physics_layer_2/collision_mask = 9
 physics_layer_3/collision_layer = 17
 physics_layer_3/collision_mask = 17
+physics_layer_4/collision_layer = 33
+physics_layer_4/collision_mask = 0
 custom_data_layer_0/name = "drillable"
 custom_data_layer_0/type = 1
 custom_data_layer_1/name = "hardness"

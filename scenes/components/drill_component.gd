@@ -93,13 +93,12 @@ func _disable_drill_detector():
 # Enable the drill detector
 func _enable_drill_detector(_vel:Vector2):
 	var collision: CollisionShape2D = drill_detector.get_child(0)
-	
 	collision.disabled = false
 	
 	_vel = _vel.normalized()
-	collision.rotation = _vel.angle() + PI/2
+	collision.rotation = _vel.angle() + PI
 	
-	# Allows drilling from   at weird angles
+	# Allows drilling from  at weird angles
 	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
 		collision.rotation += PI
 		collision.position.y = -1.0
