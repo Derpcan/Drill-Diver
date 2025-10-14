@@ -309,7 +309,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h3xc6"]
-size = Vector2(108, 27)
+size = Vector2(108, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0xbq"]
 size = Vector2(20, 113)
@@ -390,7 +390,7 @@ centered = false
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(648, 435.5)
+position = Vector2(648, 433)
 shape = SubResource("RectangleShape2D_h3xc6")
 
 [node name="Checkpoint" parent="." instance=ExtResource("10_s36qc")]
