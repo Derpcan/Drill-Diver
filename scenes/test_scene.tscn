@@ -478,4 +478,7 @@ remove_up_to_frame = 1750
 [node name="CollisionShape2D" parent="Ghost/HurtBox" index="0"]
 disabled = true
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(591, 347)
+
 [editable path="Ghost"]

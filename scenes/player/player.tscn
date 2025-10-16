@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dbmv1rqx5nlbt" path="res://scenes/components/health_component.tscn" id="13_ugbui"]
 [ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_fcs02"]
 [ext_resource type="Script" uid="uid://ca2j7t2iuei5m" path="res://super_drill_component.gd" id="16_kvlxm"]
-[ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/key_logger.tscn" id="16_myrg7"]
+[ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/input_logger.tscn" id="16_myrg7"]
 
 [sub_resource type="JSON" id="JSON_fcs02"]
 data = {

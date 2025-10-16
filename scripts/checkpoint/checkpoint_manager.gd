@@ -124,6 +124,11 @@ func _camera_returned_restart() -> void:
 	# Attach the camera back to the player
 	game_camera.reparent(player)
 	
+	# Christian: Moved from _player_animation_finished so it starts when input is re-enabled
+	# Charlie: When the death animation is finished, stop the timer and reenable it to start again
+	GameManager.set_timer_to(GameManager.get_time_at_checkpoint()) # Turn this off to not reset timer
+	GameManager.set_timer_can_start(true)
+	
 
 
 # Will connect the player's necessary signals to this manager
@@ -140,9 +145,7 @@ func _player_animation_finished(animation_name:String) -> void:
 		print_rich("[color=#ED6868]Death Caught", "[/color]")
 		emit_signal("player_death_animation_ended", last_checkpoint_position)
 		
-		# Charlie: When the death animation is finished, stop the timer and reenable it to start again
-		GameManager.set_timer_to(GameManager.get_time_at_checkpoint())
-		GameManager.set_timer_can_start(true)
+
 
 
 func _player_died() -> void:

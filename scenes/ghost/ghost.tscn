@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://b8mmd73gut507" path="res://scenes/components/drill_component.gd" id="12_repsn"]
 [ext_resource type="PackedScene" uid="uid://dbmv1rqx5nlbt" path="res://scenes/components/health_component.tscn" id="13_mnbd1"]
 [ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_m3884"]
-[ext_resource type="PackedScene" uid="uid://dh34w4u750hwq" path="res://scenes/ghost/load_key_logger.tscn" id="16_qauis"]
+[ext_resource type="PackedScene" uid="uid://dh34w4u750hwq" path="res://scenes/ghost/load_input_logger.tscn" id="16_qauis"]
 [ext_resource type="PackedScene" uid="uid://cwyk8dwf0iqq6" path="res://super_drill_component.tscn" id="16_qlm1j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ewyia"]
