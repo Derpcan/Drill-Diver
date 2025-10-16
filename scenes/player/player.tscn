@@ -219,7 +219,7 @@ scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_fm80t")
 debug_color = Color(2.21401e-06, 0.624765, 0.526161, 0.42)
 
-[node name="KeyLogger" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("16_myrg7")]
+[node name="InputLogger" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("16_myrg7")]
 input_component = NodePath("../InputComponent")
 
 [node name="DashHitbox" type="Area2D" parent="."]

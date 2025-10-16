@@ -2,7 +2,8 @@ extends Node
 class_name KeyLogger
 ## Logs the keys pressed in a given frame, gets inputs from the InputComponent
 
-
+## Will read the signals of the inputs off of the InputComponent and store them
+## so they can be used for replays.
 @export var input_component:InputComponent
 var folder_path:String = "user://test_data/inputlogs"
 var save_path:String = folder_path + "/intputlog.json"

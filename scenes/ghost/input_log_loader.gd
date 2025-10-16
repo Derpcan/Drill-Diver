@@ -13,7 +13,7 @@ signal dash_inputs(direction:Vector2)
 signal drill_inputs(direction:Vector2)
 signal super_drill_inputs(direction:Vector2)
 
-# Skip to a specfic frame of the input replay
+## Skip to a specfic frame of the input replay
 @export var remove_up_to_frame:int = 0
 
 # Keeps all the pressed keys read from the input log

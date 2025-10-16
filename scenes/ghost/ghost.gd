@@ -1,9 +1,15 @@
 extends CharacterBody2D
 class_name Ghost
 
+## Override the file name of the input log file
 @export var input_log_file_name:String = "inputlog1.json"
+
+## Override the folder path of the input log file
 @export var input_log_folder_path:String = "user://test_data/inputlogs"
+
+## Skip to a specfic frame of the input replay
 @export var remove_up_to_frame:int = 0
+
 
 @export var movement_component:MovementComponent
 @export var jump_component:JumpComponent
@@ -42,7 +48,7 @@ func _ready() -> void:
 	jump_component.jump.connect(movement_component.force_velocity_y)
 	
 	input_component.dash_inputs.connect(dash_component._calculate_dash)
-	input_component.dash_inputs.connect(_set_last_dash)
+	
 	dash_component.dash_start.connect(movement_component.force_velocity)
 	dash_component.dash_start.connect(movement_component._disable_vel_x_clamp)
 	dash_component.dash_start.connect(movement_component._not_exiting_ground)
