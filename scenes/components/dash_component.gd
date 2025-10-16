@@ -1,7 +1,7 @@
 extends Node
 class_name DashComponent
 
-@onready var dash_hitbox: Area2D = owner.get_node("DashHitbox")
+@onready var dash_hitbox: Area2D = owner.get_node_or_null("DashHitbox")
 
 @export var dash_speed:float = 200
 

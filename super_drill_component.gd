@@ -1,8 +1,8 @@
 extends Node
 class_name SuperDrillComponent
 
-@onready var dash_hitbox: Area2D = owner.get_node("DashHitbox")
-@onready var super_hitbox: Area2D = owner.get_node("SuperHitbox")
+@onready var dash_hitbox: Area2D = owner.get_node_or_null("DashHitbox")
+@onready var super_hitbox: Area2D = owner.get_node_or_null("SuperHitbox")
 @export var super_drill_speed:float = 175
 
 var super_drill_timer:Timer
