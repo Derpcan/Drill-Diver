@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
 [ext_resource type="PackedScene" uid="uid://s3d4wjd0wc53" path="res://scenes/components/json_loader.tscn" id="2_gmlin"]
 [ext_resource type="PackedScene" uid="uid://bc2f56sqxrqqk" path="res://scenes/animation play/animation_play.tscn" id="3_gmlin"]
+[ext_resource type="JSON" path="res://assets/JSON/Player.JSON" id="4_kvlxm"]
 [ext_resource type="PackedScene" uid="uid://boi6rio4dyg2u" path="res://scenes/components/state_machine.tscn" id="4_lvxji"]
 [ext_resource type="PackedScene" uid="uid://dqp5bgps30vvg" path="res://scenes/components/movement_component.tscn" id="5_p47bc"]
 [ext_resource type="PackedScene" uid="uid://b34ldb1ryno6p" path="res://scenes/components/input_component.tscn" id="6_75vfm"]
@@ -17,51 +18,8 @@
 [ext_resource type="Script" uid="uid://ca2j7t2iuei5m" path="res://super_drill_component.gd" id="16_kvlxm"]
 [ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/input_logger.tscn" id="16_myrg7"]
 
-[sub_resource type="JSON" id="JSON_fcs02"]
-data = {
-"player": {
-"sprites": {
-"death": {
-"frames_x": 4.0,
-"frames_y": 1.0,
-"loop": false,
-"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Death.png",
-"time_length": 0.8
-},
-"drill": {
-"frames_x": 1.0,
-"frames_y": 1.0,
-"loop": true,
-"path": "res://assets/development assets (temporary)/Drill.png",
-"time_length": 0.8
-},
-"idle": {
-"frames_x": 6.0,
-"frames_y": 1.0,
-"loop": true,
-"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Idle.png",
-"time_length": 0.8
-},
-"jump": {
-"frames_x": 5.0,
-"frames_y": 1.0,
-"loop": true,
-"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Jump.png",
-"time_length": 0.8
-},
-"run": {
-"frames_x": 6.0,
-"frames_y": 1.0,
-"loop": true,
-"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Run.png",
-"time_length": 0.8
-}
-}
-}
-}
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_myrg7"]
-radius = 3.37079
+radius = 4.0
 height = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fcs02"]
@@ -98,11 +56,12 @@ ray = NodePath("ShapeCast2D")
 super_drill_component = NodePath("SuperDrillComponent")
 
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
+animation = &""
 json_loaded = NodePath("../JSONLoader")
 creature_name = "player"
 
 [node name="JSONLoader" parent="." instance=ExtResource("2_gmlin")]
-json_file = SubResource("JSON_fcs02")
+json_file = ExtResource("4_kvlxm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
@@ -177,7 +136,7 @@ input_pickable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DrillDetector"]
 physics_interpolation_mode = 2
 position = Vector2(0, 1)
-scale = Vector2(1.8, 1.011)
+scale = Vector2(1.8, 0.8)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
 

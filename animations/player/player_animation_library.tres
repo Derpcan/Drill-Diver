@@ -1,7 +1,7 @@
-[gd_resource type="AnimationLibrary" load_steps=6 format=3 uid="uid://d1tiev5c5qv4m"]
+[gd_resource type="AnimationLibrary" load_steps=7 format=3]
 
 [sub_resource type="Animation" id="Animation_7aoul"]
-length = 0.8
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -9,10 +9,37 @@ tracks/0/path = NodePath("AnimationSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": ["dash"]
+}
+
+[sub_resource type="Animation" id="Animation_ellx7"]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0571429, 0.114286, 0.171429, 0.228571, 0.285714, 0.342857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -27,7 +54,7 @@ tracks/1/keys = {
 "values": ["death"]
 }
 
-[sub_resource type="Animation" id="Animation_ellx7"]
+[sub_resource type="Animation" id="Animation_tbrg4"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -37,10 +64,10 @@ tracks/0/path = NodePath("AnimationSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -55,7 +82,7 @@ tracks/1/keys = {
 "values": ["drill"]
 }
 
-[sub_resource type="Animation" id="Animation_tbrg4"]
+[sub_resource type="Animation" id="Animation_jqmen"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -65,10 +92,10 @@ tracks/0/path = NodePath("AnimationSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0, 1]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -83,9 +110,8 @@ tracks/1/keys = {
 "values": ["idle"]
 }
 
-[sub_resource type="Animation" id="Animation_jqmen"]
-length = 0.8
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_jmtdp"]
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -93,10 +119,10 @@ tracks/0/path = NodePath("AnimationSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0, 1, 2, 3]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -111,7 +137,7 @@ tracks/1/keys = {
 "values": ["jump"]
 }
 
-[sub_resource type="Animation" id="Animation_jmtdp"]
+[sub_resource type="Animation" id="Animation_rdg5d"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -141,9 +167,10 @@ tracks/1/keys = {
 
 [resource]
 _data = {
-&"death": SubResource("Animation_7aoul"),
-&"drill": SubResource("Animation_ellx7"),
-&"idle": SubResource("Animation_tbrg4"),
-&"jump": SubResource("Animation_jqmen"),
-&"run": SubResource("Animation_jmtdp")
+&"dash": SubResource("Animation_7aoul"),
+&"death": SubResource("Animation_ellx7"),
+&"drill": SubResource("Animation_tbrg4"),
+&"idle": SubResource("Animation_jqmen"),
+&"jump": SubResource("Animation_jmtdp"),
+&"run": SubResource("Animation_rdg5d")
 }

@@ -17,7 +17,7 @@ signal bounce
 signal entered_drill_mode()
 
 var can_move:bool = true
-var can_bounce:bool = true
+var can_bounce:bool = false
 var last_dash:Vector2
 
 var drill_enabled:bool = false:
@@ -84,6 +84,8 @@ func rotate_player(rot:float):
 
 # Disables the drill detector
 func _disable_drill_detector():
+	var sprite = get_parent().animated_sprite
+	
 	if not drill_enabled:
 		var collision: CollisionShape2D = drill_detector.get_child(0)
 		collision.set_deferred("disabled", true)
@@ -93,16 +95,19 @@ func _disable_drill_detector():
 # Enable the drill detector
 func _enable_drill_detector(_vel:Vector2):
 	var collision: CollisionShape2D = drill_detector.get_child(0)
+	var sprite = get_parent().animated_sprite
 	collision.disabled = false
 	
 	_vel = _vel.normalized()
 	collision.rotation = _vel.angle() + PI
+	sprite.rotation = _vel.angle()
+	if sprite.flip_h == true:
+		sprite.rotation += PI
 	
 	# Allows drilling from  at weird angles
 	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
 		collision.rotation += PI
 		collision.position.y = -1.0
-
 
 # Re-enable movement after a bounce
 func _enable_movement_after_bounce():
@@ -119,14 +124,20 @@ func _start_bump(_body):
 	drill_shape_cast.force_shapecast_update()
 	
 	# Check if the shape cast is colliding with anything
-	if drill_shape_cast.is_colliding() and can_bounce:
+	if drill_shape_cast.is_colliding():
 	
 		var normal = drill_shape_cast.get_collision_normal(0)
 		
 		parent.velocity = parent.velocity.bounce(normal) * 0.8  # 0.8 for energy loss
 		
+		if parent.velocity.x == 0.0 and parent.velocity.y != 0.0 :
+				parent.velocity = Vector2(parent.velocity.y/2,parent.velocity.y)
+				
+		elif parent.velocity.y == 0.0 and parent.velocity.x != 0.0:
+			parent.velocity = Vector2(parent.velocity.x,parent.velocity.x/2)
+			
 		if parent.animated_sprite.flip_h == true:
-			parent.rotation = -1* (PI-parent.velocity.angle())
+			parent.rotation = -1*(PI-parent.velocity.angle())
 		else:
 			parent.rotation = parent.velocity.angle()
 		
@@ -134,23 +145,22 @@ func _start_bump(_body):
 		can_move = false
 		parent.bounce_timer.start(0.2)
 		drill_shape_cast.force_shapecast_update()
-		if drill_shape_cast.is_colliding():
-			var rot = (PI/2 + parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
+		#
+		#if drill_shape_cast.is_colliding():
+			#
+		#
+			#
+			#var rot = PI*parent.get_angle_to(drill_shape_cast.get_collision_point(0))
+			#rotate_player(rot)
+			#
 			
-			if parent.animated_sprite.flip_h == true:
-				rot = PI - rot
-			
-			rotate_player(rot)
-			
-			
-				
-			if parent.velocity.y == 0.0:
-				rot -= (PI - parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
-				if parent.animated_sprite.flip_h == true:
-					rot = (PI/2 + parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
-					rot += (PI + parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
-				rotate_player(rot)
-	
+			#if parent.velocity.y == 0.0 or parent.velocity.x == 0.0 :
+				#rot -= (PI - parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
+				#if parent.animated_sprite.flip_h == true:
+					#rot = (PI/2 + parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
+					#rot += (PI - parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
+				#rotate_player(rot)
+		
 
 
 
@@ -247,5 +257,4 @@ func _enter_drill_state(_body) -> void:
 		for i in range(5):
 			await get_tree().physics_frame
 		
-		# enable can_bounce
 		can_bounce = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=25 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
 [ext_resource type="Script" uid="uid://dko13chblqbea" path="res://scenes/test_scene.gd" id="1_gthg3"]
@@ -315,6 +315,49 @@ size = Vector2(108, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0xbq"]
 size = Vector2(20, 113)
 
+[sub_resource type="JSON" id="JSON_pln1h"]
+data = {
+"player": {
+"sprites": {
+"death": {
+"frames_x": 4.0,
+"frames_y": 1.0,
+"loop": false,
+"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Death.png",
+"time_length": 0.8
+},
+"drill": {
+"frames_x": 1.0,
+"frames_y": 1.0,
+"loop": true,
+"path": "res://assets/development assets (temporary)/Drill.png",
+"time_length": 0.8
+},
+"idle": {
+"frames_x": 2.0,
+"frames_y": 1.0,
+"loop": true,
+"path": "res://assets/sprites/bit/Bit_Idle_Temp.png",
+"time_length": 0.8
+},
+"jump": {
+"frames_x": 5.0,
+"frames_y": 1.0,
+"loop": true,
+"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Jump.png",
+"time_length": 0.8
+},
+"run": {
+"frames_x": 6.0,
+"frames_y": 1.0,
+"loop": true,
+"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Run.png",
+"time_length": 0.8
+}
+}
+}
+}
+
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_gthg3")
 
@@ -475,10 +518,14 @@ position = Vector2(204, 149)
 input_log_file_name = "inputlog135.json"
 remove_up_to_frame = 1750
 
+[node name="JSONLoader" parent="Ghost" index="1"]
+json_file = SubResource("JSON_pln1h")
+
 [node name="CollisionShape2D" parent="Ghost/HurtBox" index="0"]
 disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(591, 347)
+enabled = false
 
 [editable path="Ghost"]

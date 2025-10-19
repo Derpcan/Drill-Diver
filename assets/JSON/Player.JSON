@@ -2,39 +2,25 @@
 	"player": {
 		"sprites": {
 			"run": {
-				"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Run.png",
+				"path": "res://assets/sprites/bit/Bit_run.png",
 				"frames_x": 6.0,
 				"frames_y": 1.0,
 				"loop": true,
 				"time_length": 0.8
 			},
 			"idle": {
-				"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Idle.png",
-				"frames_x": 6.0,
+				"path": "res://assets/sprites/bit/Bit_Idle.png",
+				"frames_x": 2.0,
 				"frames_y": 1.0,
 				"loop": true,
 				"time_length": 0.8
 			},
 			"jump": {
-				"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Jump.png",
-				"frames_x": 5.0,
-				"frames_y": 1.0,
-				"loop": true,
-				"time_length": 0.8
-			},
-			"drill": {
-				"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Jump.png",
-				"frames_x": 5.0,
-				"frames_y": 1.0,
-				"loop": true,
-				"time_length": 0.8
-			},
-			"death": {
-				"path": "res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Astronaut/Astronaut_Death.png",
+				"path": "res://assets/sprites/bit/Bit_Jump.png",
 				"frames_x": 4.0,
 				"frames_y": 1.0,
 				"loop": false,
-				"time_length": 0.8
+				"time_length": 0.4
 			},
 			"drill": {
 				"path": "res://assets/development assets (temporary)/Drill.png",
@@ -42,6 +28,20 @@
 				"frames_y": 1.0,
 				"loop": true,
 				"time_length": 0.8
+			},
+			"death": {
+				"path": "res://assets/sprites/bit/Bit_Die.png",
+				"frames_x": 7.0,
+				"frames_y": 1.0,
+				"loop": false,
+				"time_length": 0.4
+			},
+			"dash": {
+				"path":"res://assets/sprites/bit/Bit_Dash.png",
+				"frames_x": 3.0,
+				"frames_y": 1.0,
+				"loop": false,
+				"time_length": 0.3
 			}
 		}
 	}

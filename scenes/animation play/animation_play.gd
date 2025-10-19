@@ -89,15 +89,20 @@ func create_animations(lib:AnimationLibrary, creature_name:String) -> void:
 			# Parse from the json how long the animation should take
 			var time_length:float = json_animation["time_length"]
 			
+			# Parse from the json how long the animation should take
+			var frame_count:float = json_animation["frames_x"] * json_animation["frames_y"]
+			
 			# Set the should_loop variable to loop if loop is true in JSON and loop_none if loop is false in JSON
 			var should_loop: = Animation.LOOP_LINEAR if json_animation["loop"] else Animation.LOOP_NONE
 			
+			
+			
 			# Add each animation to the library
-			add_animation_to_library(anim_name, lib, time_length, should_loop)
+			add_animation_to_library(anim_name, lib, time_length, should_loop, frame_count)
 
 
 # Make an animation and add it to the library
-func add_animation_to_library(animation_name:String, lib:AnimationLibrary, time_length:float, should_loop) -> void:
+func add_animation_to_library(animation_name:String, lib:AnimationLibrary, time_length:float, should_loop, frame_count:float) -> void:
 	# Create an animation to store new data
 	var anim:Animation = Animation.new()
 	
@@ -119,12 +124,16 @@ func add_animation_to_library(animation_name:String, lib:AnimationLibrary, time_
 	anim.track_set_path(track, str(relative_path)+":frame")
 	
 	# Calculate the time step between each frame
-	var frame_time_step:float = anim.length / 6.0
+	var frame_time_step:float = anim.length / frame_count
 	
-	# Insert each frame into the animation at each time step
-	for i in range(0,6):
-		anim.track_insert_key(track, (i)*frame_time_step, i)
-	
+	if animation_name != "dash":
+		# Insert each frame into the animation at each time step
+		for i in range(0,frame_count):
+			anim.track_insert_key(track, (i)*frame_time_step, i)
+	else:
+		anim.track_insert_key(track, 0, 0)
+		anim.track_insert_key(track, 0.05, 1)
+		anim.track_insert_key(track, 0.1, 2)
 	
 	# Make a new track for the animation to set the animation for the AnimationSprite so it uses the proper sprites
 	var track2 = anim.add_track(Animation.TYPE_VALUE)
