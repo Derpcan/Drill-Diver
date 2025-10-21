@@ -98,6 +98,7 @@ func change_current_replay_frame(change_value:int) -> void:
 	var value:int = key_array[key_array_index+change_value]["frame"]
 	current_counted_frames = value
 	key_array_index = frame_to_input_dict[value]["index"]
+	elapsed_time = key_array[key_array_index]["elapsed_time"]
 
 
 
@@ -105,13 +106,15 @@ func change_current_replay_frame(change_value:int) -> void:
 func _set_replay_frame(set_value:float) -> void:
 	
 	var value:int = int(set_value)
+	
 	if value >= len(key_array) or value < 0:
 		return
 	
 	current_counted_frames = key_array[value]["frame"]
-	key_array_index = frame_to_input_dict[current_counted_frames]["index"]
-
 	
+	key_array_index = frame_to_input_dict[current_counted_frames]["index"]
+	
+	elapsed_time = key_array[value]["elapsed_time"]
 	
 
 # Sets up the dictionary that connects frame to input log
@@ -205,7 +208,7 @@ func _load_key_log_json() -> void:
 			
 			#
 			#for dict in native:
-				##print("move_dir = ",dict["move_dir"])
+				#print("move_dir = ",dict["move_dir"])
 				#pass
 		# Close the file, since it was read fully already
 		file.close()
@@ -262,8 +265,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	# Get the current input to replay
-	var check_dict:Dictionary = key_array[0]
-	var dict:Dictionary = key_array[0]
+	var dict:Dictionary = key_array[key_array_index]
 	
 	# Make default values that should be emitted if no input is able to be read
 	var dir:Vector2 = Vector2.ZERO
@@ -276,7 +278,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Check if the frame should be played
 	# Add the offset to the current Engine frames
-	if dict["frame"] <= remove_up_to_frame + current_counted_frames:
+	if dict["frame"] <= remove_up_to_frame + current_counted_frames and dict["elapsed_time"] <= elapsed_time:
 		# Grab the current input from the array
 		dict = key_array[key_array_index]
 		key_array_index += 1 # increment the index

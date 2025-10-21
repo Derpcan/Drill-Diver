@@ -20,6 +20,8 @@ var elapsed_time:float = 0.0:
 			#print_rich("[color=#34eb71]Time Left: [/color][color=#f28395]", mins, ":", secs)
 		elapsed_time = new_val
 
+var frame:int = 0
+
 var file:FileAccess
 
 
@@ -41,6 +43,9 @@ func _ready() -> void:
 	tree_exiting.connect(_exiting)
 
 
+func _physics_process(delta: float) -> void:
+	elapsed_time += get_physics_process_delta_time()
+	frame += 1
 
 
 func _set_up_key_logger() -> void:
@@ -67,7 +72,7 @@ func _set_up_key_logger() -> void:
 
 # Log the keys this frame from the InputComponent
 func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_pressed:bool, dash_dir:Vector2, drill_vector:Vector2) -> void:
-	elapsed_time += get_physics_process_delta_time()
+	
 	
 	# Get the current frame (subtract frame offset to make replaying better)
 	var current_frame:int = Engine.get_physics_frames() - frame_offset
@@ -99,7 +104,7 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 		#keys_pressed_dict["frame"] = current_frame
 		
 	
-	if not keys_pressed_dict.is_empty() or current_frame % 5 == 0:
+	if not keys_pressed_dict.is_empty() or frame % 5 == 0:
 		#var parent = get_parent() as CharacterBody2D
 		keys_pressed_dict["rot"] = parent.rotation
 		
@@ -111,7 +116,7 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 		keys_pressed_dict["elapsed_time"] = elapsed_time
 		
 		# Set the current frame - the frame offset
-		keys_pressed_dict["frame"] = current_frame
+		keys_pressed_dict["frame"] = frame
 		if "animated_sprite" in parent:
 			keys_pressed_dict["flip"] = parent.animated_sprite.flip_h
 		

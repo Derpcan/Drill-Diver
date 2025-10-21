@@ -3,6 +3,8 @@ extends HSlider
 ## Keep track of the ghost so playback can be scrubbed through
 @export var ghost:Ghost
 
+var is_being_dragged:bool = false
+
 func _ready() -> void:
 	if not ghost: # If the ghost is not set, hide and quit early
 		hide()
@@ -20,6 +22,21 @@ func _ready() -> void:
 	
 	drag_started.connect(ghost.input_component._enable_pause_playback)
 	drag_ended.connect(ghost.input_component._disable_pause_playback)
+	
+	drag_started.connect(_is_dragging)
+	drag_ended.connect(_stopped_dragging)
 
 func _update_slider(new_value:int) -> void:
-	value = new_value
+	if is_being_dragged:
+		value = new_value
+	else:
+		# Make it so it will update live and not emit signal
+		value_changed.disconnect(ghost.input_component._set_replay_frame)
+		value = new_value
+		value_changed.connect(ghost.input_component._set_replay_frame)
+
+func _is_dragging() -> void:
+	is_being_dragged = true
+
+func _stopped_dragging(any=null) -> void:
+	is_being_dragged = false
