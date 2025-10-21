@@ -1,16 +1,20 @@
 extends HSlider
 
-
+## Keep track of the ghost so playback can be scrubbed through
 @export var ghost:Ghost
 
 func _ready() -> void:
+	if not ghost: # If the ghost is not set, hide and quit early
+		hide()
+		return
 	
-	await get_tree().physics_frame
-	ghost.input_component._set_replay_frame(0)
-	
+	# Wait until ghost is ready
+	await ghost.ready
+	# Set max value of slider
 	max_value = len(ghost.input_component.key_array)
-	step = 1
+	step = 1 # set the step to 1
 	
+	# Connect signals necessary
 	value_changed.connect(ghost.input_component._set_replay_frame)
 	ghost.input_component.key_array_index_changed.connect(_update_slider)
 	
