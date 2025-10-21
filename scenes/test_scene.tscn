@@ -460,40 +460,42 @@ position = Vector2(661, 312)
 speed = 20.0
 patrol_distance = 75.0
 
-[node name="MeterItem" parent="." instance=ExtResource("14_u0xbq")]
+[node name="Gems" type="Node2D" parent="."]
+
+[node name="MeterItem" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(345, 118)
 
-[node name="MeterItem2" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem2" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(554, 107)
 
-[node name="MeterItem3" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem3" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(765, 135)
 
-[node name="MeterItem4" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem4" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(855, 137)
 
-[node name="MeterItem5" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem5" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(576, 223)
 
-[node name="MeterItem6" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem6" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(304, 291)
 
-[node name="MeterItem7" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem7" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(431, 290)
 
-[node name="MeterItem11" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem11" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(439, 219)
 
-[node name="MeterItem12" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem12" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(191, 434)
 
-[node name="MeterItem8" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem8" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(191, 384)
 
-[node name="MeterItem9" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem9" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(249, 352)
 
-[node name="MeterItem10" parent="." instance=ExtResource("14_u0xbq")]
+[node name="MeterItem10" parent="Gems" instance=ExtResource("14_u0xbq")]
 position = Vector2(64, 332)
 
 [node name="FinishLevel" type="Area2D" parent="."]
