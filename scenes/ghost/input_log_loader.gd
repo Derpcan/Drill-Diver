@@ -38,7 +38,67 @@ func _ready() -> void:
 	
 	# Load the key log file
 	_load_key_log_json()
+	
+	# Update the remove_up_to_frame value to the first input frame
+	remove_up_to_frame = find_first_input()
+	# Skip to the first input value
+	skip_to_frame(remove_up_to_frame)
+	
+	
 
+
+# Finds the first input in the array
+func find_first_input() -> int:
+	var frame_first_input:int = 0
+	
+	var temp_array:Array = key_array.duplicate()
+	
+	# If the key array contains input data from the json file
+	if len(temp_array) > 0:
+		# Get the first input from the key array
+		var dict:Dictionary = temp_array[0]
+		
+		# Check if the first recorded value has inputs
+		if has_input(dict):
+				frame_first_input = dict["frame"]
+				return frame_first_input
+		
+		#has_input = "move_dir" in dict or "jump_dir" in dict or "is_jump_pressed" in dict or "dash_dir" in dict or "drill_dir" in dict
+		while len(temp_array) > 1: # Check if it should be skipped
+			temp_array.pop_front() # Remove the input from the array
+			dict = temp_array[0] # Go to the next frame
+			
+			# If the dict has an input section
+			if has_input(dict):
+				frame_first_input = dict["frame"]
+				return frame_first_input # Return the frame value
+			
+	
+	# Returns the first frame that has input
+	return frame_first_input
+
+
+# Checks if the input dictionary has input values
+func has_input(dict:Dictionary) -> bool:
+	return "move_dir" in dict or "jump_dir" in dict or "is_jump_pressed" in dict or "dash_dir" in dict or "drill_dir" in dict
+
+
+func skip_to_frame(remove_up_to_frame:int) -> void:
+	# Make a temporary variable to help skip frames
+	var frame:int = 0
+	
+	# If the key array contains input data from the json file
+	if len(key_array) > 0:
+		# Get the first input from the key array
+		var dict:Dictionary = key_array[0]
+		# Set frame equal to the first frame recorded in the inputs
+		frame = dict["frame"]
+		while frame < remove_up_to_frame: # Check if it should be skipped
+			key_array.pop_front() # Remove the input from the array
+			dict = key_array[0] # Go to the next frame
+			frame = dict["frame"] # Update frame to next input frame value
+	
+	
 
 func _load_key_log_json() -> void:
 	# Make a variable to store the path to the input log file
@@ -68,19 +128,7 @@ func _load_key_log_json() -> void:
 		# Close the file, since it was read fully already
 		file.close()
 	
-	# Make a temporary variable to help skip frames
-	var frame:int = 0
 	
-	# If the key array contains input data from the json file
-	if len(key_array) > 0:
-		# Get the first input from the key array
-		var dict:Dictionary = key_array[0]
-		# Set frame equal to the first frame recorded in the inputs
-		frame = dict["frame"]
-		while frame < remove_up_to_frame: # Check if it should be skipped
-			key_array.pop_front() # Remove the input from the array
-			dict = key_array[0] # Go to the next frame
-			frame = dict["frame"] # Update frame to next input frame value
 
 
 

@@ -25,11 +25,13 @@ var drill_enabled:bool = false:
 		drill_enabled = new_val
 		if drill_enabled:
 			#print("Drill Enabled")
-			print_rich("[color=#42ED59]Drill Enabled", "[/color]")
+			#print_rich("[color=#42ED59]Drill Enabled", "[/color]")
+			pass
 			
 		else:
 			#print("Drill Disabled")
-			print_rich("[color=#EDA451]Drill Disabled", "[/color]")
+			#print_rich("[color=#EDA451]Drill Disabled", "[/color]")
+			pass
 		
 		# Enable or disable the physics_process call depending on 
 		# if the character is in the drilling state

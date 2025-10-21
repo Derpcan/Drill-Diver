@@ -36,7 +36,6 @@ radius = 8.0
 collision_layer = 0
 collision_mask = 25
 script = ExtResource("1_dowl3")
-input_log_file_name = "inputlog0.JSON"
 movement_component = NodePath("MovementComponent")
 jump_component = NodePath("JumpComponent")
 input_component = NodePath("LoadKeyLogger")

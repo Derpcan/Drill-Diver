@@ -24,10 +24,12 @@ var disable_movement_component:bool = false:
 	set(new_val):
 		disable_movement_component = new_val
 		if disable_movement_component:
-			print_rich("[color=#EDA451]Movement Component is Disabled", "[/color]")
+			pass
+			#print_rich("[color=#EDA451]Movement Component is Disabled", "[/color]")
 			#print("Movement Component is Disabled")
 		else:
-			print_rich("[color=#42ED59]Movement Component is Enabled", "[/color]")
+			#print_rich("[color=#42ED59]Movement Component is Enabled", "[/color]")
+			pass
 			#print("Movement Component is Enabled")
 		
 		# Enable or disable physics process depending on if the component is enabled

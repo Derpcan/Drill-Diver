@@ -393,6 +393,7 @@ game_camera = NodePath("../GameCamera")
 position = Vector2(204, 150)
 
 [node name="GameCamera" parent="." instance=ExtResource("4_qjeyg")]
+enabled = false
 zoom = Vector2(4, 4)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -515,8 +516,6 @@ text = "Press \"Esc\" or \"+\" to open Pause Menu and view Controls"
 
 [node name="Ghost" parent="." instance=ExtResource("15_pln1h")]
 position = Vector2(204, 149)
-input_log_file_name = "inputlog135.json"
-remove_up_to_frame = 1750
 
 [node name="JSONLoader" parent="Ghost" index="1"]
 json_file = SubResource("JSON_pln1h")
@@ -526,6 +525,5 @@ disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(591, 347)
-enabled = false
 
 [editable path="Ghost"]

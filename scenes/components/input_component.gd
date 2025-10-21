@@ -59,7 +59,7 @@ func _physics_process(delta: float) -> void:
 			# Otherwise, use the input provided, converted to 8-directions
 			dash_dir = turn_vector_into_8_directions(Vector2(round_to_8_directions(dir_x), round_to_8_directions(dir_y)))
 			
-		print("Dash direction: ", dash_dir)
+		#print("Dash direction: ", dash_dir)
 		# ---------------------------
 		
 	if Input.is_action_just_pressed("super_drill"):
@@ -78,7 +78,7 @@ func _physics_process(delta: float) -> void:
 			# Otherwise, use the input provided, converted to 8-directions
 			super_drill_dir = turn_vector_into_8_directions(Vector2(round_to_8_directions(super_drill_dir_x), round_to_8_directions(super_drill_dir_y)))
 			
-		print("Dash direction: ", dash_dir)
+		#print("Dash direction: ", dash_dir)
 		
 	var drill_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
 	var drill_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")

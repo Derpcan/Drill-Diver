@@ -23,7 +23,7 @@ func _add_state(state_name:String) -> void:
 	state_dict[len(state_dict)] = state_name
 	states.append(state_name)
 	#print("Added State " + state_name)
-	print_rich("[color=#FF7A9E]Added State: ", state_name, "[/color]")
+	#print_rich("[color=#FF7A9E]Added State: ", state_name, "[/color]")
 
 func get_state_name() -> String:
 	if current_state >= 0:
