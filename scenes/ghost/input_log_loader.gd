@@ -13,15 +13,34 @@ signal dash_inputs(direction:Vector2)
 signal drill_inputs(direction:Vector2)
 signal super_drill_inputs(direction:Vector2)
 
+# Is emitted when the key array index value is changed
+signal key_array_index_changed(new_value:int)
+
 ## Skip to a specfic frame of the input replay
 @export var remove_up_to_frame:int = 0
 
 # Keeps all the pressed keys read from the input log
 var key_array:Array = []
 
+# Keeps track of the current index in the key array of the input that is being played
+var key_array_index:int = 0:
+	set(new_value):
+		key_array_index = new_value
+		key_array_index_changed.emit(key_array_index)
+
+var pause_playback:bool = false:
+	set(new_value):
+		pause_playback = new_value
+
 # Keeps track of the current time passed to keep input replay accurate
 var elapsed_time:float = 0.0
 
+# Keeps track of the physics frames that have passed
+var current_counted_frames:int = 0
+
+# Keeps track of the frame and the dictionary related to that frame
+# and can be used to scrub through playback
+var frame_to_input_dict:Dictionary[int, Dictionary] = {}
 
 func _ready() -> void:
 	# Get the parent as a Ghost (Since its the only object that can replay inputs)
@@ -44,7 +63,70 @@ func _ready() -> void:
 	# Skip to the first input value
 	skip_to_frame(remove_up_to_frame)
 	
+	frame_to_input_dict = set_up_frame_to_dict()
+
+
+# Pauses the playback
+func _enable_pause_playback(any=null) -> void:
+	pause_playback = true
 	
+	var parent:Ghost = get_parent() as Ghost
+	parent.movement_component.disable_movement_component = true
+	parent.drill_component._disable_drill()
+
+# Unpauses the playback
+func _disable_pause_playback(any=null) -> void:
+	pause_playback = false
+	
+	var parent:Ghost = get_parent() as Ghost
+	parent.movement_component.disable_movement_component = false
+
+
+# Changes the current replay frame
+func change_current_replay_frame(change_value:int) -> void:
+	var new_frame_value:int = current_counted_frames + change_value
+	
+	if new_frame_value <= 0 or key_array_index + change_value <= 0:
+		var value = key_array[0]["frame"]
+		current_counted_frames = 0
+		key_array_index = frame_to_input_dict[value]["index"]
+		return
+	
+	if key_array_index + change_value >= len(key_array):
+		return
+	
+	var value:int = key_array[key_array_index+change_value]["frame"]
+	current_counted_frames = value
+	key_array_index = frame_to_input_dict[value]["index"]
+
+
+
+# Sets the current frame to the passed in value
+func _set_replay_frame(set_value:float) -> void:
+	
+	var value:int = int(set_value)
+	if value >= len(key_array) or value < 0:
+		return
+	
+	current_counted_frames = key_array[value]["frame"]
+	key_array_index = frame_to_input_dict[current_counted_frames]["index"]
+
+	
+	
+
+# Sets up the dictionary that connects frame to input log
+func set_up_frame_to_dict() -> Dictionary[int, Dictionary]:
+	var dict:Dictionary[int, Dictionary] = {}
+	var temp_array:Array = key_array.duplicate()
+	
+	for i in range(len(temp_array)):
+		dict[temp_array[i]["frame"]] = temp_array[i]
+		dict[temp_array[i]["frame"]]["index"] = i
+	#for dictionary in temp_array:
+		#dict[dictionary["frame"]] = dictionary
+	
+	#print("Keys: ",dict.keys())
+	return dict
 
 
 # Finds the first input in the array
@@ -97,8 +179,8 @@ func skip_to_frame(remove_up_to_frame:int) -> void:
 			key_array.pop_front() # Remove the input from the array
 			dict = key_array[0] # Go to the next frame
 			frame = dict["frame"] # Update frame to next input frame value
-	
-	
+
+
 
 func _load_key_log_json() -> void:
 	# Make a variable to store the path to the input log file
@@ -127,8 +209,6 @@ func _load_key_log_json() -> void:
 				#pass
 		# Close the file, since it was read fully already
 		file.close()
-	
-	
 
 
 
@@ -147,11 +227,33 @@ func _enable_inputs() -> void:
 
 # Get inputs during each physics process frame
 func _physics_process(delta: float) -> void:
+	if OS.is_debug_build() and Input.is_action_pressed("ui_left"):
+		#print("Going back 1 frames")
+		change_current_replay_frame(-2)
+		#print("New frame: ", current_counted_frames)
+	elif OS.is_debug_build() and Input.is_action_pressed("ui_right"):
+		#print("Going forward 1 frames")
+		change_current_replay_frame(1)
+		#print("New frame: ", current_counted_frames)
+	
+	
+	if pause_playback:
+		dash_inputs.emit(Vector2.ZERO) 
+		jump_input.emit(Vector2.ZERO, false)
+		movement_inputs.emit(Vector2.ZERO, delta)
+		drill_inputs.emit(Vector2.ZERO)
+		super_drill_inputs.emit(Vector2.ZERO)
+		set_parent_data()
+		return
+	
+	
 	elapsed_time += delta # Update the elapsed time that has passed for input replaying
+	current_counted_frames += 1 # Increment the current counted frames
+	
 	
 	# If there are no more inputs to replay
 	# Emit default inputs
-	if len(key_array) <= 0: 
+	if len(key_array) <= 0 or key_array_index >= len(key_array): 
 		dash_inputs.emit(Vector2.ZERO) 
 		jump_input.emit(Vector2.ZERO, false)
 		movement_inputs.emit(Vector2.ZERO, delta)
@@ -171,30 +273,18 @@ func _physics_process(delta: float) -> void:
 	var drill_dir:Vector2 = Vector2.ZERO
 	var super_drill_dir:Vector2 = Vector2.ZERO
 	
-	# Check if it is the right time to play the inputs
-	#if (dict["elapsed_time"] >= elapsed_time):
-		#dash_inputs.emit(dash_dir)
-		#jump_input.emit(jump_direction, is_jump_pressed)
-		#movement_inputs.emit(dir, delta)
-		#drill_inputs.emit(drill_dir)
-		#return
 	
 	# Check if the frame should be played
 	# Add the offset to the current Engine frames
-	if dict["frame"] <= remove_up_to_frame + Engine.get_physics_frames():#dict["elapsed_time"] <= elapsed_time :#and dict["frame"] <= Engine.get_physics_frames():
-		#while dict["elapsed_time"] <= elapsed_time: #and dict["frame"] <= Engine.get_physics_frames():
-		#	check_dict = dict
-		# Remove the input from the array
-		dict = key_array.pop_front()
-		#print(dict["elapsed_time"], " : ", elapsed_time)
-		#print(check_dict["elapsed_time"], " : ", elapsed_time)
-		#key_array.insert(0, dict)
-		#dict = check_dict
+	if dict["frame"] <= remove_up_to_frame + current_counted_frames:
+		# Grab the current input from the array
+		dict = key_array[key_array_index]
+		key_array_index += 1 # increment the index
 		
-		#if "rot" in dict.keys():# and dict["frame"] % 30 == 0:#"rot" in dict.keys():#dict["frame"] % 1 == 0:
 		
 		# Get the parent so it can be updated
 		var parent = get_parent() as CharacterBody2D
+		
 		if "rot" in dict: # Update the basic stats of parent to keep replay accurate
 			parent.rotation = dict["rot"]
 			
@@ -236,4 +326,35 @@ func _physics_process(delta: float) -> void:
 	movement_inputs.emit(dir, delta)
 	drill_inputs.emit(drill_dir)
 	super_drill_inputs.emit(super_drill_dir)
+
+
+func set_parent_data() -> void:
+	var dict = key_array[key_array_index]
 	
+	# Get the parent so it can be updated
+	var parent = get_parent() as CharacterBody2D
+	
+	if "rot" in dict: # Update the basic stats of parent to keep replay accurate
+		parent.rotation = dict["rot"]
+		
+		
+		# Get the drill component and state machine1
+		var drill:DrillComponent = (parent.drill_component as DrillComponent)
+		var state_machine:StateMachine = (parent.state_machine as StateMachine)
+		state_machine._enter_state(dict["state"])
+		if dict["state"] == "drill":
+			state_machine._enter_state("drill")
+			drill._enter_drill_state(null)
+		else:
+			#state_machine._enter_state("jump")
+			if drill.drill_enabled:
+				drill._exit_drill_state(null)
+	
+	# Update the position of the parent if it is in the dictionary
+	if "pos" in dict:
+		parent.position = dict["pos"]
+	
+	if "flip" in dict:
+		parent.animated_sprite.flip_h = dict["flip"]
+
+	return

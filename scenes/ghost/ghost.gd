@@ -103,6 +103,7 @@ func _physics_process(delta: float) -> void:
 		
 
 
+
 func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
 	animated_sprite.scale = Vector2(0.5, 0.5)
 	

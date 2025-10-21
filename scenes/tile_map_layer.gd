@@ -19,10 +19,10 @@ func _ready() -> void:
 
 
 func _delete_tile(coords:Vector2):
-	print("DELETE")
+	#print("DELETE")
 	var tile_data = get_cell_tile_data(coords)
-	print("coords:", coords)
-	print("tile data:", tile_data)
+	#print("coords:", coords)
+	#print("tile data:", tile_data)
 	if tile_data and tile_data.has_custom_data("hardness") and tile_data.get_custom_data("hardness") == 1 :
 			# Erase the tile by setting the cell to -1 (empty)
 			var particle: GPUParticles2D = preload("res://scenes/particles/super_drill_break_particle.tscn").instantiate()

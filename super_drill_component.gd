@@ -28,7 +28,7 @@ func _calculate_dash(direction:Vector2) -> void:
 	if can_super_drill and direction != Vector2.ZERO and super_drill_timer.is_stopped() and GameManager.get_current_charge() == 100:
 		var new_vel:Vector2 = direction * super_drill_speed
 		emit_signal("super_drill_start", new_vel)
-		print("super drill")
+		#print("super drill")
 		# Timer is connected to movement component and will stop gravity from applying during the time the dash is active
 		super_drill_timer.start(super_drill_time)
 		_enable_hitbox() 
@@ -79,7 +79,7 @@ func _disable_super_drill_hitbox():
 
 
 func _on_super_hitbox_body_entered(body):
-	print("entered")
+	#print("entered")
 	if body is TileMapLayer:
 		var tilemap_node = body
 		

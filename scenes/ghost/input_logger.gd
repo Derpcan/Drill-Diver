@@ -99,7 +99,7 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 		#keys_pressed_dict["frame"] = current_frame
 		
 	
-	if not keys_pressed_dict.is_empty() or current_frame % 15 == 0:
+	if not keys_pressed_dict.is_empty() or current_frame % 5 == 0:
 		#var parent = get_parent() as CharacterBody2D
 		keys_pressed_dict["rot"] = parent.rotation
 		
@@ -112,6 +112,8 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 		
 		# Set the current frame - the frame offset
 		keys_pressed_dict["frame"] = current_frame
+		if "animated_sprite" in parent:
+			keys_pressed_dict["flip"] = parent.animated_sprite.flip_h
 		
 		keys_pressed_dict["pos"] = parent.position
 		# Store the data with proper JSON syntax

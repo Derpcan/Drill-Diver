@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=26 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
 [ext_resource type="Script" uid="uid://dko13chblqbea" path="res://scenes/test_scene.gd" id="1_gthg3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://b1p5pk5wugdfx" path="res://scenes/tile_map_layer.gd" id="6_pln1h"]
 [ext_resource type="Texture2D" uid="uid://bslqw4xdrn6wr" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/runner-asset-sheet-with-transparency.png" id="7_wtsjf"]
 [ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="8_rnaij"]
+[ext_resource type="PackedScene" uid="uid://bldjv2jp8etne" path="res://scenes/ghost/playback_slider.tscn" id="10_8gixj"]
 [ext_resource type="PackedScene" uid="uid://c82ds1yobrg78" path="res://scenes/checkpoint/checkpoint.tscn" id="10_s36qc"]
 [ext_resource type="PackedScene" uid="uid://d1qjh238xsdgr" path="res://scenes/enemy/enemy.tscn" id="11_6qxox"]
 [ext_resource type="PackedScene" uid="uid://bjlp87podhpig" path="res://scenes/system/OnLevelLoaded.tscn" id="13_ntc4i"]
@@ -396,6 +397,14 @@ position = Vector2(204, 150)
 enabled = false
 zoom = Vector2(4, 4)
 
+[node name="PlaybackSlider" parent="." node_paths=PackedStringArray("ghost") instance=ExtResource("10_8gixj")]
+custom_minimum_size = Vector2(200, 0)
+offset_left = 272.0
+offset_top = 543.0
+offset_right = 923.0
+offset_bottom = 568.0
+ghost = NodePath("../Ghost")
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 follow_viewport_enabled = true
 follow_viewport_scale = 0.8
@@ -516,6 +525,7 @@ text = "Press \"Esc\" or \"+\" to open Pause Menu and view Controls"
 
 [node name="Ghost" parent="." instance=ExtResource("15_pln1h")]
 position = Vector2(204, 149)
+input_log_file_name = "inputlog135.json"
 
 [node name="JSONLoader" parent="Ghost" index="1"]
 json_file = SubResource("JSON_pln1h")
