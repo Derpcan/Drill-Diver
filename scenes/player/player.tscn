@@ -1,10 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=23 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
 [ext_resource type="PackedScene" uid="uid://s3d4wjd0wc53" path="res://scenes/components/json_loader.tscn" id="2_gmlin"]
 [ext_resource type="PackedScene" uid="uid://bc2f56sqxrqqk" path="res://scenes/animation play/animation_play.tscn" id="3_gmlin"]
-[ext_resource type="SpriteFrames" uid="uid://eg8ic487cwl2" path="res://animations/player/player_sprite_frames.tres" id="3_uf5tr"]
 [ext_resource type="JSON" path="res://assets/JSON/Player.JSON" id="4_kvlxm"]
 [ext_resource type="PackedScene" uid="uid://boi6rio4dyg2u" path="res://scenes/components/state_machine.tscn" id="4_lvxji"]
 [ext_resource type="PackedScene" uid="uid://dqp5bgps30vvg" path="res://scenes/components/movement_component.tscn" id="5_p47bc"]
@@ -59,8 +58,6 @@ super_drill_component = NodePath("SuperDrillComponent")
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
 position = Vector2(0, -2.2)
 scale = Vector2(0.5, 0.5)
-sprite_frames = ExtResource("3_uf5tr")
-animation = &"dash"
 json_loaded = NodePath("../JSONLoader")
 creature_name = "player"
 

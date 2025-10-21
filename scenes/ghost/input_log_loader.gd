@@ -84,21 +84,7 @@ func _disable_pause_playback(any=null) -> void:
 
 # Changes the current replay frame
 func change_current_replay_frame(change_value:int) -> void:
-	var new_frame_value:int = current_counted_frames + change_value
-	
-	if new_frame_value <= 0 or key_array_index + change_value <= 0:
-		var value = key_array[0]["frame"]
-		current_counted_frames = 0
-		key_array_index = frame_to_input_dict[value]["index"]
-		return
-	
-	if key_array_index + change_value >= len(key_array):
-		return
-	
-	var value:int = key_array[key_array_index+change_value]["frame"]
-	current_counted_frames = value
-	key_array_index = frame_to_input_dict[value]["index"]
-	elapsed_time = key_array[key_array_index]["elapsed_time"]
+	_set_replay_frame(key_array_index+change_value)
 
 
 
@@ -336,6 +322,9 @@ func set_parent_data() -> void:
 	# Get the parent so it can be updated
 	var parent = get_parent() as CharacterBody2D
 	
+	if "flip" in dict:
+		parent.animated_sprite.flip_h = dict["flip"]
+	
 	if "rot" in dict: # Update the basic stats of parent to keep replay accurate
 		parent.rotation = dict["rot"]
 		
@@ -356,7 +345,6 @@ func set_parent_data() -> void:
 	if "pos" in dict:
 		parent.position = dict["pos"]
 	
-	if "flip" in dict:
-		parent.animated_sprite.flip_h = dict["flip"]
+	
 
 	return

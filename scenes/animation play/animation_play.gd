@@ -25,6 +25,7 @@ func _ready() -> void:
 	
 	# Create variables to store path of folders and the saved animation file
 	var folder_path:String = "res://animations/" + creature_name
+	#var folder_path:String = "user://animations/" + creature_name
 	var save_path:String =  folder_path + "/" + creature_name +"_animation_library.tres"
 	
 	# Check if the saved animation exists already, if not make the animation file from JSON
