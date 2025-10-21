@@ -30,10 +30,10 @@ func _update_slider(new_value:int) -> void:
 	if is_being_dragged:
 		value = new_value
 	else:
-		# Make it so it will update live and not emit signal
-		value_changed.disconnect(ghost.input_component._set_replay_frame)
+		# Make it so slider will update live and not emit signal
+		set_block_signals(true)
 		value = new_value
-		value_changed.connect(ghost.input_component._set_replay_frame)
+		set_block_signals(false)
 
 func _is_dragging() -> void:
 	is_being_dragged = true
