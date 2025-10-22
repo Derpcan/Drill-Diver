@@ -59,19 +59,20 @@ func _increment_enemies_killed(enemy:Enemy) -> void:
 func _increment_times_drilled() -> void:
 	num_times_drilled += 1
 	drill_dict[num_times_drilled] = {"start_drill_pos":player.global_position, "start_time":time}
-	print("Drilled ", num_times_drilled)
+	#print("Drilled ", num_times_drilled)
 
 func _increment_deaths() -> void:
+	pass
 	#num_deaths += 1
 	#death_dict[num_deaths] = [player.global_position, Engine.get_physics_frames()]
-	print(num_deaths)
+	#print(num_deaths)
 
 func _add_player_died_to(enemy:Enemy, character_hit) -> void:
 	if character_hit == player:
 		num_deaths += 1
 		
 		death_dict[num_deaths] = {"player_pos":player.global_position,"time_passed":time, "frame":Engine.get_physics_frames(), "enemy_name":enemy.name}
-		print("Death Dict: ", death_dict[num_deaths])
+		#print("Death Dict: ", death_dict[num_deaths])
 
 
 func _save_all_data() -> void:

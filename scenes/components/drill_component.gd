@@ -6,7 +6,7 @@ class_name DrillComponent
 
 
 @export var drill_speed:float
-@export var turn_raduis:float
+@export var turn_speed:float
 
 @export var drill_detector:Area2D
 @export var drill_shape_cast:ShapeCast2D 
@@ -56,12 +56,12 @@ func _enable_drill() -> void:
 func _physics_process(delta: float) -> void:
 	# If the parent exists and is in the drilling state
 	if parent and drill_enabled:
-		var turn_speed = 150
-		if parent.get_node("AnimationSprite").flip_h == true :
-			turn_speed*=-1
 		
+		#if parent.get_node("AnimationSprite").flip_h == true :
+			#parent.get_node("AnimationSprite").flip_h = false
+			#turn_speed*=-1
 		var direction = Vector2(cos(parent.rotation), sin(parent.rotation))
-		parent.velocity = direction * turn_speed
+		parent.velocity = direction * drill_speed
 		
 		
 		parent.move_and_slide()
@@ -78,10 +78,11 @@ func _calulate_rotation(direction:Vector2):
 # Rotates the character when drill_enabled
 func rotate_player(rot:float):
 	if parent.get_node("AnimationSprite").flip_h == true :
-		rot = -1 *(PI-rot)
+		parent.get_node("AnimationSprite").flip_h = false
+		#rot = -1 *(PI-rot)
 	
 	# Rotate the character
-	parent.rotation = lerp_angle(parent.rotation, rot, 0.1)
+	parent.rotation = lerp_angle(parent.rotation, rot, turn_speed)
 
 
 # Disables the drill detector
@@ -101,15 +102,17 @@ func _enable_drill_detector(_vel:Vector2):
 	collision.disabled = false
 	
 	_vel = _vel.normalized()
-	collision.rotation = _vel.angle() + PI
+	drill_detector.rotation = _vel.angle() 
+	#collision.rotation = _vel.angle() + PI
 	sprite.rotation = _vel.angle()
 	if sprite.flip_h == true:
+		#sprite.flip_h = false
 		sprite.rotation += PI
 	
 	# Allows drilling from  at weird angles
 	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
 		collision.rotation += PI
-		collision.position.y = -1.0
+		collision.position.y = -2.0
 
 # Re-enable movement after a bounce
 func _enable_movement_after_bounce():
@@ -127,16 +130,16 @@ func _start_bump(_body):
 	
 	# Check if the shape cast is colliding with anything
 	if drill_shape_cast.is_colliding():
-	
+		
 		var normal = drill_shape_cast.get_collision_normal(0)
 		
 		parent.velocity = parent.velocity.bounce(normal) * 0.8  # 0.8 for energy loss
 		
 		if parent.velocity.x == 0.0 and parent.velocity.y != 0.0 :
-				parent.velocity = Vector2(parent.velocity.y/2,parent.velocity.y)
+				parent.velocity = Vector2(parent.velocity.y/8,parent.velocity.y)
 				
 		elif parent.velocity.y == 0.0 and parent.velocity.x != 0.0:
-			parent.velocity = Vector2(parent.velocity.x,parent.velocity.x/2)
+			parent.velocity = Vector2(parent.velocity.x,parent.velocity.x/8)
 			
 		if parent.animated_sprite.flip_h == true:
 			parent.rotation = -1*(PI-parent.velocity.angle())
@@ -144,7 +147,7 @@ func _start_bump(_body):
 			parent.rotation = parent.velocity.angle()
 		
 		
-		can_move = false
+		#can_move = false
 		parent.bounce_timer.start(0.2)
 		drill_shape_cast.force_shapecast_update()
 		#
@@ -208,6 +211,7 @@ func _exit_drill_state(_body) -> void:
 	parent.super_drill_component.can_super_drill = true 
 
 
+
 # Enters the drill state. Called by the drill detector _on_body_entered signal. Connected in player script
 func _enter_drill_state(_body) -> void:
 	# Check if drill is enabled, and if the parent has a health component and is alive
@@ -216,7 +220,6 @@ func _enter_drill_state(_body) -> void:
 		parent.set_collision_mask_value(1, false)
 		
 		# Set the speed of the player
-		var speed:float = 150
 		var angle:float = 0
 		
 		# Check if the parent has a last_dash variable
@@ -225,14 +228,36 @@ func _enter_drill_state(_body) -> void:
 		
 		# Check if the parent has an animated sprite, and see if it is flipped
 		if "animated_sprite" in parent and parent.animated_sprite.flip_h == true:
-			speed *=-1
-			angle = (PI-angle)*-1
+			parent.animated_sprite.flip_h = false
+			#speed *=-1
+			#angle = (PI-angle)*-1
+			angle = PI
+			parent.rotation = PI
+		
+		var dir:Vector2 = Vector2.ZERO
+		
+		if _body and parent:
+			#print(parent.global_position.direction_to(_body.global_position))
+			dir = parent.global_position.direction_to(_body.global_position)
+		
+		
+		if last_dash.y > 0:
+			parent.global_position.y += 2
+		elif last_dash.y < 0:
+			parent.global_position.y -= 4
+		
+		if last_dash.x > 0:
+			parent.global_position.x += 5
+		elif last_dash.x < 0:
+			parent.global_position.x -= 5
+		
 		
 		# Change the parent's rotation and velocity
 		parent.rotation = lerp_angle(parent.rotation, angle, 1)
-		parent.velocity = speed*Vector2.from_angle(angle)
+		parent.velocity = drill_speed*Vector2.from_angle(angle)
 		
-		parent.move_and_slide()
+		#print(angle)
+		#parent.move_and_slide()
 		
 		# Get the shape and bump
 		var shape:CollisionShape2D = drill_detector.get_child(0)

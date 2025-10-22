@@ -5,4 +5,3 @@
 [node name="DrillComponent" type="Node"]
 script = ExtResource("1_3lt44")
 drill_speed = 3.0
-turn_raduis = 0.1

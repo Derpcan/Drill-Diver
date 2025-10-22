@@ -527,6 +527,7 @@ text = "Press \"Esc\" or \"+\" to open Pause Menu and view Controls"
 
 [node name="Ghost" parent="." instance=ExtResource("15_pln1h")]
 position = Vector2(204, 149)
+input_log_file_name = "inputlog0312313123.json"
 
 [node name="JSONLoader" parent="Ghost" index="1"]
 json_file = SubResource("JSON_pln1h")

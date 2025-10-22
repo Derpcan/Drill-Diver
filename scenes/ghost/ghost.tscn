@@ -91,10 +91,11 @@ jump_speed = 270.0
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_ewyia")
 
-[node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component", "dash_component") instance=ExtResource("10_qyq4l")]
+[node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component", "dash_component", "drill_component") instance=ExtResource("10_qyq4l")]
 movement_component = NodePath("../MovementComponent")
 jump_component = NodePath("../JumpComponent")
 dash_component = NodePath("../DashComponent")
+drill_component = NodePath("../DrillComponent")
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
 position = Vector2(0, 1)
@@ -138,7 +139,6 @@ disabled = true
 [node name="DrillComponent" type="Node" parent="." node_paths=PackedStringArray("parent", "drill_detector", "drill_shape_cast", "bump_detector")]
 script = ExtResource("12_repsn")
 parent = NodePath("..")
-turn_raduis = 0.08
 drill_detector = NodePath("../DrillDetector")
 drill_shape_cast = NodePath("../ShapeCast2D")
 bump_detector = NodePath("../BumpDetector")

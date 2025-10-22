@@ -28,8 +28,8 @@ height = 18.0
 radius = 9.44444
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fm80t"]
-radius = 4.49438
-height = 12.0
+radius = 5.55556
+height = 14.4444
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kvlxm"]
 radius = 4.49438
@@ -92,14 +92,16 @@ charcter_body = NodePath("..")
 jump_speed = 270.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_myrg7")
 debug_color = Color(0.662585, 0.513306, 0, 0.42)
 
-[node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component", "dash_component") instance=ExtResource("11_je7p5")]
+[node name="PlayerStatLoaderComponent" parent="." node_paths=PackedStringArray("movement_component", "jump_component", "dash_component", "drill_component") instance=ExtResource("11_je7p5")]
 movement_component = NodePath("../MovementComponent")
 jump_component = NodePath("../JumpComponent")
 dash_component = NodePath("../DashComponent")
+drill_component = NodePath("../DrillComponent")
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
 position = Vector2(0, 1)
@@ -124,19 +126,19 @@ collision_mask = 16
 priority = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BumpDetector"]
+visible = false
 shape = SubResource("CircleShape2D_fm80t")
 disabled = true
 debug_color = Color(0.729596, 0.235627, 1, 0.42)
 
 [node name="DrillDetector" type="Area2D" parent="."]
-position = Vector2(0, 1)
 collision_layer = 0
 collision_mask = 4
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DrillDetector"]
 physics_interpolation_mode = 2
-position = Vector2(0, 1)
+position = Vector2(2, 0)
 scale = Vector2(1.8, 0.8)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
@@ -149,6 +151,7 @@ input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SuperHitbox"]
 physics_interpolation_mode = 2
+visible = false
 position = Vector2(0, -1)
 rotation = 1.5708
 scale = Vector2(1.8, 1)
@@ -159,7 +162,8 @@ debug_color = Color(0.910002, 0.183521, 0.585461, 0.42)
 [node name="DrillComponent" type="Node" parent="." node_paths=PackedStringArray("parent", "drill_detector", "drill_shape_cast", "bump_detector")]
 script = ExtResource("12_gx1jg")
 parent = NodePath("..")
-turn_raduis = 0.08
+drill_speed = 150.0
+turn_speed = 0.1
 drill_detector = NodePath("../DrillDetector")
 drill_shape_cast = NodePath("../ShapeCast2D")
 bump_detector = NodePath("../BumpDetector")
@@ -173,6 +177,7 @@ health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 physics_interpolation_mode = 2
+visible = false
 position = Vector2(1.35525e-20, -1)
 rotation = -1.5708
 scale = Vector2(1.78, 1)
@@ -187,6 +192,7 @@ collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashHitbox"]
+visible = false
 position = Vector2(4.54747e-13, -1)
 scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_kvlxm")

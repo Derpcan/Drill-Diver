@@ -11,8 +11,12 @@
 				"input_jump_delay_forgiveness": 0.3
 			},
 			"dash": {
-				"dash_speed": 350.0,
-				"dash_time": 0.25
+				"dash_speed": 250.0,
+				"dash_time": 0.2
+			},
+			"drill": {
+				"drill_speed": 180.0,
+				"turn_speed": 0.2
 			}
 		}
 	}
