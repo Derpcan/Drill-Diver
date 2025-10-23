@@ -46,6 +46,9 @@ func _ready() -> void:
 	# Get the parent as a Ghost (Since its the only object that can replay inputs)
 	var parent = get_parent() as Ghost
 	
+	if parent.disable_replay:
+		return
+	
 	# If the parent has a different name for the json file, swap to the override
 	json_name = parent.input_log_file_name
 	

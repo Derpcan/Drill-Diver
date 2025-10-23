@@ -1,16 +1,21 @@
 extends CharacterBody2D
 class_name Ghost
 
+@export_category("Replay Values")
 ## Override the file name of the input log file
 @export var input_log_file_name:String = "inputlog0.json"
 
 ## Override the folder path of the input log file
 @export var input_log_folder_path:String = "user://test_data/inputlogs"
 
+## Prevents the ghost from properly loading a input log file
+@export var disable_replay:bool = false
+
 ## Skip to a specfic frame of the input replay
 @export var remove_up_to_frame:int = 0
 
 
+@export_category("Normal Player Values")
 @export var movement_component:MovementComponent
 @export var jump_component:JumpComponent
 @export var input_component:KeyLogLoader
