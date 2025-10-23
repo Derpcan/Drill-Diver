@@ -317,6 +317,9 @@ func _physics_process(delta: float) -> void:
 
 
 func set_parent_data() -> void:
+	if len(key_array) <= 0:
+		return
+	
 	var dict = key_array[key_array_index]
 	
 	# Get the parent so it can be updated

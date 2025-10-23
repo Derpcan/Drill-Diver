@@ -116,7 +116,7 @@ func _physics_process(delta: float) -> void:
 func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
 	animated_sprite.scale = Vector2(0.5, 0.5)
 	
-	animated_sprite.position.y = -2.2
+	animated_sprite.position.y = -2.0
 	if health_component.current_hp == 0:
 		state_machine._enter_state("death")
 		return
@@ -153,17 +153,21 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		pass
 	
 	# If the character is falling or jumping, enter the jump state
-	if (abs(dir.y) > 0 and not drill_component.drill_enabled) or abs(velocity.y) > 0 and (!drill_component.drill_enabled) :
+	if (abs(dir.y) > 0 and not drill_component.drill_enabled) or abs(velocity.y) > 0 and (!drill_component.drill_enabled):
+		
 		if animation_play.current_animation == "dash":
 			await animation_play.animation_finished
+		
 		state_machine._enter_state("jump")
 		animated_sprite.rotation = 0
 		return
 	
 	# If the character is not moving on the x-axis and is not moving on y-axis enter idle state
 	if velocity.x == 0 and not drill_component.drill_enabled:
+		
 		if animation_play.current_animation == "dash":
 			await  animation_play.animation_finished
+		
 		state_machine._enter_state("idle")
 		animated_sprite.rotation = 0
 		return 
@@ -171,6 +175,7 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 	# If the character is moving on the x-axis and not the y-axis enter the run state
 	if abs(dir.x) > 0 and not drill_component.drill_enabled and not dash_component.is_dashing() and is_on_floor():
 		
+		# Prevent run state while dashing
 		if  animation_play.current_animation == "dash":
 			await animation_play.animation_finished
 			

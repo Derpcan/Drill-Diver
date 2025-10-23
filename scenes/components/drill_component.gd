@@ -102,17 +102,27 @@ func _enable_drill_detector(_vel:Vector2):
 	collision.disabled = false
 	
 	_vel = _vel.normalized()
+	
 	drill_detector.rotation = _vel.angle() 
 	#collision.rotation = _vel.angle() + PI
 	sprite.rotation = _vel.angle()
-	if sprite.flip_h == true:
-		#sprite.flip_h = false
+	#if sprite.flip_h == true:
+		##sprite.flip_h = false
+		#sprite.rotation += PI
+	
+	if abs(_vel.y) > 0 and _vel.x == 0:
+		if sprite.flip_h == true:
+			sprite.flip_h = false
+	elif sprite.flip_h == true:
 		sprite.rotation += PI
+		
+		#sprite.rotation += PI
 	
 	# Allows drilling from  at weird angles
 	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
-		collision.rotation += PI
-		collision.position.y = -2.0
+		#collision.rotation += PI
+		#collision.position.y = -2.0
+		pass
 
 # Re-enable movement after a bounce
 func _enable_movement_after_bounce():
@@ -231,20 +241,32 @@ func _enter_drill_state(_body) -> void:
 			parent.animated_sprite.flip_h = false
 			#speed *=-1
 			#angle = (PI-angle)*-1
-			angle = PI
-			parent.rotation = PI
+			
+			# Drill vertically
+			if last_dash.x == 0 and abs(last_dash.y) > 0:
+				angle = -PI/2
+				parent.rotation = -PI/2
+			# Drill horizontally
+			elif abs(last_dash.x) > 0 and last_dash.y == 0:
+				angle = PI
+				parent.rotation = PI
+			# Drill diagonal up left
+			elif last_dash.y < 0:
+				angle = -3*PI/4
+				parent.rotation = -3*PI/4
+			# Drill diagonal down left
+			elif last_dash.y > 0:
+				angle = 3*PI/4
+				parent.rotation = 3*PI/4
 		
-		var dir:Vector2 = Vector2.ZERO
-		
-		if _body and parent:
-			#print(parent.global_position.direction_to(_body.global_position))
-			dir = parent.global_position.direction_to(_body.global_position)
 		
 		
+		# Give a boost in position to each dash direction
 		if last_dash.y > 0:
 			parent.global_position.y += 2
 		elif last_dash.y < 0:
 			parent.global_position.y -= 4
+		
 		
 		if last_dash.x > 0:
 			parent.global_position.x += 5
@@ -257,7 +279,7 @@ func _enter_drill_state(_body) -> void:
 		parent.velocity = drill_speed*Vector2.from_angle(angle)
 		
 		#print(angle)
-		#parent.move_and_slide()
+		parent.move_and_slide()
 		
 		# Get the shape and bump
 		var shape:CollisionShape2D = drill_detector.get_child(0)
