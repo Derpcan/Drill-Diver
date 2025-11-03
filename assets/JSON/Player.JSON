@@ -23,11 +23,11 @@
 				"time_length": 0.4
 			},
 			"drill": {
-				"path": "res://assets/development assets (temporary)/Drill.png",
-				"frames_x": 1.0,
+				"path": "res://assets/sprites/bit/Bit_Drill.png",
+				"frames_x": 7.0,
 				"frames_y": 1.0,
 				"loop": true,
-				"time_length": 0.8
+				"time_length": 0.4
 			},
 			"death": {
 				"path": "res://assets/sprites/bit/Bit_Die.png",

@@ -129,9 +129,9 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		
 		# Correct the drill angle depending on sprite flip
 		if animated_sprite.flip_h == false:
-			animated_sprite.rotation = PI/4
+			animated_sprite.rotation = PI/2
 		else:
-			animated_sprite.rotation = -PI/4
+			animated_sprite.rotation = -PI/2
 	
 	# Flip the character Sprite depending on which direction is being pressed
 	if dir.x > 0 and (not drill_component.drill_enabled):
