@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=7 format=3]
+[gd_resource type="AnimationLibrary" load_steps=8 format=3]
 
 [sub_resource type="Animation" id="Animation_7aoul"]
 length = 0.3
@@ -165,6 +165,33 @@ tracks/1/keys = {
 "values": ["run"]
 }
 
+[sub_resource type="Animation" id="Animation_twnhm"]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": ["superdrill"]
+}
+
 [resource]
 _data = {
 &"dash": SubResource("Animation_7aoul"),
@@ -172,5 +199,6 @@ _data = {
 &"drill": SubResource("Animation_tbrg4"),
 &"idle": SubResource("Animation_jqmen"),
 &"jump": SubResource("Animation_jmtdp"),
-&"run": SubResource("Animation_rdg5d")
+&"run": SubResource("Animation_rdg5d"),
+&"superdrill": SubResource("Animation_twnhm")
 }

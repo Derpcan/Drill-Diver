@@ -147,6 +147,11 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 	if dash_component.is_dashing() and not drill_component.drill_enabled:
 		state_machine._enter_state("dash")
 		return
+	
+	if super_drill_component.is_dashing() and not drill_component.drill_enabled:
+		state_machine._enter_state("superdrill")
+		return
+		
 		
 	# If the speed is greater than 0 in the y direction
 	if abs(velocity.y) > 0:

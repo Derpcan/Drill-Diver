@@ -37,7 +37,14 @@
 				"time_length": 0.4
 			},
 			"dash": {
-				"path":"res://assets/sprites/bit/Bit_Dash.png",
+				"path": "res://assets/sprites/bit/Bit_Dash.png",
+				"frames_x": 3.0,
+				"frames_y": 1.0,
+				"loop": false,
+				"time_length": 0.3
+			},
+			"superdrill": {
+				"path": "res://assets/sprites/bit/Bit_Super_Drill.png",
 				"frames_x": 3.0,
 				"frames_y": 1.0,
 				"loop": false,

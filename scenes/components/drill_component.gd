@@ -143,38 +143,30 @@ func _start_bump(_body):
 		
 		var normal = drill_shape_cast.get_collision_normal(0)
 		
-		parent.velocity = parent.velocity.bounce(normal) * 0.8  # 0.8 for energy loss
+		var new_velocity = parent.velocity.bounce(normal) * 0.8  
 		
-		if parent.velocity.x == 0.0 and parent.velocity.y != 0.0 :
-				parent.velocity = Vector2(parent.velocity.y/8,parent.velocity.y)
-				
-		elif parent.velocity.y == 0.0 and parent.velocity.x != 0.0:
-			parent.velocity = Vector2(parent.velocity.x,parent.velocity.x/8)
-			
+		var normal_component = new_velocity.dot(normal)
+		var MIN_LAUNCH_SPEED = 100
+		
+		# Checks if the bounce is a high enough velocity
+		# this will prevent getting stuck on a surface
+		if abs(normal_component) < MIN_LAUNCH_SPEED:
+			var tangential_velocity = new_velocity.slide(normal)
+			new_velocity = tangential_velocity + (normal * MIN_LAUNCH_SPEED)		#if parent.velocity.x == 0.0 and parent.velocity.y != 0.0 :
+				#parent.velocity = Vector2(parent.velocity.y/8,parent.velocity.y)
+				#
+		#elif parent.velocity.y == 0.0 and parent.velocity.x != 0.0:
+			#parent.velocity = Vector2(parent.velocity.x,parent.velocity.x/8)
+		parent.velocity = new_velocity
 		if parent.animated_sprite.flip_h == true:
 			parent.rotation = -1*(PI-parent.velocity.angle())
 		else:
 			parent.rotation = parent.velocity.angle()
 		
 		
-		#can_move = false
+		can_move = false
 		parent.bounce_timer.start(0.2)
 		drill_shape_cast.force_shapecast_update()
-		#
-		#if drill_shape_cast.is_colliding():
-			#
-		#
-			#
-			#var rot = PI*parent.get_angle_to(drill_shape_cast.get_collision_point(0))
-			#rotate_player(rot)
-			#
-			
-			#if parent.velocity.y == 0.0 or parent.velocity.x == 0.0 :
-				#rot -= (PI - parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
-				#if parent.animated_sprite.flip_h == true:
-					#rot = (PI/2 + parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
-					#rot += (PI - parent.get_angle_to(drill_shape_cast.get_collision_point(0)))
-				#rotate_player(rot)
 		
 
 
