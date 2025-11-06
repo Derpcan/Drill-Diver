@@ -65,7 +65,6 @@ creature_name = "player"
 json_file = ExtResource("4_kvlxm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
 zoom = Vector2(4, 4)
 
 [node name="AnimationPlay" parent="." node_paths=PackedStringArray("json_loader", "animation_sprite", "state_machine") instance=ExtResource("3_gmlin")]
