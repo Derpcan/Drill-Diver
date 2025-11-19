@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3 uid="uid://cso12yd5vwp87"]
+
+[sub_resource type="GDScript" id="GDScript_ssgxn"]
+script/source = "@tool
+extends PanelContainer
+
+
+@export var image:Texture2D:
+	set(new_texture):
+		image = new_texture
+		if texture_rect != null:
+			if image != null:
+				texture_rect.texture = image
+			else:
+				texture_rect.texture = null
+
+@export var text:String = \"\": 
+	set(new_text):
+		text = new_text
+		
+		if label:
+			label.text = text
+
+@export var texture_rect:TextureRect
+@export var button:Button
+
+@export var label:Label
+
+
+signal tile_selected(text:String)
+
+
+func _ready() -> void:
+	if button != null:
+		button.pressed.connect(_tile_selected)
+
+
+func _tile_selected() -> void:
+	emit_signal(\"tile_selected\", text)
+"
+
+[node name="TileSelectorButton" type="PanelContainer" node_paths=PackedStringArray("texture_rect", "button", "label")]
+custom_minimum_size = Vector2(98, 85)
+offset_right = 58.0
+offset_bottom = 85.0
+mouse_filter = 2
+script = SubResource("GDScript_ssgxn")
+texture_rect = NodePath("MarginContainer/VBoxContainer2/HBoxContainer/TextureButton")
+button = NodePath("Button")
+label = NodePath("MarginContainer/VBoxContainer2/Label")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="TextureButton" type="TextureRect" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_filter = 2
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+horizontal_alignment = 1

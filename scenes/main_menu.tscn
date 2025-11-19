@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=4 uid="uid://dyg4ajothat7g"]
+[gd_scene load_steps=16 format=4 uid="uid://dyg4ajothat7g"]
 
 [ext_resource type="Script" uid="uid://tf8is18n6kq" path="res://scripts/UI/menus/option_button.gd" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://ci8mvuro6jqfh" path="res://scripts/UI/menus/level_select_button.gd" id="2_ekxnf"]
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="2_oa1go"]
 [ext_resource type="Script" uid="uid://bxj8xb4x6rpdq" path="res://scripts/UI/menus/quit_button.gd" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://cfjggk5f6sk0p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Tiles/RunnerTileSet.png" id="4_wu84c"]
+[ext_resource type="Script" uid="uid://td0yfq73gf1f" path="res://scripts/UI/menus/level_editor_button.gd" id="5_lgwnu"]
 [ext_resource type="PackedScene" uid="uid://d1qjh238xsdgr" path="res://scenes/enemy/enemy.tscn" id="6_rtw2f"]
 [ext_resource type="PackedScene" uid="uid://c82ds1yobrg78" path="res://scenes/checkpoint/checkpoint.tscn" id="7_oa1go"]
 [ext_resource type="PackedScene" uid="uid://nv87e5t72j7o" path="res://scenes/hitbox/agents/spikes.tscn" id="8_tbmy8"]
@@ -358,6 +359,14 @@ offset_right = 486.0
 offset_bottom = 439.0
 text = "Level Select"
 script = ExtResource("2_ekxnf")
+
+[node name="LevelEditorButton" type="Button" parent="."]
+offset_left = 541.0
+offset_top = 513.0
+offset_right = 640.0
+offset_bottom = 544.0
+text = "Level Editor"
+script = ExtResource("5_lgwnu")
 
 [node name="QuitButton" type="Button" parent="."]
 offset_left = 686.0

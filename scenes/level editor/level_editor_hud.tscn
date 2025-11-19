@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://blnst3na25i2i"]
+
+[ext_resource type="Script" uid="uid://dgqwosol42b3a" path="res://scripts/UI/menus/pause_button.gd" id="1_qmhco"]
+[ext_resource type="PackedScene" uid="uid://kwdjeqxdj2v" path="res://scenes/level editor/tile_selector.tscn" id="2_tnwft"]
+
+[node name="LevelEditorHud" type="CanvasLayer"]
+
+[node name="TileSelector" parent="." instance=ExtResource("2_tnwft")]
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="PauseButton" type="Button" parent="."]
+visible = false
+offset_left = 19.0
+offset_top = 597.0
+offset_right = 74.0
+offset_bottom = 628.0
+text = "Pause"
+script = ExtResource("1_qmhco")
