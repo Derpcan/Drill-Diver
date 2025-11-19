@@ -3,7 +3,7 @@
 [sub_resource type="GDScript" id="GDScript_ssgxn"]
 script/source = "@tool
 extends PanelContainer
-
+class_name TileSelectorButton
 
 @export var image:Texture2D:
 	set(new_texture):
