@@ -218,6 +218,11 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 				tile_pos_to_object_dictionary[tile_position].queue_free()
 			tile_pos_to_object_dictionary[tile_position] = null
 		
+		# Remove from the other dictionary that is used to save
+		for key in object_string_name_to_tile_pos.keys():
+			if tile_position in object_string_name_to_tile_pos[key]:
+				object_string_name_to_tile_pos[key].erase(tile_position)
+		
 		# Add new object to tree and dictionary
 		var object = selected_object.instantiate()
 		object.global_position = tile_map.map_to_local(tile_position)
