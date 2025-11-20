@@ -21,11 +21,19 @@ text = "Test Level"
 script = ExtResource("1_3shnc")
 
 [node name="TestLevelButton2" type="Button" parent="."]
-offset_left = 274.0
+offset_left = 178.0
 offset_top = 407.0
-offset_right = 373.0
+offset_right = 368.0
 offset_bottom = 438.0
-text = "Test Level2"
+text = "Loaded Level from Files"
+script = ExtResource("1_3shnc")
+
+[node name="CustomLevel Button" type="Button" parent="."]
+offset_left = 912.0
+offset_top = 600.0
+offset_right = 1141.0
+offset_bottom = 631.0
+text = "Play Custom Level from Files"
 script = ExtResource("1_3shnc")
 
 [node name="BackButton" type="Button" parent="."]

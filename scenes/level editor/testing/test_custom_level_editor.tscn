@@ -34,9 +34,8 @@ player = NodePath("../Player")
 
 [node name="ObjectNode" type="Node2D" parent="."]
 
-[node name="CheckpointManager" parent="." node_paths=PackedStringArray("player", "ghost") instance=ExtResource("6_es2ws")]
+[node name="CheckpointManager" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_es2ws")]
 player = NodePath("../Player")
-ghost = NodePath("")
 last_checkpoint_position = Vector2(204, 150)
 
 [node name="Player" parent="." instance=ExtResource("7_2bioa")]

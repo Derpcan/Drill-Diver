@@ -2,7 +2,10 @@ extends Node2D
 class_name TestCustomLevelEditor
 
 
-@export var level_file_path:String = ""
+@export var level_file_path:String = "":
+	set(new_path):
+		load_logic(level_file_path)
+
 @onready var tilemap:TileMapLayer = $TileMapLayer3
 
 
@@ -183,6 +186,9 @@ func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
 
 
 func load_logic(path_name:String="") -> void:
+	tilemap.clear()
+	tile_pos_to_object_dictionary.clear()
+	object_string_name_to_tile_pos.clear()
 	
 	if ResourceLoader.exists(path_name):
 		# Open the file for writing

@@ -20,7 +20,8 @@ func _ready() -> void:
 			#assert(player != null, "ERROR: No Player was found.")
 	
 	if player:
-		player.super_drill_tile.connect(_delete_tile)
+		if not player.super_drill_tile.is_connected(_delete_tile):
+			player.super_drill_tile.connect(_delete_tile)
 
 
 func _delete_tile(coords:Vector2):
