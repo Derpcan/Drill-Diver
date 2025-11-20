@@ -152,7 +152,7 @@ layout_mode = 2
 text = "Create New Level"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(401, 239)
+position = Vector2(525, 203)
 sprite_frames = SubResource("SpriteFrames_8w7op")
 
 [node name="Label" type="Label" parent="AnimatedSprite2D"]
@@ -160,7 +160,15 @@ offset_left = 15.0
 offset_top = -8.0
 offset_right = 357.0
 offset_bottom = 15.0
-text = "WARNING: No Controllers Beyond This Point"
+text = "WARNING: "
+
+[node name="Label2" type="Label" parent="AnimatedSprite2D"]
+offset_left = -123.0
+offset_top = 22.0
+offset_right = 219.0
+offset_bottom = 45.0
+text = "No Controllers Beyond This Point"
+horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {

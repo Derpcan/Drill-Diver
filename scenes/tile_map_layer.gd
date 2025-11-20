@@ -1,6 +1,10 @@
 extends TileMapLayer
 ## If not assigned, will try to be found in _ready()
-@export var player:Player
+@export var player:Player:
+	set(new_value):
+		player = new_value
+		if new_value != null:
+			player.super_drill_tile.connect(_delete_tile)
 
 func _ready() -> void:
 	# If the player is not set before startup
@@ -15,7 +19,8 @@ func _ready() -> void:
 			printerr("No Player was found in scene tree.")
 			#assert(player != null, "ERROR: No Player was found.")
 	
-	player.super_drill_tile.connect(_delete_tile)
+	if player:
+		player.super_drill_tile.connect(_delete_tile)
 
 
 func _delete_tile(coords:Vector2):

@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=12 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
 [ext_resource type="PackedScene" uid="uid://blnst3na25i2i" path="res://scenes/level editor/level_editor_hud.tscn" id="3_ackq3"]
 [ext_resource type="Texture2D" uid="uid://dr5dfxylf3hfs" path="res://scenes/level editor/PreviewTile.png" id="4_g8j7s"]
+[ext_resource type="Script" uid="uid://b1p5pk5wugdfx" path="res://scenes/tile_map_layer.gd" id="5_cwu4w"]
 [ext_resource type="PackedScene" uid="uid://dlby0tn0le6uv" path="res://scenes/level editor/load_or_save.tscn" id="5_dx1w1"]
 
 [sub_resource type="Animation" id="Animation_dx1w1"]
@@ -58,6 +59,13 @@ script = ExtResource("1_s4d5t")
 process_mode = 1
 visible = false
 
+[node name="TestLevelButton" type="Button" parent="LevelEditorHud"]
+offset_left = 7.0
+offset_top = 589.0
+offset_right = 111.0
+offset_bottom = 639.0
+text = "Test Level"
+
 [node name="SavedLabel" type="Label" parent="LevelEditorHud"]
 modulate = Color(1, 1, 1, 0)
 offset_left = 9.0
@@ -73,7 +81,10 @@ libraries = {
 }
 
 [node name="PhysicsTileMap" type="TileMapLayer" parent="."]
+rotation = 0.000554825
+scale = Vector2(1, 1)
 tile_set = ExtResource("1_e806q")
+script = ExtResource("5_cwu4w")
 
 [node name="DecorativeTileMap" type="TileMapLayer" parent="."]
 
@@ -97,3 +108,15 @@ use_native_dialog = true
 access = 1
 root_subfolder = "level_editor/levels/"
 use_native_dialog = true
+
+[node name="TestingHud" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="StopTestingButton" type="Button" parent="TestingHud"]
+offset_left = 1030.0
+offset_top = 19.0
+offset_right = 1133.0
+offset_bottom = 50.0
+text = "Stop Testing"
+
+[node name="ObjectNode" type="Node2D" parent="."]

@@ -63,12 +63,15 @@ func _ready() -> void:
 			#assert(game_camera != null, "ERROR: No Camera was found.")
 			
 	if player:
+		last_checkpoint_position = player.global_position
 		connect_player_signals()
 		connect_camera_to_player()
 		connect_camera_signals()
 	if ghost:
 		connect_ghost_signals()
-		
+	
+	print("Readying")
+	print(player)
 	
 	# Find all nodes belonging to the 'checkpoint' group
 	var checkpoint_nodes = get_tree().get_nodes_in_group("checkpoint")

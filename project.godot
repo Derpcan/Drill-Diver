@@ -22,6 +22,7 @@ SceneManager="*res://scripts/system/scene_manager.gd"
 
 [display]
 
+window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
 
 [input]

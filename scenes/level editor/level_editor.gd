@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name LevelEditor
 
 @onready var physics_tilemap:TileMapLayer = $PhysicsTileMap
 @onready var decorative_tilemap:TileMapLayer = $DecorativeTileMap
@@ -16,6 +16,12 @@ extends Node2D
 
 @onready var save_animation_player:AnimationPlayer = $LevelEditorHud/AnimationPlayer
 
+@onready var object_node:Node2D = $ObjectNode
+
+
+var testing_mode:bool = false:
+	set(new_value):
+		testing_mode = new_value
 
 
 var prevent_tile_placement:bool = true:
@@ -66,21 +72,29 @@ enum tile_types {
 # The possible tiles that can be placed in the level editor
 var tiles_dictionary:Dictionary = {
 	"Ground":tile_types.UNDRILLABLE,#[0,Vector2(0,0), 0],
+	"Dirt":tile_types.DRILLABLE,
+	"SuperDrillable":tile_types.SUPERDRILLABLE
 }
 
 var tile_type_to_tile_data_dictionary:Dictionary = {
 	tile_types.UNDRILLABLE:[0,Vector2(0,0),0],
+	tile_types.DRILLABLE:[2,Vector2(0,0),0],
+	tile_types.SUPERDRILLABLE:[1,Vector2(0,0),0]
 }
 
 # The possible objects that can be placed in the level editor
 var object_dictionary:Dictionary = {
 	"Checkpoint":preload("res://scenes/checkpoint/checkpoint.tscn"),
 	"Gem":preload("res://scenes/items/MeterItem.tscn"),
+	"Spawnpoint":preload("res://scenes/checkpoint/spawnpoint.tscn"),
+	"Alien":preload("res://scenes/enemy/enemy.tscn"),
 }
 
 var scene_dictionary:Dictionary = {
 	preload("res://scenes/checkpoint/checkpoint.tscn"):"Checkpoint",
 	preload("res://scenes/items/MeterItem.tscn"):"Gem",
+	preload("res://scenes/checkpoint/spawnpoint.tscn"):"Spawnpoint",
+	preload("res://scenes/enemy/enemy.tscn"):"Alien",
 }
 
 # Keeps track of unique locations and stores the associated object at the location
@@ -114,6 +128,8 @@ func _ready() -> void:
 	load_file_dialog.file_selected.connect(load_logic)
 	save_file_dialog.file_selected.connect(_create_new_level_logic)
 	
+	$LevelEditorHud/TestLevelButton.pressed.connect(test_level)
+	$TestingHud/StopTestingButton.pressed.connect(_stop_testing)
 
 
 
@@ -178,6 +194,32 @@ func get_tile() -> Array:
 
 
 
+func check_can_add_spawnpoint() -> bool:
+	# Check if there is multiple Spawnpoints
+	if "Spawnpoint" not in object_string_name_to_tile_pos:
+		return true
+	
+	if len(object_string_name_to_tile_pos["Spawnpoint"]) == 0:
+		return true
+	
+	return false
+
+
+func get_spawnpoint() -> Node2D:
+	if "Spawnpoint" in object_string_name_to_tile_pos:
+		if len(object_string_name_to_tile_pos["Spawnpoint"]) == 1:
+			if object_string_name_to_tile_pos["Spawnpoint"][0] in tile_pos_to_object_dictionary:
+				return tile_pos_to_object_dictionary[object_string_name_to_tile_pos["Spawnpoint"][0]]
+	return null
+
+
+func delete_all_by_object_name(obj_name:String) -> void:
+	
+	for pos:Vector2i in object_string_name_to_tile_pos[obj_name]:
+		delete_tile(physics_tilemap, pos)
+	
+
+
 
 func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 	
@@ -207,6 +249,10 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 	# Set object in tile
 	else:
 		
+		# Check is spawnpoint already exists
+		if not check_can_add_spawnpoint() and object_string == "Spawnpoint":
+			delete_all_by_object_name("Spawnpoint") # Delete all occurances of Spawnpoint
+		
 		# Check to see if a tile is there already
 		if tile_map.get_cell_tile_data(tile_position) != null:
 			tile_map.erase_cell(tile_position)
@@ -226,8 +272,9 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		# Add new object to tree and dictionary
 		var object = selected_object.instantiate()
 		object.global_position = tile_map.map_to_local(tile_position)
-		add_child(object)
+		object_node.add_child(object)
 		tile_pos_to_object_dictionary[tile_position] = object
+		
 		
 		if object_string in object_string_name_to_tile_pos:
 			if tile_position not in object_string_name_to_tile_pos[object_string]:
@@ -276,6 +323,9 @@ func show_tile_place_preview(tile_position:Vector2) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if testing_mode == true: # If in testing mode
+		return
+	
 	if prevent_tile_placement == true:
 		return
 	
@@ -295,6 +345,9 @@ func _physics_process(delta: float) -> void:
 
 
 func place_tile_input_logic() -> void:
+	if testing_mode == true:
+		return
+	
 	# Get the mouse position
 	mouse_position = get_global_mouse_position()
 	
@@ -352,7 +405,10 @@ func save_logic() -> void:
 
 
 func load_logic(path_name:String="") -> void:
-	load_or_save_ui.queue_free()
+	if load_or_save_ui:
+		load_or_save_ui.queue_free()
+		load_or_save_ui = null
+	
 	save_path = path_name
 	level_editor_hud.show()
 	if ResourceLoader.exists(path_name):
@@ -362,17 +418,19 @@ func load_logic(path_name:String="") -> void:
 		if save == null:
 			print("failed to load")
 		
+		selected_object = null
+		
 		# Load the physics tile map cells
 		for pos in save.physics_tilemap_cells[0]:
 			selected_tile = "Ground"
 			set_tile(physics_tilemap, pos)
 		
 		for pos in save.physics_tilemap_cells[1]:
-			selected_tile = "HardDrillable"
+			selected_tile = "SuperDrillable"
 			set_tile(physics_tilemap, pos)
 		
 		for pos in save.physics_tilemap_cells[2]:
-			selected_tile = "Drillable"
+			selected_tile = "Dirt"
 			set_tile(physics_tilemap, pos)
 		
 		selected_tile = "Ground"
@@ -423,8 +481,145 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("escape"):
 		place_held_down = false
 
+
+
+
+func load_level_to_tilemap(tilemap:TileMapLayer):
+	if ResourceLoader.exists(save_path):
+		# Open the file for writing
+		var save:CustomLevelSave = ResourceLoader.load(save_path,"", ResourceLoader.CACHE_MODE_IGNORE)
+		
+		if save == null:
+			print("failed to load")
+		
+		# Load the physics tile map cells
+		for pos in save.physics_tilemap_cells[0]:
+			selected_tile = "Ground"
+			set_tile(tilemap, pos)
+		
+		for pos in save.physics_tilemap_cells[1]:
+			selected_tile = "HardDrillable"
+			set_tile(tilemap, pos)
+		
+		for pos in save.physics_tilemap_cells[2]:
+			selected_tile = "Drillable"
+			set_tile(tilemap, pos)
+		
+		selected_tile = "Ground"
+		
+		
+		# Load Objects
+		for object_key in save.object_string_name_to_tile_pos.keys():
+			for pos in save.object_string_name_to_tile_pos[object_key]:
+				selected_object = object_dictionary[object_key]
+				object_string = object_key
+				set_tile(tilemap, pos)
+		
+		
+		selected_object = null
+		
+		print(tilemap.get_used_cells())
+		
+		#print(save)
+		#
+		#print(save.physics_tilemap_cells)
+		#
+		#print(save.object_string_name_to_tile_pos)
+		
+	prevent_tile_placement = false
+
+
+var player:Player = null
+var checkpoint_mangager:CheckpointManager = null
+var game_camera:GameCamera = null
+var hud:CanvasLayer = null
+var on_level_loaded:Node = null
+
+func test_level() -> void:
+	
+	save_logic()
 	
 	
+	var player_scene:PackedScene = preload("res://scenes/player/player.tscn")
+	var checkpoint_manager_scene:PackedScene = preload("res://scenes/checkpoint/checkpoint_manager.tscn")
+	var game_camera_scene:PackedScene = preload("res://scenes/Camera/game_camera.tscn")
+	
+	var hud_scene:PackedScene = preload("res://scenes/UI/hud.tscn")
+	var level_loaded_scene:PackedScene = preload("res://scenes/system/OnLevelLoaded.tscn")
+	
+	hud = hud_scene.instantiate()
+	on_level_loaded = level_loaded_scene.instantiate()
+	
+	player = player_scene.instantiate()
+	checkpoint_mangager = checkpoint_manager_scene.instantiate()
+	game_camera = game_camera_scene.instantiate()
+	
+	
+	checkpoint_mangager.game_camera = game_camera
+	checkpoint_mangager.player = player
+	
+	testing_mode = true
+	$LevelEditorHud/TestLevelButton.hide()
+	$Camera2D.hide()
+	$Camera2D.enabled = false
+	
+	game_camera.enabled = true
+	game_camera.zoom = Vector2(3,3)
+	
+	physics_tilemap.player = player
+	
+	var spawn_point:Node2D = get_spawnpoint()
+	
+	if spawn_point:
+		player.global_position = spawn_point.global_position
+	
+	add_child(player)
+	add_child(checkpoint_mangager)
+	add_child(game_camera)
+	add_child(hud)
+	add_child(on_level_loaded)
+	
+	level_editor_hud.hide()
+	
+	
+	$TestingHud.show()
+
+
+func _stop_testing() -> void:
+	testing_mode = false
+	game_camera.queue_free()
+	player.queue_free()
+	checkpoint_mangager.queue_free()
+	hud.queue_free()
+	on_level_loaded.queue_free()
+	
+	GameManager._handle_set_meter(0)
+	
+	level_editor_hud.show()
+	$TestingHud.hide()
+	
+	$LevelEditorHud/TestLevelButton.show()
+	$Camera2D.show()
+	$Camera2D.enabled = true
+	
+	physics_tilemap.player = null
+	
+	# Remove children from object node
+	for child in object_node.get_children():
+		child.queue_free()
+	
+	
+	reload_tilemaps()
+
+
+func reload_tilemaps() -> void:
+	physics_tilemap.clear()
+	object_string_name_to_tile_pos.clear()
+	tile_pos_to_object_dictionary.clear()
+	
+	load_logic(save_path)
+
+
 
 
 # https://forum.godotengine.org/t/tile-based-line-drawing-algorithm-efficiency/26998

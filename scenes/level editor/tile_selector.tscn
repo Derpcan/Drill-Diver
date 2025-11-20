@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=10 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
 [ext_resource type="PackedScene" uid="uid://cso12yd5vwp87" path="res://scenes/level editor/tile_selector_button.tscn" id="3_igrm3"]
 [ext_resource type="Texture2D" uid="uid://cu2183edopvth" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/Diamond.png" id="4_1bmts"]
+[ext_resource type="Texture2D" uid="uid://j3ll8yipnw8p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Alien/Alien_idle.png" id="5_1bmts"]
 
 [sub_resource type="Animation" id="Animation_qv4l2"]
 length = 0.001
@@ -213,20 +214,54 @@ alignment = 1
 layout_mode = 2
 image = ExtResource("3_1t62o")
 text = "Checkpoint"
+bonus_parameters = null
 
-[node name="TileSelectorButton2" parent="ColorRect/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="Gem" parent="ColorRect/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("4_1bmts")
 text = "Gem"
+bonus_parameters = null
+
+[node name="SpawnPoint" parent="ColorRect/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("3_1t62o")
+text = "Spawnpoint"
+bonus_parameters = null
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="TileSelectorButton3" parent="ColorRect/VBoxContainer/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Ground" parent="ColorRect/VBoxContainer/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "Ground"
+bonus_parameters = null
+
+[node name="Dirt" parent="ColorRect/VBoxContainer/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+text = "Dirt"
+bonus_parameters = null
+
+[node name="SuperDrillable" parent="ColorRect/VBoxContainer/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+text = "SuperDrillable"
+bonus_parameters = null
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Alien" parent="ColorRect/VBoxContainer/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("5_1bmts")
+text = "Alien"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

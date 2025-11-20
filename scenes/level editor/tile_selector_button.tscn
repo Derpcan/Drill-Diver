@@ -21,6 +21,10 @@ class_name TileSelectorButton
 		if label:
 			label.text = text
 
+@export var bonus_parameters:Dictionary = {}
+
+
+@export_category(\"Nodes\")
 @export var texture_rect:TextureRect
 @export var button:Button
 
