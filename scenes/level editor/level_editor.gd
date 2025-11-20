@@ -99,6 +99,8 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		var alt_tile:int = tile_data[2]
 		
 		tile_map.set_cell(tile_position, source_id, atlas_coord, alt_tile)
+	
+	# Set object in tile
 	else:
 		
 		# Check to see if a tile is there already
@@ -107,17 +109,19 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		
 		# Check to see if the position exists in there
 		if tile_position in tile_pos_to_object_dictionary:
+			# If there is an object in existance, remove it
 			if tile_pos_to_object_dictionary[tile_position] != null:
 				tile_pos_to_object_dictionary[tile_position].queue_free()
 			tile_pos_to_object_dictionary[tile_position] = null
 		
+		# Add new object to tree and dictionary
 		var object = selected_object.instantiate()
 		object.global_position = tile_map.map_to_local(tile_position)
 		add_child(object)
 		tile_pos_to_object_dictionary[tile_position] = object
 	
 
-
+# Deletes tile that is in use
 func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
 	var tile_data:Array = get_tile()
 	var source_id:int = tile_data[0]
