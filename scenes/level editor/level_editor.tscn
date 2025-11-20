@@ -29,3 +29,12 @@ z_index = 5
 tile_set = SubResource("TileSet_cwu4w")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 4
+visible = true
+ok_button_text = "Open"
+file_mode = 0
+access = 1
+root_subfolder = "level_editor/levels/"

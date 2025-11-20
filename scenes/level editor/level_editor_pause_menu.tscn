@@ -64,10 +64,3 @@ offset_right = 630.0
 offset_bottom = 387.0
 text = "Main Menu"
 script = SubResource("GDScript_n87rw")
-
-[node name="SaveButton" type="Button" parent="."]
-offset_left = 535.0
-offset_top = 299.0
-offset_right = 624.0
-offset_bottom = 330.0
-text = "Save Level"

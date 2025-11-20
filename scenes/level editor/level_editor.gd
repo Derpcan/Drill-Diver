@@ -8,6 +8,10 @@ extends Node2D
 
 @onready var camera:Camera2D = $Camera2D
 
+@onready var file_dialog:FileDialog = $FileDialog
+
+
+
 var prevent_tile_placement:bool = false:
 	set(new_value):
 		prevent_tile_placement = new_value
@@ -22,31 +26,22 @@ var place_held_down:bool = false
 
 var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 	set(new_tilemap_mouse_position):
+		
 		previous_tilemap_mouse_postion = tilemap_mouse_position
 		tilemap_mouse_position = new_tilemap_mouse_position
 		
+		# If the place button is being held down
 		if place_held_down:
-			
-			
-			# Check if a straight horizontal line is being drawn
-			if previous_tilemap_mouse_postion.y == tilemap_mouse_position.y:
-				
-				# Complete the line in case there are skips
-				for x in range(previous_tilemap_mouse_postion.x, tilemap_mouse_position.x):
-					set_tile(physics_tilemap, Vector2i(x,previous_tilemap_mouse_postion.y))
-			
-			# Check if a straight vertical line is being drawn
-			elif previous_tilemap_mouse_postion.x == tilemap_mouse_position.x:
-				
-				# Complete the line in case there are skips
-				for y in range(previous_tilemap_mouse_postion.y, tilemap_mouse_position.y):
-					set_tile(physics_tilemap, Vector2i(previous_tilemap_mouse_postion.x,y))
-			
-			else:
-				for point in line(previous_tilemap_mouse_postion, tilemap_mouse_position):
+			# Complete the line between the two points in case there are skips
+			for point in line(previous_tilemap_mouse_postion, tilemap_mouse_position):
+				if is_deleting == false:
 					set_tile(physics_tilemap, Vector2i(point[0], point[1]))
+				elif is_deleting == true:
+					delete_tile(physics_tilemap, Vector2i(point[0], point[1]))
+
 
 var previous_tilemap_mouse_postion:Vector2 = Vector2.ZERO
+
 
 # The toggle for if the editor should be deleting tiles or placing
 var is_deleting:bool = false:
@@ -73,8 +68,18 @@ var object_dictionary:Dictionary = {
 	"Gem":preload("res://scenes/items/MeterItem.tscn"),
 }
 
+var scene_dictionary:Dictionary = {
+	preload("res://scenes/checkpoint/checkpoint.tscn"):"Checkpoint",
+	preload("res://scenes/items/MeterItem.tscn"):"Gem",
+}
+
 # Keeps track of unique locations and stores the associated object at the location
 var tile_pos_to_object_dictionary:Dictionary[Vector2i, Object] = {
+	
+}
+
+# This will be saved in the custom level resource
+var object_string_name_to_tile_pos:Dictionary = {
 	
 }
 
@@ -82,6 +87,7 @@ var tile_pos_to_object_dictionary:Dictionary[Vector2i, Object] = {
 
 var selected_tile:String = "Ground"
 var selected_object:PackedScene = null
+var object_string:String = ""
 
 
 func _ready() -> void:
@@ -89,10 +95,13 @@ func _ready() -> void:
 	var tile_selector:TileSelector = level_editor_hud.get_node("TileSelector") as TileSelector
 	tile_selector.tile_selector_state_changed.connect(tile_selector_changed)
 	tile_selector.tile_selector_new_tile_selected.connect(tile_selected_changed)
+	
+	file_dialog.file_selected.connect(load_logic)
+	
+	
 
 
 func tile_selected_changed(tile_string:String) -> void:
-	print(tile_string)
 	if tile_string in tiles_dictionary:
 		selected_object = null
 		selected_tile = tile_string
@@ -100,6 +109,7 @@ func tile_selected_changed(tile_string:String) -> void:
 	if tile_string in object_dictionary:
 		selected_object = object_dictionary[tile_string]
 		selected_tile = ""
+		object_string = tile_string
 		#print("Selected Object")
 
 
@@ -135,6 +145,20 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		var atlas_coord:Vector2i = tile_data[1]
 		var alt_tile:int = tile_data[2]
 		
+		
+		# Check to see if the position exists in there
+		if tile_position in tile_pos_to_object_dictionary:
+			# If there is an object in existance, remove it
+			if tile_pos_to_object_dictionary[tile_position] != null:
+				tile_pos_to_object_dictionary[tile_position].queue_free()
+			tile_pos_to_object_dictionary[tile_position] = null
+		
+		# Remove from the other dictionary that is used to save
+		for key in object_string_name_to_tile_pos.keys():
+			if tile_position in object_string_name_to_tile_pos[key]:
+				object_string_name_to_tile_pos[key].erase(tile_position)
+		
+		
 		tile_map.set_cell(tile_position, source_id, atlas_coord, alt_tile)
 	
 	# Set object in tile
@@ -156,6 +180,12 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		object.global_position = tile_map.map_to_local(tile_position)
 		add_child(object)
 		tile_pos_to_object_dictionary[tile_position] = object
+		
+		if object_string in object_string_name_to_tile_pos:
+			if tile_position not in object_string_name_to_tile_pos[object_string]:
+				object_string_name_to_tile_pos[object_string].append(tile_position)
+		else:
+			object_string_name_to_tile_pos[object_string] = [tile_position]
 
 
 
@@ -195,6 +225,9 @@ func _physics_process(delta: float) -> void:
 	if prevent_tile_placement == true:
 		return
 	
+	# Prevent the camera from moving when pressing the quick save keybind
+	if Input.is_action_pressed("save_level_editor"):
+		return
 	
 	# Allows for the camera to move
 	var dir_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
@@ -204,11 +237,6 @@ func _physics_process(delta: float) -> void:
 	camera.global_position.y += dir_y*4
 	# End Camera Movement
 
-
-
-
-func _process(delta: float) -> void:
-	place_tile_input_logic()
 
 
 
@@ -235,7 +263,11 @@ func place_tile_input_logic() -> void:
 		place_held_down = false
 
 
-func _unhandled_input(event: InputEvent) -> void:
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("save_level_editor"):
+		print("Saved")
+		save_logic()
 	
 	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
 		is_deleting = not is_deleting
@@ -249,7 +281,99 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
 	if Input.is_action_just_pressed("camera_scroll_reset"):
 		camera.zoom = Vector2(1,1)
-	#place_tile_input_logic()
+	
+	place_tile_input_logic()
+	
+	# When pause is pressed
+	if Input.is_action_just_pressed("escape"):
+		place_held_down = false
+
+
+
+
+var folder_path:String = "user://level_editor/levels"
+var save_path:String = folder_path + "/"
+
+func save_logic() -> void:
+	
+	var level_name:String = "level_one.tres"
+	
+	# Create the directories needed to save the file
+	DirAccess.make_dir_recursive_absolute(folder_path)
+	
+	# Open the file for writing
+	var file:FileAccess = FileAccess.open(save_path+level_name, FileAccess.WRITE)
+	
+	print(physics_tilemap.get_used_cells_by_id(0))
+	print(physics_tilemap.get_used_cells_by_id(1))
+	print(physics_tilemap.get_used_cells_by_id(2))
+	
+	var save:CustomLevelSave = CustomLevelSave.new()
+	
+	# Save the Physics tile cells
+	save.physics_tilemap_cells[0] = physics_tilemap.get_used_cells_by_id(0)
+	save.physics_tilemap_cells[1] = physics_tilemap.get_used_cells_by_id(1)
+	save.physics_tilemap_cells[2] = physics_tilemap.get_used_cells_by_id(2)
+	
+	save.object_string_name_to_tile_pos = object_string_name_to_tile_pos
+	
+	ResourceSaver.save(save, save_path+level_name)
+
+
+func load_logic(path_name:String="") -> void:
+	
+	var level_name:String = "level_one.tres"
+	print(save_path+level_name)
+	
+	if ResourceLoader.exists(path_name):
+		# Open the file for writing
+		var save:CustomLevelSave = ResourceLoader.load(path_name,"", ResourceLoader.CACHE_MODE_IGNORE)
+		
+		if save == null:
+			print("failed to load")
+		
+		# Load the physics tile map cells
+		for pos in save.physics_tilemap_cells[0]:
+			selected_tile = "Ground"
+			set_tile(physics_tilemap, pos)
+		
+		for pos in save.physics_tilemap_cells[1]:
+			selected_tile = "HardDrillable"
+			set_tile(physics_tilemap, pos)
+		
+		for pos in save.physics_tilemap_cells[2]:
+			selected_tile = "Drillable"
+			set_tile(physics_tilemap, pos)
+		
+		selected_tile = "Ground"
+		
+		
+		
+		
+		# Load Objects
+		for object_key in save.object_string_name_to_tile_pos.keys():
+			for pos in save.object_string_name_to_tile_pos[object_key]:
+				selected_object = object_dictionary[object_key]
+				object_string = object_key
+				set_tile(physics_tilemap, pos)
+		
+		
+		selected_object = null
+		
+		
+		#print(save)
+		#
+		#print(save.physics_tilemap_cells)
+		#
+		#print(save.object_string_name_to_tile_pos)
+		
+		
+
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	pass
+	
 	
 
 
