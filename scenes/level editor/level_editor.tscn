@@ -25,6 +25,7 @@ tile_set = ExtResource("1_e806q")
 
 [node name="PreviewTileMap" type="TileMapLayer" parent="."]
 modulate = Color(1, 0, 0, 1)
+z_index = 5
 tile_set = SubResource("TileSet_cwu4w")
 
 [node name="Camera2D" type="Camera2D" parent="."]

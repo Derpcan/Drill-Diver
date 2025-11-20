@@ -66,15 +66,15 @@ func _ready() -> void:
 
 func tile_selected_changed(tile_string:String) -> void:
 	if tile_string in tiles_dictionary:
-		
 		selected_object = null
-		pass
+		
 	
 	if tile_string in object_dictionary:
 		selected_object = object_dictionary[tile_string]
 		selected_tile = -1
 		print("Selected Object")
-	
+
+
 
 
 # Block or unblock placing tiles
@@ -88,9 +88,11 @@ func tile_selector_changed(is_open:bool) -> void:
 
 
 
+
 func get_tile() -> Array:
 	
 	return [0, Vector2i(0,0), 0]
+
 
 
 
@@ -124,7 +126,8 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		object.global_position = tile_map.map_to_local(tile_position)
 		add_child(object)
 		tile_pos_to_object_dictionary[tile_position] = object
-	
+
+
 
 # Deletes tile that is in use
 func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
@@ -178,6 +181,7 @@ func _process(delta: float) -> void:
 	place_tile_input_logic()
 
 
+
 func place_tile_input_logic() -> void:
 	# Get the mouse position
 	mouse_position = get_global_mouse_position()
@@ -203,5 +207,5 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
 		is_deleting = not is_deleting
 	
-	place_tile_input_logic()
+	#place_tile_input_logic()
 	
