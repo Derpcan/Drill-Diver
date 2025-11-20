@@ -8,6 +8,7 @@
 [node name="TileSelector" parent="." instance=ExtResource("2_tnwft")]
 offset_right = 0.0
 offset_bottom = 0.0
+is_open = false
 
 [node name="PauseButton" type="Button" parent="."]
 visible = false

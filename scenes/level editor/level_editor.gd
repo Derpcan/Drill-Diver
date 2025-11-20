@@ -18,8 +18,35 @@ var prevent_tile_placement:bool = false:
 
 var mouse_position:Vector2 = Vector2.ZERO
 
-var tilemap_mouse_position:Vector2 = Vector2.ZERO
+var place_held_down:bool = false
 
+var tilemap_mouse_position:Vector2 = Vector2.ZERO:
+	set(new_tilemap_mouse_position):
+		previous_tilemap_mouse_postion = tilemap_mouse_position
+		tilemap_mouse_position = new_tilemap_mouse_position
+		
+		if place_held_down:
+			
+			
+			# Check if a straight horizontal line is being drawn
+			if previous_tilemap_mouse_postion.y == tilemap_mouse_position.y:
+				
+				# Complete the line in case there are skips
+				for x in range(previous_tilemap_mouse_postion.x, tilemap_mouse_position.x):
+					set_tile(physics_tilemap, Vector2i(x,previous_tilemap_mouse_postion.y))
+			
+			# Check if a straight vertical line is being drawn
+			elif previous_tilemap_mouse_postion.x == tilemap_mouse_position.x:
+				
+				# Complete the line in case there are skips
+				for y in range(previous_tilemap_mouse_postion.y, tilemap_mouse_position.y):
+					set_tile(physics_tilemap, Vector2i(previous_tilemap_mouse_postion.x,y))
+			
+			else:
+				for point in line(previous_tilemap_mouse_postion, tilemap_mouse_position):
+					set_tile(physics_tilemap, Vector2i(point[0], point[1]))
+
+var previous_tilemap_mouse_postion:Vector2 = Vector2.ZERO
 
 # The toggle for if the editor should be deleting tiles or placing
 var is_deleting:bool = false:
@@ -196,6 +223,7 @@ func place_tile_input_logic() -> void:
 	
 	# Place down a tile
 	if Input.is_action_pressed("place_tile") and not prevent_tile_placement:
+		place_held_down = true
 		var tile_data:Array = get_tile()
 		
 		if is_deleting == false:
@@ -203,6 +231,8 @@ func place_tile_input_logic() -> void:
 		if is_deleting == true:
 			delete_tile(physics_tilemap, tilemap_mouse_position)
 			physics_tilemap.set_cell(tilemap_mouse_position, -1, Vector2i(-1,-1), 0)
+	elif Input.is_action_just_released("place_tile"):
+		place_held_down = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -221,3 +251,28 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.zoom = Vector2(1,1)
 	#place_tile_input_logic()
 	
+
+
+# https://forum.godotengine.org/t/tile-based-line-drawing-algorithm-efficiency/26998
+#Returns a set of points from p0 to p1 using Bresenham's line algorithm
+#use: line([0, 0], [10, 10])
+func line(p0:Vector2i, p1:Vector2i):
+	var points:Array = []
+	var dx:int = abs(p1[0] - p0[0])
+	var dy:int = -abs(p1[1] - p0[1])
+	var err:int = dx + dy
+	var e2:int = 2 * err
+	var sx:int = 1 if p0[0] < p1[0] else -1
+	var sy:int = 1 if p0[1] < p1[1] else -1
+	while true:
+		points.append([p0[0], p0[1]])
+		if p0[0] == p1[0] and p0[1] == p1[1]:
+			break
+		e2 = 2 * err
+		if e2 >= dy:
+			err += dy
+			p0[0] += sx
+		if e2 <= dx:
+			err += dx
+			p0[1] += sy
+	return points
