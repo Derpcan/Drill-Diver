@@ -8,11 +8,12 @@ extends Node2D
 
 @onready var camera:Camera2D = $Camera2D
 
-var prevent_tile_placement:bool = true:
+var prevent_tile_placement:bool = false:
 	set(new_value):
 		prevent_tile_placement = new_value
 		
 		if prevent_tile_placement == true:
+			delete_tile(physics_tilemap, tilemap_mouse_position) # Delete tile when opening selection menu
 			preview_tilemap.clear()
 
 var mouse_position:Vector2 = Vector2.ZERO
@@ -34,14 +35,18 @@ enum tile_types {
 }
 
 
+# The possible tiles that can be placed in the level editor
 var tiles_dictionary:Dictionary = {
 	
 }
 
+# The possible objects that can be placed in the level editor
 var object_dictionary:Dictionary = {
-	"Checkpoint":preload("res://scenes/checkpoint/checkpoint.tscn")
+	"Checkpoint":preload("res://scenes/checkpoint/checkpoint.tscn"),
+	"Gem":preload("res://scenes/items/MeterItem.tscn"),
 }
 
+# Keeps track of unique locations and stores the associated object at the location
 var tile_pos_to_object_dictionary:Dictionary[Vector2i, Object] = {
 	
 }
@@ -167,12 +172,13 @@ func _physics_process(delta: float) -> void:
 	# End Camera Movement
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	
-	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
-		is_deleting = not is_deleting
-	
-	
+
+
+func _process(delta: float) -> void:
+	place_tile_input_logic()
+
+
+func place_tile_input_logic() -> void:
 	# Get the mouse position
 	mouse_position = get_global_mouse_position()
 	
@@ -181,18 +187,21 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	show_tile_place_preview(tilemap_mouse_position)
 	
-	
-	print("Mouse Position: ", mouse_position)
-	print("Tilemap Mouse Position: ", tilemap_mouse_position)
-	
 	# Place down a tile
 	if Input.is_action_pressed("place_tile") and not prevent_tile_placement:
 		var tile_data:Array = get_tile()
 		
-		print("placed")
 		if is_deleting == false:
-			set_tile( physics_tilemap, tilemap_mouse_position,)
+			set_tile(physics_tilemap, tilemap_mouse_position,)
 		if is_deleting == true:
 			delete_tile(physics_tilemap, tilemap_mouse_position)
 			physics_tilemap.set_cell(tilemap_mouse_position, -1, Vector2i(-1,-1), 0)
-		
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	
+	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
+		is_deleting = not is_deleting
+	
+	place_tile_input_logic()
+	
