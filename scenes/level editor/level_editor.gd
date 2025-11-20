@@ -211,11 +211,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		is_deleting = not is_deleting
 	
 	# Camera Zooming In and Out
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_DOWN):
+	if Input.is_action_pressed("camera_scroll_out"):
 		camera.zoom *= 0.8
-		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(10,10))
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_UP):
+		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
+	if Input.is_action_pressed("camera_scroll_in"):
 		camera.zoom *= 1.2
-		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(10,10))
+		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
+	if Input.is_action_just_pressed("camera_scroll_reset"):
+		camera.zoom = Vector2(1,1)
 	#place_tile_input_logic()
 	
