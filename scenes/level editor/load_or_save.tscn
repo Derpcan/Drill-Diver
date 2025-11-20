@@ -1,6 +1,112 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlby0tn0le6uv"]
+[gd_scene load_steps=15 format=3 uid="uid://dlby0tn0le6uv"]
 
 [ext_resource type="Script" uid="uid://duwvy0vgir65y" path="res://scenes/level editor/load_or_save.gd" id="1_wof0u"]
+[ext_resource type="Texture2D" uid="uid://vtku2nt3lrt6" path="res://assets/WarningSign_PixyFantasy/WarningSign01.png" id="2_p1na8"]
+[ext_resource type="Texture2D" uid="uid://u5ofb4itevxh" path="res://assets/WarningSign_PixyFantasy/WarningSign02.png" id="3_arkj1"]
+[ext_resource type="Texture2D" uid="uid://nm0t8yxjlqdm" path="res://assets/WarningSign_PixyFantasy/WarningSign03.png" id="4_sk1hb"]
+[ext_resource type="Texture2D" uid="uid://bfqcdc456uijt" path="res://assets/WarningSign_PixyFantasy/WarningSign04.png" id="5_lisxt"]
+[ext_resource type="Texture2D" uid="uid://n5vbpodkcqik" path="res://assets/WarningSign_PixyFantasy/WarningSign05.png" id="6_ghv8j"]
+[ext_resource type="Texture2D" uid="uid://vodr3wbs1n2q" path="res://assets/WarningSign_PixyFantasy/WarningSign06.png" id="7_v7dyo"]
+[ext_resource type="Texture2D" uid="uid://etvh132313mr" path="res://assets/WarningSign_PixyFantasy/WarningSign07.png" id="8_0xlsa"]
+[ext_resource type="Texture2D" uid="uid://cjnx8wkvi68hf" path="res://assets/WarningSign_PixyFantasy/WarningSign08.png" id="9_x01o5"]
+[ext_resource type="Texture2D" uid="uid://c6af2q5wvv1w3" path="res://assets/WarningSign_PixyFantasy/WarningSign09.png" id="10_5meuo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8w7op"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_p1na8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_arkj1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sk1hb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lisxt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ghv8j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_v7dyo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_0xlsa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_x01o5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_5meuo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_p1na8"]
+resource_name = "loop"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_arkj1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sk1hb"]
+_data = {
+&"RESET": SubResource("Animation_arkj1"),
+&"loop": SubResource("Animation_p1na8")
+}
 
 [node name="LoadOrSave" type="CanvasLayer"]
 script = ExtResource("1_wof0u")
@@ -30,7 +136,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Welcome to the Drill Diver Level Editor"
+text = "Welcome to the Drill Diver Construction Zone"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
 layout_mode = 2
@@ -44,3 +150,19 @@ text = "Load Level"
 [node name="Create" type="Button" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Create New Level"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(401, 239)
+sprite_frames = SubResource("SpriteFrames_8w7op")
+
+[node name="Label" type="Label" parent="AnimatedSprite2D"]
+offset_left = 15.0
+offset_top = -8.0
+offset_right = 357.0
+offset_bottom = 15.0
+text = "WARNING: No Controllers Beyond This Point"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_sk1hb")
+}

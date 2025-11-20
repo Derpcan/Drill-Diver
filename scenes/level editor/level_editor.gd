@@ -14,13 +14,16 @@ extends Node2D
 @onready var load_or_save_ui:LoadOrSave = $LoadOrSave
 
 
+@onready var save_animation_player:AnimationPlayer = $LevelEditorHud/AnimationPlayer
+
+
 
 var prevent_tile_placement:bool = true:
 	set(new_value):
 		prevent_tile_placement = new_value
 		
 		if prevent_tile_placement == true:
-			delete_tile(physics_tilemap, tilemap_mouse_position) # Delete tile when opening selection menu
+			#delete_tile(physics_tilemap, tilemap_mouse_position) # Delete tile when opening selection menu
 			preview_tilemap.clear()
 
 var mouse_position:Vector2 = Vector2.ZERO
@@ -62,7 +65,11 @@ enum tile_types {
 
 # The possible tiles that can be placed in the level editor
 var tiles_dictionary:Dictionary = {
-	"Ground":[0,Vector2(0,0), 0],
+	"Ground":tile_types.UNDRILLABLE,#[0,Vector2(0,0), 0],
+}
+
+var tile_type_to_tile_data_dictionary:Dictionary = {
+	tile_types.UNDRILLABLE:[0,Vector2(0,0),0],
 }
 
 # The possible objects that can be placed in the level editor
@@ -110,7 +117,7 @@ func _ready() -> void:
 
 
 
-
+# Creates the new file in the filesystem
 func _create_new_level_logic(nam:String) -> void:
 	load_or_save_ui.queue_free()
 	level_editor_hud.show()
@@ -125,14 +132,15 @@ func _create_new_level_logic(nam:String) -> void:
 	
 	save_path = nam+".tres"
 
-
+# Show the Create new level dialog
 func _create_new_level_dialog() -> void:
 	save_file_dialog.show()
 	
 
-
+# Show the load level file dialog
 func _load_level_logic() -> void:
 	load_file_dialog.show()
+	
 
 
 func tile_selected_changed(tile_string:String) -> void:
@@ -144,7 +152,6 @@ func tile_selected_changed(tile_string:String) -> void:
 		selected_object = object_dictionary[tile_string]
 		selected_tile = ""
 		object_string = tile_string
-		#print("Selected Object")
 
 
 
@@ -162,9 +169,11 @@ func tile_selector_changed(is_open:bool) -> void:
 
 
 func get_tile() -> Array:
-	match selected_tile:
-		"Ground":
-			return tiles_dictionary[selected_tile]
+	if (selected_tile in tiles_dictionary):
+		return tile_type_to_tile_data_dictionary[tiles_dictionary[selected_tile]]
+	#match selected_tile:
+		#"Ground":
+			#return tiles_dictionary[selected_tile]
 	return [0, Vector2i(0,0), 0]
 
 
@@ -237,6 +246,12 @@ func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
 		if tile_pos_to_object_dictionary[tile_position] != null:
 			tile_pos_to_object_dictionary[tile_position].queue_free()
 		tile_pos_to_object_dictionary[tile_position] = null
+	
+	
+	# Remove from the other dictionary that is used to save
+	for key in object_string_name_to_tile_pos.keys():
+		if tile_position in object_string_name_to_tile_pos[key]:
+			object_string_name_to_tile_pos[key].erase(tile_position)
 
 
 func show_tile_place_preview(tile_position:Vector2) -> void:
@@ -298,31 +313,6 @@ func place_tile_input_logic() -> void:
 
 
 
-func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("save_level_editor"):
-		print("Saved")
-		save_logic()
-	
-	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
-		is_deleting = not is_deleting
-	
-	# Camera Zooming In and Out
-	if Input.is_action_pressed("camera_scroll_out"):
-		camera.zoom *= 0.8
-		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
-	if Input.is_action_pressed("camera_scroll_in"):
-		camera.zoom *= 1.2
-		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
-	if Input.is_action_just_pressed("camera_scroll_reset"):
-		camera.zoom = Vector2(1,1)
-	
-	place_tile_input_logic()
-	
-	# When pause is pressed
-	if Input.is_action_just_pressed("escape"):
-		place_held_down = false
-
-
 
 
 var folder_path:String = "user://level_editor/levels"
@@ -336,9 +326,6 @@ func save_logic() -> void:
 	DirAccess.make_dir_recursive_absolute(folder_path)
 	
 	
-	print(physics_tilemap.get_used_cells_by_id(0))
-	print(physics_tilemap.get_used_cells_by_id(1))
-	print(physics_tilemap.get_used_cells_by_id(2))
 	
 	var save:CustomLevelSave = CustomLevelSave.new()
 	
@@ -347,9 +334,16 @@ func save_logic() -> void:
 	save.physics_tilemap_cells[1] = physics_tilemap.get_used_cells_by_id(1)
 	save.physics_tilemap_cells[2] = physics_tilemap.get_used_cells_by_id(2)
 	
+	# Save the objects that are placed down
 	save.object_string_name_to_tile_pos = object_string_name_to_tile_pos
 	
 	ResourceSaver.save(save, save_path)
+	
+	
+	if save_animation_player.is_playing():
+		save_animation_player.stop()
+	
+	save_animation_player.play("fade_out")
 
 
 func load_logic(path_name:String="") -> void:
@@ -379,8 +373,6 @@ func load_logic(path_name:String="") -> void:
 		selected_tile = "Ground"
 		
 		
-		
-		
 		# Load Objects
 		for object_key in save.object_string_name_to_tile_pos.keys():
 			for pos in save.object_string_name_to_tile_pos[object_key]:
@@ -403,7 +395,29 @@ func load_logic(path_name:String="") -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	pass
+	if Input.is_action_just_pressed("save_level_editor"):
+		print("Saved")
+		save_logic()
+	
+	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
+		is_deleting = not is_deleting
+	
+	# Camera Zooming In and Out
+	if Input.is_action_pressed("camera_scroll_out"):
+		camera.zoom *= 0.8
+		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
+	if Input.is_action_pressed("camera_scroll_in"):
+		camera.zoom *= 1.2
+		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
+	if Input.is_action_just_pressed("camera_scroll_reset"):
+		camera.zoom = Vector2(1,1)
+	
+	place_tile_input_logic()
+	
+	# When pause is pressed
+	if Input.is_action_just_pressed("escape"):
+		place_held_down = false
+
 	
 	
 

@@ -9,6 +9,7 @@ signal create_new_level()
 func _ready() -> void:
 	$Control/ColorRect/VBoxContainer/HBoxContainer2/Load.pressed.connect(_emit_load_level_signal)
 	$Control/ColorRect/VBoxContainer/HBoxContainer2/Create.pressed.connect(_emit_create_new_level_signal)
+	$AnimatedSprite2D/AnimationPlayer.play("loop")
 
 
 func _emit_load_level_signal() -> void:
