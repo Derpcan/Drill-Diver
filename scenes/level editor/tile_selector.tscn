@@ -209,7 +209,7 @@ layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="TileSelectorButton" parent="ColorRect/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="CheckPoint" parent="ColorRect/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("3_1t62o")
 text = "Checkpoint"
@@ -218,6 +218,15 @@ text = "Checkpoint"
 layout_mode = 2
 image = ExtResource("4_1bmts")
 text = "Gem"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TileSelectorButton3" parent="ColorRect/VBoxContainer/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+text = "Ground"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -37,7 +37,7 @@ enum tile_types {
 
 # The possible tiles that can be placed in the level editor
 var tiles_dictionary:Dictionary = {
-	
+	"Ground":[0,Vector2(0,0), 0],
 }
 
 # The possible objects that can be placed in the level editor
@@ -53,7 +53,7 @@ var tile_pos_to_object_dictionary:Dictionary[Vector2i, Object] = {
 
 
 
-var selected_tile:int = 0
+var selected_tile:String = "Ground"
 var selected_object:PackedScene = null
 
 
@@ -65,14 +65,15 @@ func _ready() -> void:
 
 
 func tile_selected_changed(tile_string:String) -> void:
+	print(tile_string)
 	if tile_string in tiles_dictionary:
 		selected_object = null
-		
+		selected_tile = tile_string
 	
 	if tile_string in object_dictionary:
 		selected_object = object_dictionary[tile_string]
-		selected_tile = -1
-		print("Selected Object")
+		selected_tile = ""
+		#print("Selected Object")
 
 
 
@@ -90,7 +91,9 @@ func tile_selector_changed(is_open:bool) -> void:
 
 
 func get_tile() -> Array:
-	
+	match selected_tile:
+		"Ground":
+			return tiles_dictionary[selected_tile]
 	return [0, Vector2i(0,0), 0]
 
 
@@ -207,5 +210,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
 		is_deleting = not is_deleting
 	
+	# Camera Zooming In and Out
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_DOWN):
+		camera.zoom *= 0.8
+		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(10,10))
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_UP):
+		camera.zoom *= 1.2
+		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(10,10))
 	#place_tile_input_logic()
 	
