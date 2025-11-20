@@ -8,11 +8,14 @@ extends Node2D
 
 @onready var camera:Camera2D = $Camera2D
 
-@onready var file_dialog:FileDialog = $FileDialog
+@onready var load_file_dialog:FileDialog = $LoadDialog
+@onready var save_file_dialog:FileDialog = $SaveDialog
+
+@onready var load_or_save_ui:LoadOrSave = $LoadOrSave
 
 
 
-var prevent_tile_placement:bool = false:
+var prevent_tile_placement:bool = true:
 	set(new_value):
 		prevent_tile_placement = new_value
 		
@@ -96,9 +99,40 @@ func _ready() -> void:
 	tile_selector.tile_selector_state_changed.connect(tile_selector_changed)
 	tile_selector.tile_selector_new_tile_selected.connect(tile_selected_changed)
 	
-	file_dialog.file_selected.connect(load_logic)
+	
+	load_or_save_ui.create_new_level.connect(_create_new_level_dialog)
+	load_or_save_ui.load_level.connect(_load_level_logic)
 	
 	
+	load_file_dialog.file_selected.connect(load_logic)
+	save_file_dialog.file_selected.connect(_create_new_level_logic)
+	
+
+
+
+
+func _create_new_level_logic(nam:String) -> void:
+	load_or_save_ui.queue_free()
+	level_editor_hud.show()
+	
+	# Create the directories needed to save the file
+	DirAccess.make_dir_recursive_absolute(folder_path)
+	
+	# Open the file for writing
+	var file:FileAccess = FileAccess.open(nam+".tres", FileAccess.WRITE)
+	
+	prevent_tile_placement = false
+	
+	save_path = nam+".tres"
+
+
+func _create_new_level_dialog() -> void:
+	save_file_dialog.show()
+	
+
+
+func _load_level_logic() -> void:
+	load_file_dialog.show()
 
 
 func tile_selected_changed(tile_string:String) -> void:
@@ -293,16 +327,14 @@ func _input(event: InputEvent) -> void:
 
 var folder_path:String = "user://level_editor/levels"
 var save_path:String = folder_path + "/"
+var level_name:String = "level_0.tres"
 
 func save_logic() -> void:
 	
-	var level_name:String = "level_one.tres"
 	
 	# Create the directories needed to save the file
 	DirAccess.make_dir_recursive_absolute(folder_path)
 	
-	# Open the file for writing
-	var file:FileAccess = FileAccess.open(save_path+level_name, FileAccess.WRITE)
 	
 	print(physics_tilemap.get_used_cells_by_id(0))
 	print(physics_tilemap.get_used_cells_by_id(1))
@@ -317,14 +349,13 @@ func save_logic() -> void:
 	
 	save.object_string_name_to_tile_pos = object_string_name_to_tile_pos
 	
-	ResourceSaver.save(save, save_path+level_name)
+	ResourceSaver.save(save, save_path)
 
 
 func load_logic(path_name:String="") -> void:
-	
-	var level_name:String = "level_one.tres"
-	print(save_path+level_name)
-	
+	load_or_save_ui.queue_free()
+	save_path = path_name
+	level_editor_hud.show()
 	if ResourceLoader.exists(path_name):
 		# Open the file for writing
 		var save:CustomLevelSave = ResourceLoader.load(path_name,"", ResourceLoader.CACHE_MODE_IGNORE)
@@ -367,7 +398,7 @@ func load_logic(path_name:String="") -> void:
 		#
 		#print(save.object_string_name_to_tile_pos)
 		
-		
+	prevent_tile_placement = false
 
 
 

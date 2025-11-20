@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=8 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
 [ext_resource type="PackedScene" uid="uid://blnst3na25i2i" path="res://scenes/level editor/level_editor_hud.tscn" id="3_ackq3"]
 [ext_resource type="Texture2D" uid="uid://dr5dfxylf3hfs" path="res://scenes/level editor/PreviewTile.png" id="4_g8j7s"]
+[ext_resource type="PackedScene" uid="uid://dlby0tn0le6uv" path="res://scenes/level editor/load_or_save.tscn" id="5_dx1w1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dx1w1"]
 texture = ExtResource("4_g8j7s")
@@ -15,8 +16,11 @@ sources/0 = SubResource("TileSetAtlasSource_dx1w1")
 [node name="LevelEditor" type="Node2D"]
 script = ExtResource("1_s4d5t")
 
+[node name="LoadOrSave" parent="." instance=ExtResource("5_dx1w1")]
+
 [node name="LevelEditorHud" parent="." instance=ExtResource("3_ackq3")]
 process_mode = 1
+visible = false
 
 [node name="PhysicsTileMap" type="TileMapLayer" parent="."]
 tile_set = ExtResource("1_e806q")
@@ -30,11 +34,16 @@ tile_set = SubResource("TileSet_cwu4w")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="LoadDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 4
-visible = true
 ok_button_text = "Open"
 file_mode = 0
 access = 1
 root_subfolder = "level_editor/levels/"
+use_native_dialog = true
+
+[node name="SaveDialog" type="FileDialog" parent="."]
+access = 1
+root_subfolder = "level_editor/levels/"
+use_native_dialog = true
