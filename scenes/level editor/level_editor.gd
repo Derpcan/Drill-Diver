@@ -306,6 +306,7 @@ func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
 			object_string_name_to_tile_pos[key].erase(tile_position)
 
 
+
 func show_tile_place_preview(tile_position:Vector2) -> void:
 	preview_tilemap.clear()
 	
@@ -379,23 +380,40 @@ var level_name:String = "level_0.tres"
 
 func save_logic() -> void:
 	
-	
 	# Create the directories needed to save the file
 	DirAccess.make_dir_recursive_absolute(folder_path)
 	
+	var file:FileAccess = FileAccess.open(folder_path+"/filejson.json", FileAccess.WRITE)
 	
 	
 	var save:CustomLevelSave = CustomLevelSave.new()
 	
-	# Save the Physics tile cells
-	save.physics_tilemap_cells[0] = physics_tilemap.get_used_cells_by_id(0)
-	save.physics_tilemap_cells[1] = physics_tilemap.get_used_cells_by_id(1)
-	save.physics_tilemap_cells[2] = physics_tilemap.get_used_cells_by_id(2)
 	
-	# Save the objects that are placed down
-	save.object_string_name_to_tile_pos = object_string_name_to_tile_pos
+	## Save the Physics tile cells
+	#save.physics_tilemap_cells[0] = physics_tilemap.get_used_cells_by_id(0)
+	#save.physics_tilemap_cells[1] = physics_tilemap.get_used_cells_by_id(1)
+	#save.physics_tilemap_cells[2] = physics_tilemap.get_used_cells_by_id(2)
+	#
+	## Save the objects that are placed down
+	#save.object_string_name_to_tile_pos = object_string_name_to_tile_pos
+	#
+	#ResourceSaver.save(save, save_path)
 	
-	ResourceSaver.save(save, save_path)
+	
+	# Save the level as a json
+	file.store_string("{\n\"PhysicsTilemap\":[\n")
+	file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(0)))+",\n")
+	file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(1)))+",\n")
+	file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(2)))+"\n")
+	file.store_string("],\n")
+	
+	
+	file.store_string("\"ObjectStringTilePos\":")
+	
+	file.store_string(JSON.stringify(JSON.from_native(object_string_name_to_tile_pos), "")+"\n")
+	
+	
+	file.store_string("}")
 	
 	
 	if save_animation_player.is_playing():
@@ -409,7 +427,52 @@ func load_logic(path_name:String="") -> void:
 		load_or_save_ui.queue_free()
 		load_or_save_ui = null
 	
-	print(path_name)
+	
+	
+	if FileAccess.file_exists(folder_path+"/filejson.json"):
+		var file:FileAccess = FileAccess.open(folder_path+"/filejson.json", FileAccess.READ)
+		
+		# Get the text from the file
+		var json_string = file.get_as_text()
+		
+		if json_string == "": # See if the file is empty
+			return # Return early to not cause any errors
+		
+		# Parse the text from the file in json style
+		var json = JSON.parse_string(json_string)
+		print(json)
+		if json != null: # If there was no error parsing the text
+			var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) # Convert json into native Godot types
+			print(physics_tilemap_data)
+			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
+			print(object_string_tile_pos)
+			
+			# Load the physics tile map cells
+			for pos in physics_tilemap_data[0]:
+				selected_tile = "Ground"
+				set_tile(physics_tilemap, pos)
+				
+			for pos in physics_tilemap_data[1]:
+				selected_tile = "SuperDrillable"
+				set_tile(physics_tilemap, pos)
+				
+			for pos in physics_tilemap_data[2]:
+				selected_tile = "Dirt"
+				set_tile(physics_tilemap, pos)
+			
+			
+			selected_tile = "Ground"
+			
+			# Load Objects
+			for object_key in object_string_tile_pos.keys():
+				for pos in object_string_tile_pos[object_key]:
+					selected_object = object_dictionary[object_key]
+					object_string = object_key
+					set_tile(physics_tilemap, pos)
+			
+			selected_object = null
+	
+	
 	save_path = path_name
 	level_editor_hud.show()
 	if ResourceLoader.exists(path_name):
@@ -422,30 +485,30 @@ func load_logic(path_name:String="") -> void:
 		selected_object = null
 		
 		# Load the physics tile map cells
-		for pos in save.physics_tilemap_cells[0]:
-			selected_tile = "Ground"
-			set_tile(physics_tilemap, pos)
+		#for pos in save.physics_tilemap_cells[0]:
+			#selected_tile = "Ground"
+			#set_tile(physics_tilemap, pos)
 		
-		for pos in save.physics_tilemap_cells[1]:
-			selected_tile = "SuperDrillable"
-			set_tile(physics_tilemap, pos)
+		#for pos in save.physics_tilemap_cells[1]:
+			#selected_tile = "SuperDrillable"
+			#set_tile(physics_tilemap, pos)
 		
-		for pos in save.physics_tilemap_cells[2]:
-			selected_tile = "Dirt"
-			set_tile(physics_tilemap, pos)
+		#for pos in save.physics_tilemap_cells[2]:
+			#selected_tile = "Dirt"
+			#set_tile(physics_tilemap, pos)
 		
 		selected_tile = "Ground"
 		
 		
 		# Load Objects
-		for object_key in save.object_string_name_to_tile_pos.keys():
-			for pos in save.object_string_name_to_tile_pos[object_key]:
-				selected_object = object_dictionary[object_key]
-				object_string = object_key
-				set_tile(physics_tilemap, pos)
-		
-		
-		selected_object = null
+		#for object_key in save.object_string_name_to_tile_pos.keys():
+			#for pos in save.object_string_name_to_tile_pos[object_key]:
+				#selected_object = object_dictionary[object_key]
+				#object_string = object_key
+				#set_tile(physics_tilemap, pos)
+		#
+		#
+		#selected_object = null
 		
 		
 		#print(save)
