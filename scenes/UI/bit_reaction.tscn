@@ -150,7 +150,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0.00203281, 0.0666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(0.85, 0.85)]
+"values": [Vector2(1, 1), Vector2(0.9, 0.9)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -159,10 +159,10 @@ tracks/2/path = NodePath("AnimatedSprite2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0677537),
+"times": PackedFloat32Array(0, 0.0666667),
 "transitions": PackedFloat32Array(1, 1e-05),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 19.84)]
+"values": [Vector2(0, 0), Vector2(0, 15.42)]
 }
 
 [sub_resource type="Animation" id="Animation_nsiiu"]
