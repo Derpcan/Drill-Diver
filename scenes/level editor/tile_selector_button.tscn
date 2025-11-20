@@ -21,7 +21,7 @@ class_name TileSelectorButton
 		if label:
 			label.text = text
 
-@export var bonus_parameters:Dictionary = {}
+#@export var bonus_parameters:Dictionary = {}
 
 
 @export_category(\"Nodes\")

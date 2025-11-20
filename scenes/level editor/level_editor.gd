@@ -409,6 +409,7 @@ func load_logic(path_name:String="") -> void:
 		load_or_save_ui.queue_free()
 		load_or_save_ui = null
 	
+	print(path_name)
 	save_path = path_name
 	level_editor_hud.show()
 	if ResourceLoader.exists(path_name):

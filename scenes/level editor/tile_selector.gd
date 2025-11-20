@@ -7,6 +7,8 @@ class_name TileSelector
 @export var anim_player:AnimationPlayer
 
 
+
+
 @export var is_open:bool = true
 
 signal tile_selector_state_changed(is_open:bool)
@@ -17,7 +19,7 @@ signal tile_selector_new_tile_selected(new_tile_string:String)
 func _ready() -> void:
 	open_close_button.pressed.connect(open_close_button_pressed)
 	
-	for hbox in $ColorRect/VBoxContainer.get_children():
+	for hbox in get_tree().get_nodes_in_group("tile_selector_holder"):#$ColorRect/VBoxContainer.get_children():
 		for child in hbox.get_children():
 			child.tile_selected.connect(_tile_selected_handler)
 

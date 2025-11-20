@@ -205,55 +205,73 @@ offset_right = 1126.0
 offset_bottom = 585.0
 theme_override_constants/separation = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Objects"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer/VBoxContainer" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="CheckPoint" parent="ColorRect/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="CheckPoint" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("3_1t62o")
 text = "Checkpoint"
-bonus_parameters = null
 
-[node name="Gem" parent="ColorRect/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="Gem" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("4_1bmts")
 text = "Gem"
-bonus_parameters = null
 
-[node name="SpawnPoint" parent="ColorRect/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="SpawnPoint" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("3_1t62o")
 text = "Spawnpoint"
-bonus_parameters = null
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Physics Tiles"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/VBoxContainer/VBoxContainer2" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Ground" parent="ColorRect/VBoxContainer/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Ground" parent="ColorRect/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "Ground"
-bonus_parameters = null
 
-[node name="Dirt" parent="ColorRect/VBoxContainer/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Dirt" parent="ColorRect/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "Dirt"
-bonus_parameters = null
 
-[node name="SuperDrillable" parent="ColorRect/VBoxContainer/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="SuperDrillable" parent="ColorRect/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "SuperDrillable"
-bonus_parameters = null
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Enemies"
+horizontal_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/VBoxContainer/VBoxContainer3" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Alien" parent="ColorRect/VBoxContainer/HBoxContainer4" instance=ExtResource("3_igrm3")]
+[node name="Alien" parent="ColorRect/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("5_1bmts")
 text = "Alien"
