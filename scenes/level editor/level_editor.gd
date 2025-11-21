@@ -398,10 +398,14 @@ func undo_logic() -> void:
 		if len(stack_value) == 0:
 			return
 		
+		if len(stack_value) == 1 and stack_value[0] is bool:
+			return
+		
 		# For deleting tiles that were placed
 		if stack_value[0] == false:
 			for vec:Vector2i in stack_value.slice(1):
 				delete_tile(physics_tilemap, vec)
+			undo_stack.pop()
 		# Replacing tiles that were deleted
 		else:
 			var temp_selected_tile = selected_tile
