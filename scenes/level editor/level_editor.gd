@@ -52,7 +52,10 @@ var place_held_down:bool = false:
 				ignore_tiles = {}
 				#undo_stack.push(is_deleting)
 				pass
-		
+		else:
+			# Pop the empty dictionary after place button is released
+			if undo_stack.peek() == {false:[], true:[]}:
+				undo_stack.pop()
 		place_held_down = new_value
 		print(undo_stack.stack_array)
 		

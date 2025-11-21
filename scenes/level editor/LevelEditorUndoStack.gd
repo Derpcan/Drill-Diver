@@ -23,9 +23,9 @@ func push_array(new_array:Array) -> void:
 
 func push_dictionary(new_dict:Dictionary) -> void:
 	# Remove any arrays of size 1
-	#for dict in stack_array:
-		#if len(dict) == 1:
-			#stack_array.erase(dict)
+	for dict in stack_array:
+		if len(dict[false]) == 0 and len(dict[true]) == 0:
+			stack_array.erase(dict)
 	
 	# Add new array
 	stack_array.append(new_dict)
@@ -39,12 +39,6 @@ func push(data, is_deleting:bool) -> void:
 	if len(stack_array) <= 0:
 		stack_array.append({false:[], true:[]})
 	
-	#if data is Array:
-		#if data[2] in stack_array.back()[is_deleting]:
-			#return
-	#elif data is Vector2i:
-		#if data in stack_array.back()[is_deleting]:
-			#return
 	
 	if data not in stack_array.back():
 		#stack_array.back().append(new_tile_position)
@@ -52,11 +46,15 @@ func push(data, is_deleting:bool) -> void:
 
 
 func pop() -> Dictionary:
-	while peek() != {} and len(peek()) > 0:
-		if len(peek()) == 1:
-			stack_array.pop_back()
-		if len(stack_array) > 0:
-			return stack_array.pop_back()
+	while peek() != {}:
+		print("STACK AT POP: ", stack_array)
+		for i in range(len(stack_array)-1, 0, -1):
+			
+			if len(peek()[false]) != 0 or len(peek()[true]) != 0:
+				return stack_array.pop_back()
+		#stack_array.pop_back()
+		
+		return stack_array.pop_back()
 	return {}
 
 func peek() -> Dictionary:
