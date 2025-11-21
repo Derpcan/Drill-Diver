@@ -72,9 +72,12 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 			for point in line(previous_tilemap_mouse_postion, tilemap_mouse_position):
 				if is_deleting == false:
 					set_tile(physics_tilemap, Vector2i(point[0], point[1]))
+					set_tile(decorative_tilemap, Vector2i(point[0], point[1]))
+					
 					undo_stack.push(Vector2i(point[0], point[1]), false)
 				elif is_deleting == true:
 					delete_tile(physics_tilemap, Vector2i(point[0], point[1]))
+					delete_tile(decorative_tilemap, Vector2i(point[0], point[1]))
 
 
 var previous_tilemap_mouse_postion:Vector2 = Vector2.ZERO
@@ -96,6 +99,11 @@ enum tile_types {
 }
 
 
+var tile_map_to_tile_dictionary:Dictionary[String, Dictionary] = {
+	"Decorative":decorative_tiles_data_dictionary,
+	"Physics":decorative_tiles_to_physics,
+}
+
 # The possible tiles that can be placed in the level editor
 var tiles_dictionary:Dictionary = {
 	"Ground":tile_types.UNDRILLABLE,#[0,Vector2(0,0), 0],
@@ -103,7 +111,24 @@ var tiles_dictionary:Dictionary = {
 	"SuperDrillable":tile_types.SUPERDRILLABLE
 }
 
-var tile_type_to_tile_data_dictionary:Dictionary = {
+
+# The conversion from decorative to physics tiles
+var decorative_tiles_to_physics:Dictionary = {
+	"Ground":tile_types.UNDRILLABLE,
+	"Dirt":tile_types.DRILLABLE,
+	"SuperDrillable":tile_types.SUPERDRILLABLE,
+}
+
+
+# The tile data associated with the decorative tileset
+var decorative_tiles_data_dictionary:Dictionary = {
+	"Ground":[0,Vector2i(21,0),0],
+	"Dirt":[0,Vector2i(3,1),0],
+	"SuperDrillable":[0,Vector2(7,9),0],
+}
+
+# The data associated with the physics Tiles
+var physics_tile_type_to_tile_data_dictionary:Dictionary = {
 	tile_types.UNDRILLABLE:[0,Vector2(0,0),0],
 	tile_types.DRILLABLE:[2,Vector2(0,0),0],
 	tile_types.SUPERDRILLABLE:[1,Vector2(0,0),0]
@@ -215,9 +240,16 @@ func tile_selector_changed(is_open:bool) -> void:
 
 
 
-func get_tile() -> Array:
-	if (selected_tile in tiles_dictionary):
-		return tile_type_to_tile_data_dictionary[tiles_dictionary[selected_tile]]
+func get_tile(tile_map:TileMapLayer) -> Array:
+	
+	# Physics tile map needs to convert from decorative
+	if tile_map == physics_tilemap:
+		return physics_tile_type_to_tile_data_dictionary[decorative_tiles_to_physics[selected_tile]]
+	elif tile_map == decorative_tilemap:
+		return decorative_tiles_data_dictionary[selected_tile]
+	
+	#if (selected_tile in tiles_dictionary):
+		#return tile_type_to_tile_data_dictionary[tiles_dictionary[selected_tile]]
 	#match selected_tile:
 		#"Ground":
 			#return tiles_dictionary[selected_tile]
@@ -296,7 +328,7 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 	
 	# If the tile being placed is not an object
 	if selected_object == null:
-		var tile_data:Array = get_tile()
+		var tile_data:Array = get_tile(tile_map)
 		var source_id:int = tile_data[0]
 		var atlas_coord:Vector2i = tile_data[1]
 		var alt_tile:int = tile_data[2]
@@ -353,10 +385,10 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 
 # Deletes tile that is in use
 func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
-	var tile_data:Array = get_tile()
-	var source_id:int = tile_data[0]
-	var atlas_coord:Vector2i = tile_data[1]
-	var alt_tile:int = tile_data[2]
+	#var tile_data:Array = get_tile()
+	#var source_id:int = tile_data[0]
+	#var atlas_coord:Vector2i = tile_data[1]
+	#var alt_tile:int = tile_data[2]
 	
 	
 	# If there is tile data at the point
@@ -452,9 +484,10 @@ func undo_logic() -> void:
 		# Push an empty array to catch the additions from delete tile function
 		#undo_stack.push_array([])
 		undo_stack.push_dictionary({false:[],true:[]})
-		print("STACK VALUE: ",stack_value)
+		#print("STACK VALUE: ",stack_value)
 		for arr:Vector2i in stack_value[false]:
 			delete_tile(physics_tilemap, arr)
+			delete_tile(decorative_tilemap, arr)
 		
 		# Pop the array thats added from deleting tiles
 		undo_stack.pop()
@@ -472,6 +505,7 @@ func undo_logic() -> void:
 			else:
 				selected_object = null
 			set_tile(physics_tilemap, arr[2])
+			set_tile(decorative_tilemap, arr[2])
 		selected_tile = temp_selected_tile
 		object_string = temp_object
 		selected_object = temp_selected_object
@@ -498,17 +532,18 @@ func place_tile_input_logic() -> void:
 	# Place down a tile
 	if Input.is_action_pressed("place_tile") and not prevent_tile_placement:
 		place_held_down = true
-		var tile_data:Array = get_tile()
 		
 		if is_deleting == false:
-			set_tile(physics_tilemap, tilemap_mouse_position,)
-			
+			#set_tile(physics_tilemap, tilemap_mouse_position,)
+			#set_tile(decorative_tilemap, tilemap_mouse_position,)
+			pass
 			#undo_stack.push(tilemap_mouse_position)
 			
 		if is_deleting == true:
 			
 			
-			delete_tile(physics_tilemap, tilemap_mouse_position)
+			#delete_tile(physics_tilemap, tilemap_mouse_position)
+			pass
 			#physics_tilemap.set_cell(tilemap_mouse_position, -1, Vector2i(-1,-1), 0)
 	elif Input.is_action_just_released("place_tile"):
 		place_held_down = false
@@ -579,14 +614,17 @@ func load_logic(path_name:String="") -> void:
 			for pos in physics_tilemap_data[0]:
 				selected_tile = "Ground"
 				set_tile(physics_tilemap, pos)
+				set_tile(decorative_tilemap, pos,)
 				
 			for pos in physics_tilemap_data[1]:
 				selected_tile = "SuperDrillable"
 				set_tile(physics_tilemap, pos)
+				set_tile(decorative_tilemap, pos,)
 				
 			for pos in physics_tilemap_data[2]:
 				selected_tile = "Dirt"
 				set_tile(physics_tilemap, pos)
+				set_tile(decorative_tilemap, pos,)
 			
 			
 			selected_tile = "Ground"
@@ -633,46 +671,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("escape"):
 		place_held_down = false
 
-
-
-
-func load_level_to_tilemap(tilemap:TileMapLayer):
-	if ResourceLoader.exists(save_path):
-		# Open the file for writing
-		var save:CustomLevelSave = ResourceLoader.load(save_path,"", ResourceLoader.CACHE_MODE_IGNORE)
-		
-		if save == null:
-			print("failed to load")
-		
-		# Load the physics tile map cells
-		for pos in save.physics_tilemap_cells[0]:
-			selected_tile = "Ground"
-			set_tile(tilemap, pos)
-		
-		for pos in save.physics_tilemap_cells[1]:
-			selected_tile = "HardDrillable"
-			set_tile(tilemap, pos)
-		
-		for pos in save.physics_tilemap_cells[2]:
-			selected_tile = "Drillable"
-			set_tile(tilemap, pos)
-		
-		selected_tile = "Ground"
-		
-		
-		# Load Objects
-		for object_key in save.object_string_name_to_tile_pos.keys():
-			for pos in save.object_string_name_to_tile_pos[object_key]:
-				selected_object = object_dictionary[object_key]
-				object_string = object_key
-				set_tile(tilemap, pos)
-		
-		
-		selected_object = null
-		
-		
-		
-	prevent_tile_placement = false
 
 
 var player:Player = null
@@ -760,8 +758,10 @@ func _stop_testing() -> void:
 
 func reload_tilemaps() -> void:
 	physics_tilemap.clear()
+	decorative_tilemap.clear()
 	object_string_name_to_tile_pos.clear()
 	tile_pos_to_object_dictionary.clear()
+	ignore_tiles.clear()
 	
 	load_logic(save_path)
 

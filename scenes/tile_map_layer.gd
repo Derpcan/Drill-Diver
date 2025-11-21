@@ -1,4 +1,8 @@
 extends TileMapLayer
+
+
+signal deleted_tile(coords:Vector2i)
+
 ## If not assigned, will try to be found in _ready()
 @export var player:Player:
 	set(new_value):
@@ -27,6 +31,7 @@ func _ready() -> void:
 func _delete_tile(coords:Vector2):
 	#print("DELETE")
 	var tile_data = get_cell_tile_data(coords)
+	
 	#print("coords:", coords)
 	#print("tile data:", tile_data)
 	if tile_data and tile_data.has_custom_data("hardness") and tile_data.get_custom_data("hardness") == 1 :
@@ -37,3 +42,4 @@ func _delete_tile(coords:Vector2):
 			particle.finished.connect(particle.queue_free)
 			particle.emitting = true
 			erase_cell(coords)
+			emit_signal("deleted_tile", coords)
