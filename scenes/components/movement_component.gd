@@ -55,7 +55,12 @@ func _physics_process(delta: float) -> void:
 		instrot = false
 		if not prevent_vel_x_clamp:
 			# Clamp the X Velocity so the character doesn't speed up really fast
-			velocity.x = clampf(velocity.x, -max_speed, max_speed)
+			#velocity.x = clampf(velocity.x, -max_speed, max_speed)
+			if abs(velocity.x) > max_speed*1.5:
+				velocity.x = lerpf(velocity.x, sign(velocity.x)*max_speed, 3.0*delta)
+			elif abs(velocity.x) > max_speed:
+				
+				velocity.x = lerpf(velocity.x, sign(velocity.x)*max_speed, 6.0*delta)
 		
 		# If the character body hits the ceiling, it will set the y velocity to zero
 		# So the character will fall after hitting the ceiling instead of attaching to it for a bit
@@ -96,6 +101,12 @@ func _accelerate_in_direction(dir:Vector2, delta:float) -> void:
 	if prevent_vel_x_clamp or disable_movement_component:
 		return
 	if dir != Vector2.ZERO:
+		if dir.x > 0 and velocity.x < 0:
+			velocity.x *= 0.4
+		if dir.x < 0 and velocity.x > 0:
+			velocity.x *= 0.4
+		if abs(velocity.x) < 80:
+			delta *= 3
 		velocity += dir * accel * delta
 	else:
 		velocity = velocity.lerp(Vector2(0, velocity.y), friction)
@@ -119,8 +130,8 @@ func _disable_vel_x_clamp(value = 0) -> void:
 
 func _enable_vel_x_clamp() -> void:
 	prevent_vel_x_clamp = false
-	velocity.x *= 0.2
-	velocity.y *= 0.2
+	#velocity.x *= 0.2
+	#velocity.y *= 0.2
 	
 func _is_exiting_ground():
 	exiting_ground = true

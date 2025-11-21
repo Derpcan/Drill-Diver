@@ -117,6 +117,7 @@ collision_mask = 16
 wait_time = 0.2
 
 [node name="DashComponent" parent="." instance=ExtResource("12_fm80t")]
+dash_time_cooldown = 0.5
 
 [node name="BumpDetector" type="Area2D" parent="."]
 position = Vector2(0, 1)
@@ -202,6 +203,13 @@ debug_color = Color(0.968203, 0, 0.469374, 0.42)
 
 [node name="SuperDrillComponent" type="Node" parent="."]
 script = ExtResource("16_kvlxm")
+
+[node name="Label" type="Label" parent="."]
+offset_top = -11.0
+offset_right = 40.0
+offset_bottom = 12.0
+scale = Vector2(0.25, 0.25)
+text = "Speed:"
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]

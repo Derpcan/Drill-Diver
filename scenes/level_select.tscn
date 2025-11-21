@@ -21,14 +21,6 @@ offset_bottom = 438.0
 text = "Test Level"
 script = ExtResource("1_3shnc")
 
-[node name="TestLevelButton2" type="Button" parent="."]
-offset_left = 178.0
-offset_top = 407.0
-offset_right = 368.0
-offset_bottom = 438.0
-text = "Loaded Level from Files"
-script = ExtResource("1_3shnc")
-
 [node name="BackButton" type="Button" parent="."]
 offset_left = 577.0
 offset_top = 407.0
@@ -39,7 +31,7 @@ script = ExtResource("2_p0wlc")
 
 [node name="CustomLevel Button2" parent="." instance=ExtResource("3_2epne")]
 custom_minimum_size = Vector2(20, 20)
-offset_left = 917.0
-offset_top = 542.0
-offset_right = 1146.0
-offset_bottom = 573.0
+offset_left = 447.0
+offset_top = 565.0
+offset_right = 676.0
+offset_bottom = 596.0

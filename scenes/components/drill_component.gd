@@ -200,12 +200,14 @@ func _exit_drill_state(_body) -> void:
 		delta_x *=-1
 	#print(momentum)
 	
-	parent.velocity.x += delta_x*cos(momentum) * 0.4
+	#parent.velocity.x += delta_x*cos(momentum) * 0.4
+	parent.velocity.x += delta_x*cos(momentum) * 0.2
 	parent.velocity.y += delta_y*sin(momentum) * 0.6
+	#parent.velocity.y += delta_y*sin(momentum) * 0.6
 	
 	#print(velocity.x, velocity.y)
-	parent.movement_component.max_speed = abs(parent.velocity.x)
-	parent.movement_component.exiting_ground = true
+	#parent.movement_component.max_speed = abs(parent.velocity.x)
+	#parent.movement_component.exiting_ground = true
 	parent.movement_component.force_velocity(parent.velocity)
 	
 	parent.rotation=0

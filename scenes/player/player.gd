@@ -105,6 +105,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	$Label.text = "Speed: " + str(movement_component.velocity.x)
+	
 	if (is_on_floor() or is_on_wall() or is_on_ceiling()) and drill_component.drill_enabled:
 	
 		emit_signal("on_floor_dirt",null)
