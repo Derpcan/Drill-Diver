@@ -142,11 +142,11 @@ func _create_new_level_logic(nam:String) -> void:
 	DirAccess.make_dir_recursive_absolute(folder_path)
 	
 	# Open the file for writing
-	var file:FileAccess = FileAccess.open(nam+".tres", FileAccess.WRITE)
+	var file:FileAccess = FileAccess.open(nam+".json", FileAccess.WRITE)
 	
 	prevent_tile_placement = false
 	
-	save_path = nam+".tres"
+	save_path = nam+".json"
 
 # Show the Create new level dialog
 func _create_new_level_dialog() -> void:
@@ -383,21 +383,7 @@ func save_logic() -> void:
 	# Create the directories needed to save the file
 	DirAccess.make_dir_recursive_absolute(folder_path)
 	
-	var file:FileAccess = FileAccess.open(folder_path+"/filejson.json", FileAccess.WRITE)
-	
-	
-	var save:CustomLevelSave = CustomLevelSave.new()
-	
-	
-	## Save the Physics tile cells
-	#save.physics_tilemap_cells[0] = physics_tilemap.get_used_cells_by_id(0)
-	#save.physics_tilemap_cells[1] = physics_tilemap.get_used_cells_by_id(1)
-	#save.physics_tilemap_cells[2] = physics_tilemap.get_used_cells_by_id(2)
-	#
-	## Save the objects that are placed down
-	#save.object_string_name_to_tile_pos = object_string_name_to_tile_pos
-	#
-	#ResourceSaver.save(save, save_path)
+	var file:FileAccess = FileAccess.open(save_path, FileAccess.WRITE)
 	
 	
 	# Save the level as a json
@@ -411,8 +397,6 @@ func save_logic() -> void:
 	file.store_string("\"ObjectStringTilePos\":")
 	
 	file.store_string(JSON.stringify(JSON.from_native(object_string_name_to_tile_pos), "")+"\n")
-	
-	
 	file.store_string("}")
 	
 	
@@ -427,10 +411,14 @@ func load_logic(path_name:String="") -> void:
 		load_or_save_ui.queue_free()
 		load_or_save_ui = null
 	
+	save_path = path_name
 	
 	
-	if FileAccess.file_exists(folder_path+"/filejson.json"):
-		var file:FileAccess = FileAccess.open(folder_path+"/filejson.json", FileAccess.READ)
+	# Load level from json file
+	if FileAccess.file_exists(save_path):
+		
+		# Open the json file for reading
+		var file:FileAccess = FileAccess.open(save_path, FileAccess.READ)
 		
 		# Get the text from the file
 		var json_string = file.get_as_text()
@@ -440,12 +428,9 @@ func load_logic(path_name:String="") -> void:
 		
 		# Parse the text from the file in json style
 		var json = JSON.parse_string(json_string)
-		print(json)
 		if json != null: # If there was no error parsing the text
 			var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) # Convert json into native Godot types
-			print(physics_tilemap_data)
 			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
-			print(object_string_tile_pos)
 			
 			# Load the physics tile map cells
 			for pos in physics_tilemap_data[0]:
@@ -471,52 +456,11 @@ func load_logic(path_name:String="") -> void:
 					set_tile(physics_tilemap, pos)
 			
 			selected_object = null
+			file.close()
 	
 	
-	save_path = path_name
 	level_editor_hud.show()
-	if ResourceLoader.exists(path_name):
-		# Open the file for writing
-		var save:CustomLevelSave = ResourceLoader.load(path_name,"", ResourceLoader.CACHE_MODE_IGNORE)
-		
-		if save == null:
-			print("failed to load")
-		
-		selected_object = null
-		
-		# Load the physics tile map cells
-		#for pos in save.physics_tilemap_cells[0]:
-			#selected_tile = "Ground"
-			#set_tile(physics_tilemap, pos)
-		
-		#for pos in save.physics_tilemap_cells[1]:
-			#selected_tile = "SuperDrillable"
-			#set_tile(physics_tilemap, pos)
-		
-		#for pos in save.physics_tilemap_cells[2]:
-			#selected_tile = "Dirt"
-			#set_tile(physics_tilemap, pos)
-		
-		selected_tile = "Ground"
-		
-		
-		# Load Objects
-		#for object_key in save.object_string_name_to_tile_pos.keys():
-			#for pos in save.object_string_name_to_tile_pos[object_key]:
-				#selected_object = object_dictionary[object_key]
-				#object_string = object_key
-				#set_tile(physics_tilemap, pos)
-		#
-		#
-		#selected_object = null
-		
-		
-		#print(save)
-		#
-		#print(save.physics_tilemap_cells)
-		#
-		#print(save.object_string_name_to_tile_pos)
-		
+	
 	prevent_tile_placement = false
 
 
@@ -582,13 +526,7 @@ func load_level_to_tilemap(tilemap:TileMapLayer):
 		
 		selected_object = null
 		
-		print(tilemap.get_used_cells())
 		
-		#print(save)
-		#
-		#print(save.physics_tilemap_cells)
-		#
-		#print(save.object_string_name_to_tile_pos)
 		
 	prevent_tile_placement = false
 
