@@ -115,23 +115,30 @@ var tiles_dictionary:Dictionary = {
 # The conversion from decorative to physics tiles
 var decorative_tiles_to_physics:Dictionary = {
 	"Ground":tile_types.UNDRILLABLE,
-	"Dirt":tile_types.DRILLABLE,
 	"SuperDrillable":tile_types.SUPERDRILLABLE,
+	"Dirt":tile_types.DRILLABLE,
+}
+
+
+var decorative_source_id_to_tile_name:Dictionary = {
+	0:"Ground",
+	1:"SuperDrillable",
+	2:"Dirt",
 }
 
 
 # The tile data associated with the decorative tileset
 var decorative_tiles_data_dictionary:Dictionary = {
-	"Ground":[0,Vector2i(21,0),0],
-	"Dirt":[0,Vector2i(3,1),0],
-	"SuperDrillable":[0,Vector2(7,9),0],
+	"Ground":[1,Vector2i(21,0),0],
+	"SuperDrillable":[2,Vector2(7,9),0],
+	"Dirt":[3,Vector2i(3,1),0],
 }
 
 # The data associated with the physics Tiles
 var physics_tile_type_to_tile_data_dictionary:Dictionary = {
 	tile_types.UNDRILLABLE:[0,Vector2(0,0),0],
-	tile_types.DRILLABLE:[2,Vector2(0,0),0],
-	tile_types.SUPERDRILLABLE:[1,Vector2(0,0),0]
+	tile_types.SUPERDRILLABLE:[1,Vector2(0,0),0],
+	tile_types.DRILLABLE:[2,Vector2(0,0),0],	
 }
 
 # The possible objects that can be placed in the level editor
@@ -554,7 +561,7 @@ func place_tile_input_logic() -> void:
 
 var folder_path:String = "user://level_editor/levels"
 var save_path:String = folder_path + "/"
-var level_name:String = "level_0.tres"
+var level_name:String = "level_0.json"
 
 func save_logic() -> void:
 	
@@ -571,6 +578,13 @@ func save_logic() -> void:
 	file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(2)))+"\n")
 	file.store_string("],\n")
 	
+	# Save the decorative map
+	file.store_string("\"DecorativeTilemap\":[\n")
+	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(1)))+",\n")
+	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(2)))+",\n")
+	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(3)))+"\n")
+	file.store_string("],\n")
+	
 	
 	file.store_string("\"ObjectStringTilePos\":")
 	
@@ -584,6 +598,10 @@ func save_logic() -> void:
 	save_animation_player.play("save_fade_out")
 
 
+
+
+
+# Loading Level
 func load_logic(path_name:String="") -> void:
 	if load_or_save_ui:
 		load_or_save_ui.queue_free()
@@ -608,23 +626,38 @@ func load_logic(path_name:String="") -> void:
 		var json = JSON.parse_string(json_string)
 		if json != null: # If there was no error parsing the text
 			var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) # Convert json into native Godot types
+			var decorative_tilemap_data
+			if "DecorativeTilemap" in json:
+				decorative_tilemap_data = JSON.to_native(json["DecorativeTilemap"])
 			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
 			
-			# Load the physics tile map cells
-			for pos in physics_tilemap_data[0]:
-				selected_tile = "Ground"
-				set_tile(physics_tilemap, pos)
-				set_tile(decorative_tilemap, pos,)
-				
-			for pos in physics_tilemap_data[1]:
-				selected_tile = "SuperDrillable"
-				set_tile(physics_tilemap, pos)
-				set_tile(decorative_tilemap, pos,)
-				
-			for pos in physics_tilemap_data[2]:
-				selected_tile = "Dirt"
-				set_tile(physics_tilemap, pos)
-				set_tile(decorative_tilemap, pos,)
+			selected_object = null
+			object_string = ""
+			
+			if decorative_tilemap_data:
+				for id in range(len(decorative_tilemap_data)):
+					for pos:Vector2i in decorative_tilemap_data[id]:
+						selected_tile = decorative_source_id_to_tile_name[id]
+						#print(selected_tile)
+						set_tile(physics_tilemap, pos)
+						set_tile(decorative_tilemap, pos,)
+			#else:
+			#
+				## Load the physics tile map cells
+				#for pos in physics_tilemap_data[0]:
+					#selected_tile = "Ground"
+					#set_tile(physics_tilemap, pos)
+					#set_tile(decorative_tilemap, pos,)
+					#
+				#for pos in physics_tilemap_data[1]:
+					#selected_tile = "SuperDrillable"
+					#set_tile(physics_tilemap, pos)
+					#set_tile(decorative_tilemap, pos,)
+					#
+				#for pos in physics_tilemap_data[2]:
+					#selected_tile = "Dirt"
+					#set_tile(physics_tilemap, pos)
+					#set_tile(decorative_tilemap, pos,)
 			
 			
 			selected_tile = "Ground"
