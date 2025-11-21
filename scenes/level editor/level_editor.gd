@@ -19,6 +19,9 @@ class_name LevelEditor
 @onready var object_node:Node2D = $ObjectNode
 
 
+@onready var undo_stack:UndoStack = UndoStack.new()
+
+
 var testing_mode:bool = false:
 	set(new_value):
 		testing_mode = new_value
@@ -34,7 +37,19 @@ var prevent_tile_placement:bool = true:
 
 var mouse_position:Vector2 = Vector2.ZERO
 
-var place_held_down:bool = false
+var place_held_down:bool = false:
+	set(new_value):
+		
+		
+		if new_value == true and place_held_down == false:
+			if len(undo_stack.peek()) > 0:
+				undo_stack.push_array([is_deleting])
+			else:
+				undo_stack.push(is_deleting)
+		
+		place_held_down = new_value
+		
+		
 
 var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 	set(new_tilemap_mouse_position):
@@ -48,6 +63,7 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 			for point in line(previous_tilemap_mouse_postion, tilemap_mouse_position):
 				if is_deleting == false:
 					set_tile(physics_tilemap, Vector2i(point[0], point[1]))
+					undo_stack.push(Vector2i(point[0], point[1]))
 				elif is_deleting == true:
 					delete_tile(physics_tilemap, Vector2i(point[0], point[1]))
 
@@ -59,6 +75,8 @@ var previous_tilemap_mouse_postion:Vector2 = Vector2.ZERO
 var is_deleting:bool = false:
 	set(new_value):
 		is_deleting = new_value
+		if len(undo_stack.peek()) > 0:
+			undo_stack.push_array([])
 
 
 
@@ -98,7 +116,7 @@ var scene_dictionary:Dictionary = {
 }
 
 # Keeps track of unique locations and stores the associated object at the location
-var tile_pos_to_object_dictionary:Dictionary[Vector2i, Object] = {
+var tile_pos_to_object_dictionary:Dictionary[Vector2i, Dictionary] = {
 	
 }
 
@@ -109,7 +127,11 @@ var object_string_name_to_tile_pos:Dictionary = {
 
 
 
-var selected_tile:String = "Ground"
+var selected_tile:String = "Ground":
+	set(new_value):
+		selected_tile = new_value
+		object_string = ""
+
 var selected_object:PackedScene = null
 var object_string:String = ""
 
@@ -209,7 +231,7 @@ func get_spawnpoint() -> Node2D:
 	if "Spawnpoint" in object_string_name_to_tile_pos:
 		if len(object_string_name_to_tile_pos["Spawnpoint"]) == 1:
 			if object_string_name_to_tile_pos["Spawnpoint"][0] in tile_pos_to_object_dictionary:
-				return tile_pos_to_object_dictionary[object_string_name_to_tile_pos["Spawnpoint"][0]]
+				return tile_pos_to_object_dictionary[object_string_name_to_tile_pos["Spawnpoint"][0]]["object"]
 	return null
 
 
@@ -232,11 +254,13 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		
 		
 		# Check to see if the position exists in there
+		#delete_tile(tile_map, tile_position)
 		if tile_position in tile_pos_to_object_dictionary:
 			# If there is an object in existance, remove it
 			if tile_pos_to_object_dictionary[tile_position] != null:
-				tile_pos_to_object_dictionary[tile_position].queue_free()
-			tile_pos_to_object_dictionary[tile_position] = null
+				tile_pos_to_object_dictionary[tile_position]["object"].queue_free()
+			tile_pos_to_object_dictionary[tile_position]["object"] = null
+			tile_pos_to_object_dictionary[tile_position]["object_name"] = ""
 		
 		# Remove from the other dictionary that is used to save
 		for key in object_string_name_to_tile_pos.keys():
@@ -260,9 +284,10 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		# Check to see if the position exists in there
 		if tile_position in tile_pos_to_object_dictionary:
 			# If there is an object in existance, remove it
-			if tile_pos_to_object_dictionary[tile_position] != null:
-				tile_pos_to_object_dictionary[tile_position].queue_free()
-			tile_pos_to_object_dictionary[tile_position] = null
+			if tile_pos_to_object_dictionary[tile_position]["object"] != null:
+				tile_pos_to_object_dictionary[tile_position]["object"].queue_free()
+			tile_pos_to_object_dictionary[tile_position]["object"] = null
+			tile_pos_to_object_dictionary[tile_position]["object_name"] = ""
 		
 		# Remove from the other dictionary that is used to save
 		for key in object_string_name_to_tile_pos.keys():
@@ -273,7 +298,9 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		var object = selected_object.instantiate()
 		object.global_position = tile_map.map_to_local(tile_position)
 		object_node.add_child(object)
-		tile_pos_to_object_dictionary[tile_position] = object
+		tile_pos_to_object_dictionary[tile_position] = {"object":null, "object_name":""}
+		tile_pos_to_object_dictionary[tile_position]["object"] = object
+		tile_pos_to_object_dictionary[tile_position]["object_name"] = object_string
 		
 		
 		if object_string in object_string_name_to_tile_pos:
@@ -291,13 +318,32 @@ func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
 	var atlas_coord:Vector2i = tile_data[1]
 	var alt_tile:int = tile_data[2]
 	
+	
+	# If there is tile data at the point
+	var tile_at_point:int = tile_map.get_cell_source_id(tile_position)
+	if tile_at_point != -1:
+		
+		if tile_map == physics_tilemap:
+			match tile_at_point:
+				0:
+					undo_stack.push(["Ground", "", tile_position])
+				1:
+					undo_stack.push(["SuperDrillable", "", tile_position])
+				2:
+					undo_stack.push(["Dirt", "", tile_position])
+	
+	
 	tile_map.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
+	
+	
 	
 	# Check to see if the position exists in there
 	if tile_position in tile_pos_to_object_dictionary:
-		if tile_pos_to_object_dictionary[tile_position] != null:
-			tile_pos_to_object_dictionary[tile_position].queue_free()
-		tile_pos_to_object_dictionary[tile_position] = null
+		if tile_pos_to_object_dictionary[tile_position]["object"] != null:
+			undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position])
+			tile_pos_to_object_dictionary[tile_position]["object"].queue_free()
+		tile_pos_to_object_dictionary[tile_position]["object"] = null
+		tile_pos_to_object_dictionary[tile_position]["object_name"] = ""
 	
 	
 	# Remove from the other dictionary that is used to save
@@ -344,6 +390,36 @@ func _physics_process(delta: float) -> void:
 
 
 
+func undo_logic() -> void:
+	if Input.is_action_just_pressed("undo_level_editor"):
+		var stack_value:Array = undo_stack.pop()
+		print(stack_value)
+		
+		if len(stack_value) == 0:
+			return
+		
+		# For deleting tiles that were placed
+		if stack_value[0] == false:
+			for vec:Vector2i in stack_value.slice(1):
+				delete_tile(physics_tilemap, vec)
+		# Replacing tiles that were deleted
+		else:
+			var temp_selected_tile = selected_tile
+			var temp_object = object_string
+			var temp_selected_object = selected_object
+			for arr:Array in stack_value.slice(1):
+				selected_tile = arr[0]
+				object_string = arr[1]
+				if object_string in object_dictionary:
+					selected_object = object_dictionary[object_string]
+				else:
+					selected_object = null
+				set_tile(physics_tilemap, arr[2])
+			selected_tile = temp_selected_tile
+			object_string = temp_object
+			selected_object = temp_selected_object
+
+
 
 func place_tile_input_logic() -> void:
 	if testing_mode == true:
@@ -357,6 +433,10 @@ func place_tile_input_logic() -> void:
 	
 	show_tile_place_preview(tilemap_mouse_position)
 	
+	
+	undo_logic()
+	
+	
 	# Place down a tile
 	if Input.is_action_pressed("place_tile") and not prevent_tile_placement:
 		place_held_down = true
@@ -364,9 +444,14 @@ func place_tile_input_logic() -> void:
 		
 		if is_deleting == false:
 			set_tile(physics_tilemap, tilemap_mouse_position,)
+			
+			#undo_stack.push(tilemap_mouse_position)
+			
 		if is_deleting == true:
+			
+			
 			delete_tile(physics_tilemap, tilemap_mouse_position)
-			physics_tilemap.set_cell(tilemap_mouse_position, -1, Vector2i(-1,-1), 0)
+			#physics_tilemap.set_cell(tilemap_mouse_position, -1, Vector2i(-1,-1), 0)
 	elif Input.is_action_just_released("place_tile"):
 		place_held_down = false
 
@@ -455,6 +540,7 @@ func load_logic(path_name:String="") -> void:
 					object_string = object_key
 					set_tile(physics_tilemap, pos)
 			
+			object_string = ""
 			selected_object = null
 			file.close()
 	
