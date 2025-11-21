@@ -39,9 +39,11 @@ var mouse_position:Vector2 = Vector2.ZERO
 
 var place_held_down:bool = false:
 	set(new_value):
+		if new_value == place_held_down:
+			return
 		
-		
-		if new_value == true and place_held_down == false:
+		#if new_value != place_held_down:
+		if new_value == true :#and place_held_down == false:
 			if len(undo_stack.peek()) > 0:
 				undo_stack.push_array([is_deleting])
 			else:
@@ -393,7 +395,7 @@ func _physics_process(delta: float) -> void:
 func undo_logic() -> void:
 	if Input.is_action_just_pressed("undo_level_editor"):
 		var stack_value:Array = undo_stack.pop()
-		print(stack_value)
+		#print(stack_value)
 		
 		if len(stack_value) == 0:
 			return
@@ -403,8 +405,14 @@ func undo_logic() -> void:
 		
 		# For deleting tiles that were placed
 		if stack_value[0] == false:
+			
+			# Push an empty array to catch the additions from delete tile function
+			undo_stack.push_array([])
+			
 			for vec:Vector2i in stack_value.slice(1):
 				delete_tile(physics_tilemap, vec)
+			
+			# Pop the array thats added from deleting tiles
 			undo_stack.pop()
 		# Replacing tiles that were deleted
 		else:
@@ -422,6 +430,7 @@ func undo_logic() -> void:
 			selected_tile = temp_selected_tile
 			object_string = temp_object
 			selected_object = temp_selected_object
+		
 
 
 
