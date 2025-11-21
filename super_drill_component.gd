@@ -10,6 +10,8 @@ var super_drill_timer:Timer
 @export var super_drill_time:float = 0.25
 var can_super_drill:bool = true
 
+var last_dir:Vector2 
+
 signal super_drill_start(new_velocity:Vector2)
 signal super_drill_end
 
@@ -33,6 +35,8 @@ func _calculate_dash(direction:Vector2) -> void:
 		super_drill_timer.start(super_drill_time)
 		_enable_hitbox() 
 		can_super_drill = false
+		
+		last_dir = direction
 		
 		
 
@@ -89,10 +93,54 @@ func _on_super_hitbox_body_entered(body):
 		
 		# Convert the pixel position to the TileMap's cell coordinates
 		var cell_position = tilemap_node.local_to_map(area_global_position)
-		cell_position.x += 1
-		# Get the ID of the tile in that cell
-		get_parent().emit_signal("super_drill_tile", cell_position)
-		get_parent().emit_signal("super_drill_tile", cell_position+Vector2i(0,1))
-		get_parent().emit_signal("super_drill_tile", cell_position-Vector2i(0,1))
+		
+		
+		
+		if last_dir.y == 0:
+			if last_dir.x > 0:
+				cell_position.x += 1
+			elif last_dir.x < 0:
+				cell_position.x -= 1
+			
+			# Get the ID of the tile in that cell
+			get_parent().emit_signal("super_drill_tile", cell_position)
+			get_parent().emit_signal("super_drill_tile", cell_position+Vector2i(0,1))
+			get_parent().emit_signal("super_drill_tile", cell_position-Vector2i(0,1))
+		elif last_dir.x == 0:
+			if last_dir.y > 0:
+				cell_position.y += 1
+			elif last_dir.y < 0:
+				cell_position.y -= 1
+			
+			# Get the ID of the tile in that cell
+			get_parent().emit_signal("super_drill_tile", cell_position)
+			get_parent().emit_signal("super_drill_tile", cell_position+Vector2i(1,0))
+			get_parent().emit_signal("super_drill_tile", cell_position-Vector2i(1,0))
 		# Check if the cell contains a tile
+		else:
+			if last_dir.y > 0:
+				if last_dir.x < 0:
+					cell_position.y += 1
+					cell_position.x -= 1
+				if last_dir.x > 0:
+					cell_position.y += 1
+					cell_position.x += 1
+			elif last_dir.y < 0:
+				if last_dir.x < 0:
+					cell_position.y -= 1
+					cell_position.x -= 1
+				if last_dir.x > 0:
+					cell_position.y -= 1
+					cell_position.x += 1
+			
+			# Get the ID of the tile in that cell
+			get_parent().emit_signal("super_drill_tile", cell_position)
+			get_parent().emit_signal("super_drill_tile", cell_position+Vector2i(1,0))
+			get_parent().emit_signal("super_drill_tile", cell_position-Vector2i(1,0))
+			get_parent().emit_signal("super_drill_tile", cell_position+Vector2i(0,1))
+			get_parent().emit_signal("super_drill_tile", cell_position-Vector2i(0,1))
+			get_parent().emit_signal("super_drill_tile", cell_position+Vector2i(1,1))
+			get_parent().emit_signal("super_drill_tile", cell_position-Vector2i(1,1))
+			
+		
 		

@@ -4,15 +4,15 @@ class_name TestCustomLevelEditor
 
 @export var level_file_path:String = "":
 	set(new_path):
-		load_logic(level_file_path)
+		level_file_path = new_path
 
-@onready var tilemap:TileMapLayer = $TileMapLayer3
+@export var physics_tilemap:TileMapLayer
+@export var decorative_tilemap:TileMapLayer
 
 
-@onready var object_node:Node2D = $ObjectNode
+@export var object_node:Node2D
 
 func _ready() -> void:
-	pass
 	load_logic(level_file_path)
 
 
@@ -65,14 +65,53 @@ var object_string_name_to_tile_pos:Dictionary = {
 	
 }
 
+# The data associated with the physics Tiles
+var physics_tile_type_to_tile_data_dictionary:Dictionary = {
+	tile_types.UNDRILLABLE:[0,Vector2(0,0),0],
+	tile_types.SUPERDRILLABLE:[1,Vector2(0,0),0],
+	tile_types.DRILLABLE:[2,Vector2(0,0),0],	
+}
 
-func get_tile() -> Array:
-	if (selected_tile in tiles_dictionary):
-		return tile_type_to_tile_data_dictionary[tiles_dictionary[selected_tile]]
+# The conversion from decorative to physics tiles
+var decorative_tiles_to_physics:Dictionary = {
+	"Ground":tile_types.UNDRILLABLE,
+	"SuperDrillable":tile_types.SUPERDRILLABLE,
+	"Dirt":tile_types.DRILLABLE,
+}
+
+# The tile data associated with the decorative tileset
+var decorative_tiles_data_dictionary:Dictionary = {
+	"Ground":[1,Vector2i(21,0),0],
+	"SuperDrillable":[2,Vector2(7,9),0],
+	"Dirt":[3,Vector2i(3,1),0],
+}
+
+
+#func get_tile() -> Array:
+	#if (selected_tile in tiles_dictionary):
+		#return tile_type_to_tile_data_dictionary[tiles_dictionary[selected_tile]]
+	##match selected_tile:
+		##"Ground":
+			##return tiles_dictionary[selected_tile]
+	#return [0, Vector2i(0,0), 0]
+
+
+func get_tile(tile_map:TileMapLayer) -> Array:
+	
+	# Physics tile map needs to convert from decorative
+	if tile_map == physics_tilemap:
+		return physics_tile_type_to_tile_data_dictionary[decorative_tiles_to_physics[selected_tile]]
+	elif tile_map == decorative_tilemap:
+		return decorative_tiles_data_dictionary[selected_tile]
+	
+	#if (selected_tile in tiles_dictionary):
+		#return tile_type_to_tile_data_dictionary[tiles_dictionary[selected_tile]]
 	#match selected_tile:
 		#"Ground":
 			#return tiles_dictionary[selected_tile]
 	return [0, Vector2i(0,0), 0]
+
+
 
 func check_can_add_spawnpoint() -> bool:
 	# Check if there is multiple Spawnpoints
@@ -104,7 +143,7 @@ func delete_all_by_object_name(obj_name:String) -> void:
 func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 	# If the tile being placed is not an object
 	if selected_object == null:
-		var tile_data:Array = get_tile()
+		var tile_data:Array = get_tile(tile_map)
 		var source_id:int = tile_data[0]
 		var atlas_coord:Vector2i = tile_data[1]
 		var alt_tile:int = tile_data[2]
@@ -165,7 +204,7 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 
 # Deletes tile that is in use
 func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
-	var tile_data:Array = get_tile()
+	var tile_data:Array = get_tile(tile_map)
 	var source_id:int = tile_data[0]
 	var atlas_coord:Vector2i = tile_data[1]
 	var alt_tile:int = tile_data[2]
@@ -185,8 +224,9 @@ func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
 			object_string_name_to_tile_pos[key].erase(tile_position)
 
 
-func load_logic(path_name:String="") -> void:
-	tilemap.clear()
+func load_logics(path_name:String="") -> void:
+	#tilemap.clear()
+	print("PATH: ", path_name)
 	tile_pos_to_object_dictionary.clear()
 	object_string_name_to_tile_pos.clear()
 	
@@ -203,15 +243,15 @@ func load_logic(path_name:String="") -> void:
 		# Load the physics tile map cells
 		for pos in save.physics_tilemap_cells[0]:
 			selected_tile = "Ground"
-			set_tile(tilemap, pos)
+			set_tile(physics_tilemap, pos)
 		
 		for pos in save.physics_tilemap_cells[1]:
 			selected_tile = "SuperDrillable"
-			set_tile(tilemap, pos)
+			set_tile(physics_tilemap, pos)
 		
 		for pos in save.physics_tilemap_cells[2]:
 			selected_tile = "Dirt"
-			set_tile(tilemap, pos)
+			set_tile(physics_tilemap, pos)
 		
 		selected_tile = "Ground"
 		
@@ -221,7 +261,7 @@ func load_logic(path_name:String="") -> void:
 			for pos in save.object_string_name_to_tile_pos[object_key]:
 				selected_object = object_dictionary[object_key]
 				object_string = object_key
-				set_tile(tilemap, pos)
+				set_tile(physics_tilemap, pos)
 				
 				# Set the player's spawn
 				if object_string == "Spawnpoint":
@@ -233,6 +273,87 @@ func load_logic(path_name:String="") -> void:
 		selected_object = null
 		
 		
+
+
+var decorative_source_id_to_tile_name:Dictionary = {
+	0:"Ground",
+	1:"SuperDrillable",
+	2:"Dirt",
+}
+
+func load_logic(path_name:String="") -> void:
+	
+	
+	# Load level from json file
+	if FileAccess.file_exists(path_name):
+		
+		# Open the json file for reading
+		var file:FileAccess = FileAccess.open(path_name, FileAccess.READ)
+		
+		# Get the text from the file
+		var json_string = file.get_as_text()
+		
+		if json_string == "": # See if the file is empty
+			return # Return early to not cause any errors
+		
+		# Parse the text from the file in json style
+		var json = JSON.parse_string(json_string)
+		if json != null: # If there was no error parsing the text
+			#var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) 
+			# Convert json into native Godot types
+			var decorative_tilemap_data
+			if "DecorativeTilemap" in json:
+				decorative_tilemap_data = JSON.to_native(json["DecorativeTilemap"])
+			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
+			
+			selected_object = null
+			object_string = ""
+			
+			if decorative_tilemap_data:
+				for id in range(len(decorative_tilemap_data)):
+					for pos:Vector2i in decorative_tilemap_data[id]:
+						selected_tile = decorative_source_id_to_tile_name[id]
+						#print(selected_tile)
+						set_tile(physics_tilemap, pos)
+						set_tile(decorative_tilemap, pos,)
+			#else:
+			#
+				## Load the physics tile map cells
+				#for pos in physics_tilemap_data[0]:
+					#selected_tile = "Ground"
+					#set_tile(physics_tilemap, pos)
+					#set_tile(decorative_tilemap, pos,)
+					#
+				#for pos in physics_tilemap_data[1]:
+					#selected_tile = "SuperDrillable"
+					#set_tile(physics_tilemap, pos)
+					#set_tile(decorative_tilemap, pos,)
+					#
+				#for pos in physics_tilemap_data[2]:
+					#selected_tile = "Dirt"
+					#set_tile(physics_tilemap, pos)
+					#set_tile(decorative_tilemap, pos,)
+			
+			
+			selected_tile = "Ground"
+			
+			# Load Objects
+			for object_key in object_string_tile_pos.keys():
+				for pos in object_string_tile_pos[object_key]:
+					selected_object = object_dictionary[object_key]
+					object_string = object_key
+					set_tile(physics_tilemap, pos)
+					
+					# Set the player's spawn
+					if object_string == "Spawnpoint":
+						var obj:Node2D = tile_pos_to_object_dictionary[object_string_name_to_tile_pos[object_string][0]]
+						$Player.global_position = obj.global_position
+						$GameCamera.global_position = $Player.global_position
+			
+			object_string = ""
+			selected_object = null
+			file.close()
+
 
 
 

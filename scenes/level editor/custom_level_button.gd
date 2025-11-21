@@ -10,4 +10,4 @@ func _handle_on_press():
 
 
 func file_selected(file_path:String):
-	pass
+	SceneManager.change_scene_extra_args("res://scenes/level editor/testing/test_custom_level_editor.tscn", [file_path])

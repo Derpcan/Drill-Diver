@@ -20,6 +20,20 @@ func change_scene(scene: String) -> void:
 	await get_tree().node_added
 	scene_stack.push_back(get_tree().current_scene)
 
+
+func change_scene_extra_args(scene:String, args:Array) -> void:
+	# We no longer need to track the layering of scenes (they'll be freed by change_scene_to_packed())
+	scene_stack.clear()
+	
+	get_tree().change_scene_to_file.call_deferred(scene)
+	
+	await get_tree().node_added
+	
+	scene_stack.push_back(get_tree().current_scene)
+	get_tree().current_scene.level_file_path = args[0]
+	
+
+
 ## Pushes the given scene onto the scene stack, rendering all scenes
 func push_scene(scene: String) -> void:
 	if scene_stack.size() > 0:

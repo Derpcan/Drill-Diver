@@ -37,7 +37,7 @@ func _delete_tile(coords:Vector2):
 	if tile_data and tile_data.has_custom_data("hardness") and tile_data.get_custom_data("hardness") == 1 :
 			# Erase the tile by setting the cell to -1 (empty)
 			var particle: GPUParticles2D = preload("res://scenes/particles/super_drill_break_particle.tscn").instantiate()
-			particle.global_position =map_to_local(coords)
+			particle.global_position = map_to_local(coords)
 			add_child(particle)
 			particle.finished.connect(particle.queue_free)
 			particle.emitting = true
