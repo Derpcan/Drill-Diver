@@ -57,7 +57,6 @@ var place_held_down:bool = false:
 			if undo_stack.peek() == {false:[], true:[]}:
 				undo_stack.pop()
 		place_held_down = new_value
-		print(undo_stack.stack_array)
 		
 		
 
@@ -248,6 +247,9 @@ func get_spawnpoint() -> Node2D:
 func delete_all_by_object_name(obj_name:String) -> void:
 	
 	for pos:Vector2i in object_string_name_to_tile_pos[obj_name]:
+		
+		# Allows for dragging the spawnpoint and undoing to properly work for it
+		undo_stack.push_dictionary({false:[],true:[]})
 		delete_tile(physics_tilemap, pos)
 	
 
@@ -276,9 +278,7 @@ func set_tile_deleter(tile_map:TileMapLayer, tile_position:Vector2i) -> void:
 	
 	# If there is tile data at the point
 	var tile_at_point:int = tile_map.get_cell_source_id(tile_position)
-	print(tile_at_point)
-	print(tile_position in ignore_tiles)
-	print(ignore_tiles)
+	
 	if tile_at_point != -1 and tile_position not in ignore_tiles:
 		if tile_map == physics_tilemap:
 			match tile_at_point:
@@ -311,7 +311,7 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 	else:
 		
 		# Check is spawnpoint already exists
-		if not check_can_add_spawnpoint() and object_string == "Spawnpoint":
+		if not check_can_add_spawnpoint() and object_string == "Spawnpoint" and tile_position not in ignore_tiles:
 			delete_all_by_object_name("Spawnpoint") # Delete all occurances of Spawnpoint
 		
 		set_tile_deleter(tile_map, tile_position)
@@ -347,9 +347,6 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 					object_string_name_to_tile_pos[object_string].append(tile_position)
 			else:
 				object_string_name_to_tile_pos[object_string] = [tile_position]
-			print(undo_stack.stack_array)
-			print(object_string_name_to_tile_pos[object_string])
-			print(tile_pos_to_object_dictionary[tile_position])
 			ignore_tiles[tile_position] = true
 
 
@@ -434,7 +431,6 @@ func _physics_process(delta: float) -> void:
 
 func undo_logic() -> void:
 	if Input.is_action_just_pressed("undo_level_editor"):
-		print(undo_stack.stack_array)
 		var stack_value:Dictionary = undo_stack.pop()
 		
 		#print(stack_value)

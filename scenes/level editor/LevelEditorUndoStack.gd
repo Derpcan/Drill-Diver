@@ -47,7 +47,6 @@ func push(data, is_deleting:bool) -> void:
 
 func pop() -> Dictionary:
 	while peek() != {}:
-		print("STACK AT POP: ", stack_array)
 		for i in range(len(stack_array)-1, 0, -1):
 			
 			if len(peek()[false]) != 0 or len(peek()[true]) != 0:
