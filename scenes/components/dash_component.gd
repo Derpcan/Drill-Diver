@@ -46,6 +46,7 @@ func _calculate_dash(direction:Vector2) -> void:
 		return
 	if can_dash and direction != Vector2.ZERO and dash_timer.is_stopped():
 		var new_vel:Vector2 = direction * dash_speed
+		new_vel *= Vector2(1, 0.8)
 		emit_signal("dash_start", new_vel)
 		# Timer is connected to movement component and will stop gravity from applying during the time the dash is active
 		dash_timer.start(dash_time)
