@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=13 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
@@ -6,21 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dr5dfxylf3hfs" path="res://scenes/level editor/PreviewTile.png" id="4_g8j7s"]
 [ext_resource type="Script" uid="uid://b1p5pk5wugdfx" path="res://scenes/tile_map_layer.gd" id="5_cwu4w"]
 [ext_resource type="PackedScene" uid="uid://dlby0tn0le6uv" path="res://scenes/level editor/load_or_save.tscn" id="5_dx1w1"]
-
-[sub_resource type="Animation" id="Animation_dx1w1"]
-resource_name = "fade_out"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelEditorHud/SavedLabel:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_cwu4w"]
 length = 0.001
@@ -36,11 +21,78 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelEditorHud/SavedLabel:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Level Saved"]
+}
+
+[sub_resource type="Animation" id="Animation_dx1w1"]
+resource_name = "save_fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelEditorHud/SavedLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelEditorHud/SavedLabel:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Level Saved"]
+}
+
+[sub_resource type="Animation" id="Animation_vdwei"]
+resource_name = "nothing_undo_fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelEditorHud/SavedLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelEditorHud/SavedLabel:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Nothing to Undo"]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vdwei"]
 _data = {
 &"RESET": SubResource("Animation_cwu4w"),
-&"fade_out": SubResource("Animation_dx1w1")
+&"nothing_undo_fade_out": SubResource("Animation_vdwei"),
+&"save_fade_out": SubResource("Animation_dx1w1")
 }
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dx1w1"]
