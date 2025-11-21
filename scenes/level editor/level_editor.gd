@@ -571,15 +571,16 @@ func save_logic() -> void:
 	var file:FileAccess = FileAccess.open(save_path, FileAccess.WRITE)
 	
 	
+	# Omit this to save almost half of the storage thats used to make levels
 	# Save the level as a json
-	file.store_string("{\n\"PhysicsTilemap\":[\n")
-	file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(0)))+",\n")
-	file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(1)))+",\n")
-	file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(2)))+"\n")
-	file.store_string("],\n")
+	#file.store_string("{\n\"PhysicsTilemap\":[\n")
+	#file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(0)))+",\n")
+	#file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(1)))+",\n")
+	#file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(2)))+"\n")
+	#file.store_string("],\n")
 	
 	# Save the decorative map
-	file.store_string("\"DecorativeTilemap\":[\n")
+	file.store_string("{\"DecorativeTilemap\":[\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(1)))+",\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(2)))+",\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(3)))+"\n")
@@ -625,7 +626,8 @@ func load_logic(path_name:String="") -> void:
 		# Parse the text from the file in json style
 		var json = JSON.parse_string(json_string)
 		if json != null: # If there was no error parsing the text
-			var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) # Convert json into native Godot types
+			#var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) 
+			# Convert json into native Godot types
 			var decorative_tilemap_data
 			if "DecorativeTilemap" in json:
 				decorative_tilemap_data = JSON.to_native(json["DecorativeTilemap"])
