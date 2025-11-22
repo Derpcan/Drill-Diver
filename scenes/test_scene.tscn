@@ -450,12 +450,10 @@ position = Vector2(64, 354)
 
 [node name="Enemy1" parent="." groups=["enemy"] instance=ExtResource("11_6qxox")]
 position = Vector2(345, 152)
-speed = 20.0
 patrol_distance = 75.0
 
 [node name="Enemy2" parent="." groups=["enemy"] instance=ExtResource("11_6qxox")]
 position = Vector2(661, 312)
-speed = 20.0
 patrol_distance = 75.0
 
 [node name="Gems" type="Node2D" parent="."]

@@ -1,8 +1,27 @@
 extends CharacterBody2D
 class_name Enemy
 # 1. MOVEMENT PROPERTIES
-@export var speed: float
-@export var patrol_distance: float # How far the enemy walks from its start point
+@export var speed: float = 20
+@export var patrol_distance: float = 10: # How far the enemy walks from its start point
+	set(new_distance):
+		patrol_distance = new_distance
+		
+		if not in_editor:
+			return
+		
+		if line_2d != null:
+			line_2d.clear_points()
+			line_2d.add_point(Vector2(-patrol_distance, 0))
+			line_2d.add_point(Vector2(+patrol_distance, 0))
+			
+		else:
+			line_2d = Line2D.new()
+			line_2d.add_point(Vector2(-patrol_distance, 0))
+			line_2d.add_point(Vector2(+patrol_distance, 0))
+			line_2d.default_color = Color.from_rgba8(255, 255, 255, 160)
+			line_2d.width = 3
+			add_child(line_2d)
+		
 @export var gravity: float = 800.0 # Match your game's gravity
 
 var direction: float = -1.0 # 1.0 for right, -1.0 for left
@@ -14,14 +33,30 @@ var is_dead: bool = false # State variable for death
 @onready var damage_area = $HitBox
 @onready var hurtbox = $EnemyHurtbox
 
+var in_editor:bool = false
+
+var line_2d:Line2D = null
+
 signal died(enemy)
 
 func _ready():
+	if in_editor:
+		line_2d = Line2D.new()
+		line_2d.add_point(Vector2(-patrol_distance, 0))
+		line_2d.add_point(Vector2(+patrol_distance, 0))
+		line_2d.default_color = Color.from_rgba8(255, 255, 255, 200)
+		line_2d.width = 3
+		add_child(line_2d)
+		return
+	
 	initial_x = global_position.x # Record the starting X position
 	# The enemy starts walking
 	sprite.play("run")
 
 func _physics_process(delta):
+	if in_editor:
+		return
+	
 	if is_dead:
 		# Stop movement and exit the physics loop if dead
 		velocity = Vector2.ZERO
@@ -33,6 +68,7 @@ func _physics_process(delta):
 
 	# Walk back and forth logic
 	velocity.x = speed * direction
+	
 
 	# Check if the enemy reached a turning point
 	var current_dist = global_position.x - initial_x

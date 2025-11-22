@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cso12yd5vwp87"]
+[gd_scene load_steps=3 format=3 uid="uid://cso12yd5vwp87"]
+
+[ext_resource type="PackedScene" uid="uid://nhj2ogd508yq" path="res://scenes/level editor/tile_selector_ui/number_edit.tscn" id="1_ssgxn"]
 
 [sub_resource type="GDScript" id="GDScript_ssgxn"]
 script/source = "@tool
@@ -21,7 +23,50 @@ class_name TileSelectorButton
 		if label:
 			label.text = text
 
-#@export var bonus_parameters:Dictionary = {}
+@export_category(\"Enable Bonus Parameters\")
+
+
+@export var distance_parameter:bool = false:
+	set(new_value):
+		distance_parameter = new_value
+		
+		
+		if Engine.is_editor_hint():
+			if distance_parameter:
+				distance_edit.show()
+				bonus_parameters[\"Distance\"] = 10
+			else:
+				distance_edit.hide()
+				bonus_parameters.erase(\"Distance\")
+		
+		
+		await ready
+		
+		if distance_parameter:
+			distance_edit.show()
+			bonus_parameters[\"Distance\"] = 10
+		else:
+			distance_edit.hide()
+			bonus_parameters.erase(\"Distance\")
+		
+
+@export var range_parameter:bool = false:
+	set(new_value):
+		range_parameter = new_value
+		
+		await ready
+		
+		if range_parameter:
+			#distance_edit.show()
+			bonus_parameters[\"Range\"] = 10
+		else:
+			#distance_edit.hide()
+			bonus_parameters.erase(\"Range\")
+		
+
+
+@export var bonus_parameters:Dictionary[String, int] = {
+}
 
 
 @export_category(\"Nodes\")
@@ -30,17 +75,32 @@ class_name TileSelectorButton
 
 @export var label:Label
 
+@onready var distance_edit:NumberEdit = $MarginContainer/VBoxContainer2/DistanceEdit
 
-signal tile_selected(text:String)
+
+signal tile_selected(text:String, bonus_parameters:Dictionary )
 
 
 func _ready() -> void:
 	if button != null:
 		button.pressed.connect(_tile_selected)
+	
+	distance_edit.input_value_changed.connect(_update_bonus_parameters)
 
 
 func _tile_selected() -> void:
-	emit_signal(\"tile_selected\", text)
+	#if any_bonus_parameters_enabled():
+	emit_signal(\"tile_selected\", text, bonus_parameters)
+	#else:
+		#emit_signal(\"tile_selected\", text, {})
+
+
+func any_bonus_parameters_enabled() -> bool:
+	return distance_parameter or range_parameter 
+
+
+func _update_bonus_parameters(new_value:int, place_holder_text:String) -> void:
+	bonus_parameters[place_holder_text] = new_value
 "
 
 [node name="TileSelectorButton" type="PanelContainer" node_paths=PackedStringArray("texture_rect", "button", "label")]
@@ -69,6 +129,9 @@ layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
 layout_mode = 2
 mouse_filter = 2
@@ -83,3 +146,11 @@ stretch_mode = 4
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer2"]
 layout_mode = 2
 horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="DistanceEdit" parent="MarginContainer/VBoxContainer2" instance=ExtResource("1_ssgxn")]
+visible = false
+layout_mode = 2
+placeholder_text = "Distance"

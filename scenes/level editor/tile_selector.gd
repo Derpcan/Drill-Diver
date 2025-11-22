@@ -13,7 +13,7 @@ class_name TileSelector
 
 signal tile_selector_state_changed(is_open:bool)
 
-signal tile_selector_new_tile_selected(new_tile_string:String)
+signal tile_selector_new_tile_selected(new_tile_string:String, bonus_params:Dictionary)
 
 
 func _ready() -> void:
@@ -24,8 +24,8 @@ func _ready() -> void:
 			child.tile_selected.connect(_tile_selected_handler)
 
 
-func _tile_selected_handler(text:String) -> void:
-	emit_signal("tile_selector_new_tile_selected", text)
+func _tile_selected_handler(text:String, bonus_params:Dictionary) -> void:
+	emit_signal("tile_selector_new_tile_selected", text, bonus_params)
 
 
 

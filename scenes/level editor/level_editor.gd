@@ -166,6 +166,11 @@ var object_string_name_to_tile_pos:Dictionary = {
 	
 }
 
+# This will keep track of bonus parameters at a specific tile
+var tile_pos_to_bonus_parameters:Dictionary[Vector2i, Dictionary] = {
+	
+}
+
 
 
 var selected_tile:String = "Ground":
@@ -175,6 +180,11 @@ var selected_tile:String = "Ground":
 
 var selected_object:PackedScene = null
 var object_string:String = ""
+var object_bonus_parameters:Dictionary = {}:
+	set(new_dict):
+		object_bonus_parameters = new_dict
+		#print(object_bonus_parameters)
+
 
 
 func _ready() -> void:
@@ -222,15 +232,17 @@ func _load_level_logic() -> void:
 	
 
 
-func tile_selected_changed(tile_string:String) -> void:
+func tile_selected_changed(tile_string:String, bonus_parameters:Dictionary={}) -> void:
 	if tile_string in tiles_dictionary:
 		selected_object = null
 		selected_tile = tile_string
+		object_bonus_parameters = {}
 	
 	if tile_string in object_dictionary:
 		selected_object = object_dictionary[tile_string]
 		selected_tile = ""
 		object_string = tile_string
+		object_bonus_parameters = bonus_parameters
 
 
 
@@ -304,7 +316,12 @@ func set_tile_deleter(tile_map:TileMapLayer, tile_position:Vector2i) -> void:
 	if tile_position in tile_pos_to_object_dictionary and tile_position not in ignore_tiles:
 		# If there is an object in existance, remove it
 		if tile_pos_to_object_dictionary[tile_position]["object"] != null:
-			undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position], true)
+			if tile_pos_to_bonus_parameters.has(tile_position):
+				# Push the deletion with the Bonus Parameters so undoing will bring back parameters
+				undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position, tile_pos_to_bonus_parameters[tile_position]], true)
+			else:
+				undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position, {}], true)
+			#undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position], true)
 			tile_pos_to_object_dictionary[tile_position]["object"].queue_free()
 		tile_pos_to_object_dictionary[tile_position]["object"] = null
 		tile_pos_to_object_dictionary[tile_position]["object_name"] = ""
@@ -322,11 +339,11 @@ func set_tile_deleter(tile_map:TileMapLayer, tile_position:Vector2i) -> void:
 		if tile_map == physics_tilemap:
 			match tile_at_point:
 				0:
-					undo_stack.push(["Ground", "", tile_position], true)
+					undo_stack.push(["Ground", "", tile_position, {}], true)
 				1:
-					undo_stack.push(["SuperDrillable", "", tile_position], true)
+					undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
 				2:
-					undo_stack.push(["Dirt", "", tile_position], true)
+					undo_stack.push(["Dirt", "", tile_position, {}], true)
 		
 
 
@@ -374,6 +391,19 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		if tile_position not in ignore_tiles:
 			# Add new object to tree and dictionary
 			var object = selected_object.instantiate()
+			
+			if object_bonus_parameters != {}:
+			
+				tile_pos_to_bonus_parameters[tile_position] = object_bonus_parameters.duplicate()
+			elif object_bonus_parameters == {} and tile_pos_to_bonus_parameters.has(tile_position):
+				tile_pos_to_bonus_parameters.erase(tile_position)
+			#object_bonus_parameters = {}
+			
+			# Pauses the object if it is an enemy
+			pause_enemy_tiles(object, tile_position)
+			
+			add_bonus_params_to_objects(object, tile_position)
+			
 			object.global_position = tile_map.map_to_local(tile_position)
 			object_node.add_child(object)
 			tile_pos_to_object_dictionary[tile_position] = {"object":null, "object_name":""}
@@ -388,6 +418,32 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 				object_string_name_to_tile_pos[object_string] = [tile_position]
 			ignore_tiles[tile_position] = true
 
+
+
+func pause_enemy_tiles(object:Object, tile_position:Vector2i) -> void:
+	if testing_mode:
+		return
+	
+	if scene_dictionary[selected_object] == "Alien":
+		object.in_editor = true
+	
+	if not tile_pos_to_bonus_parameters.has(tile_position):
+		return
+	
+	if tile_pos_to_bonus_parameters[tile_position].has("Distance"):
+		object.patrol_distance = tile_pos_to_bonus_parameters[tile_position]["Distance"]
+
+
+
+func add_bonus_params_to_objects(object:Object,tile_position:Vector2i) -> void:
+	if not testing_mode:
+		return
+	
+	if not tile_pos_to_bonus_parameters.has(tile_position):
+		return
+	
+	if tile_pos_to_bonus_parameters[tile_position].has("Distance"):
+		object.patrol_distance = tile_pos_to_bonus_parameters[tile_position]["Distance"]
 
 
 # Deletes tile that is in use
@@ -418,7 +474,13 @@ func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
 	# Check to see if the position exists in there
 	if tile_position in tile_pos_to_object_dictionary:
 		if tile_pos_to_object_dictionary[tile_position]["object"] != null:
-			undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position], true)
+			if tile_pos_to_bonus_parameters.has(tile_position):
+				# Push the deletion with the Bonus Parameters so undoing will bring back parameters
+				undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position, tile_pos_to_bonus_parameters[tile_position]], true)
+			else:
+				undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position, {}], true)
+			
+			
 			tile_pos_to_object_dictionary[tile_position]["object"].queue_free()
 		tile_pos_to_object_dictionary[tile_position]["object"] = null
 		tile_pos_to_object_dictionary[tile_position]["object_name"] = ""
@@ -481,32 +543,37 @@ func undo_logic() -> void:
 			save_animation_player.play("nothing_undo_fade_out")
 			return
 		
-		#if len(stack_value) == 1 and stack_value[0] is bool:
-			#stack_value = undo_stack.pop()
-			
-		
-		# For deleting tiles that were placed
-		#if stack_value[0] == false:
 			
 		# Push an empty array to catch the additions from delete tile function
-		#undo_stack.push_array([])
 		undo_stack.push_dictionary({false:[],true:[]})
-		#print("STACK VALUE: ",stack_value)
 		for arr:Vector2i in stack_value[false]:
 			delete_tile(physics_tilemap, arr)
 			delete_tile(decorative_tilemap, arr)
 		
 		# Pop the array thats added from deleting tiles
 		undo_stack.pop()
+		
 		# Replacing tiles that were deleted
-		#else:
 		var temp_selected_tile = selected_tile
 		var temp_object = object_string
 		var temp_selected_object = selected_object
+		
+		#print(stack_value[true])
+		
+		var temp_obj_bonus_params:Dictionary = object_bonus_parameters
+		
 		for arr:Array in stack_value[true]:
+			
 			ignore_tiles.clear()
 			selected_tile = arr[0]
 			object_string = arr[1]
+			object_bonus_parameters = arr[3]
+			
+			if tile_pos_to_bonus_parameters.has(arr[2]):
+				if object_bonus_parameters == {}:
+					tile_pos_to_bonus_parameters[arr[2]] = {}
+				tile_pos_to_bonus_parameters[arr[2]] = object_bonus_parameters
+			
 			if object_string in object_dictionary:
 				selected_object = object_dictionary[object_string]
 			else:
@@ -516,7 +583,7 @@ func undo_logic() -> void:
 		selected_tile = temp_selected_tile
 		object_string = temp_object
 		selected_object = temp_selected_object
-		
+		object_bonus_parameters = temp_obj_bonus_params
 
 
 
@@ -539,19 +606,7 @@ func place_tile_input_logic() -> void:
 	# Place down a tile
 	if Input.is_action_pressed("place_tile") and not prevent_tile_placement:
 		place_held_down = true
-		
-		if is_deleting == false:
-			#set_tile(physics_tilemap, tilemap_mouse_position,)
-			#set_tile(decorative_tilemap, tilemap_mouse_position,)
-			pass
-			#undo_stack.push(tilemap_mouse_position)
-			
-		if is_deleting == true:
-			
-			
-			#delete_tile(physics_tilemap, tilemap_mouse_position)
-			pass
-			#physics_tilemap.set_cell(tilemap_mouse_position, -1, Vector2i(-1,-1), 0)
+	
 	elif Input.is_action_just_released("place_tile"):
 		place_held_down = false
 
@@ -589,7 +644,12 @@ func save_logic() -> void:
 	
 	file.store_string("\"ObjectStringTilePos\":")
 	
-	file.store_string(JSON.stringify(JSON.from_native(object_string_name_to_tile_pos), "")+"\n")
+	file.store_string(JSON.stringify(JSON.from_native(object_string_name_to_tile_pos), "")+",\n")
+	#file.store_string(",")
+	
+	file.store_string("\"TilePosBonusParameters\":")
+	
+	file.store_string(JSON.stringify(JSON.from_native(tile_pos_to_bonus_parameters), "")+"\n")
 	file.store_string("}")
 	
 	
@@ -631,7 +691,14 @@ func load_logic(path_name:String="") -> void:
 			var decorative_tilemap_data
 			if "DecorativeTilemap" in json:
 				decorative_tilemap_data = JSON.to_native(json["DecorativeTilemap"])
+			
+			var tile_pos_to_bonus_params:Dictionary = {}
+			if "TilePosBonusParameters" in json:
+				tile_pos_to_bonus_params = JSON.to_native(json["TilePosBonusParameters"])
+			
 			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
+			
+			
 			
 			selected_object = null
 			object_string = ""
@@ -640,7 +707,6 @@ func load_logic(path_name:String="") -> void:
 				for id in range(len(decorative_tilemap_data)):
 					for pos:Vector2i in decorative_tilemap_data[id]:
 						selected_tile = decorative_source_id_to_tile_name[id]
-						#print(selected_tile)
 						set_tile(physics_tilemap, pos)
 						set_tile(decorative_tilemap, pos,)
 			#else:
@@ -664,11 +730,20 @@ func load_logic(path_name:String="") -> void:
 			
 			selected_tile = "Ground"
 			
+			# Load the bonus paramaters from the JSON file
+			tile_pos_to_bonus_parameters = tile_pos_to_bonus_params
+			
 			# Load Objects
 			for object_key in object_string_tile_pos.keys():
-				for pos in object_string_tile_pos[object_key]:
+				for pos:Vector2i in object_string_tile_pos[object_key]:
 					selected_object = object_dictionary[object_key]
 					object_string = object_key
+					
+					if tile_pos_to_bonus_params.has(pos):
+						object_bonus_parameters = tile_pos_to_bonus_params[pos]
+					else:
+						object_bonus_parameters = {}
+					
 					set_tile(physics_tilemap, pos)
 			
 			object_string = ""
@@ -714,9 +789,20 @@ var game_camera:GameCamera = null
 var hud:CanvasLayer = null
 var on_level_loaded:Node = null
 
+var temp_bonus:Dictionary
+
 func test_level() -> void:
+	testing_mode = true
 	
 	save_logic()
+	
+	
+	temp_bonus = object_bonus_parameters
+	object_bonus_parameters = {}
+	
+	
+	reload_tilemaps()
+	
 	
 	
 	var player_scene:PackedScene = preload("res://scenes/player/player.tscn")
@@ -737,7 +823,7 @@ func test_level() -> void:
 	checkpoint_mangager.game_camera = game_camera
 	checkpoint_mangager.player = player
 	
-	testing_mode = true
+	
 	$LevelEditorHud/TestLevelButton.hide()
 	$Camera2D.hide()
 	$Camera2D.enabled = false
@@ -783,15 +869,17 @@ func _stop_testing() -> void:
 	
 	physics_tilemap.player = null
 	
+	
+	
+	reload_tilemaps()
+	object_bonus_parameters = temp_bonus
+
+
+func reload_tilemaps() -> void:
 	# Remove children from object node
 	for child in object_node.get_children():
 		child.queue_free()
 	
-	
-	reload_tilemaps()
-
-
-func reload_tilemaps() -> void:
 	physics_tilemap.clear()
 	decorative_tilemap.clear()
 	object_string_name_to_tile_pos.clear()

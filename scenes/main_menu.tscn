@@ -392,27 +392,22 @@ text = "Copy Path to Clipboard"
 
 [node name="Enemy" parent="." instance=ExtResource("6_rtw2f")]
 position = Vector2(339, 104)
-speed = 20.0
 patrol_distance = 75.0
 
 [node name="Enemy2" parent="." instance=ExtResource("6_rtw2f")]
 position = Vector2(576, 104)
-speed = 20.0
 patrol_distance = 30.0
 
 [node name="Enemy3" parent="." instance=ExtResource("6_rtw2f")]
 position = Vector2(792, 184)
-speed = 20.0
 patrol_distance = 30.0
 
 [node name="Enemy4" parent="." instance=ExtResource("6_rtw2f")]
 position = Vector2(824, 408)
-speed = 20.0
 patrol_distance = 30.0
 
 [node name="Enemy5" parent="." instance=ExtResource("6_rtw2f")]
 position = Vector2(825, 472)
-speed = 20.0
 patrol_distance = 60.0
 
 [node name="Checkpoint" parent="." instance=ExtResource("7_oa1go")]
