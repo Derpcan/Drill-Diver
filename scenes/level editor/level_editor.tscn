@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=23 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
@@ -7,7 +7,9 @@
 [ext_resource type="Script" uid="uid://b1p5pk5wugdfx" path="res://scenes/tile_map_layer.gd" id="5_cwu4w"]
 [ext_resource type="PackedScene" uid="uid://dlby0tn0le6uv" path="res://scenes/level editor/load_or_save.tscn" id="5_dx1w1"]
 [ext_resource type="Texture2D" uid="uid://cfjggk5f6sk0p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Tiles/RunnerTileSet.png" id="6_vdwei"]
+[ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="7_ckxsl"]
 [ext_resource type="Script" uid="uid://ktd6250lpfu3" path="res://scenes/level editor/tilemap_link_superdrill_destruction.gd" id="7_j6oxv"]
+[ext_resource type="Texture2D" uid="uid://bbt2df64h3yhi" path="res://assets/cave/spritesheet.png" id="8_a25ho"]
 
 [sub_resource type="Animation" id="Animation_cwu4w"]
 length = 0.001
@@ -880,10 +882,155 @@ texture = ExtResource("6_vdwei")
 12:11/0 = 0
 17:11/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r6hoa"]
+texture = ExtResource("7_ckxsl")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_php1e"]
+texture = ExtResource("8_a25ho")
+margins = Vector2i(0, 1)
+0:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+1:3/0/terrain_set = 0
+2:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+1:5/0 = 0
+1:5/0/terrain_set = 0
+1:5/0/terrain = 0
+1:5/0/terrains_peering_bit/right_side = 0
+1:5/0/terrains_peering_bit/left_side = 0
+2:5/0 = 0
+2:5/0/terrain_set = 0
+2:5/0/terrain = 0
+2:5/0/terrains_peering_bit/left_side = 0
+3:5/0 = 0
+0:6/0 = 0
+0:6/0/terrain_set = 0
+0:6/0/terrain = 0
+0:6/0/terrains_peering_bit/right_side = 0
+0:6/0/terrains_peering_bit/bottom_side = 0
+1:6/0 = 0
+1:6/0/terrain_set = 0
+1:6/0/terrain = 0
+1:6/0/terrains_peering_bit/right_side = 0
+1:6/0/terrains_peering_bit/bottom_side = 0
+1:6/0/terrains_peering_bit/left_side = 0
+2:6/0 = 0
+2:6/0/terrain_set = 0
+2:6/0/terrain = 0
+2:6/0/terrains_peering_bit/bottom_side = 0
+2:6/0/terrains_peering_bit/left_side = 0
+3:6/0 = 0
+0:7/0 = 0
+0:7/0/terrain_set = 0
+0:7/0/terrain = 0
+0:7/0/terrains_peering_bit/right_side = 0
+0:7/0/terrains_peering_bit/bottom_side = 0
+0:7/0/terrains_peering_bit/top_side = 0
+1:7/0 = 0
+1:7/0/terrain_set = 0
+1:7/0/terrain = 0
+1:7/0/terrains_peering_bit/right_side = 0
+1:7/0/terrains_peering_bit/bottom_side = 0
+1:7/0/terrains_peering_bit/left_side = 0
+1:7/0/terrains_peering_bit/top_side = 0
+2:7/0 = 0
+2:7/0/terrain_set = 0
+2:7/0/terrain = 0
+2:7/0/terrains_peering_bit/bottom_side = 0
+2:7/0/terrains_peering_bit/left_side = 0
+2:7/0/terrains_peering_bit/top_side = 0
+3:7/0 = 0
+0:8/0 = 0
+0:8/0/terrain_set = 0
+0:8/0/terrain = 0
+0:8/0/terrains_peering_bit/right_side = 0
+0:8/0/terrains_peering_bit/top_side = 0
+1:8/0 = 0
+1:8/0/terrain_set = 0
+1:8/0/terrain = 0
+1:8/0/terrains_peering_bit/right_side = 0
+1:8/0/terrains_peering_bit/left_side = 0
+1:8/0/terrains_peering_bit/top_side = 0
+2:8/0 = 0
+2:8/0/terrain_set = 0
+2:8/0/terrain = 0
+2:8/0/terrains_peering_bit/left_side = 0
+2:8/0/terrains_peering_bit/top_side = 0
+3:8/0 = 0
+2:9/0 = 0
+2:9/0/terrain_set = 0
+2:9/0/terrain = 0
+2:9/0/terrains_peering_bit/bottom_side = 0
+3:9/0 = 0
+2:10/0 = 0
+2:10/0/terrain_set = 0
+2:10/0/terrain = 0
+2:10/0/terrains_peering_bit/bottom_side = 0
+2:10/0/terrains_peering_bit/top_side = 0
+3:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+2:11/0/terrain_set = 0
+2:11/0/terrain = 0
+2:11/0/terrains_peering_bit/top_side = 0
+0:12/0 = 0
+1:12/0 = 0
+2:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+2:13/0 = 0
+0:14/0 = 0
+1:14/0 = 0
+2:14/0 = 0
+1:15/0 = 0
+2:15/0 = 0
+0:16/0 = 0
+1:16/0 = 0
+2:16/0 = 0
+0:17/0 = 0
+1:17/0 = 0
+2:17/0 = 0
+0:18/0 = 0
+1:18/0 = 0
+2:18/0 = 0
+0:19/0 = 0
+1:19/0 = 0
+2:19/0 = 0
+0:20/0 = 0
+1:20/0 = 0
+2:20/0 = 0
+0:21/0 = 0
+1:21/0 = 0
+0:5/0 = 0
+0:5/0/terrain_set = 0
+0:5/0/terrain = 0
+0:5/0/terrains_peering_bit/right_side = 0
+
 [sub_resource type="TileSet" id="TileSet_ckxsl"]
+terrain_set_0/mode = 2
+terrain_set_0/terrain_0/name = "Terrain 0"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/1 = SubResource("TileSetAtlasSource_j6oxv")
 sources/2 = SubResource("TileSetAtlasSource_ckxsl")
 sources/3 = SubResource("TileSetAtlasSource_a25ho")
+sources/4 = SubResource("TileSetAtlasSource_r6hoa")
+sources/6 = SubResource("TileSetAtlasSource_php1e")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dx1w1"]
 texture = ExtResource("4_g8j7s")
@@ -923,6 +1070,7 @@ libraries = {
 }
 
 [node name="PhysicsTileMap" type="TileMapLayer" parent="."]
+visible = false
 rotation = 0.000554825
 tile_set = ExtResource("1_e806q")
 script = ExtResource("5_cwu4w")
@@ -945,12 +1093,12 @@ initial_position = 4
 ok_button_text = "Open"
 file_mode = 0
 access = 1
-root_subfolder = "level_editor/levels/"
+root_subfolder = "./level_editor/levels/"
 use_native_dialog = true
 
 [node name="SaveDialog" type="FileDialog" parent="."]
 access = 1
-root_subfolder = "level_editor/levels/"
+root_subfolder = "./level_editor/levels/"
 use_native_dialog = true
 
 [node name="TestingHud" type="CanvasLayer" parent="."]

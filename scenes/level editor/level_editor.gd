@@ -129,7 +129,8 @@ var decorative_source_id_to_tile_name:Dictionary = {
 
 # The tile data associated with the decorative tileset
 var decorative_tiles_data_dictionary:Dictionary = {
-	"Ground":[1,Vector2i(21,0),0],
+	"Ground":[6,Vector2i(1,6),0],
+	#"Ground":[1,Vector2i(21,0),0],
 	"SuperDrillable":[2,Vector2(7,9),0],
 	"Dirt":[3,Vector2i(3,1),0],
 }
@@ -193,6 +194,8 @@ func _ready() -> void:
 	tile_selector.tile_selector_state_changed.connect(tile_selector_changed)
 	tile_selector.tile_selector_new_tile_selected.connect(tile_selected_changed)
 	
+	# Create the directories needed to save the file
+	DirAccess.make_dir_recursive_absolute(folder_path)
 	
 	load_or_save_ui.create_new_level.connect(_create_new_level_dialog)
 	load_or_save_ui.load_level.connect(_load_level_logic)
@@ -208,11 +211,11 @@ func _ready() -> void:
 
 # Creates the new file in the filesystem
 func _create_new_level_logic(nam:String) -> void:
+	
 	load_or_save_ui.queue_free()
 	level_editor_hud.show()
 	
-	# Create the directories needed to save the file
-	DirAccess.make_dir_recursive_absolute(folder_path)
+	
 	
 	# Open the file for writing
 	var file:FileAccess = FileAccess.open(nam+".json", FileAccess.WRITE)
@@ -361,6 +364,10 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		
 		
 		tile_map.set_cell(tile_position, source_id, atlas_coord, alt_tile)
+		
+		decorative_tilemap.set_cells_terrain_connect(decorative_tilemap.get_used_cells(), 0, 0, false)
+		
+		
 		ignore_tiles[tile_position] = true
 	
 	# Set object in tile

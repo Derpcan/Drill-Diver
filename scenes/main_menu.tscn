@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://td0yfq73gf1f" path="res://scripts/UI/menus/level_editor_button.gd" id="5_lgwnu"]
 [ext_resource type="PackedScene" uid="uid://d1qjh238xsdgr" path="res://scenes/enemy/enemy.tscn" id="6_rtw2f"]
 [ext_resource type="PackedScene" uid="uid://c82ds1yobrg78" path="res://scenes/checkpoint/checkpoint.tscn" id="7_oa1go"]
-[ext_resource type="PackedScene" uid="uid://nv87e5t72j7o" path="res://scenes/hitbox/agents/spikes.tscn" id="8_tbmy8"]
+[ext_resource type="PackedScene" path="res://scenes/hitbox/agents/spikes.tscn" id="8_tbmy8"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="10_5dd4i"]
 [ext_resource type="PackedScene" uid="uid://b7yg6ow7ysjaj" path="res://scenes/items/MeterItem.tscn" id="10_lgwnu"]
 
