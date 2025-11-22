@@ -87,8 +87,9 @@ var previous_tilemap_mouse_postion:Vector2 = Vector2.ZERO
 var is_deleting:bool = false:
 	set(new_value):
 		is_deleting = new_value
-		if len(undo_stack.peek()) > 0:
-			undo_stack.push_dictionary({false:[], true:[]})
+		if is_deleting == true:
+			if len(undo_stack.peek()) > 0:
+				undo_stack.push_dictionary({false:[], true:[]})
 
 
 
@@ -365,8 +366,9 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
 		
 		tile_map.set_cell(tile_position, source_id, atlas_coord, alt_tile)
 		
-		decorative_tilemap.set_cells_terrain_connect(decorative_tilemap.get_used_cells(), 0, 0, false)
-		
+		#decorative_tilemap.set_cells_terrain_connect(decorative_tilemap.get_used_cells(), 0, 0, false)
+		#BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells(),)
+		BetterTerrain.update_terrain_cell(decorative_tilemap, tile_position,)
 		
 		ignore_tiles[tile_position] = true
 	
@@ -467,16 +469,16 @@ func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
 		if tile_map == physics_tilemap:
 			match tile_at_point:
 				0:
-					undo_stack.push(["Ground", "", tile_position], true)
+					undo_stack.push(["Ground", "", tile_position, {}], true)
 				1:
-					undo_stack.push(["SuperDrillable", "", tile_position], true)
+					undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
 				2:
-					undo_stack.push(["Dirt", "", tile_position], true)
+					undo_stack.push(["Dirt", "", tile_position, {}], true)
 	
 	
 	tile_map.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
 	
-	
+	BetterTerrain.update_terrain_cell(decorative_tilemap, tile_position,)
 	
 	# Check to see if the position exists in there
 	if tile_position in tile_pos_to_object_dictionary:
@@ -565,7 +567,7 @@ func undo_logic() -> void:
 		var temp_object = object_string
 		var temp_selected_object = selected_object
 		
-		#print(stack_value[true])
+		print(stack_value[true])
 		
 		var temp_obj_bonus_params:Dictionary = object_bonus_parameters
 		
@@ -614,8 +616,18 @@ func place_tile_input_logic() -> void:
 	if Input.is_action_pressed("place_tile") and not prevent_tile_placement:
 		place_held_down = true
 	
+	
 	elif Input.is_action_just_released("place_tile"):
 		place_held_down = false
+	
+	if Input.is_action_pressed("delete_tile") and not prevent_tile_placement:
+		place_held_down = true
+		
+		if is_deleting == false:
+			is_deleting = true
+	elif Input.is_action_just_released("delete_tile"):
+		place_held_down = false
+		is_deleting = false
 
 
 
@@ -643,7 +655,7 @@ func save_logic() -> void:
 	
 	# Save the decorative map
 	file.store_string("{\"DecorativeTilemap\":[\n")
-	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(1)))+",\n")
+	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(6)))+",\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(2)))+",\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(3)))+"\n")
 	file.store_string("],\n")
@@ -770,7 +782,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		save_logic()
 	
 	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
-		is_deleting = not is_deleting
+		if Input.is_action_pressed("delete_tile"):
+			is_deleting = not is_deleting
 	
 	# Camera Zooming In and Out
 	if Input.is_action_pressed("camera_scroll_out"):
