@@ -3,9 +3,23 @@ extends CanvasLayer
 @export var bit:BitReaction
 @export var time:Label
 @export var timer:Timer
-var minutes
-var seconds
-var miliseconds
+
+
+
+var minutes:float = 0.0:
+	set(new_value):
+		minutes = new_value
+		time.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
+		
+var seconds:float = 0.0:
+	set(new_value):
+		seconds = new_value
+		time.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
+		
+var miliseconds:float = 0.0:
+	set(new_value):
+		miliseconds = new_value
+		time.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
 var completeTime
 var completeTimeMin
 var completeTimeSec
@@ -14,26 +28,33 @@ var sranktime
 const LERP_SPEED:float = 0.5
 
 func _ready():
-	minutes = 0.0
-	seconds = 0.0
-	miliseconds = 0.0
-	_set_complete_time(4000)
 	
+	_set_complete_time(1532.36)
 	
 	sranktime = 1520.0
 	time.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
+	_reveal_time()
 
+		
+func _reveal_time():
+	var tween = create_tween()
+	tween.set_parallel()
+	tween.tween_method(Callable(self, "_update_minutes"), minutes, completeTimeMin, 2)
+	tween.tween_method(Callable(self, "_update_seconds"), seconds, completeTimeSec, 2)
+	tween.tween_method(Callable(self, "_update_mili"), miliseconds, completeTimeMili, 2)
+	await tween.finished
+	timer.start()
+	await timer.timeout
+	_decide_rank()
+func _update_minutes(value:float):
+	minutes=value
+	
+func _update_seconds(value:float):
+	seconds=value
 
-func _process(delta):
-	minutes = move_toward(minutes, completeTimeMin, LERP_SPEED)
-	seconds = move_toward(seconds, completeTimeSec, LERP_SPEED)
-	miliseconds = move_toward(miliseconds, completeTimeMili, LERP_SPEED)
-	time.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
-	if is_equal_approx(minutes,completeTimeMin) && is_equal_approx(seconds,completeTimeSec) && is_equal_approx(miliseconds,completeTimeMili):
-		set_process(false)
-		timer.start()
-		await timer.timeout
-		_decide_rank()
+func _update_mili(value:float):
+	miliseconds=value
+	
 		
 func _decide_rank():
 	if (completeTime <= sranktime):
