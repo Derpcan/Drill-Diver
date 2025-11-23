@@ -73,11 +73,11 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 				if is_deleting == false:
 					#set_tile(physics_tilemap, Vector2i(point[0], point[1]))
 					set_tile(decorative_tilemap, Vector2i(point[0], point[1]))
-					BetterTerrain.update_terrain_cell(decorative_tilemap, Vector2i(point[0], point[1]),)
+					
 					
 					undo_stack.push(Vector2i(point[0], point[1]), false)
 				elif is_deleting == true:
-					delete_tile(physics_tilemap, Vector2i(point[0], point[1]))
+					#delete_tile(physics_tilemap, Vector2i(point[0], point[1]))
 					delete_tile(decorative_tilemap, Vector2i(point[0], point[1]))
 
 
@@ -503,6 +503,7 @@ static func static_set_object(
 	tilemap:TileMapLayer, 
 	tile_position:Vector2i, 
 	selected_object:PackedScene,
+	testing_mode:bool,
 	object_node:Node2D,
 	tile_position_to_object_dictionary:Dictionary[Vector2i, Dictionary], 
 	tile_position_to_bonus_parameters:Dictionary[Vector2i,Dictionary],
@@ -533,6 +534,7 @@ static func static_set_object(
 			tile_position_to_bonus_parameters.erase(tile_position)
 		
 		# Pause enemy Tiles
+		static_pause_enemy_tiles(testing_mode, object, tile_position, selected_object, tile_position_to_bonus_parameters)
 		
 		# Add bonus Params
 		
@@ -551,7 +553,30 @@ static func static_set_object(
 		
 		ignore_tiles[tile_position] = true
 	
+
+
+
+static func static_pause_enemy_tiles(
+	testing_mode:bool, 
+	object:Object, 
+	tile_position:Vector2i,
+	selected_object:PackedScene,
+	tile_position_to_bonus_parameters:Dictionary[Vector2i, Dictionary]
+) -> void:
+	if testing_mode:
+		return
 	
+	if scene_dictionary[selected_object] == "Alien":
+		object.in_editor = true
+	
+	if not tile_position_to_bonus_parameters.has(tile_position):
+		return
+	
+	if tile_position_to_bonus_parameters[tile_position].has("Distance"):
+		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
+	
+
+
 
 static func static_set_tile(
 	tilemap:TileMapLayer, tilemap_type:String, tile_position:Vector2i, selected_object:PackedScene,
@@ -565,9 +590,9 @@ static func static_set_tile(
 	ignore_tiles:Dictionary[Vector2i, bool] = {},
 	avoid_stack:bool=false,
 	undo_stack:UndoStack = null,
+	testing_mode:bool = false
 ) -> void:
 	if selected_object == null:
-		
 		# Get the tile data necessary to place selected tile
 		var tile_data:Array = static_get_tile(tilemap, selected_tile)[tilemap_type]
 		var source_id:int = tile_data[0]
@@ -581,19 +606,19 @@ static func static_set_tile(
 		tilemap.set_cell(tile_position, source_id, atlas_coord, alt_tile)
 		
 		# Update the terrain
-		#BetterTerrain.update_terrain_cell(tilemap, tile_position,)
+		if tilemap_type == "Decorative":
+			BetterTerrain.update_terrain_cell(tilemap, tile_position,)
 		
 		ignore_tiles[tile_position] = true
 	else:
-		static_set_object(object_string, tilemap, tile_position, selected_object, object_node, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, object_bonus_parameters, ignore_tiles,avoid_stack, undo_stack)
+		static_set_object(object_string, tilemap, tile_position, selected_object, testing_mode, object_node, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, object_bonus_parameters, ignore_tiles,avoid_stack, undo_stack)
 	
-	
-	
+
 
 
 func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=false) -> void:
 	#static_set_tile(tile_map, "Physics", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, ignore_tiles, true, undo_stack)
-	static_set_tile(decorative_tilemap, "Decorative", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, ignore_tiles, false, undo_stack)
+	static_set_tile(decorative_tilemap, "Decorative", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, ignore_tiles, false, undo_stack, false)
 	#print(undo_stack.stack_array)
 	return
 	# If the tile being placed is not an object
@@ -956,9 +981,9 @@ func load_logic(path_name:String="") -> void:
 			
 			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
 			
-			print("Decorative_tilemap_data: ", decorative_tilemap_data)
-			print("TilePosBonusParameters: ", tile_pos_to_bonus_params)
-			print("ObjectStringTilePos: ", object_string_tile_pos)
+			#print("Decorative_tilemap_data: ", decorative_tilemap_data)
+			#print("TilePosBonusParameters: ", tile_pos_to_bonus_params)
+			#print("ObjectStringTilePos: ", object_string_tile_pos)
 			
 			selected_object = null
 			object_string = ""
