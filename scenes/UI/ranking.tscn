@@ -11,7 +11,6 @@ font_size = 50
 font_size = 70
 
 [node name="Ranking" type="CanvasLayer" node_paths=PackedStringArray("rankletter", "bit", "time", "timer")]
-follow_viewport_enabled = true
 script = ExtResource("1_lley0")
 rankletter = NodePath("RankLetter")
 bit = NodePath("BitReaction")

@@ -1,4 +1,5 @@
 extends CanvasLayer
+class_name Ranking
 @export var rankletter:RankLetter
 @export var bit:BitReaction
 @export var time:Label
@@ -29,11 +30,11 @@ const LERP_SPEED:float = 0.5
 
 func _ready():
 	
-	_set_complete_time(1532.36)
 	
-	sranktime = 1520.0
+	
+	
 	time.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
-	_reveal_time()
+	
 
 		
 func _reveal_time():
@@ -46,6 +47,7 @@ func _reveal_time():
 	timer.start()
 	await timer.timeout
 	_decide_rank()
+	
 func _update_minutes(value:float):
 	minutes=value
 	
@@ -79,6 +81,8 @@ func _set_complete_time(timetaken:float):
 	completeTimeSec = int(completeTime) % 60
 	completeTimeMili = round((completeTime - int(completeTime)) * 100)
 
+func _set_S_rank_time(s_rank_time:float):
+	sranktime = s_rank_time
 	
 func _A_rank():
 	bit._play_A_rank()

@@ -366,7 +366,6 @@ script = ExtResource("1_gthg3")
 
 [node name="Ranking" parent="." instance=ExtResource("17_hf2sn")]
 visible = false
-follow_viewport_enabled = false
 
 [node name="OnLevelLoaded" parent="." instance=ExtResource("13_ntc4i")]
 

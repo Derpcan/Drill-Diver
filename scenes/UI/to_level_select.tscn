@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2s6jnrtrbx8e"]
+
+[ext_resource type="Script" uid="uid://cw4tuxjyhynfu" path="res://scenes/UI/to_level_select.gd" id="1_jxaos"]
+[ext_resource type="Script" path="res://scripts/UI/menus/level_select_button.gd" id="1_vm4vn"]
+
+[node name="ToLevelSelect" type="CanvasLayer" node_paths=PackedStringArray("level_select")]
+script = ExtResource("1_jxaos")
+level_select = NodePath("Button")
+
+[node name="Button" type="Button" parent="."]
+visible = false
+offset_left = 999.0
+offset_top = 555.0
+offset_right = 1121.0
+offset_bottom = 586.0
+disabled = true
+text = "To Level Select"
+script = ExtResource("1_vm4vn")
