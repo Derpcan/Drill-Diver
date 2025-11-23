@@ -1,6 +1,9 @@
 extends Node2D
 class_name TestCustomLevelEditor
 
+## Temporary to test Completion Times and Ending screen
+@export var s_rank_time:float = 10000
+
 
 @export var level_file_path:String = "":
 	set(new_path):

@@ -1112,7 +1112,6 @@ metadata/_better_terrain = {
 
 [node name="TestCustomLevelEditor" type="Node2D" node_paths=PackedStringArray("physics_tilemap", "decorative_tilemap", "object_node")]
 script = ExtResource("1_ve8og")
-level_file_path = "/Users/christianwagenknecht/Library/Application Support/Godot/app_userdata/Drill Diver/level_editor/levels/Testing_level.json"
 physics_tilemap = NodePath("PhysicsTileMap")
 decorative_tilemap = NodePath("DecorativeTileMap")
 object_node = NodePath("ObjectNode")
