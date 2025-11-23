@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2s6jnrtrbx8e"]
+[gd_scene load_steps=3 format=3 uid="uid://4qfhiuw7i8j"]
 
-[ext_resource type="Script" uid="uid://cw4tuxjyhynfu" path="res://scenes/UI/to_level_select.gd" id="1_jxaos"]
-[ext_resource type="Script" path="res://scripts/UI/menus/level_select_button.gd" id="1_vm4vn"]
+[ext_resource type="Script" path="res://scenes/UI/to_level_select.gd" id="1_jxaos"]
+[ext_resource type="Script" uid="uid://ci8mvuro6jqfh" path="res://scripts/UI/menus/level_select_button.gd" id="1_vm4vn"]
 
 [node name="ToLevelSelect" type="CanvasLayer" node_paths=PackedStringArray("level_select")]
 script = ExtResource("1_jxaos")

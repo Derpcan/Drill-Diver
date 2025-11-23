@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://ckobqg36uilxm" path="res://scenes/Camera/game_camera.tscn" id="8_www0j"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="9_www0j"]
 [ext_resource type="PackedScene" uid="uid://cyrrdovf63mtg" path="res://scenes/goal/goal.tscn" id="14_fy751"]
-[ext_resource type="PackedScene" uid="uid://d2s6jnrtrbx8e" path="res://scenes/UI/to_level_select.tscn" id="15_sm865"]
+[ext_resource type="PackedScene" uid="uid://4qfhiuw7i8j" path="res://scenes/UI/to_level_select.tscn" id="15_sm865"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sm865"]
 texture = ExtResource("5_es2ws")
@@ -1121,7 +1121,7 @@ object_node = NodePath("ObjectNode")
 
 [node name="OnLevelLoaded" parent="." instance=ExtResource("1_kn7qf")]
 
-[node name="Hud" parent="." instance=ExtResource("2_ve8og")]
+[node name="Hud" parent="." groups=["hud"] instance=ExtResource("2_ve8og")]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = ExtResource("3_2bioa")

@@ -1264,6 +1264,7 @@ root_subfolder = "./level_editor/levels/"
 use_native_dialog = true
 
 [node name="TestingHud" type="CanvasLayer" parent="."]
+layer = 2
 visible = false
 
 [node name="StopTestingButton" type="Button" parent="TestingHud"]

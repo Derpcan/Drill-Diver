@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=11 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
 [ext_resource type="PackedScene" uid="uid://cso12yd5vwp87" path="res://scenes/level editor/tile_selector_button.tscn" id="3_igrm3"]
 [ext_resource type="Texture2D" uid="uid://cu2183edopvth" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/Diamond.png" id="4_1bmts"]
+[ext_resource type="Texture2D" uid="uid://dsjcog8rud0d2" path="res://assets/sprites/goal/GoalImage.png" id="4_ll7yy"]
 [ext_resource type="Texture2D" uid="uid://j3ll8yipnw8p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Alien/Alien_idle.png" id="5_1bmts"]
 
 [sub_resource type="Animation" id="Animation_qv4l2"]
@@ -218,6 +219,16 @@ layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
+[node name="SpawnPoint" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("3_1t62o")
+text = "Spawnpoint"
+
+[node name="Goal" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("4_ll7yy")
+text = "Goal"
+
 [node name="CheckPoint" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("3_1t62o")
@@ -227,11 +238,6 @@ text = "Checkpoint"
 layout_mode = 2
 image = ExtResource("4_1bmts")
 text = "Gem"
-
-[node name="SpawnPoint" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
-layout_mode = 2
-image = ExtResource("3_1t62o")
-text = "Spawnpoint"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/VBoxContainer"]
 layout_mode = 2

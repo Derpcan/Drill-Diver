@@ -52,287 +52,10 @@ var tile_pos_to_bonus_parameters:Dictionary[Vector2i, Dictionary] = {
 
 
 
-#func get_tile() -> Array:
-	#if (selected_tile in tiles_dictionary):
-		#return tile_type_to_tile_data_dictionary[tiles_dictionary[selected_tile]]
-	##match selected_tile:
-		##"Ground":
-			##return tiles_dictionary[selected_tile]
-	#return [0, Vector2i(0,0), 0]
-
-
-func get_tile(tile_map:TileMapLayer) -> Array:
-	
-	# Physics tile map needs to convert from decorative
-	if tile_map == physics_tilemap:
-		return LevelEditor.physics_tile_type_to_tile_data_dictionary[LevelEditor.decorative_tiles_to_physics[selected_tile]]
-	elif tile_map == decorative_tilemap:
-		return LevelEditor.decorative_tiles_data_dictionary[selected_tile]
-	
-	#if (selected_tile in tiles_dictionary):
-		#return tile_type_to_tile_data_dictionary[tiles_dictionary[selected_tile]]
-	#match selected_tile:
-		#"Ground":
-			#return tiles_dictionary[selected_tile]
-	return [0, Vector2i(0,0), 0]
-
-
-
-func check_can_add_spawnpoint() -> bool:
-	# Check if there is multiple Spawnpoints
-	if "Spawnpoint" not in object_string_name_to_tile_pos:
-		return true
-	
-	if len(object_string_name_to_tile_pos["Spawnpoint"]) == 0:
-		return true
-	
-	return false
-
-
-func get_spawnpoint() -> Node2D:
-	if "Spawnpoint" in object_string_name_to_tile_pos:
-		if len(object_string_name_to_tile_pos["Spawnpoint"]) == 1:
-			if object_string_name_to_tile_pos["Spawnpoint"][0] in tile_pos_to_object_dictionary:
-				return tile_pos_to_object_dictionary[object_string_name_to_tile_pos["Spawnpoint"][0]]["object"]
-	return null
-
-
-func delete_all_by_object_name(obj_name:String) -> void:
-	
-	for pos:Vector2i in object_string_name_to_tile_pos[obj_name]:
-		delete_tile(null, pos)
-
-
-func set_tile_deleter(tile_map:TileMapLayer, tile_position:Vector2i) -> void:
-	# Check to see if the position exists in there
-	#delete_tile(tile_map, tile_position)
-	if tile_position in tile_pos_to_object_dictionary:
-		# If there is an object in existance, remove it
-		if tile_pos_to_object_dictionary[tile_position]["object"] != null:
-			tile_pos_to_object_dictionary[tile_position]["object"].queue_free()
-		tile_pos_to_object_dictionary[tile_position]["object"] = null
-		tile_pos_to_object_dictionary[tile_position]["object_name"] = ""
-	
-	# Remove from the other dictionary that is used to save
-	for key in object_string_name_to_tile_pos.keys():
-		if tile_position in object_string_name_to_tile_pos[key]:
-			object_string_name_to_tile_pos[key].erase(tile_position)
-	
-
-	
-
-
-
-func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
-	
-	# If the tile being placed is not an object
-	if selected_object == null:
-		var tile_data:Array = get_tile(tile_map)
-		var source_id:int = tile_data[0]
-		var atlas_coord:Vector2i = tile_data[1]
-		var alt_tile:int = tile_data[2]
-		
-		set_tile_deleter(tile_map, tile_position)
-		
-		
-		tile_map.set_cell(tile_position, source_id, atlas_coord, alt_tile)
-		
-		#decorative_tilemap.set_cells_terrain_connect(decorative_tilemap.get_used_cells(), 0, 0, false)
-		#BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells(),)
-		BetterTerrain.update_terrain_cell(decorative_tilemap, tile_position,)
-		
-		
-		#var tile_atlas_coords:Vector2i = decorative_tilemap.get_cell_atlas_coords(tile_position)
-		#print(tile_atlas_coords)
-		#if decorative_tiles_slope_to_physics_slope.has(tile_atlas_coords):
-			#var new_tile_data = physics_tile_type_to_tile_data_dictionary[decorative_tiles_slope_to_physics_slope[tile_atlas_coords]]
-			#print(new_tile_data)
-			#physics_tilemap.set_cell(tile_position, new_tile_data[0], new_tile_data[1], new_tile_data[2])
-	
-	# Set object in tile
-	else:
-		
-		# Check is spawnpoint already exists
-		if not check_can_add_spawnpoint() and object_string == "Spawnpoint":
-			delete_all_by_object_name("Spawnpoint") # Delete all occurances of Spawnpoint
-		
-		set_tile_deleter(tile_map, tile_position)
-		## Check to see if a tile is there already
-		if tile_map.get_cell_tile_data(tile_position) != null:
-			tile_map.erase_cell(tile_position)
-		
-	
-		# Add new object to tree and dictionary
-		var object = selected_object.instantiate()
-		
-		#if object_bonus_parameters != {}:
-		#
-			#tile_pos_to_bonus_parameters[tile_position] = object_bonus_parameters.duplicate()
-		#elif object_bonus_parameters == {} and tile_pos_to_bonus_parameters.has(tile_position):
-			#tile_pos_to_bonus_parameters.erase(tile_position)
-		#object_bonus_parameters = {}
-		
-		
-		add_bonus_params_to_objects(object, tile_position)
-		
-		object.global_position = tile_map.map_to_local(tile_position)
-		object_node.add_child(object)
-		tile_pos_to_object_dictionary[tile_position] = {"object":null, "object_name":""}
-		tile_pos_to_object_dictionary[tile_position]["object"] = object
-		tile_pos_to_object_dictionary[tile_position]["object_name"] = object_string
-		
-		
-		if object_string in object_string_name_to_tile_pos:
-			if tile_position not in object_string_name_to_tile_pos[object_string]:
-				object_string_name_to_tile_pos[object_string].append(tile_position)
-		else:
-			object_string_name_to_tile_pos[object_string] = [tile_position]
 
 
 
 
-func add_bonus_params_to_objects(object:Object,tile_position:Vector2i) -> void:
-	
-	if not tile_pos_to_bonus_parameters.has(tile_position):
-		return
-	
-	if tile_pos_to_bonus_parameters[tile_position].has("Distance"):
-		object.patrol_distance = tile_pos_to_bonus_parameters[tile_position]["Distance"]
-
-
-#func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,) -> void:
-	## If the tile being placed is not an object
-	#if selected_object == null:
-		#var tile_data:Array = get_tile(tile_map)
-		#var source_id:int = tile_data[0]
-		#var atlas_coord:Vector2i = tile_data[1]
-		#var alt_tile:int = tile_data[2]
-		#
-		#
-		## Check to see if the position exists in there
-		#if tile_position in tile_pos_to_object_dictionary:
-			## If there is an object in existance, remove it
-			#if tile_pos_to_object_dictionary[tile_position] != null:
-				#tile_pos_to_object_dictionary[tile_position].queue_free()
-			#tile_pos_to_object_dictionary[tile_position] = null
-		#
-		## Remove from the other dictionary that is used to save
-		#for key in object_string_name_to_tile_pos.keys():
-			#if tile_position in object_string_name_to_tile_pos[key]:
-				#object_string_name_to_tile_pos[key].erase(tile_position)
-		#
-		#
-		#tile_map.set_cell(tile_position, source_id, atlas_coord, alt_tile)
-	#
-	## Set object in tile
-	#else:
-		#
-		## Check is spawnpoint already exists
-		#if not check_can_add_spawnpoint() and object_string == "Spawnpoint":
-			#delete_all_by_object_name("Spawnpoint") # Delete all occurances of Spawnpoint
-		#
-		## Check to see if a tile is there already
-		#if tile_map.get_cell_tile_data(tile_position) != null:
-			#tile_map.erase_cell(tile_position)
-		#
-		## Check to see if the position exists in there
-		#if tile_position in tile_pos_to_object_dictionary:
-			## If there is an object in existance, remove it
-			#if tile_pos_to_object_dictionary[tile_position] != null:
-				#tile_pos_to_object_dictionary[tile_position].queue_free()
-			#tile_pos_to_object_dictionary[tile_position] = null
-		#
-		## Remove from the other dictionary that is used to save
-		#for key in object_string_name_to_tile_pos.keys():
-			#if tile_position in object_string_name_to_tile_pos[key]:
-				#object_string_name_to_tile_pos[key].erase(tile_position)
-		#
-		## Add new object to tree and dictionary
-		#var object = selected_object.instantiate()
-		#object.global_position = tile_map.map_to_local(tile_position)
-		#object_node.add_child(object)
-		#tile_pos_to_object_dictionary[tile_position] = object
-		#
-		#
-		#if object_string in object_string_name_to_tile_pos:
-			#if tile_position not in object_string_name_to_tile_pos[object_string]:
-				#object_string_name_to_tile_pos[object_string].append(tile_position)
-		#else:
-			#object_string_name_to_tile_pos[object_string] = [tile_position]
-
-
-
-# Deletes tile that is in use
-func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i,):
-	var tile_data:Array = get_tile(tile_map)
-	var source_id:int = tile_data[0]
-	var atlas_coord:Vector2i = tile_data[1]
-	var alt_tile:int = tile_data[2]
-	
-	tile_map.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
-	
-	# Check to see if the position exists in there
-	if tile_position in tile_pos_to_object_dictionary:
-		if tile_pos_to_object_dictionary[tile_position]["object"] != null:
-			tile_pos_to_object_dictionary[tile_position]["object"].queue_free()
-		tile_pos_to_object_dictionary[tile_position]["object"] = null
-	
-	
-	# Remove from the other dictionary that is used to save
-	for key in object_string_name_to_tile_pos.keys():
-		if tile_position in object_string_name_to_tile_pos[key]:
-			object_string_name_to_tile_pos[key].erase(tile_position)
-
-
-func load_logics(path_name:String="") -> void:
-	#tilemap.clear()
-	print("PATH: ", path_name)
-	tile_pos_to_object_dictionary.clear()
-	object_string_name_to_tile_pos.clear()
-	
-	if ResourceLoader.exists(path_name):
-		# Open the file for writing
-		var save:CustomLevelSave = ResourceLoader.load(path_name,"", ResourceLoader.CACHE_MODE_IGNORE)
-		
-		if save == null:
-			print("failed to load")
-		
-		selected_object = null
-		
-		
-		# Load the physics tile map cells
-		for pos in save.physics_tilemap_cells[0]:
-			selected_tile = "Ground"
-			set_tile(physics_tilemap, pos)
-		
-		for pos in save.physics_tilemap_cells[1]:
-			selected_tile = "SuperDrillable"
-			set_tile(physics_tilemap, pos)
-		
-		for pos in save.physics_tilemap_cells[2]:
-			selected_tile = "Dirt"
-			set_tile(physics_tilemap, pos)
-		
-		selected_tile = "Ground"
-		
-		
-		# Load Objects
-		for object_key in save.object_string_name_to_tile_pos.keys():
-			for pos in save.object_string_name_to_tile_pos[object_key]:
-				selected_object = LevelEditor.object_dictionary[object_key]
-				object_string = object_key
-				set_tile(physics_tilemap, pos)
-				
-				# Set the player's spawn
-				if object_string == "Spawnpoint":
-					var obj:Node2D = tile_pos_to_object_dictionary[object_string_name_to_tile_pos[object_string][0]]["object"]
-					$Player.global_position = obj.global_position
-					$GameCamera.global_position = $Player.global_position
-		
-		
-		selected_object = null
-		
-		
 
 
 var decorative_source_id_to_tile_name:Dictionary = {
@@ -380,28 +103,8 @@ func load_logic(path_name:String="") -> void:
 				for id in range(len(decorative_tilemap_data)):
 					for pos:Vector2i in decorative_tilemap_data[id]:
 						selected_tile = decorative_source_id_to_tile_name[id]
-						#print(selected_tile)
-						LevelEditor.static_set_tile(physics_tilemap, "Physics", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters)
-						LevelEditor.static_set_tile(decorative_tilemap, "Decorative", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters)
-						#set_tile(physics_tilemap, pos)
-						#set_tile(decorative_tilemap, pos,)
-			#else:
-			#
-				## Load the physics tile map cells
-				#for pos in physics_tilemap_data[0]:
-					#selected_tile = "Ground"
-					#set_tile(physics_tilemap, pos)
-					#set_tile(decorative_tilemap, pos,)
-					#
-				#for pos in physics_tilemap_data[1]:
-					#selected_tile = "SuperDrillable"
-					#set_tile(physics_tilemap, pos)
-					#set_tile(decorative_tilemap, pos,)
-					#
-				#for pos in physics_tilemap_data[2]:
-					#selected_tile = "Dirt"
-					#set_tile(physics_tilemap, pos)
-					#set_tile(decorative_tilemap, pos,)
+						LevelEditor.static_set_tile(physics_tilemap, "Physics", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
+						LevelEditor.static_set_tile(decorative_tilemap, "Decorative", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
 			
 			
 			selected_tile = "Ground"
@@ -411,10 +114,18 @@ func load_logic(path_name:String="") -> void:
 			
 			# Load Objects
 			for object_key in object_string_tile_pos.keys():
-				for pos in object_string_tile_pos[object_key]:
+				for pos:Vector2i in object_string_tile_pos[object_key]:
 					selected_object = LevelEditor.object_dictionary[object_key]
 					object_string = object_key
-					set_tile(physics_tilemap, pos)
+					
+					if pos in tile_pos_to_bonus_parameters:
+						object_bonus_parameters = tile_pos_to_bonus_parameters[pos]
+					else:
+						object_bonus_parameters = {}
+					
+					
+					LevelEditor.static_set_tile(physics_tilemap, "Physics", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
+					#set_tile(physics_tilemap, pos)
 					
 					# Set the player's spawn
 					if object_string == "Spawnpoint":
@@ -436,7 +147,7 @@ func fix_physics_tile_map() -> void:
 			var new_tile_data = LevelEditor.physics_tile_type_to_tile_data_dictionary[LevelEditor.decorative_tiles_slope_to_physics_slope[tile_atlas_coords]]
 			physics_tilemap.set_cell(tile_position, new_tile_data[0], new_tile_data[1], new_tile_data[2])
 		else:
-			var tile_data:Array = get_tile(physics_tilemap)
+			var tile_data:Array = LevelEditor.static_get_tile(physics_tilemap, selected_tile)["Physics"]
 			var source_id:int = tile_data[0]
 			var atlas_coord:Vector2i = tile_data[1]
 			var alt_tile:int = tile_data[2]

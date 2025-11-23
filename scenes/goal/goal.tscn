@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://57ymnu3tw8cn" path="res://assets/sprites/goal/Generator.png" id="2_0ivff"]
 [ext_resource type="Texture2D" uid="uid://c88djew1cxamv" path="res://assets/sprites/goal/campfire.png" id="4_ruxej"]
 [ext_resource type="Texture2D" uid="uid://dqvea6guscy0m" path="res://assets/sprites/goal/green_smoke.png" id="5_0jila"]
-[ext_resource type="PackedScene" uid="uid://cyd3k7ogk4stj" path="res://scenes/UI/ranking.tscn" id="7_lwhrm"]
+[ext_resource type="PackedScene" uid="uid://dwb8hnpgd5add" path="res://scenes/UI/ranking.tscn" id="7_lwhrm"]
 
 [sub_resource type="Animation" id="Animation_ruxej"]
 resource_name = "Blow Up"
@@ -557,37 +557,38 @@ libraries = {
 }
 
 [node name="Smoke" type="AnimatedSprite2D" parent="."]
-position = Vector2(-2, -17)
+position = Vector2(-2, -30)
 sprite_frames = SubResource("SpriteFrames_57ibp")
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
 z_index = 1
-position = Vector2(-15, -8)
+position = Vector2(-15, -21)
 sprite_frames = SubResource("SpriteFrames_ckv10")
 frame = 6
 
 [node name="Explosion2" type="AnimatedSprite2D" parent="."]
 z_index = 1
-position = Vector2(13, 4)
+position = Vector2(13, -9)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_ckv10")
 frame = 6
 
 [node name="Explosion3" type="AnimatedSprite2D" parent="."]
 z_index = 1
-position = Vector2(-8, 14)
+position = Vector2(-8, 1)
 scale = Vector2(0.9, 0.9)
 sprite_frames = SubResource("SpriteFrames_ckv10")
 frame = 6
 
 [node name="Explosion4" type="AnimatedSprite2D" parent="."]
 z_index = 1
-position = Vector2(-1, 6)
+position = Vector2(-1, -7)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ckv10")
 frame = 6
 
 [node name="Generator" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -13)
 sprite_frames = SubResource("SpriteFrames_8rjw6")
 
 [node name="SmokePlayer" type="AnimationPlayer" parent="."]
@@ -602,6 +603,7 @@ libraries = {
 }
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -13)
 collision_layer = 0
 collision_mask = 8
 

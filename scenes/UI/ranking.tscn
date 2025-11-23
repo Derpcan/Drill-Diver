@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyd3k7ogk4stj"]
+[gd_scene load_steps=6 format=3 uid="uid://dwb8hnpgd5add"]
 
 [ext_resource type="Script" uid="uid://dkwep0aldggp2" path="res://scenes/UI/ranking.gd" id="1_lley0"]
 [ext_resource type="PackedScene" uid="uid://cdymdpiuvmshn" path="res://scenes/UI/rank_letter.tscn" id="1_tyqhm"]
@@ -20,6 +20,14 @@ timer = NodePath("Delay")
 [node name="Delay" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_left = -1336.0
+offset_top = -1148.0
+offset_right = 2727.0
+offset_bottom = 1405.0
+color = Color(0.188235, 0.180392, 0.176471, 0.341176)
 
 [node name="Your Time" type="Label" parent="."]
 offset_left = 599.0
@@ -44,11 +52,3 @@ scale = Vector2(2.2, 2.2)
 [node name="RankLetter" parent="." instance=ExtResource("1_tyqhm")]
 position = Vector2(708, 336)
 scale = Vector2(2.5, 2.5)
-
-[node name="ColorRect" type="ColorRect" parent="."]
-show_behind_parent = true
-offset_left = -1336.0
-offset_top = -1148.0
-offset_right = 2727.0
-offset_bottom = 1405.0
-color = Color(0.188235, 0.180392, 0.176471, 0.341176)

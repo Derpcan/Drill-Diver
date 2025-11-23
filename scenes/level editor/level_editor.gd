@@ -21,6 +21,18 @@ class_name LevelEditor
 
 @onready var undo_stack:UndoStack = UndoStack.new()
 
+signal tile_placed()
+
+var best_time_completed:float = 9223372036854775807:
+	set(new_value):
+		# Reset the time
+		if new_value == -1:
+			best_time_completed = 9223372036854775807
+		
+		if new_value < best_time_completed:
+			best_time_completed = new_value
+			
+
 
 var testing_mode:bool = false:
 	set(new_value):
@@ -164,6 +176,7 @@ static var object_dictionary:Dictionary = {
 	"Checkpoint":preload("res://scenes/checkpoint/checkpoint.tscn"),
 	"Gem":preload("res://scenes/items/MeterItem.tscn"),
 	"Spawnpoint":preload("res://scenes/checkpoint/spawnpoint.tscn"),
+	"Goal":preload("res://scenes/goal/goal.tscn"),
 	"Alien":preload("res://scenes/enemy/enemy.tscn"),
 }
 
@@ -171,6 +184,7 @@ static var scene_dictionary:Dictionary = {
 	preload("res://scenes/checkpoint/checkpoint.tscn"):"Checkpoint",
 	preload("res://scenes/items/MeterItem.tscn"):"Gem",
 	preload("res://scenes/checkpoint/spawnpoint.tscn"):"Spawnpoint",
+	preload("res://scenes/goal/goal.tscn"):"Goal",
 	preload("res://scenes/enemy/enemy.tscn"):"Alien",
 }
 
@@ -223,6 +237,16 @@ func _ready() -> void:
 	
 	$LevelEditorHud/TestLevelButton.pressed.connect(test_level)
 	$TestingHud/StopTestingButton.pressed.connect(_stop_testing)
+	
+	tile_placed.connect(_handle_level_changed)
+
+
+func _handle_level_changed() -> void:
+	
+	# Prompt user if they want to Continue to change the level
+	# If they have beat the level. Have a different best time than 9223372036854775807
+	
+	print("changed")
 
 
 
@@ -235,11 +259,11 @@ func _create_new_level_logic(nam:String) -> void:
 	
 	
 	# Open the file for writing
-	var file:FileAccess = FileAccess.open(nam+".json", FileAccess.WRITE)
+	var file:FileAccess = FileAccess.open(nam+".lvl", FileAccess.WRITE)
 	
 	prevent_tile_placement = false
 	
-	save_path = nam+".json"
+	save_path = nam+".lvl"
 	
 	# Save so it isnt a broken file
 	save_logic()
@@ -315,6 +339,14 @@ func get_spawnpoint() -> Node2D:
 		if len(object_string_name_to_tile_pos["Spawnpoint"]) == 1:
 			if object_string_name_to_tile_pos["Spawnpoint"][0] in tile_pos_to_object_dictionary:
 				return tile_pos_to_object_dictionary[object_string_name_to_tile_pos["Spawnpoint"][0]]["object"]
+	return null
+
+
+func get_goal() -> Node2D:
+	if "Goal" in object_string_name_to_tile_pos:
+		if len(object_string_name_to_tile_pos["Goal"]) == 1:
+			if object_string_name_to_tile_pos["Goal"][0] in tile_pos_to_object_dictionary:
+				return tile_pos_to_object_dictionary[object_string_name_to_tile_pos["Goal"][0]]["object"]
 	return null
 
 
@@ -413,6 +445,8 @@ static func static_delete_tile(
 	# Set the cell to nothing hence deleting it
 	tilemap.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
 	
+	tilemap.changed.emit()
+	
 	# Check to see if an object exists at the tile position
 	if tile_position_to_object_dictionary.has(tile_position) and (not check_ignore_tiles or (tile_position not in ignore_tiles)):
 		# Check if the object at the location is null.. Safety Check
@@ -459,6 +493,20 @@ static func static_check_can_add_spawnpoint(
 	
 	# Spawnpoint object has no location
 	if len(object_string_name_to_tile_position["Spawnpoint"]) == 0:
+		return true
+	
+	return false
+
+
+static func static_check_can_add_goal(
+	object_string_name_to_tile_position:Dictionary[String, Array],
+) -> bool:
+	# Goal hasn't been placed yet
+	if "Goal" not in object_string_name_to_tile_position:
+		return true
+	
+	# Spawnpoint object has no location
+	if len(object_string_name_to_tile_position["Goal"]) == 0:
 		return true
 	
 	return false
@@ -517,6 +565,9 @@ static func static_set_object(
 	if not static_check_can_add_spawnpoint(object_string_to_tile_position) and object_string == "Spawnpoint" and tile_position not in ignore_tiles:
 		static_delete_all_by_object_name("Spawnpoint", tilemap, tile_position, object_string_to_tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, ignore_tiles, avoid_stack, undo_stack)
 	
+	if not static_check_can_add_goal(object_string_to_tile_position) and object_string == "Goal" and tile_position not in ignore_tiles:
+		static_delete_all_by_object_name("Goal", tilemap, tile_position, object_string_to_tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, ignore_tiles, avoid_stack, undo_stack)
+	
 	static_delete_tile(tilemap, tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, true, ignore_tiles, avoid_stack, undo_stack)
 	
 	# Check to see if a tile is there already
@@ -534,9 +585,10 @@ static func static_set_object(
 			tile_position_to_bonus_parameters.erase(tile_position)
 		
 		# Pause enemy Tiles
-		static_pause_enemy_tiles(testing_mode, object, tile_position, selected_object, tile_position_to_bonus_parameters)
+		static_pause_enemy_tiles(testing_mode, tile_position, object, selected_object, tile_position_to_bonus_parameters)
 		
 		# Add bonus Params
+		static_add_bonus_params_to_objects(testing_mode, tile_position, object, tile_position_to_bonus_parameters)
 		
 		object.global_position = tilemap.map_to_local(tile_position)
 		object_node.add_child(object)
@@ -558,8 +610,8 @@ static func static_set_object(
 
 static func static_pause_enemy_tiles(
 	testing_mode:bool, 
-	object:Object, 
 	tile_position:Vector2i,
+	object:Object, 
 	selected_object:PackedScene,
 	tile_position_to_bonus_parameters:Dictionary[Vector2i, Dictionary]
 ) -> void:
@@ -573,8 +625,25 @@ static func static_pause_enemy_tiles(
 		return
 	
 	if tile_position_to_bonus_parameters[tile_position].has("Distance"):
+		
 		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
+		print(object.patrol_distance)
+
+
+static func static_add_bonus_params_to_objects(
+	testing_mode:bool,
+	tile_position:Vector2i,
+	object:Object,
+	tile_position_to_bonus_parameters:Dictionary[Vector2i, Dictionary]
+) -> void:
+	if not testing_mode:
+		return
 	
+	if not tile_position_to_bonus_parameters.has(tile_position):
+		return
+	
+	if tile_position_to_bonus_parameters[tile_position].has("Distance"):
+		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
 
 
 
@@ -587,10 +656,10 @@ static func static_set_tile(
 	tile_position_to_bonus_parameters:Dictionary[Vector2i, Dictionary],
 	object_string_to_tile_position:Dictionary[String, Array],
 	object_bonus_parameters,
+	testing_mode:bool = false,
 	ignore_tiles:Dictionary[Vector2i, bool] = {},
 	avoid_stack:bool=false,
 	undo_stack:UndoStack = null,
-	testing_mode:bool = false
 ) -> void:
 	if selected_object == null:
 		# Get the tile data necessary to place selected tile
@@ -605,6 +674,9 @@ static func static_set_tile(
 		# Set the new tile
 		tilemap.set_cell(tile_position, source_id, atlas_coord, alt_tile)
 		
+		tilemap.changed.emit()
+		
+		
 		# Update the terrain
 		if tilemap_type == "Decorative":
 			BetterTerrain.update_terrain_cell(tilemap, tile_position,)
@@ -618,7 +690,7 @@ static func static_set_tile(
 
 func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=false) -> void:
 	#static_set_tile(tile_map, "Physics", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, ignore_tiles, true, undo_stack)
-	static_set_tile(decorative_tilemap, "Decorative", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, ignore_tiles, false, undo_stack, false)
+	static_set_tile(decorative_tilemap, "Decorative", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, testing_mode, ignore_tiles, false, undo_stack)
 	#print(undo_stack.stack_array)
 	return
 	# If the tile being placed is not an object
@@ -718,6 +790,8 @@ func add_bonus_params_to_objects(object:Object,tile_position:Vector2i) -> void:
 
 # Deletes tile that is in use
 func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i, avoid_stack:bool=false):
+	static_delete_tile(tile_map, tile_position, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, false, ignore_tiles, avoid_stack, undo_stack)
+	return
 	# If there is tile data at the point
 	if avoid_stack == false:
 		var tile_at_point:int = tile_map.get_cell_source_id(tile_position)
@@ -733,6 +807,7 @@ func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i, avoid_stack:bool
 	
 	
 	tile_map.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
+	
 	
 	BetterTerrain.update_terrain_cell(decorative_tilemap, tile_position,)
 	
@@ -802,6 +877,7 @@ func undo_logic() -> void:
 	if Input.is_action_just_pressed("undo_level_editor"):
 		var stack_value:Dictionary = undo_stack.pop()
 		
+		#print(undo_stack.stack_array)
 		#print(stack_value)
 		
 		if len(stack_value) == 0:
@@ -916,8 +992,11 @@ func save_logic() -> void:
 	#file.store_string(JSON.stringify(JSON.from_native(physics_tilemap.get_used_cells_by_id(2)))+"\n")
 	#file.store_string("],\n")
 	
+	file.store_string("{\"BestTimeCompleted\":")
+	file.store_string(JSON.stringify(JSON.from_native(best_time_completed)) + ",\n")
+	
 	# Save the decorative map
-	file.store_string("{\"DecorativeTilemap\":[\n")
+	file.store_string("\"DecorativeTilemap\":[\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(6)))+",\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(2)))+",\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(3)))+"\n")
@@ -952,6 +1031,9 @@ func load_logic(path_name:String="") -> void:
 	
 	save_path = path_name
 	
+	# Disconnect the signal
+	if decorative_tilemap.changed.is_connected(_handle_beat_level):
+		decorative_tilemap.changed.disconnect(_handle_beat_level)
 	
 	# Load level from json file
 	if FileAccess.file_exists(save_path):
@@ -1039,6 +1121,8 @@ func load_logic(path_name:String="") -> void:
 	level_editor_hud.show()
 	
 	prevent_tile_placement = false
+	
+	decorative_tilemap.changed.connect(_handle_level_changed)
 
 
 
@@ -1110,6 +1194,8 @@ func test_level() -> void:
 	checkpoint_mangager.game_camera = game_camera
 	checkpoint_mangager.player = player
 	
+	hud.add_to_group("hud")
+	player.add_to_group("player")
 	
 	$LevelEditorHud/TestLevelButton.hide()
 	$Camera2D.hide()
@@ -1125,6 +1211,12 @@ func test_level() -> void:
 	if spawn_point:
 		player.global_position = spawn_point.global_position
 	
+	var goal:Goal = get_goal() as Goal
+	
+	if goal:
+		goal.Sranktime = best_time_completed
+		goal.new_time_got.connect(_handle_beat_level)
+	
 	add_child(player)
 	add_child(checkpoint_mangager)
 	add_child(game_camera)
@@ -1135,6 +1227,11 @@ func test_level() -> void:
 	
 	
 	$TestingHud.show()
+
+
+func _handle_beat_level(new_time:float) -> void:
+	best_time_completed = new_time
+	save_logic()
 
 
 func _stop_testing() -> void:
@@ -1164,6 +1261,11 @@ func _stop_testing() -> void:
 
 
 func reload_tilemaps() -> void:
+	
+	# Disconnect the signal
+	if decorative_tilemap.changed.is_connected(_handle_beat_level):
+		decorative_tilemap.changed.disconnect(_handle_beat_level)
+	
 	# Remove children from object node
 	for child in object_node.get_children():
 		child.queue_free()
