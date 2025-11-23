@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bjlp87podhpig" path="res://scenes/system/OnLevelLoaded.tscn" id="13_ntc4i"]
 [ext_resource type="PackedScene" uid="uid://b7yg6ow7ysjaj" path="res://scenes/items/MeterItem.tscn" id="14_u0xbq"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="15_pln1h"]
-[ext_resource type="PackedScene" uid="uid://cyd3k7ogk4stj" path="res://scenes/UI/ranking.tscn" id="17_hf2sn"]
+[ext_resource type="PackedScene" path="res://scenes/UI/ranking.tscn" id="17_hf2sn"]
 [ext_resource type="PackedScene" uid="uid://cyrrdovf63mtg" path="res://scenes/goal/goal.tscn" id="18_qq5q4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gixj"]

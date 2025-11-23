@@ -40,7 +40,7 @@ var tile_pos_to_object_dictionary:Dictionary[Vector2i, Dictionary] = {
 }
 
 # This will be saved in the custom level resource
-var object_string_name_to_tile_pos:Dictionary = {
+var object_string_name_to_tile_pos:Dictionary[String, Array] = {
 	
 }
 
@@ -374,13 +374,17 @@ func load_logic(path_name:String="") -> void:
 			selected_object = null
 			object_string = ""
 			
+			var object_bonus_parameters = {}
+			
 			if decorative_tilemap_data:
 				for id in range(len(decorative_tilemap_data)):
 					for pos:Vector2i in decorative_tilemap_data[id]:
 						selected_tile = decorative_source_id_to_tile_name[id]
 						#print(selected_tile)
-						set_tile(physics_tilemap, pos)
-						set_tile(decorative_tilemap, pos,)
+						LevelEditor.static_set_tile(physics_tilemap, "Physics", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters)
+						LevelEditor.static_set_tile(decorative_tilemap, "Decorative", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters)
+						#set_tile(physics_tilemap, pos)
+						#set_tile(decorative_tilemap, pos,)
 			#else:
 			#
 				## Load the physics tile map cells
@@ -422,6 +426,7 @@ func load_logic(path_name:String="") -> void:
 			object_string = ""
 			selected_object = null
 			file.close()
+			BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells())
 			fix_physics_tile_map()
 
 func fix_physics_tile_map() -> void:

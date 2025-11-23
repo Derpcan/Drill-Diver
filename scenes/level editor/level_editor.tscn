@@ -1233,7 +1233,6 @@ libraries = {
 }
 
 [node name="PhysicsTileMap" type="TileMapLayer" parent="."]
-visible = false
 rotation = 0.000554825
 tile_set = ExtResource("1_e806q")
 script = ExtResource("5_cwu4w")
