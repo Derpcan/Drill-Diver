@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfppbixslmyep"]
+
+[ext_resource type="Script" uid="uid://c6nh6cjptjn2e" path="res://scenes/level editor/bonus_parameters/custom_line_edit.gd" id="1_4l53a"]
+
+[node name="CustomLineEdit" type="LineEdit"]
+offset_right = 68.5625
+offset_bottom = 31.0
+script = ExtResource("1_4l53a")

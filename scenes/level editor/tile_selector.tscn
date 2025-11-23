@@ -282,8 +282,10 @@ layout_mode = 2
 image = ExtResource("5_1bmts")
 text = "Alien"
 distance_parameter = true
+range_parameter = true
 bonus_parameters = Dictionary[String, int]({
-"Distance": 10
+"Distance": 10,
+"Range": 10
 })
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/VBoxContainer"]

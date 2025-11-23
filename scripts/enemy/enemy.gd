@@ -15,12 +15,13 @@ class_name Enemy
 			line_2d.add_point(Vector2(+patrol_distance, 0))
 			
 		else:
-			line_2d = Line2D.new()
-			line_2d.add_point(Vector2(-patrol_distance, 0))
-			line_2d.add_point(Vector2(+patrol_distance, 0))
-			line_2d.default_color = Color.from_rgba8(255, 255, 255, 160)
-			line_2d.width = 3
-			add_child(line_2d)
+			#line_2d = Line2D.new()
+			#line_2d.add_point(Vector2(-patrol_distance, 0))
+			#line_2d.add_point(Vector2(+patrol_distance, 0))
+			#line_2d.default_color = Color.from_rgba8(255, 255, 255, 160)
+			#line_2d.width = 3
+			pass
+			#add_child(line_2d)
 		
 @export var gravity: float = 800.0 # Match your game's gravity
 

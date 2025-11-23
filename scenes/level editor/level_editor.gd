@@ -21,6 +21,10 @@ class_name LevelEditor
 
 @onready var undo_stack:UndoStack = UndoStack.new()
 
+
+static var bonus_parameters_viewer_scene:PackedScene = preload("res://scenes/level editor/bonus_parameters/show_and_edit_bonus_parameters.tscn")
+
+
 signal tile_placed()
 
 var best_time_completed:float = 9223372036854775807:
@@ -77,6 +81,8 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 		
 		previous_tilemap_mouse_postion = tilemap_mouse_position
 		tilemap_mouse_position = new_tilemap_mouse_position
+		
+		set_up_bonus_parameters_viewer(new_tilemap_mouse_position)
 		
 		# If the place button is being held down
 		if place_held_down:
@@ -239,6 +245,53 @@ func _ready() -> void:
 	$TestingHud/StopTestingButton.pressed.connect(_stop_testing)
 	
 	tile_placed.connect(_handle_level_changed)
+
+
+
+var viewer:ShowEditBonusParameters = null
+func set_up_bonus_parameters_viewer(tile_position:Vector2i) -> void:
+	var obj = get_object_at_mouse(tile_position)
+	
+	if obj == null:
+		return
+	
+	
+	if viewer != null and viewer.global_position == physics_tilemap.map_to_local(tile_position):
+		return
+	
+	if viewer != null:
+		viewer.queue_free()
+		viewer = null
+	
+	
+	viewer = bonus_parameters_viewer_scene.instantiate()
+	viewer.global_position = physics_tilemap.map_to_local(tile_position+Vector2i(0,1))
+	if tile_pos_to_bonus_parameters.has(tile_position):
+		viewer.bonus_parameters_dictionary = tile_pos_to_bonus_parameters[tile_position]
+	viewer.tile_position = tile_position
+	viewer.object_name = tile_pos_to_object_dictionary[tile_position]["object_name"]
+	viewer.bonus_parameter_changed.connect(_update_object_bonus_parameters)
+	add_child(viewer)
+
+
+func _update_object_bonus_parameters(tile_position:Vector2i) -> void:
+	update_object_bonus_parameters(tile_position, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters)
+
+
+func get_object_at_mouse(tile_position:Vector2i) -> Object:
+	if tile_pos_to_bonus_parameters.has(tile_position):
+		#print(tile_pos_to_bonus_parameters[tile_position])
+		pass
+	
+	if tile_pos_to_object_dictionary.has(tile_position):
+		return tile_pos_to_object_dictionary[tile_position]["object"]
+		#print(tile_pos_to_object_dictionary[tile_position])
+		pass
+	#print(tile_pos_to_bonus_parameters)
+	
+	return null
+
+
 
 
 func _handle_level_changed() -> void:
@@ -607,6 +660,21 @@ static func static_set_object(
 	
 
 
+	
+
+
+static func update_object_bonus_parameters(
+	tile_position:Vector2i,
+	tile_pos_to_object_dictionary:Dictionary,
+	tile_position_to_bonus_parameters:Dictionary,
+) -> void:
+	
+	if not tile_position_to_bonus_parameters.has(tile_position):
+		return
+	
+	if tile_position_to_bonus_parameters[tile_position].has("Distance"):
+		tile_pos_to_object_dictionary[tile_position]["object"].patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
+
 
 static func static_pause_enemy_tiles(
 	testing_mode:bool, 
@@ -627,7 +695,7 @@ static func static_pause_enemy_tiles(
 	if tile_position_to_bonus_parameters[tile_position].has("Distance"):
 		
 		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
-		print(object.patrol_distance)
+		#print(object.patrol_distance)
 
 
 static func static_add_bonus_params_to_objects(
@@ -1057,7 +1125,7 @@ func load_logic(path_name:String="") -> void:
 			if "DecorativeTilemap" in json:
 				decorative_tilemap_data = JSON.to_native(json["DecorativeTilemap"])
 			
-			var tile_pos_to_bonus_params:Dictionary = {}
+			var tile_pos_to_bonus_params:Dictionary[Vector2i, Dictionary] = {}
 			if "TilePosBonusParameters" in json:
 				tile_pos_to_bonus_params = JSON.to_native(json["TilePosBonusParameters"])
 			
