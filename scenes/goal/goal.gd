@@ -4,6 +4,9 @@ extends Node2D
 var Sranktime
 var blown_up:bool = false
 @export var ranking:Ranking
+
+signal score_shown
+
 func _ready():
 	Sranktime = get_parent().s_rank_time
 	GeneratorPlayer.play("Running")
@@ -25,4 +28,5 @@ func _on_area_2d_area_entered(area):
 		blown_up = true
 		ranking.visible = true
 		ranking._reveal_time()
+		score_shown.emit()
 	

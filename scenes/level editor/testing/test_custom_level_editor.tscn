@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://b2hwgsvgpc2ci"]
+[gd_scene load_steps=22 format=4 uid="uid://b2hwgsvgpc2ci"]
 
 [ext_resource type="PackedScene" uid="uid://bjlp87podhpig" path="res://scenes/system/OnLevelLoaded.tscn" id="1_kn7qf"]
 [ext_resource type="Script" uid="uid://bwj82v7g3kfuu" path="res://scenes/level editor/testing/test_custom_level_editor.gd" id="1_ve8og"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://ckobqg36uilxm" path="res://scenes/Camera/game_camera.tscn" id="8_www0j"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="9_www0j"]
 [ext_resource type="PackedScene" uid="uid://cyrrdovf63mtg" path="res://scenes/goal/goal.tscn" id="14_fy751"]
+[ext_resource type="PackedScene" uid="uid://d2s6jnrtrbx8e" path="res://scenes/UI/to_level_select.tscn" id="15_sm865"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sm865"]
 texture = ExtResource("5_es2ws")
@@ -1156,3 +1157,7 @@ input_log_file_name = "inputlog144.json"
 
 [node name="Goal" parent="." instance=ExtResource("14_fy751")]
 position = Vector2(0, -5)
+
+[node name="ToLevelSelect" parent="." instance=ExtResource("15_sm865")]
+
+[connection signal="score_shown" from="Goal" to="ToLevelSelect" method="_make_visible"]
