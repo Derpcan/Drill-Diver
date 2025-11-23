@@ -13,15 +13,18 @@ font_size = 96
 font_color = Color(0.533333, 1, 0.105882, 1)
 
 [node name="ToLevelSelect" type="CanvasLayer" node_paths=PackedStringArray("level_select")]
+layer = 2
 script = ExtResource("1_jxaos")
-level_select = NodePath("")
+level_select = NodePath("Button")
 
 [node name="Button" type="TextureButton" parent="."]
+visible = false
 material = ExtResource("2_5yme4")
-offset_left = 999.0
-offset_top = 555.0
-offset_right = 1121.0
-offset_bottom = 586.0
+offset_left = 863.0
+offset_top = 536.0
+offset_right = 985.0
+offset_bottom = 567.0
+scale = Vector2(2.49068, 2.49068)
 disabled = true
 texture_normal = ExtResource("2_a3f7q")
 texture_pressed = ExtResource("3_5yme4")
@@ -38,3 +41,6 @@ scale = Vector2(0.189, 0.16)
 layout_mode = 2
 text = "To Level Select"
 label_settings = SubResource("LabelSettings_uqaqg")
+
+[connection signal="mouse_entered" from="Button" to="Button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="Button" method="_on_mouse_exited"]
