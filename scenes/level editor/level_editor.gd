@@ -1331,8 +1331,8 @@ func _stop_testing() -> void:
 func reload_tilemaps() -> void:
 	
 	# Disconnect the signal
-	if decorative_tilemap.changed.is_connected(_handle_beat_level):
-		decorative_tilemap.changed.disconnect(_handle_beat_level)
+	if decorative_tilemap.changed.is_connected(_handle_level_changed):
+		decorative_tilemap.changed.disconnect(_handle_level_changed)
 	
 	# Remove children from object node
 	for child in object_node.get_children():
