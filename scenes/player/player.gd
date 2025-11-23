@@ -26,6 +26,7 @@ signal on_floor()
 signal on_floor_dirt()
 signal rotate
 signal super_drill_tile()
+signal idling
 
 
 
@@ -176,6 +177,7 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 			await  animation_play.animation_finished
 		
 		state_machine._enter_state("idle")
+		idling.emit()
 		animated_sprite.rotation = 0
 		return 
 	
@@ -219,3 +221,11 @@ func _dev_super():
 func _set_last_dash(dir: Vector2):
 	if dir != Vector2.ZERO:
 		last_dash = dir
+
+func _end_level():
+	
+	await dash_component.dash_end
+	state_machine._enter_state("idle")
+	movement_component._disable_movement()
+	input_component._disable_inputs()
+	

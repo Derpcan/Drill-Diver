@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://b2hwgsvgpc2ci"]
+[gd_scene load_steps=21 format=4 uid="uid://b2hwgsvgpc2ci"]
 
 [ext_resource type="PackedScene" uid="uid://bjlp87podhpig" path="res://scenes/system/OnLevelLoaded.tscn" id="1_kn7qf"]
 [ext_resource type="Script" uid="uid://bwj82v7g3kfuu" path="res://scenes/level editor/testing/test_custom_level_editor.gd" id="1_ve8og"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bbt2df64h3yhi" path="res://assets/cave/spritesheet.png" id="7_fy751"]
 [ext_resource type="PackedScene" uid="uid://ckobqg36uilxm" path="res://scenes/Camera/game_camera.tscn" id="8_www0j"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="9_www0j"]
+[ext_resource type="PackedScene" uid="uid://cyrrdovf63mtg" path="res://scenes/goal/goal.tscn" id="14_fy751"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sm865"]
 texture = ExtResource("5_es2ws")
@@ -1112,6 +1113,7 @@ metadata/_better_terrain = {
 
 [node name="TestCustomLevelEditor" type="Node2D" node_paths=PackedStringArray("physics_tilemap", "decorative_tilemap", "object_node")]
 script = ExtResource("1_ve8og")
+s_rank_time = 10.0
 physics_tilemap = NodePath("PhysicsTileMap")
 decorative_tilemap = NodePath("DecorativeTileMap")
 object_node = NodePath("ObjectNode")
@@ -1151,3 +1153,6 @@ zoom = Vector2(4, 4)
 
 [node name="Ghost" parent="." instance=ExtResource("9_www0j")]
 input_log_file_name = "inputlog144.json"
+
+[node name="Goal" parent="." instance=ExtResource("14_fy751")]
+position = Vector2(0, -5)

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/UI/HUD/super_drill_meter.gd" id="1_rd3kb"]
 [ext_resource type="Script" path="res://scripts/UI/HUD/active_time_label.gd" id="1_y5tme"]
 [ext_resource type="Script" path="res://scripts/UI/HUD/best_time_label.gd" id="2_18exe"]
-[ext_resource type="Script" path="res://scripts/UI/menus/pause_button.gd" id="4_0jeyp"]
+[ext_resource type="Script" uid="uid://dgqwosol42b3a" path="res://scripts/UI/menus/pause_button.gd" id="4_0jeyp"]
 
 [node name="Hud" type="CanvasLayer"]
 

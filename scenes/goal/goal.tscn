@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://cyrrdovf63mtg"]
+[gd_scene load_steps=47 format=3 uid="uid://cyrrdovf63mtg"]
 
 [ext_resource type="Texture2D" uid="uid://xhc1l2ahwmib" path="res://assets/sprites/goal/spritesheet.png" id="1_0ivff"]
 [ext_resource type="Script" uid="uid://bb417jcptuoet" path="res://scenes/goal/goal.gd" id="1_8q8dj"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://57ymnu3tw8cn" path="res://assets/sprites/goal/Generator.png" id="2_0ivff"]
 [ext_resource type="Texture2D" uid="uid://c88djew1cxamv" path="res://assets/sprites/goal/campfire.png" id="4_ruxej"]
 [ext_resource type="Texture2D" uid="uid://dqvea6guscy0m" path="res://assets/sprites/goal/green_smoke.png" id="5_0jila"]
+[ext_resource type="PackedScene" uid="uid://cyd3k7ogk4stj" path="res://scenes/UI/ranking.tscn" id="7_lwhrm"]
 
 [sub_resource type="Animation" id="Animation_ruxej"]
 resource_name = "Blow Up"
@@ -542,11 +543,12 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_8q8dj"]
 radius = 20.0
 
-[node name="Goal" type="Node2D" node_paths=PackedStringArray("GeneratorPlayer", "ExplosionPlayer")]
+[node name="Goal" type="Node2D" node_paths=PackedStringArray("GeneratorPlayer", "ExplosionPlayer", "ranking")]
 z_index = -2
 script = ExtResource("1_8q8dj")
 GeneratorPlayer = NodePath("GeneratorPlayer")
 ExplosionPlayer = NodePath("ExplosionPlayer")
+ranking = NodePath("Ranking")
 
 [node name="ExplosionPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../GeneratorPlayer")
@@ -606,5 +608,8 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 9)
 shape = SubResource("CircleShape2D_8q8dj")
+
+[node name="Ranking" parent="." instance=ExtResource("7_lwhrm")]
+visible = false
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

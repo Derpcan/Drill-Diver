@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://vofyhq2pi6dc"]
 
-[ext_resource type="Script" uid="uid://cpynp5hce3wao" path="res://scripts/UI/menus/test_level_button.gd" id="1_3shnc"]
-[ext_resource type="Script" uid="uid://bif3lw721as3v" path="res://scripts/UI/menus/escape_level_select_button.gd" id="2_p0wlc"]
+[ext_resource type="Script" path="res://scripts/UI/menus/test_level_button.gd" id="1_3shnc"]
+[ext_resource type="Script" path="res://scripts/UI/menus/escape_level_select_button.gd" id="2_p0wlc"]
 [ext_resource type="PackedScene" uid="uid://bjsuhmk5kibpv" path="res://scenes/level editor/custom_level_button.tscn" id="3_2epne"]
 
 [node name="LevelSelect" type="Node2D"]
