@@ -12,6 +12,7 @@ func _ready() -> void:
 
 
 func inflict_damage(hurtbox:Hurtbox) -> void:
+	print(hurtbox)
 	hurtbox._take_damage(damage)
 	
 	if get_parent():

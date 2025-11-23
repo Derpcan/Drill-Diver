@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://by6028i8q3uht"]
 
-[ext_resource type="Script" uid="uid://ddmm324xbjdkn" path="res://scripts/UI/HUD/debug_hud.gd" id="1_c4vmg"]
-[ext_resource type="Script" uid="uid://bxaitjv03valo" path="res://scripts/UI/HUD/super_drill_meter.gd" id="1_rd3kb"]
-[ext_resource type="Script" uid="uid://c7p3uhsb0f1pu" path="res://scripts/UI/HUD/active_time_label.gd" id="1_y5tme"]
-[ext_resource type="Script" uid="uid://dxfdih56foglv" path="res://scripts/UI/HUD/best_time_label.gd" id="2_18exe"]
-[ext_resource type="Script" uid="uid://dgqwosol42b3a" path="res://scripts/UI/menus/pause_button.gd" id="4_0jeyp"]
+[ext_resource type="Script" path="res://scripts/UI/HUD/debug_hud.gd" id="1_c4vmg"]
+[ext_resource type="Script" path="res://scripts/UI/HUD/super_drill_meter.gd" id="1_rd3kb"]
+[ext_resource type="Script" path="res://scripts/UI/HUD/active_time_label.gd" id="1_y5tme"]
+[ext_resource type="Script" path="res://scripts/UI/HUD/best_time_label.gd" id="2_18exe"]
+[ext_resource type="Script" path="res://scripts/UI/menus/pause_button.gd" id="4_0jeyp"]
 
 [node name="Hud" type="CanvasLayer"]
 

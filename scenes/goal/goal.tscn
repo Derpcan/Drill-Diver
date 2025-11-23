@@ -1,0 +1,610 @@
+[gd_scene load_steps=46 format=3 uid="uid://cyrrdovf63mtg"]
+
+[ext_resource type="Texture2D" uid="uid://xhc1l2ahwmib" path="res://assets/sprites/goal/spritesheet.png" id="1_0ivff"]
+[ext_resource type="Script" uid="uid://bb417jcptuoet" path="res://scenes/goal/goal.gd" id="1_8q8dj"]
+[ext_resource type="Texture2D" uid="uid://ckjbncxjw6h50" path="res://assets/sprites/goal/Exploded_Generator.png" id="1_r84s2"]
+[ext_resource type="Texture2D" uid="uid://57ymnu3tw8cn" path="res://assets/sprites/goal/Generator.png" id="2_0ivff"]
+[ext_resource type="Texture2D" uid="uid://c88djew1cxamv" path="res://assets/sprites/goal/campfire.png" id="4_ruxej"]
+[ext_resource type="Texture2D" uid="uid://dqvea6guscy0m" path="res://assets/sprites/goal/green_smoke.png" id="5_0jila"]
+
+[sub_resource type="Animation" id="Animation_ruxej"]
+resource_name = "Blow Up"
+length = 1.56667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Explosion:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.300215, 0.400058, 0.500232, 0.600783),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Explosion2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.167356, 0.266743, 0.366849, 0.467958, 0.566667, 0.666667, 0.766667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 0, 1, 2, 3, 4, 5, 6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Explosion3:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.300739, 0.40089, 0.500107, 0.600623, 0.701037, 0.801462, 0.901134),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 0, 1, 2, 3, 4, 5, 6]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Explosion4:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.533259, 0.633684, 0.733652, 0.834169, 0.933545, 1.03307, 1.13473),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 0, 1, 2, 3, 4, 5, 6]
+}
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("Broken"),
+"times": PackedFloat32Array(0.633333)
+}
+
+[sub_resource type="Animation" id="Animation_0jila"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Explosion:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Explosion2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Explosion3:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Explosion4:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("Running"),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8q8dj"]
+_data = {
+&"Blow Up": SubResource("Animation_ruxej"),
+&"RESET": SubResource("Animation_0jila")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckv10"]
+atlas = ExtResource("4_ruxej")
+region = Rect2(0, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6uvaj"]
+atlas = ExtResource("4_ruxej")
+region = Rect2(37, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dylqp"]
+atlas = ExtResource("4_ruxej")
+region = Rect2(74, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wpvd"]
+atlas = ExtResource("4_ruxej")
+region = Rect2(111, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88n8d"]
+atlas = ExtResource("4_ruxej")
+region = Rect2(148, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uluqf"]
+atlas = ExtResource("4_ruxej")
+region = Rect2(185, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57ibp"]
+atlas = ExtResource("5_0jila")
+region = Rect2(0, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jue2b"]
+atlas = ExtResource("5_0jila")
+region = Rect2(37, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wdur"]
+atlas = ExtResource("5_0jila")
+region = Rect2(74, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrevi"]
+atlas = ExtResource("5_0jila")
+region = Rect2(111, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28dpl"]
+atlas = ExtResource("5_0jila")
+region = Rect2(148, 0, 37, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgmgq"]
+atlas = ExtResource("5_0jila")
+region = Rect2(185, 0, 37, 62)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_57ibp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ckv10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6uvaj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dylqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wpvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88n8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uluqf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57ibp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jue2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wdur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hrevi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28dpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgmgq")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rjw6"]
+atlas = ExtResource("1_0ivff")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8ep1"]
+atlas = ExtResource("1_0ivff")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7q26o"]
+atlas = ExtResource("1_0ivff")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euwt3"]
+atlas = ExtResource("1_0ivff")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mwn4"]
+atlas = ExtResource("1_0ivff")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ic3hf"]
+atlas = ExtResource("1_0ivff")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2txo"]
+atlas = ExtResource("1_0ivff")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ckv10"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rjw6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8ep1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7q26o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_euwt3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6mwn4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ic3hf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2txo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ruxej"]
+atlas = ExtResource("1_r84s2")
+region = Rect2(42, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jila"]
+atlas = ExtResource("2_0ivff")
+region = Rect2(0, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8q8dj"]
+atlas = ExtResource("2_0ivff")
+region = Rect2(42, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwhrm"]
+atlas = ExtResource("2_0ivff")
+region = Rect2(84, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpit2"]
+atlas = ExtResource("2_0ivff")
+region = Rect2(126, 0, 42, 42)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8rjw6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ruxej")
+}],
+"loop": true,
+"name": &"broken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jila")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8q8dj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwhrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpit2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_jpit2"]
+resource_name = "Green_Smoke"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Smoke:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Smoke:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"new_animation"]
+}
+
+[sub_resource type="Animation" id="Animation_lwhrm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Smoke:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Smoke:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+
+[sub_resource type="Animation" id="Animation_8q8dj"]
+resource_name = "Smoke"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Smoke:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Smoke:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8rjw6"]
+_data = {
+&"Green_Smoke": SubResource("Animation_jpit2"),
+&"RESET": SubResource("Animation_lwhrm"),
+&"Smoke": SubResource("Animation_8q8dj")
+}
+
+[sub_resource type="Animation" id="Animation_euwt3"]
+resource_name = "Broken"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Generator:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"broken"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Generator:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SmokePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Smoke"),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_7q26o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Generator:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Generator:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+
+[sub_resource type="Animation" id="Animation_g8ep1"]
+resource_name = "Running"
+length = 0.66667
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Generator:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Generator:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SmokePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Green_Smoke"),
+"times": PackedFloat32Array(0.0333333)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6mwn4"]
+_data = {
+&"Broken": SubResource("Animation_euwt3"),
+&"RESET": SubResource("Animation_7q26o"),
+&"Running": SubResource("Animation_g8ep1")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8q8dj"]
+radius = 20.0
+
+[node name="Goal" type="Node2D" node_paths=PackedStringArray("GeneratorPlayer", "ExplosionPlayer")]
+z_index = -2
+script = ExtResource("1_8q8dj")
+GeneratorPlayer = NodePath("GeneratorPlayer")
+ExplosionPlayer = NodePath("ExplosionPlayer")
+
+[node name="ExplosionPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../GeneratorPlayer")
+libraries = {
+&"": SubResource("AnimationLibrary_8q8dj")
+}
+
+[node name="Smoke" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, -17)
+sprite_frames = SubResource("SpriteFrames_57ibp")
+
+[node name="Explosion" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(-15, -8)
+sprite_frames = SubResource("SpriteFrames_ckv10")
+frame = 6
+
+[node name="Explosion2" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(13, 4)
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_ckv10")
+frame = 6
+
+[node name="Explosion3" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(-8, 14)
+scale = Vector2(0.9, 0.9)
+sprite_frames = SubResource("SpriteFrames_ckv10")
+frame = 6
+
+[node name="Explosion4" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(-1, 6)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ckv10")
+frame = 6
+
+[node name="Generator" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8rjw6")
+
+[node name="SmokePlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../GeneratorPlayer")
+libraries = {
+&"": SubResource("AnimationLibrary_8rjw6")
+}
+
+[node name="GeneratorPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_6mwn4")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 9)
+shape = SubResource("CircleShape2D_8q8dj")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

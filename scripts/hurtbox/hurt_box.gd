@@ -12,4 +12,7 @@ signal got_hit
 
 
 func _take_damage(damage_value:int) -> void:
-	health_component.current_hp -= damage_value
+	print("ow!")
+	if health_component:
+		health_component.current_hp -= damage_value
+	got_hit.emit()
