@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://ddquepw4fqyuw"]
+[gd_scene load_steps=28 format=4 uid="uid://ddquepw4fqyuw"]
 
 [ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="1_g7g4h"]
 [ext_resource type="Script" uid="uid://dko13chblqbea" path="res://scenes/test_scene.gd" id="1_gthg3"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b7yg6ow7ysjaj" path="res://scenes/items/MeterItem.tscn" id="14_u0xbq"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="15_pln1h"]
 [ext_resource type="PackedScene" uid="uid://cyd3k7ogk4stj" path="res://scenes/UI/ranking.tscn" id="17_hf2sn"]
+[ext_resource type="PackedScene" uid="uid://cyrrdovf63mtg" path="res://scenes/goal/goal.tscn" id="18_qq5q4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h3xc6"]
 texture = ExtResource("3_3qnke")
@@ -364,6 +365,7 @@ data = {
 script = ExtResource("1_gthg3")
 
 [node name="Ranking" parent="." instance=ExtResource("17_hf2sn")]
+visible = false
 follow_viewport_enabled = false
 
 [node name="OnLevelLoaded" parent="." instance=ExtResource("13_ntc4i")]
@@ -539,5 +541,8 @@ disabled = true
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(591, 347)
 enabled = false
+
+[node name="Goal" parent="." instance=ExtResource("18_qq5q4")]
+position = Vector2(291, 139)
 
 [editable path="Ghost"]
