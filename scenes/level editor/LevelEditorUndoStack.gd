@@ -40,7 +40,7 @@ func push(data, is_deleting:bool) -> void:
 		stack_array.append({false:[], true:[]})
 	
 	
-	if data not in stack_array.back():
+	if data not in stack_array.back()[is_deleting]:
 		#stack_array.back().append(new_tile_position)
 		stack_array.back()[is_deleting].append(data)
 

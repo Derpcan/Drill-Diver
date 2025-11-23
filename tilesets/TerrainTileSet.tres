@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://bq44h40hohica"]
+[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://bq44h40hohica"]
 
 [ext_resource type="Texture2D" uid="uid://rpolgf6ylmjp" path="res://tilesets/Tile_NonDrillable.tres" id="1_y4wiy"]
 [ext_resource type="Texture2D" uid="uid://bhvgcs2hpbty2" path="res://tilesets/Tile_HardDrillable.tres" id="2_qcckd"]
@@ -30,6 +30,34 @@ texture = ExtResource("3_wvy4t")
 0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:0/0/custom_data_0 = true
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y4wiy"]
+resource_name = "UpStairRight"
+texture = ExtResource("1_y4wiy")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -8, 8)
+0:0/0/physics_layer_3/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qcckd"]
+resource_name = "UpStairLeft"
+texture = ExtResource("1_y4wiy")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, 8, -8, 8)
+0:0/0/physics_layer_3/polygon_0/points = PackedVector2Array(-8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wvy4t"]
+resource_name = "DownStairRight"
+texture = ExtResource("1_y4wiy")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, 8, 8, -8)
+0:0/0/physics_layer_3/polygon_0/points = PackedVector2Array(-8, -8, 8, 8, 8, -8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrhj5"]
+resource_name = "DownStairLeft"
+texture = ExtResource("1_y4wiy")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, -8)
+0:0/0/physics_layer_3/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, -8)
+
 [resource]
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 5
@@ -46,3 +74,7 @@ custom_data_layer_1/type = 2
 sources/0 = SubResource("TileSetAtlasSource_6kcbn")
 sources/1 = SubResource("TileSetAtlasSource_8vsxg")
 sources/2 = SubResource("TileSetAtlasSource_e33ul")
+sources/3 = SubResource("TileSetAtlasSource_y4wiy")
+sources/4 = SubResource("TileSetAtlasSource_qcckd")
+sources/5 = SubResource("TileSetAtlasSource_wvy4t")
+sources/6 = SubResource("TileSetAtlasSource_wrhj5")
