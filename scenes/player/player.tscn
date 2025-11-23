@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=24 format=3 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://ymgg3bvdg5hu" path="res://scenes/hurtbox/hurt_box.tscn" id="14_fcs02"]
 [ext_resource type="Script" uid="uid://ca2j7t2iuei5m" path="res://super_drill_component.gd" id="16_kvlxm"]
 [ext_resource type="PackedScene" uid="uid://b5lra8levgvlk" path="res://scenes/ghost/input_logger.tscn" id="16_myrg7"]
+[ext_resource type="Script" uid="uid://c3dxq7yaj2k6o" path="res://scripts/hitbox/hit_box.gd" id="17_uf5tr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_myrg7"]
 radius = 5.0
@@ -192,9 +193,9 @@ input_component = NodePath("../InputComponent")
 [node name="DashHitbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 0
+script = ExtResource("17_uf5tr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashHitbox"]
-visible = false
 position = Vector2(4.54747e-13, -1)
 scale = Vector2(1.78, 1)
 shape = SubResource("CapsuleShape2D_kvlxm")

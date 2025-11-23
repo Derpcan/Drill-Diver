@@ -104,13 +104,13 @@ enum tile_types {
 }
 
 
-var tile_map_to_tile_dictionary:Dictionary[String, Dictionary] = {
+static var tile_map_to_tile_dictionary:Dictionary[String, Dictionary] = {
 	"Decorative":decorative_tiles_data_dictionary,
 	"Physics":decorative_tiles_to_physics,
 }
 
 # The possible tiles that can be placed in the level editor
-var tiles_dictionary:Dictionary = {
+static var tiles_dictionary:Dictionary = {
 	"Ground":tile_types.UNDRILLABLE,#[0,Vector2(0,0), 0],
 	"Dirt":tile_types.DRILLABLE,
 	"SuperDrillable":tile_types.SUPERDRILLABLE
@@ -118,21 +118,21 @@ var tiles_dictionary:Dictionary = {
 
 
 # The conversion from decorative to physics tiles
-var decorative_tiles_to_physics:Dictionary = {
+static var decorative_tiles_to_physics:Dictionary = {
 	"Ground":tile_types.UNDRILLABLE,
 	"SuperDrillable":tile_types.SUPERDRILLABLE,
 	"Dirt":tile_types.DRILLABLE,
 }
 
 
-var decorative_source_id_to_tile_name:Dictionary = {
+static var decorative_source_id_to_tile_name:Dictionary = {
 	0:"Ground",
 	1:"SuperDrillable",
 	2:"Dirt",
 }
 
 
-var decorative_tiles_slope_to_physics_slope:Dictionary[Vector2i,int] = {
+static var decorative_tiles_slope_to_physics_slope:Dictionary[Vector2i,int] = {
 	Vector2i(1,4):tile_types.UNDRILLABLE_DOWN_STAIR_RIGHT,
 	Vector2i(2,4):tile_types.UNDRILLABLE_DOWN_STAIR_LEFT,
 	Vector2i(3,0):tile_types.UNDRILLABLE_UP_STAIR_RIGHT,
@@ -140,7 +140,7 @@ var decorative_tiles_slope_to_physics_slope:Dictionary[Vector2i,int] = {
 }
 
 # The tile data associated with the decorative tileset
-var decorative_tiles_data_dictionary:Dictionary = {
+static var decorative_tiles_data_dictionary:Dictionary = {
 	"Ground":[6,Vector2i(1,6),0],
 	#"Ground":[1,Vector2i(21,0),0],
 	"SuperDrillable":[2,Vector2(7,9),0],
@@ -148,7 +148,7 @@ var decorative_tiles_data_dictionary:Dictionary = {
 }
 
 # The data associated with the physics Tiles
-var physics_tile_type_to_tile_data_dictionary:Dictionary = {
+static var physics_tile_type_to_tile_data_dictionary:Dictionary = {
 	tile_types.UNDRILLABLE:[0,Vector2(0,0),0],
 	tile_types.SUPERDRILLABLE:[1,Vector2(0,0),0],
 	tile_types.DRILLABLE:[2,Vector2(0,0),0],
@@ -159,14 +159,14 @@ var physics_tile_type_to_tile_data_dictionary:Dictionary = {
 }
 
 # The possible objects that can be placed in the level editor
-var object_dictionary:Dictionary = {
+static var object_dictionary:Dictionary = {
 	"Checkpoint":preload("res://scenes/checkpoint/checkpoint.tscn"),
 	"Gem":preload("res://scenes/items/MeterItem.tscn"),
 	"Spawnpoint":preload("res://scenes/checkpoint/spawnpoint.tscn"),
 	"Alien":preload("res://scenes/enemy/enemy.tscn"),
 }
 
-var scene_dictionary:Dictionary = {
+static var scene_dictionary:Dictionary = {
 	preload("res://scenes/checkpoint/checkpoint.tscn"):"Checkpoint",
 	preload("res://scenes/items/MeterItem.tscn"):"Gem",
 	preload("res://scenes/checkpoint/spawnpoint.tscn"):"Spawnpoint",
@@ -901,6 +901,7 @@ func test_level() -> void:
 
 
 func _stop_testing() -> void:
+	
 	testing_mode = false
 	game_camera.queue_free()
 	player.queue_free()
