@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dyg4ajothat7g"]
+[gd_scene load_steps=35 format=4 uid="uid://dyg4ajothat7g"]
 
 [ext_resource type="Script" uid="uid://tf8is18n6kq" path="res://scripts/UI/menus/option_button.gd" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://ci8mvuro6jqfh" path="res://scripts/UI/menus/level_select_button.gd" id="2_ekxnf"]
@@ -8,9 +8,18 @@
 [ext_resource type="Script" uid="uid://td0yfq73gf1f" path="res://scripts/UI/menus/level_editor_button.gd" id="5_lgwnu"]
 [ext_resource type="PackedScene" uid="uid://d1qjh238xsdgr" path="res://scenes/enemy/enemy.tscn" id="6_rtw2f"]
 [ext_resource type="PackedScene" uid="uid://c82ds1yobrg78" path="res://scenes/checkpoint/checkpoint.tscn" id="7_oa1go"]
-[ext_resource type="PackedScene" path="res://scenes/hitbox/agents/spikes.tscn" id="8_tbmy8"]
+[ext_resource type="PackedScene" uid="uid://nv87e5t72j7o" path="res://scenes/hitbox/agents/spikes.tscn" id="8_tbmy8"]
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="10_5dd4i"]
 [ext_resource type="PackedScene" uid="uid://b7yg6ow7ysjaj" path="res://scenes/items/MeterItem.tscn" id="10_lgwnu"]
+[ext_resource type="Texture2D" uid="uid://d3nl1b8v1uujd" path="res://assets/sprites/bit/Bit S .png" id="12_7b55j"]
+[ext_resource type="Texture2D" uid="uid://bpmxvvqsdpvcy" path="res://assets/sprites/menu/UI_Metal_Frame_Standard_02a-export.png" id="12_rcqid"]
+[ext_resource type="Texture2D" uid="uid://b8450g0cxosxk" path="res://assets/sprites/menu/Drill Diver.png" id="13_1ajci"]
+[ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="16_j7ex8"]
+[ext_resource type="Texture2D" uid="uid://cuemrkgn6e26i" path="res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export3.png" id="17_a8gd2"]
+[ext_resource type="Texture2D" uid="uid://b0dwfsjh4xp03" path="res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export4.png" id="18_hstxw"]
+[ext_resource type="Texture2D" uid="uid://bo4jd7j6lh3fc" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button1.png" id="19_8egab"]
+[ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="19_hstxw"]
+[ext_resource type="Texture2D" uid="uid://cjf3agshmo73n" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button2.png" id="20_gw5y6"]
 
 [sub_resource type="GDScript" id="GDScript_5dd4i"]
 script/source = "extends Node2D
@@ -309,6 +318,186 @@ sources/0 = SubResource("TileSetAtlasSource_8ln24")
 radius = 4.49438
 height = 12.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_j7ex8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_7b55j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7b55j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_rcqid")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5pajh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_1ajci")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Shader" id="Shader_hstxw"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a8gd2"]
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("16_j7ex8")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8egab"]
+font = ExtResource("19_hstxw")
+font_size = 96
+font_color = Color(0.533333, 1, 0.105882, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8egab"]
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("16_j7ex8")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="Shader" id="Shader_a8gd2"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hstxw"]
+shader = SubResource("Shader_a8gd2")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("16_j7ex8")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gw5y6"]
+shader = SubResource("Shader_a8gd2")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("16_j7ex8")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
 [node name="MainMenu" type="Node2D"]
 script = SubResource("GDScript_5dd4i")
 
@@ -331,6 +520,7 @@ tile_map_data = PackedByteArray("AAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAA
 tile_set = ExtResource("2_oa1go")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 offset_left = 33.0
 offset_top = 33.0
 offset_right = 73.0
@@ -338,43 +528,12 @@ offset_bottom = 56.0
 text = "Main Menu"
 
 [node name="Label2" type="Label" parent="."]
+visible = false
 offset_left = 538.0
 offset_top = 231.0
 offset_right = 633.0
 offset_bottom = 254.0
 text = "DRILL DIVER"
-
-[node name="OptionButton" type="Button" parent="."]
-offset_left = 554.0
-offset_top = 408.0
-offset_right = 624.0
-offset_bottom = 439.0
-text = "Options"
-script = ExtResource("1_l6cm7")
-
-[node name="LevelSelectButton" type="Button" parent="."]
-offset_left = 387.0
-offset_top = 408.0
-offset_right = 486.0
-offset_bottom = 439.0
-text = "Level Select"
-script = ExtResource("2_ekxnf")
-
-[node name="LevelEditorButton" type="Button" parent="."]
-offset_left = 541.0
-offset_top = 513.0
-offset_right = 640.0
-offset_bottom = 544.0
-text = "Level Editor"
-script = ExtResource("5_lgwnu")
-
-[node name="QuitButton" type="Button" parent="."]
-offset_left = 686.0
-offset_top = 408.0
-offset_right = 728.0
-offset_bottom = 439.0
-text = "Quit"
-script = ExtResource("3_bqqt6")
 
 [node name="TestDataPath" type="Label" parent="."]
 offset_left = 33.0
@@ -495,3 +654,126 @@ position = Vector2(238, 308)
 
 [node name="Area2D10" parent="." instance=ExtResource("10_lgwnu")]
 position = Vector2(160, 308)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1048, 392)
+scale = Vector2(3.45, 3.45)
+sprite_frames = SubResource("SpriteFrames_j7ex8")
+
+[node name="Menu Background" type="AnimatedSprite2D" parent="."]
+position = Vector2(73, 257)
+rotation = 0.190241
+scale = Vector2(8.40921, 10.1745)
+sprite_frames = SubResource("SpriteFrames_7b55j")
+frame_progress = 0.195786
+
+[node name="Logo" type="AnimatedSprite2D" parent="."]
+position = Vector2(486, 153)
+scale = Vector2(1.8, 1.8)
+sprite_frames = SubResource("SpriteFrames_5pajh")
+
+[node name="Level Select" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_a8gd2")
+offset_left = 230.0
+offset_top = 241.0
+offset_right = 326.0
+offset_bottom = 270.0
+scale = Vector2(3.49, 3.49)
+texture_normal = ExtResource("17_a8gd2")
+texture_pressed = ExtResource("18_hstxw")
+script = ExtResource("2_ekxnf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Level Select"]
+layout_mode = 0
+offset_left = 11.4613
+offset_top = 4.29799
+offset_right = 362.461
+offset_bottom = 100.298
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="Level Select/HBoxContainer"]
+layout_mode = 2
+text = "Level Select"
+label_settings = SubResource("LabelSettings_8egab")
+
+[node name="Level Editor" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_8egab")
+offset_left = 188.0
+offset_top = 342.0
+offset_right = 284.0
+offset_bottom = 371.0
+scale = Vector2(3.49, 3.49)
+texture_normal = ExtResource("17_a8gd2")
+texture_pressed = ExtResource("18_hstxw")
+script = ExtResource("5_lgwnu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Level Editor"]
+layout_mode = 0
+offset_left = 11.4613
+offset_top = 4.29799
+offset_right = 362.461
+offset_bottom = 100.298
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="Level Editor/HBoxContainer"]
+layout_mode = 2
+text = "Level Editior"
+label_settings = SubResource("LabelSettings_8egab")
+
+[node name="Options" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_hstxw")
+offset_left = 252.0
+offset_top = 461.0
+offset_right = 348.0
+offset_bottom = 490.0
+scale = Vector2(3.49, 3.49)
+texture_normal = ExtResource("19_8egab")
+texture_pressed = ExtResource("20_gw5y6")
+script = ExtResource("1_l6cm7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Options"]
+layout_mode = 0
+offset_left = 8.88252
+offset_top = -1.43267
+offset_right = 359.883
+offset_bottom = 94.5673
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="Options/HBoxContainer"]
+layout_mode = 2
+text = "Options"
+label_settings = SubResource("LabelSettings_8egab")
+
+[node name="Quit" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_gw5y6")
+offset_left = 220.0
+offset_top = 552.0
+offset_right = 316.0
+offset_bottom = 581.0
+scale = Vector2(3.49, 3.49)
+texture_normal = ExtResource("19_8egab")
+texture_pressed = ExtResource("20_gw5y6")
+script = ExtResource("3_bqqt6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Quit"]
+layout_mode = 0
+offset_left = 19.7708
+offset_top = -1.43267
+offset_right = 370.771
+offset_bottom = 94.5673
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="Quit/HBoxContainer"]
+layout_mode = 2
+text = "Quit"
+label_settings = SubResource("LabelSettings_8egab")
+horizontal_alignment = 1
+
+[connection signal="mouse_entered" from="Level Select" to="Level Select" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Level Select" to="Level Select" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Level Editor" to="Level Editor" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Level Editor" to="Level Editor" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Options" to="Options" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Options" to="Options" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Quit" to="Quit" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Quit" to="Quit" method="_on_mouse_exited"]

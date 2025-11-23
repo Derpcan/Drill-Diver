@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cke6gmcnu7r80"]
 
-[ext_resource type="Script" path="res://scripts/UI/menus/escape_pause_button.gd" id="1_n87rw"]
+[ext_resource type="Script" uid="uid://cvfnylfjoajta" path="res://scripts/UI/menus/escape_pause_button.gd" id="1_n87rw"]
 
 [sub_resource type="GDScript" id="GDScript_n87rw"]
 script/source = "extends Button

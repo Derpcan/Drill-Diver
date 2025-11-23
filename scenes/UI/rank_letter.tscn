@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://cdymdpiuvmshn"]
 
-[ext_resource type="Shader" path="res://assets/sprites/UI/Rainbow.gdshader" id="1_0g3mm"]
+[ext_resource type="Shader" uid="uid://dowj8lpxilrtk" path="res://assets/sprites/UI/Rainbow.gdshader" id="1_0g3mm"]
 [ext_resource type="Texture2D" uid="uid://bwisgc4r3iym" path="res://assets/sprites/UI/Rank Letters S Outline.png" id="1_2uq06"]
 [ext_resource type="Texture2D" uid="uid://b161w5cmxqu8" path="res://assets/sprites/UI/Rank Letters.png" id="1_8jjvh"]
 [ext_resource type="Script" uid="uid://dcdl1yjvvflvq" path="res://scenes/UI/rank_letter.gd" id="1_c15nn"]
