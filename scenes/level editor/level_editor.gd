@@ -153,12 +153,14 @@ static var tile_map_to_tile_dictionary:Dictionary[String, Dictionary] = {
 	"Physics":decorative_tiles_to_physics,
 }
 
+
 # The possible tiles that can be placed in the level editor
-static var tiles_dictionary:Dictionary = {
-	"Ground":tile_types.UNDRILLABLE,#[0,Vector2(0,0), 0],
-	"Dirt":tile_types.DRILLABLE,
-	"SuperDrillable":tile_types.SUPERDRILLABLE
-}
+#static var tiles_dictionary:Dictionary = {
+	#"Ground":tile_types.UNDRILLABLE,#[0,Vector2(0,0), 0],
+	#"Dirt":tile_types.DRILLABLE,
+	#"SuperDrillable":tile_types.SUPERDRILLABLE,
+	#"Lab":tile_types.UNDRILLABLE,
+#}
 
 
 # The conversion from decorative to physics tiles
@@ -166,6 +168,7 @@ static var decorative_tiles_to_physics:Dictionary = {
 	"Ground":tile_types.UNDRILLABLE,
 	"SuperDrillable":tile_types.SUPERDRILLABLE,
 	"Dirt":tile_types.DRILLABLE,
+	"Lab":tile_types.UNDRILLABLE
 }
 
 
@@ -173,6 +176,7 @@ static var decorative_source_id_to_tile_name:Dictionary = {
 	6:"Ground",
 	2:"SuperDrillable",
 	3:"Dirt",
+	11:"Lab"
 }
 
 
@@ -186,6 +190,7 @@ static var decorative_tiles_slope_to_physics_slope:Dictionary[Vector2i,int] = {
 # The tile data associated with the decorative tileset
 static var decorative_tiles_data_dictionary:Dictionary = {
 	"Ground":[6,Vector2i(1,6),0],
+	"Lab":[11,Vector2i(0,2),0],
 	#"Ground":[1,Vector2i(21,0),0],
 	"SuperDrillable":[2,Vector2(7,9),0],
 	"Dirt":[3,Vector2i(3,1),0],
@@ -240,6 +245,7 @@ var selected_tile:String = "Ground":
 	set(new_value):
 		selected_tile = new_value
 		object_string = ""
+
 
 var selected_object:PackedScene = null
 var object_string:String = ""
@@ -385,7 +391,7 @@ func _load_level_logic() -> void:
 
 
 func tile_selected_changed(tile_string:String, bonus_parameters:Dictionary={}) -> void:
-	if tile_string in tiles_dictionary:
+	if tile_string in decorative_tiles_to_physics:
 		selected_object = null
 		selected_tile = tile_string
 		object_bonus_parameters = {}
@@ -1064,8 +1070,10 @@ func save_logic() -> void:
 		6: decorative_tilemap.get_used_cells_by_id(6),
 		2: decorative_tilemap.get_used_cells_by_id(2),
 		3: decorative_tilemap.get_used_cells_by_id(3),
+		11: decorative_tilemap.get_used_cells_by_id(11),
 	}
 	
+	print(decorative_source_id_to_tile_name)
 	
 	# Save the decorative map
 	file.store_string("\"DecorativeTilemap\":\n")
@@ -1148,10 +1156,11 @@ func load_logic(path_name:String="") -> void:
 			
 			if decorative_tilemap_data:
 				for id:int in decorative_source_id_to_tile_name.keys():#range(len(decorative_tilemap_data)):
-					for pos:Vector2i in decorative_tilemap_data[id]:
-						selected_tile = decorative_source_id_to_tile_name[id]
-						set_tile(physics_tilemap, pos)
-						set_tile(decorative_tilemap, pos,)
+					if decorative_tilemap_data.has(id):
+						for pos:Vector2i in decorative_tilemap_data[id]:
+							selected_tile = decorative_source_id_to_tile_name[id]
+							set_tile(physics_tilemap, pos)
+							set_tile(decorative_tilemap, pos,)
 			
 			
 			selected_tile = "Ground"

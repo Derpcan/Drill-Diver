@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=26 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="7_ckxsl"]
 [ext_resource type="Script" uid="uid://ktd6250lpfu3" path="res://scenes/level editor/tilemap_link_superdrill_destruction.gd" id="7_j6oxv"]
 [ext_resource type="Texture2D" uid="uid://bbt2df64h3yhi" path="res://assets/cave/spritesheet.png" id="8_a25ho"]
+[ext_resource type="Texture2D" uid="uid://xx6j5sqf5pti" path="res://assets/lab-game-tileset-pixel-art/LabTileSet.png" id="9_0qn5d"]
 [ext_resource type="PackedScene" uid="uid://3yxhmq851bsq" path="res://scenes/level editor/check_to_edit.tscn" id="11_r6hoa"]
 
 [sub_resource type="Animation" id="Animation_cwu4w"]
@@ -360,6 +361,29 @@ texture = ExtResource("6_vdwei")
 11:11/0 = 0
 12:11/0 = 0
 17:11/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_prn34"]
+texture = ExtResource("9_0qn5d")
+0:0/0 = 0
+0:0/0/metadata/_better_terrain = {
+0: [1],
+&"type": 1
+}
+1:0/0 = 0
+1:0/0/metadata/_better_terrain = {
+0: [1],
+8: [1],
+&"type": 1
+}
+2:0/0 = 0
+2:0/0/metadata/_better_terrain = {
+8: [1],
+&"type": 1
+}
+0:2/0 = 0
+0:2/0/metadata/_better_terrain = {
+&"type": 1
+}
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r6hoa"]
 texture = ExtResource("6_vdwei")
@@ -1185,6 +1209,7 @@ sources/2 = SubResource("TileSetAtlasSource_r6hoa")
 sources/3 = SubResource("TileSetAtlasSource_php1e")
 sources/4 = SubResource("TileSetAtlasSource_e1y88")
 sources/6 = SubResource("TileSetAtlasSource_vqyq1")
+sources/11 = SubResource("TileSetAtlasSource_prn34")
 metadata/_better_terrain = {
 &"decoration": ["Decoration", Color(0.411765, 0.411765, 0.411765, 1), 3, [], {
 &"path": "res://addons/better-terrain/icons/Decoration.svg"
@@ -1192,6 +1217,8 @@ metadata/_better_terrain = {
 &"terrains": [["Terrain", Color(0.619326, 0.282086, 0.681473, 1), 0, [], {
 &"coord": Vector2i(1, 6),
 &"source_id": 6
+}], ["Lab", Color(0.879439, 0.695854, 0.0257023, 1), 0, [], {
+&"path": ""
 }]],
 &"version": "0.2"
 }
