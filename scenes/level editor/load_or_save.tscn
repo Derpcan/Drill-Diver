@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dlby0tn0le6uv"]
+[gd_scene load_steps=22 format=3 uid="uid://dlby0tn0le6uv"]
 
 [ext_resource type="Script" uid="uid://duwvy0vgir65y" path="res://scenes/level editor/load_or_save.gd" id="1_wof0u"]
 [ext_resource type="PackedScene" uid="uid://be1u7dex0aqss" path="res://scenes/UI/custom_button.tscn" id="2_arkj1"]
@@ -12,79 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://etvh132313mr" path="res://assets/WarningSign_PixyFantasy/WarningSign07.png" id="8_0xlsa"]
 [ext_resource type="Texture2D" uid="uid://cjnx8wkvi68hf" path="res://assets/WarningSign_PixyFantasy/WarningSign08.png" id="9_x01o5"]
 [ext_resource type="Texture2D" uid="uid://c6af2q5wvv1w3" path="res://assets/WarningSign_PixyFantasy/WarningSign09.png" id="10_5meuo"]
-
-[sub_resource type="Shader" id="Shader_hstxw"]
-code = "shader_type canvas_item;
-
-uniform bool useHologram = true;
-
-uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
-uniform float speed = 0.5;
-
-uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
-uniform float linesColorIntensity = 5.0;
-
-uniform sampler2D hologramTexture : filter_linear, repeat_enable;
-uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
-
-vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
-    return mod(uv * tiling + offset, 1.0);
-}
-
-void fragment() {
-
-    // Always sample the base texture
-    vec4 baseTex = texture(TEXTURE, UV);
-    vec4 finalColor = baseTex;
-
-    if (useHologram) {
-        vec2 offset = vec2(TIME * speed);
-        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
-
-        vec4 noise = texture(hologramTexture, tiling);
-
-        float fresnel = 0.71;
-        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
-        vec4 emission = colorLines * fresnel * noise;
-
-        vec4 albedo = baseColor;
-        float alpha = dot(noise.rgb, vec3(1.0));
-
-        vec4 hologram;
-        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
-        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
-        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
-        hologram.a   = clamp(hologram.a, 0.0, 1.0);
-
-        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
-        finalColor.a   = min(baseTex.a, hologram.a);
-    }
-
-    COLOR = finalColor;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lisxt"]
-resource_local_to_scene = true
-shader = SubResource("Shader_hstxw")
-shader_parameter/useHologram = false
-shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
-shader_parameter/speed = 0.3
-shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
-shader_parameter/linesColorIntensity = 0.4
-shader_parameter/hologramTexture = ExtResource("3_sk1hb")
-shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ghv8j"]
-resource_local_to_scene = true
-shader = SubResource("Shader_hstxw")
-shader_parameter/useHologram = false
-shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
-shader_parameter/speed = 0.3
-shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
-shader_parameter/linesColorIntensity = 0.4
-shader_parameter/hologramTexture = ExtResource("3_sk1hb")
-shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+[ext_resource type="PackedScene" uid="uid://byidv4a683rw2" path="res://scenes/UI/custom_button/custom_button_small.tscn" id="13_x01o5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8w7op"]
 animations = [{
@@ -183,10 +111,95 @@ _data = {
 &"loop": SubResource("Animation_p1na8")
 }
 
-[node name="LoadOrSave" type="CanvasLayer" node_paths=PackedStringArray("load_button", "create_button")]
+[sub_resource type="Shader" id="Shader_hstxw"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lisxt"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("3_sk1hb")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ghv8j"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("3_sk1hb")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sk1hb"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("3_sk1hb")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[node name="LoadOrSave" type="CanvasLayer" node_paths=PackedStringArray("load_button", "create_button", "back_button")]
 script = ExtResource("1_wof0u")
-load_button = NodePath("Load")
-create_button = NodePath("Create")
+load_button = NodePath("Control2/Load")
+create_button = NodePath("Control2/Create")
+back_button = NodePath("Control2/Back")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -230,24 +243,6 @@ visible = false
 layout_mode = 2
 text = "Create New Level"
 
-[node name="Load" parent="." instance=ExtResource("2_arkj1")]
-material = SubResource("ShaderMaterial_lisxt")
-offset_left = 203.0
-offset_top = 460.0
-offset_right = 299.0
-offset_bottom = 489.0
-scale = Vector2(3.5, 3.5)
-button_string = "Load"
-
-[node name="Create" parent="." instance=ExtResource("2_arkj1")]
-material = SubResource("ShaderMaterial_ghv8j")
-offset_left = 614.0
-offset_top = 460.0
-offset_right = 710.0
-offset_bottom = 489.0
-scale = Vector2(3.5, 3.5)
-button_string = "Create"
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(525, 203)
 sprite_frames = SubResource("SpriteFrames_8w7op")
@@ -271,3 +266,46 @@ horizontal_alignment = 1
 libraries = {
 &"": SubResource("AnimationLibrary_sk1hb")
 }
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 189.0
+offset_top = 299.0
+offset_right = 229.0
+offset_bottom = 339.0
+
+[node name="Load" parent="Control2" instance=ExtResource("2_arkj1")]
+material = SubResource("ShaderMaterial_lisxt")
+layout_mode = 0
+scale = Vector2(2.5, 2.5)
+button_string = "Load"
+
+[node name="Create" parent="Control2" instance=ExtResource("2_arkj1")]
+material = SubResource("ShaderMaterial_ghv8j")
+layout_mode = 0
+offset_left = -37.0
+offset_top = 74.0
+offset_right = 59.0
+offset_bottom = 103.0
+scale = Vector2(2.5, 2.5)
+button_string = "Create"
+
+[node name="Back2" parent="Control2" instance=ExtResource("2_arkj1")]
+visible = false
+material = SubResource("ShaderMaterial_sk1hb")
+layout_mode = 0
+offset_left = -74.0
+offset_top = 148.0
+offset_right = 22.0
+offset_bottom = 177.0
+scale = Vector2(2.5, 2.5)
+button_string = "Back"
+
+[node name="Back" parent="Control2" instance=ExtResource("13_x01o5")]
+layout_mode = 0
+offset_left = -73.0
+offset_top = 163.0
+offset_right = 23.0
+offset_bottom = 192.0
+scale = Vector2(2.5, 2.5)
