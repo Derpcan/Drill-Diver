@@ -4,6 +4,7 @@ class_name NumberEdit
 
 
 signal input_value_changed(new_value:int, place_holder_text:String)
+signal input_value_submitted(new_value:int, place_holder_text:String)
 
 var input_int_value:int = 0:
 	set(new_value):
@@ -14,6 +15,13 @@ var input_int_value:int = 0:
 
 func _ready() -> void:
 	text_changed.connect(_check_is_int)
+	text_submitted.connect(_send_submitted_change)
+
+
+
+
+func _send_submitted_change(new_text:String) -> void:
+	input_value_submitted.emit(input_int_value, placeholder_text)
 
 
 func _check_is_int(new_text:String) -> void:

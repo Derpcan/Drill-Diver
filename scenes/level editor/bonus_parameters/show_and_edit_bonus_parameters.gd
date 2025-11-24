@@ -27,10 +27,17 @@ class_name ShowEditBonusParameters
 
 var bonus_parameters_dictionary:Dictionary = {}:
 	set(new_dictionary):
-		bonus_parameters_dictionary = new_dictionary
+		bonus_parameters_dictionary = new_dictionary.duplicate()
+		
+		for key in bonus_parameters_dictionary.keys():
+			if key_to_line_edit_dict.has(key):
+				key_to_line_edit_dict[key].text = str(bonus_parameters_dictionary[key])
 
 
-signal bonus_parameter_changed(tile_position:Vector2i)
+
+
+signal bonus_parameter_changed(tile_position:Vector2i, bonus_parameters:Dictionary)
+signal bonus_parameter_submitted(tile_position:Vector2i, bonus_parameters:Dictionary)
 
 
 func _ready() -> void:
@@ -80,10 +87,16 @@ func add_bonus_parameters(dict:Dictionary) -> void:
 		key_to_line_edit_dict[key] = line_edit
 		line_edit.placeholder_text = key
 		line_edit.input_value_changed.connect(_update_bonus_parameters)
-	
+		line_edit.input_value_submitted.connect(_send_updated_bonus_parameters)
+
+
+func _send_updated_bonus_parameters(new_value, place_holder_text) -> void:
+	#if bonus_parameters_dictionary[place_holder_text] != new_value:
+		#bonus_parameters_dictionary[place_holder_text] = new_value
+	emit_signal("bonus_parameter_submitted", tile_position, bonus_parameters_dictionary)
 
 
 func _update_bonus_parameters(new_value, place_holder_text:String) -> void:
 	if bonus_parameters_dictionary[place_holder_text] != new_value:
 		bonus_parameters_dictionary[place_holder_text] = new_value
-		emit_signal("bonus_parameter_changed", tile_position)
+		emit_signal("bonus_parameter_changed", tile_position, bonus_parameters_dictionary)

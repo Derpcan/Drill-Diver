@@ -46,6 +46,11 @@ var players_beat_level:bool = false
 var testing_mode:bool = false:
 	set(new_value):
 		testing_mode = new_value
+		
+		if testing_mode:
+			if viewer:
+				viewer.queue_free()
+				viewer = null
 
 
 var prevent_tile_placement:bool = true:
@@ -56,7 +61,15 @@ var prevent_tile_placement:bool = true:
 			#delete_tile(physics_tilemap, tilemap_mouse_position) # Delete tile when opening selection menu
 			preview_tilemap.clear()
 
-var mouse_position:Vector2 = Vector2.ZERO
+var mouse_position:Vector2 = Vector2.ZERO:
+	set(new_value):
+		mouse_position = new_value
+		
+		if viewer:
+			if mouse_position.distance_to(viewer.global_position) > 20:
+				viewer.queue_free()
+				viewer = null
+		
 
 var place_held_down:bool = false:
 	set(new_value):
@@ -103,6 +116,10 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 				elif is_deleting == true:
 					#delete_tile(physics_tilemap, Vector2i(point[0], point[1]))
 					delete_tile(decorative_tilemap, Vector2i(point[0], point[1]))
+					
+					if viewer:
+						viewer.queue_free()
+						viewer = null
 
 
 var previous_tilemap_mouse_postion:Vector2 = Vector2.ZERO
@@ -151,9 +168,9 @@ static var decorative_tiles_to_physics:Dictionary = {
 
 
 static var decorative_source_id_to_tile_name:Dictionary = {
-	0:"Ground",
-	1:"SuperDrillable",
-	2:"Dirt",
+	6:"Ground",
+	2:"SuperDrillable",
+	3:"Dirt",
 }
 
 
@@ -256,6 +273,10 @@ func _ready() -> void:
 
 var viewer:ShowEditBonusParameters = null
 func set_up_bonus_parameters_viewer(tile_position:Vector2i) -> void:
+	
+	if place_held_down:
+		return
+	
 	var obj = get_object_at_mouse(tile_position)
 	
 	if obj == null:
@@ -271,16 +292,38 @@ func set_up_bonus_parameters_viewer(tile_position:Vector2i) -> void:
 	
 	
 	viewer = bonus_parameters_viewer_scene.instantiate()
-	viewer.global_position = physics_tilemap.map_to_local(tile_position+Vector2i(0,1))
+	viewer.global_position = physics_tilemap.map_to_local(tile_position+Vector2i(0,0)) + Vector2(-7, 7)
+	viewer.scale = Vector2(1,1)/(camera.zoom)
 	if tile_pos_to_bonus_parameters.has(tile_position):
 		viewer.bonus_parameters_dictionary = tile_pos_to_bonus_parameters[tile_position]
 	viewer.tile_position = tile_position
 	viewer.object_name = tile_pos_to_object_dictionary[tile_position]["object_name"]
-	viewer.bonus_parameter_changed.connect(_update_object_bonus_parameters)
+	viewer.bonus_parameter_submitted.connect(_update_object_bonus_parameters)
 	add_child(viewer)
 
 
-func _update_object_bonus_parameters(tile_position:Vector2i) -> void:
+func _update_object_bonus_parameters(tile_position:Vector2i, new_bonus_parameters:Dictionary) -> void:
+	
+	print("attempting to change")
+	# Check is level creator wants to reset time to continue working on level
+	if check_to_edit != null and players_beat_level and not loading_level:
+		
+		check_to_edit.prompt_for_decision(best_time_completed)
+		
+		var can_edit:bool = await check_to_edit.user_decided
+		
+		# If user doesn't want to remove their best time
+		if can_edit == false:
+			viewer.bonus_parameters_dictionary = tile_pos_to_bonus_parameters[tile_position]
+			#if viewer:
+				#viewer.queue_free()
+				#viewer = null
+			return
+		
+		# Reset the time
+		best_time_completed = -1
+	
+	tile_pos_to_bonus_parameters[tile_position] = new_bonus_parameters
 	update_object_bonus_parameters(tile_position, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters)
 
 
@@ -465,15 +508,17 @@ func set_tile_deleter(tile_map:TileMapLayer, tile_position:Vector2i, avoid_stack
 func fix_physics_tile_map(physics_tile_map:TileMapLayer) -> void:
 	for tile_position:Vector2i in decorative_tilemap.get_used_cells():
 		var tile_atlas_coords:Vector2i = decorative_tilemap.get_cell_atlas_coords(tile_position)
+		var source_id:int = decorative_tilemap.get_cell_source_id(tile_position)
 		if decorative_tiles_slope_to_physics_slope.has(tile_atlas_coords):
 			var new_tile_data = physics_tile_type_to_tile_data_dictionary[decorative_tiles_slope_to_physics_slope[tile_atlas_coords]]
 			physics_tile_map.set_cell(tile_position, new_tile_data[0], new_tile_data[1], new_tile_data[2])
 		else:
+			selected_tile = decorative_source_id_to_tile_name[source_id]
 			var tile_data:Array = get_tile(physics_tile_map)
-			var source_id:int = tile_data[0]
+			var source_id2:int = tile_data[0]
 			var atlas_coord:Vector2i = tile_data[1]
 			var alt_tile:int = tile_data[2]
-			physics_tile_map.set_cell(tile_position, source_id,atlas_coord, alt_tile)
+			physics_tile_map.set_cell(tile_position, source_id2,atlas_coord, alt_tile)
 
 
 
@@ -506,6 +551,10 @@ static func static_delete_tile(
 	
 	# Set the cell to nothing hence deleting it
 	tilemap.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
+	
+	# Update the terrain
+	#if tilemap_type == "Decorative":
+	BetterTerrain.update_terrain_cell(tilemap, tile_position,)
 	
 	
 	# Check to see if an object exists at the tile position
@@ -668,7 +717,6 @@ static func static_set_object(
 	
 
 
-	
 
 
 static func update_object_bonus_parameters(
@@ -765,7 +813,7 @@ static func static_set_tile(
 
 var loading_level:bool = true
 func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=false) -> void:
-	#static_set_tile(tile_map, "Physics", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, ignore_tiles, true, undo_stack)
+	
 	decorative_tilemap.changed.emit()
 	
 	# Check is level creator wants to reset time to continue working on level
@@ -784,75 +832,7 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=fal
 		
 		
 	static_set_tile(decorative_tilemap, "Decorative", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, testing_mode, ignore_tiles, false, undo_stack)
-	#print(undo_stack.stack_array)
-	return
-	# If the tile being placed is not an object
-	if selected_object == null:
-		var tile_data:Array = get_tile(tile_map)
-		var source_id:int = tile_data[0]
-		var atlas_coord:Vector2i = tile_data[1]
-		var alt_tile:int = tile_data[2]
-		
-		set_tile_deleter(tile_map, tile_position, avoid_stack)
-		
-		
-		tile_map.set_cell(tile_position, source_id, atlas_coord, alt_tile)
-		
-		#decorative_tilemap.set_cells_terrain_connect(decorative_tilemap.get_used_cells(), 0, 0, false)
-		#BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells(),)
-		BetterTerrain.update_terrain_cell(decorative_tilemap, tile_position,)
-		
-		
-		#var tile_atlas_coords:Vector2i = decorative_tilemap.get_cell_atlas_coords(tile_position)
-		#print(tile_atlas_coords)
-		#if decorative_tiles_slope_to_physics_slope.has(tile_atlas_coords):
-			#var new_tile_data = physics_tile_type_to_tile_data_dictionary[decorative_tiles_slope_to_physics_slope[tile_atlas_coords]]
-			#print(new_tile_data)
-			#physics_tilemap.set_cell(tile_position, new_tile_data[0], new_tile_data[1], new_tile_data[2])
-		ignore_tiles[tile_position] = true
 	
-	# Set object in tile
-	else:
-		
-		# Check is spawnpoint already exists
-		if not check_can_add_spawnpoint() and object_string == "Spawnpoint" and tile_position not in ignore_tiles:
-			delete_all_by_object_name("Spawnpoint") # Delete all occurances of Spawnpoint
-		
-		set_tile_deleter(tile_map, tile_position)
-		## Check to see if a tile is there already
-		if tile_map.get_cell_tile_data(tile_position) != null:
-			tile_map.erase_cell(tile_position)
-		
-		if tile_position not in ignore_tiles:
-			# Add new object to tree and dictionary
-			var object = selected_object.instantiate()
-			
-			if object_bonus_parameters != {}:
-			
-				tile_pos_to_bonus_parameters[tile_position] = object_bonus_parameters.duplicate()
-			elif object_bonus_parameters == {} and tile_pos_to_bonus_parameters.has(tile_position):
-				tile_pos_to_bonus_parameters.erase(tile_position)
-			#object_bonus_parameters = {}
-			
-			# Pauses the object if it is an enemy
-			pause_enemy_tiles(object, tile_position)
-			
-			add_bonus_params_to_objects(object, tile_position)
-			
-			object.global_position = tile_map.map_to_local(tile_position)
-			object_node.add_child(object)
-			tile_pos_to_object_dictionary[tile_position] = {"object":null, "object_name":""}
-			tile_pos_to_object_dictionary[tile_position]["object"] = object
-			tile_pos_to_object_dictionary[tile_position]["object_name"] = object_string
-			
-			
-			if object_string in object_string_name_to_tile_pos:
-				if tile_position not in object_string_name_to_tile_pos[object_string]:
-					object_string_name_to_tile_pos[object_string].append(tile_position)
-			else:
-				object_string_name_to_tile_pos[object_string] = [tile_position]
-			ignore_tiles[tile_position] = true
-
 
 
 func pause_enemy_tiles(object:Object, tile_position:Vector2i) -> void:
@@ -883,49 +863,25 @@ func add_bonus_params_to_objects(object:Object,tile_position:Vector2i) -> void:
 
 # Deletes tile that is in use
 func delete_tile(tile_map:TileMapLayer, tile_position:Vector2i, avoid_stack:bool=false):
+	
+	decorative_tilemap.changed.emit()
+	
+	# Check is level creator wants to reset time to continue working on level
+	if check_to_edit != null and players_beat_level and not loading_level:
+		
+		check_to_edit.prompt_for_decision(best_time_completed)
+		
+		var can_edit:bool = await check_to_edit.user_decided
+		
+		# If user doesn't want to remove their best time
+		if can_edit == false:
+			return
+		
+		# Reset the time
+		best_time_completed = -1
+	
 	static_delete_tile(tile_map, tile_position, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, false, ignore_tiles, avoid_stack, undo_stack)
-	return
-	# If there is tile data at the point
-	if avoid_stack == false:
-		var tile_at_point:int = tile_map.get_cell_source_id(tile_position)
-		if tile_at_point != -1:
-			if tile_map == physics_tilemap:
-				match tile_at_point:
-					0:
-						undo_stack.push(["Ground", "", tile_position, {}], true)
-					1:
-						undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
-					2:
-						undo_stack.push(["Dirt", "", tile_position, {}], true)
 	
-	
-	tile_map.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
-	
-	
-	BetterTerrain.update_terrain_cell(decorative_tilemap, tile_position,)
-	
-	# Check to see if the position exists in there
-	if tile_pos_to_object_dictionary.has(tile_position):
-		if tile_pos_to_object_dictionary[tile_position]["object"] != null:
-			
-			if avoid_stack == false:
-				if tile_pos_to_bonus_parameters.has(tile_position):
-					# Push the deletion with the Bonus Parameters so undoing will bring back parameters
-					undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position, tile_pos_to_bonus_parameters[tile_position]], true)
-				else:
-					undo_stack.push(["", tile_pos_to_object_dictionary[tile_position]["object_name"], tile_position, {}], true)
-			
-			
-			tile_pos_to_object_dictionary[tile_position]["object"].queue_free()
-		tile_pos_to_object_dictionary[tile_position]["object"] = null
-		tile_pos_to_object_dictionary[tile_position]["object_name"] = ""
-	
-	
-		# Remove from the other dictionary that is used to save
-		for key in object_string_name_to_tile_pos.keys():
-			if tile_position in object_string_name_to_tile_pos[key]:
-				object_string_name_to_tile_pos[key].erase(tile_position)
-
 
 
 
@@ -1028,15 +984,16 @@ func undo_logic() -> void:
 
 
 
-func place_tile_input_logic() -> void:
+func place_tile_input_logic(event:InputEvent) -> void:
 	if testing_mode == true:
 		return
 	
-	# Get the mouse position
-	mouse_position = get_global_mouse_position()
+	if event is InputEventMouseMotion:
+		# Get the mouse position
+		mouse_position = get_global_mouse_position()
 	
-	# Get the tilemap coords that the mouse is at
-	tilemap_mouse_position = physics_tilemap.local_to_map(mouse_position)
+		# Get the tilemap coords that the mouse is at
+		tilemap_mouse_position = physics_tilemap.local_to_map(mouse_position)
 	
 	show_tile_place_preview(tilemap_mouse_position)
 	
@@ -1089,12 +1046,21 @@ func save_logic() -> void:
 	file.store_string("{\"BestTimeCompleted\":")
 	file.store_string(JSON.stringify(JSON.from_native(best_time_completed)) + ",\n")
 	
+	
+	var decorative_tile_map_dict:Dictionary[int, Array] = {
+		6: decorative_tilemap.get_used_cells_by_id(6),
+		2: decorative_tilemap.get_used_cells_by_id(2),
+		3: decorative_tilemap.get_used_cells_by_id(3),
+	}
+	
+	
 	# Save the decorative map
-	file.store_string("\"DecorativeTilemap\":[\n")
-	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(6)))+",\n")
-	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(2)))+",\n")
-	file.store_string(JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(3)))+"\n")
-	file.store_string("],\n")
+	file.store_string("\"DecorativeTilemap\":\n")
+	file.store_string(JSON.stringify(JSON.from_native(decorative_tile_map_dict)))
+	#file.store_string(JSON.stringify(JSON.from_native(6)) + ":" + JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(6)))+",\n")
+	#file.store_string(JSON.stringify(JSON.from_native(2)) + ":" + JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(2)))+",\n")
+	#file.store_string(JSON.stringify(JSON.from_native(3)) + ":" + JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(3)))+"\n")
+	file.store_string(",\n")
 	
 	
 	file.store_string("\"ObjectStringTilePos\":")
@@ -1139,6 +1105,7 @@ func load_logic(path_name:String="") -> void:
 		var json_string = file.get_as_text()
 		
 		
+		
 		if json_string == "": # See if the file is empty
 			return # Return early to not cause any errors
 		
@@ -1147,7 +1114,7 @@ func load_logic(path_name:String="") -> void:
 		if json != null: # If there was no error parsing the text
 			#var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) 
 			# Convert json into native Godot types
-			var decorative_tilemap_data
+			var decorative_tilemap_data:Dictionary[int, Array] = {}
 			if "DecorativeTilemap" in json:
 				decorative_tilemap_data = JSON.to_native(json["DecorativeTilemap"])
 			
@@ -1167,28 +1134,11 @@ func load_logic(path_name:String="") -> void:
 			object_string = ""
 			
 			if decorative_tilemap_data:
-				for id in range(len(decorative_tilemap_data)):
+				for id:int in decorative_source_id_to_tile_name.keys():#range(len(decorative_tilemap_data)):
 					for pos:Vector2i in decorative_tilemap_data[id]:
 						selected_tile = decorative_source_id_to_tile_name[id]
 						set_tile(physics_tilemap, pos)
 						set_tile(decorative_tilemap, pos,)
-			#else:
-			#
-				## Load the physics tile map cells
-				#for pos in physics_tilemap_data[0]:
-					#selected_tile = "Ground"
-					#set_tile(physics_tilemap, pos)
-					#set_tile(decorative_tilemap, pos,)
-					#
-				#for pos in physics_tilemap_data[1]:
-					#selected_tile = "SuperDrillable"
-					#set_tile(physics_tilemap, pos)
-					#set_tile(decorative_tilemap, pos,)
-					#
-				#for pos in physics_tilemap_data[2]:
-					#selected_tile = "Dirt"
-					#set_tile(physics_tilemap, pos)
-					#set_tile(decorative_tilemap, pos,)
 			
 			
 			selected_tile = "Ground"
@@ -1226,6 +1176,8 @@ func load_logic(path_name:String="") -> void:
 	loading_level = false
 
 
+func _input(event: InputEvent) -> void:
+	pass
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("save_level_editor"):
@@ -1233,6 +1185,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		save_logic()
 	
 	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
+		is_deleting = not is_deleting
 		if Input.is_action_pressed("delete_tile"):
 			is_deleting = not is_deleting
 	
@@ -1246,7 +1199,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("camera_scroll_reset"):
 		camera.zoom = Vector2(1,1)
 	
-	place_tile_input_logic()
+	
+	place_tile_input_logic(event)
 	
 	# When pause is pressed
 	if Input.is_action_just_pressed("escape"):
@@ -1264,6 +1218,7 @@ var temp_bonus:Dictionary
 
 func test_level() -> void:
 	testing_mode = true
+	
 	
 	save_logic()
 	
