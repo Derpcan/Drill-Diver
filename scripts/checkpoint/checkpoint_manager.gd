@@ -129,7 +129,7 @@ func _camera_returned_restart() -> void:
 	
 	# Christian: Moved from _player_animation_finished so it starts when input is re-enabled
 	# Charlie: When the death animation is finished, stop the timer and reenable it to start again
-	GameManager.set_timer_to(GameManager.get_time_at_checkpoint()) # Turn this off to not reset timer
+	#GameManager.set_timer_to(GameManager.get_time_at_checkpoint()) # Turn this off to not reset timer
 	GameManager.set_timer_can_start(true)
 	
 
