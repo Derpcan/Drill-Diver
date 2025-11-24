@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=24 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="7_ckxsl"]
 [ext_resource type="Script" uid="uid://ktd6250lpfu3" path="res://scenes/level editor/tilemap_link_superdrill_destruction.gd" id="7_j6oxv"]
 [ext_resource type="Texture2D" uid="uid://bbt2df64h3yhi" path="res://assets/cave/spritesheet.png" id="8_a25ho"]
+[ext_resource type="PackedScene" uid="uid://3yxhmq851bsq" path="res://scenes/level editor/check_to_edit.tscn" id="11_r6hoa"]
 
 [sub_resource type="Animation" id="Animation_cwu4w"]
 length = 0.001
@@ -1276,3 +1277,6 @@ offset_bottom = 50.0
 text = "Stop Testing"
 
 [node name="ObjectNode" type="Node2D" parent="."]
+
+[node name="CheckToEdit" parent="." instance=ExtResource("11_r6hoa")]
+visible = false

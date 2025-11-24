@@ -18,6 +18,8 @@ class_name LevelEditor
 
 @onready var object_node:Node2D = $ObjectNode
 
+@onready var check_to_edit:CheckToEdit = $CheckToEdit
+
 
 @onready var undo_stack:UndoStack = UndoStack.new()
 
@@ -30,13 +32,16 @@ signal tile_placed()
 var best_time_completed:float = 9223372036854775807:
 	set(new_value):
 		# Reset the time
-		if new_value == -1:
+		if new_value < 0:
 			best_time_completed = 9223372036854775807
+			players_beat_level = false
+			return
 		
 		if new_value < best_time_completed:
 			best_time_completed = new_value
-			
+			players_beat_level = true
 
+var players_beat_level:bool = false
 
 var testing_mode:bool = false:
 	set(new_value):
@@ -78,6 +83,7 @@ var place_held_down:bool = false:
 
 var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 	set(new_tilemap_mouse_position):
+		
 		
 		previous_tilemap_mouse_postion = tilemap_mouse_position
 		tilemap_mouse_position = new_tilemap_mouse_position
@@ -299,7 +305,8 @@ func _handle_level_changed() -> void:
 	# Prompt user if they want to Continue to change the level
 	# If they have beat the level. Have a different best time than 9223372036854775807
 	
-	print("changed")
+	#print("changed")
+	pass
 
 
 
@@ -480,6 +487,8 @@ static func static_delete_tile(
 	avoid_stack:bool, undo_stack:UndoStack
 ) -> void:
 	
+	tilemap.changed.emit()
+	
 	# Decide if the Undo Stack should be avoided
 	if avoid_stack == false:
 		# Get the tile's source id
@@ -498,7 +507,6 @@ static func static_delete_tile(
 	# Set the cell to nothing hence deleting it
 	tilemap.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
 	
-	tilemap.changed.emit()
 	
 	# Check to see if an object exists at the tile position
 	if tile_position_to_object_dictionary.has(tile_position) and (not check_ignore_tiles or (tile_position not in ignore_tiles)):
@@ -730,6 +738,7 @@ static func static_set_tile(
 	undo_stack:UndoStack = null,
 ) -> void:
 	if selected_object == null:
+		
 		# Get the tile data necessary to place selected tile
 		var tile_data:Array = static_get_tile(tilemap, selected_tile)[tilemap_type]
 		var source_id:int = tile_data[0]
@@ -742,7 +751,6 @@ static func static_set_tile(
 		# Set the new tile
 		tilemap.set_cell(tile_position, source_id, atlas_coord, alt_tile)
 		
-		tilemap.changed.emit()
 		
 		
 		# Update the terrain
@@ -755,9 +763,26 @@ static func static_set_tile(
 	
 
 
-
+var loading_level:bool = true
 func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=false) -> void:
 	#static_set_tile(tile_map, "Physics", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, ignore_tiles, true, undo_stack)
+	decorative_tilemap.changed.emit()
+	
+	# Check is level creator wants to reset time to continue working on level
+	if check_to_edit != null and players_beat_level and not loading_level:
+		
+		check_to_edit.prompt_for_decision(best_time_completed)
+		
+		var can_edit:bool = await check_to_edit.user_decided
+		
+		# If user doesn't want to remove their best time
+		if can_edit == false:
+			return
+		
+		# Reset the time
+		best_time_completed = -1
+		
+		
 	static_set_tile(decorative_tilemap, "Decorative", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, testing_mode, ignore_tiles, false, undo_stack)
 	#print(undo_stack.stack_array)
 	return
@@ -1022,6 +1047,7 @@ func place_tile_input_logic() -> void:
 	# Place down a tile
 	if Input.is_action_pressed("place_tile") and not prevent_tile_placement:
 		place_held_down = true
+		
 	
 	
 	elif Input.is_action_just_released("place_tile"):
@@ -1117,7 +1143,7 @@ func load_logic(path_name:String="") -> void:
 			return # Return early to not cause any errors
 		
 		# Parse the text from the file in json style
-		var json = JSON.parse_string(json_string)
+		var json:Dictionary = JSON.parse_string(json_string)
 		if json != null: # If there was no error parsing the text
 			#var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) 
 			# Convert json into native Godot types
@@ -1130,6 +1156,8 @@ func load_logic(path_name:String="") -> void:
 				tile_pos_to_bonus_params = JSON.to_native(json["TilePosBonusParameters"])
 			
 			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
+			
+			
 			
 			#print("Decorative_tilemap_data: ", decorative_tilemap_data)
 			#print("TilePosBonusParameters: ", tile_pos_to_bonus_params)
@@ -1184,6 +1212,10 @@ func load_logic(path_name:String="") -> void:
 			object_string = ""
 			selected_object = null
 			file.close()
+			
+			if "BestTimeCompleted" in json:
+				best_time_completed = JSON.to_native(json["BestTimeCompleted"])
+			print(best_time_completed)
 	
 	
 	level_editor_hud.show()
@@ -1191,6 +1223,7 @@ func load_logic(path_name:String="") -> void:
 	prevent_tile_placement = false
 	
 	decorative_tilemap.changed.connect(_handle_level_changed)
+	loading_level = false
 
 
 
@@ -1329,7 +1362,7 @@ func _stop_testing() -> void:
 
 
 func reload_tilemaps() -> void:
-	
+	loading_level = true
 	# Disconnect the signal
 	if decorative_tilemap.changed.is_connected(_handle_level_changed):
 		decorative_tilemap.changed.disconnect(_handle_level_changed)
@@ -1345,6 +1378,7 @@ func reload_tilemaps() -> void:
 	ignore_tiles.clear()
 	
 	load_logic(save_path)
+	
 
 
 

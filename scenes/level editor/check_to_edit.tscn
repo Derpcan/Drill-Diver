@@ -1,0 +1,185 @@
+[gd_scene load_steps=15 format=3 uid="uid://3yxhmq851bsq"]
+
+[ext_resource type="Script" uid="uid://vqrwo23vpl25" path="res://scenes/level editor/check_to_edit.gd" id="1_du8di"]
+[ext_resource type="Texture2D" uid="uid://vtku2nt3lrt6" path="res://assets/WarningSign_PixyFantasy/WarningSign01.png" id="2_3jkbc"]
+[ext_resource type="Texture2D" uid="uid://u5ofb4itevxh" path="res://assets/WarningSign_PixyFantasy/WarningSign02.png" id="3_hhmjx"]
+[ext_resource type="Texture2D" uid="uid://nm0t8yxjlqdm" path="res://assets/WarningSign_PixyFantasy/WarningSign03.png" id="4_0eliq"]
+[ext_resource type="Texture2D" uid="uid://bfqcdc456uijt" path="res://assets/WarningSign_PixyFantasy/WarningSign04.png" id="5_5nb3n"]
+[ext_resource type="Texture2D" uid="uid://n5vbpodkcqik" path="res://assets/WarningSign_PixyFantasy/WarningSign05.png" id="6_3ylbw"]
+[ext_resource type="Texture2D" uid="uid://vodr3wbs1n2q" path="res://assets/WarningSign_PixyFantasy/WarningSign06.png" id="7_us3cg"]
+[ext_resource type="Texture2D" uid="uid://etvh132313mr" path="res://assets/WarningSign_PixyFantasy/WarningSign07.png" id="8_gmigc"]
+[ext_resource type="Texture2D" uid="uid://cjnx8wkvi68hf" path="res://assets/WarningSign_PixyFantasy/WarningSign08.png" id="9_tbkge"]
+[ext_resource type="Texture2D" uid="uid://c6af2q5wvv1w3" path="res://assets/WarningSign_PixyFantasy/WarningSign09.png" id="10_fudak"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uyxkb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3jkbc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hhmjx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0eliq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_5nb3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_3ylbw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_us3cg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gmigc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_tbkge")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_fudak")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_arkj1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p1na8"]
+resource_name = "loop"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sk1hb"]
+_data = {
+&"RESET": SubResource("Animation_arkj1"),
+&"loop": SubResource("Animation_p1na8")
+}
+
+[node name="CheckToEdit" type="CanvasLayer" node_paths=PackedStringArray("continue_button", "cancel_button", "animation_player", "time_label")]
+script = ExtResource("1_du8di")
+continue_button = NodePath("Container/MarginContainer/VBoxContainer2/VBoxContainer2/HBoxContainer2/ContinueButton")
+cancel_button = NodePath("Container/MarginContainer/VBoxContainer2/VBoxContainer2/HBoxContainer2/CancelButton")
+animation_player = NodePath("Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/AnimatedSprite2D/AnimationPlayer")
+time_label = NodePath("Container/MarginContainer/VBoxContainer2/VBoxContainer/TimeLabel")
+
+[node name="Container" type="PanelContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Container"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 240
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Container/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 60
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+position = Vector2(504, 9)
+sprite_frames = SubResource("SpriteFrames_uyxkb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/AnimatedSprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_sk1hb")
+}
+
+[node name="TextureRect" type="TextureRect" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "WARNING: "
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "If you continue your best time will be reset"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "00:04:42"
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Container/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 95
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer2/HBoxContainer2"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+text = "Continue"
+
+[node name="CancelButton" type="Button" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer2/HBoxContainer2"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+text = "Cancel
+"
