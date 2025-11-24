@@ -41,7 +41,9 @@ var best_time_completed:float = 9223372036854775807:
 			best_time_completed = new_value
 			players_beat_level = true
 
+
 var players_beat_level:bool = false
+
 
 var testing_mode:bool = false:
 	set(new_value):
@@ -988,7 +990,7 @@ func place_tile_input_logic(event:InputEvent) -> void:
 	if testing_mode == true:
 		return
 	
-	if event is InputEventMouseMotion:
+	if event is InputEventMouse:
 		# Get the mouse position
 		mouse_position = get_global_mouse_position()
 	
@@ -1026,6 +1028,17 @@ func place_tile_input_logic(event:InputEvent) -> void:
 var folder_path:String = "user://level_editor/levels"
 var save_path:String = folder_path + "/"
 var level_name:String = "level_0.json"
+
+func save_beat_level() -> void:
+	var temp_time:float = best_time_completed
+	
+	reload_tilemap_beat_level()
+	
+	best_time_completed = temp_time
+	
+	save_logic()
+	
+	
 
 func save_logic() -> void:
 	
@@ -1287,7 +1300,8 @@ func test_level() -> void:
 
 func _handle_beat_level(new_time:float) -> void:
 	best_time_completed = new_time
-	save_logic()
+	save_beat_level()
+	#save_logic()
 
 
 func _stop_testing() -> void:
@@ -1314,6 +1328,21 @@ func _stop_testing() -> void:
 	
 	reload_tilemaps()
 	object_bonus_parameters = temp_bonus
+
+
+func reload_tilemap_beat_level() -> void:
+	loading_level = true
+	# Disconnect the signal
+	if decorative_tilemap.changed.is_connected(_handle_level_changed):
+		decorative_tilemap.changed.disconnect(_handle_level_changed)
+	
+	physics_tilemap.clear()
+	decorative_tilemap.clear()
+	object_string_name_to_tile_pos.clear()
+	tile_pos_to_object_dictionary.clear()
+	ignore_tiles.clear()
+	
+	load_logic(save_path)
 
 
 func reload_tilemaps() -> void:
