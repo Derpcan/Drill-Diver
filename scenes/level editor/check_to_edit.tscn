@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://3yxhmq851bsq"]
+[gd_scene load_steps=20 format=3 uid="uid://3yxhmq851bsq"]
 
 [ext_resource type="Script" uid="uid://vqrwo23vpl25" path="res://scenes/level editor/check_to_edit.gd" id="1_du8di"]
 [ext_resource type="Texture2D" uid="uid://vtku2nt3lrt6" path="res://assets/WarningSign_PixyFantasy/WarningSign01.png" id="2_3jkbc"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://etvh132313mr" path="res://assets/WarningSign_PixyFantasy/WarningSign07.png" id="8_gmigc"]
 [ext_resource type="Texture2D" uid="uid://cjnx8wkvi68hf" path="res://assets/WarningSign_PixyFantasy/WarningSign08.png" id="9_tbkge"]
 [ext_resource type="Texture2D" uid="uid://c6af2q5wvv1w3" path="res://assets/WarningSign_PixyFantasy/WarningSign09.png" id="10_fudak"]
+[ext_resource type="PackedScene" uid="uid://be1u7dex0aqss" path="res://scenes/UI/custom_button.tscn" id="11_0eliq"]
+[ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="12_5nb3n"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uyxkb"]
 animations = [{
@@ -108,10 +110,83 @@ _data = {
 &"loop": SubResource("Animation_p1na8")
 }
 
+[sub_resource type="Shader" id="Shader_hstxw"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ylbw"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("12_5nb3n")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0eliq"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("12_5nb3n")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
 [node name="CheckToEdit" type="CanvasLayer" node_paths=PackedStringArray("continue_button", "cancel_button", "animation_player", "time_label")]
 script = ExtResource("1_du8di")
-continue_button = NodePath("Container/MarginContainer/VBoxContainer2/VBoxContainer2/HBoxContainer2/ContinueButton")
-cancel_button = NodePath("Container/MarginContainer/VBoxContainer2/VBoxContainer2/HBoxContainer2/CancelButton")
+continue_button = NodePath("Continue")
+cancel_button = NodePath("Cancel")
 animation_player = NodePath("Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/AnimatedSprite2D/AnimationPlayer")
 time_label = NodePath("Container/MarginContainer/VBoxContainer2/VBoxContainer/TimeLabel")
 
@@ -139,7 +214,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
-position = Vector2(504, 9)
+position = Vector2(525, 9)
 sprite_frames = SubResource("SpriteFrames_uyxkb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/AnimatedSprite2D"]
@@ -148,9 +223,14 @@ libraries = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+
+[node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "WARNING: "
 horizontal_alignment = 1
@@ -183,3 +263,21 @@ custom_minimum_size = Vector2(80, 32)
 layout_mode = 2
 text = "Cancel
 "
+
+[node name="Continue" parent="." instance=ExtResource("11_0eliq")]
+material = SubResource("ShaderMaterial_3ylbw")
+offset_left = 323.0
+offset_top = 361.0
+offset_right = 419.0
+offset_bottom = 390.0
+scale = Vector2(2.5, 2.5)
+button_string = "Continue"
+
+[node name="Cancel" parent="." instance=ExtResource("11_0eliq")]
+material = SubResource("ShaderMaterial_0eliq")
+offset_left = 604.0
+offset_top = 357.0
+offset_right = 700.0
+offset_bottom = 386.0
+scale = Vector2(2.5, 2.5)
+button_string = "Cancel"

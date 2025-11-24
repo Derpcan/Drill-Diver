@@ -4,8 +4,12 @@ class_name CheckToEdit
 
 signal user_decided(decision_to_edit:bool)
 
-@export var continue_button:Button
-@export var cancel_button:Button
+#@export var continue_button:Button
+#@export var cancel_button:Button
+
+@export var continue_button:TextureButton
+@export var cancel_button:TextureButton
+
 @export var animation_player:AnimationPlayer
 @export var time_label:Label
 

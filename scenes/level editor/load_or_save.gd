@@ -6,9 +6,12 @@ signal load_level()
 
 signal create_new_level()
 
+@export var load_button:TextureButton
+@export var create_button:TextureButton
+
 func _ready() -> void:
-	$Control/ColorRect/VBoxContainer/HBoxContainer2/Load.pressed.connect(_emit_load_level_signal)
-	$Control/ColorRect/VBoxContainer/HBoxContainer2/Create.pressed.connect(_emit_create_new_level_signal)
+	load_button.pressed.connect(_emit_load_level_signal)
+	create_button.pressed.connect(_emit_create_new_level_signal)
 	$AnimatedSprite2D/AnimationPlayer.play("loop")
 
 
