@@ -1336,7 +1336,7 @@ func reload_tilemap_beat_level() -> void:
 	if decorative_tilemap.changed.is_connected(_handle_level_changed):
 		decorative_tilemap.changed.disconnect(_handle_level_changed)
 	
-	physics_tilemap.clear()
+	#physics_tilemap.clear()
 	decorative_tilemap.clear()
 	object_string_name_to_tile_pos.clear()
 	tile_pos_to_object_dictionary.clear()
