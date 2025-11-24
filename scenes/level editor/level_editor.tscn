@@ -1,7 +1,8 @@
-[gd_scene load_steps=32 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=27 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
+[ext_resource type="PackedScene" uid="uid://dioff8s7qnbas" path="res://scenes/level editor/lab_background.tscn" id="2_e1y88"]
 [ext_resource type="PackedScene" uid="uid://blnst3na25i2i" path="res://scenes/level editor/level_editor_hud.tscn" id="3_ackq3"]
 [ext_resource type="Texture2D" uid="uid://dr5dfxylf3hfs" path="res://scenes/level editor/PreviewTile.png" id="4_g8j7s"]
 [ext_resource type="Script" uid="uid://b1p5pk5wugdfx" path="res://scenes/tile_map_layer.gd" id="5_cwu4w"]
@@ -12,12 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://bbt2df64h3yhi" path="res://assets/cave/spritesheet.png" id="8_a25ho"]
 [ext_resource type="Texture2D" uid="uid://xx6j5sqf5pti" path="res://assets/lab-game-tileset-pixel-art/LabTileSet.png" id="9_0qn5d"]
 [ext_resource type="PackedScene" uid="uid://3yxhmq851bsq" path="res://scenes/level editor/check_to_edit.tscn" id="11_r6hoa"]
-[ext_resource type="Texture2D" uid="uid://d2yhfdn7ldg5x" path="res://assets/lab-game-tileset-pixel-art/2 Background/Day/1.png" id="13_0qn5d"]
-[ext_resource type="Texture2D" uid="uid://c4eu7lro1hmcc" path="res://assets/lab-game-tileset-pixel-art/2 Background/Day/5.png" id="13_vqyq1"]
-[ext_resource type="Texture2D" uid="uid://dy5im3eamhkxo" path="res://assets/lab-game-tileset-pixel-art/2 Background/Day/2.png" id="14_17hkw"]
-[ext_resource type="Texture2D" uid="uid://8q5seon35t6u" path="res://assets/lab-game-tileset-pixel-art/2 Background/Day/6.png" id="14_gar71"]
-[ext_resource type="Texture2D" uid="uid://qy4lcy83vbjm" path="res://assets/lab-game-tileset-pixel-art/2 Background/Day/3.png" id="15_xubjd"]
-[ext_resource type="Texture2D" uid="uid://la50tieuuvwj" path="res://assets/lab-game-tileset-pixel-art/2 Background/Day/4.png" id="16_w7jvr"]
 
 [sub_resource type="Animation" id="Animation_cwu4w"]
 length = 0.001
@@ -1239,78 +1234,7 @@ sources/0 = SubResource("TileSetAtlasSource_dx1w1")
 [node name="LevelEditor" type="Node2D"]
 script = ExtResource("1_s4d5t")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-scroll_ignore_camera_zoom = true
-
-[node name="Parallax2D6" type="Parallax2D" parent="ParallaxBackground"]
-scale = Vector2(2.5, 2.5)
-scroll_scale = Vector2(0.0625, 0.1)
-scroll_offset = Vector2(0, 243)
-repeat_size = Vector2(576, 0)
-repeat_times = 200
-follow_viewport = false
-
-[node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground/Parallax2D6"]
-scale = Vector2(1, 1)
-texture = ExtResource("13_0qn5d")
-
-[node name="Parallax2D5" type="Parallax2D" parent="ParallaxBackground"]
-scale = Vector2(2.5, 2.5)
-scroll_scale = Vector2(0.125, 0.1)
-scroll_offset = Vector2(0, 243)
-repeat_size = Vector2(576, 0)
-repeat_times = 200
-follow_viewport = false
-
-[node name="Sprite2D5" type="Sprite2D" parent="ParallaxBackground/Parallax2D5"]
-scale = Vector2(1, 1)
-texture = ExtResource("14_17hkw")
-
-[node name="Parallax2D4" type="Parallax2D" parent="ParallaxBackground"]
-scale = Vector2(2.5, 2.5)
-scroll_scale = Vector2(0.25, 0.1)
-scroll_offset = Vector2(0, 243)
-repeat_size = Vector2(576, 0)
-repeat_times = 200
-follow_viewport = false
-
-[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/Parallax2D4"]
-scale = Vector2(1, 1)
-texture = ExtResource("15_xubjd")
-
-[node name="Parallax2D3" type="Parallax2D" parent="ParallaxBackground"]
-scale = Vector2(2.5, 2.5)
-scroll_scale = Vector2(0.3, 0.1)
-scroll_offset = Vector2(0, 243)
-repeat_size = Vector2(576, 0)
-repeat_times = 200
-follow_viewport = false
-
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/Parallax2D3"]
-scale = Vector2(1, 1)
-texture = ExtResource("16_w7jvr")
-
-[node name="Parallax2D2" type="Parallax2D" parent="ParallaxBackground"]
-scale = Vector2(2.5, 2.5)
-scroll_scale = Vector2(0.5, 0.1)
-scroll_offset = Vector2(0, 243)
-repeat_size = Vector2(576, 0)
-repeat_times = 200
-follow_viewport = false
-
-[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/Parallax2D2"]
-texture = ExtResource("13_vqyq1")
-
-[node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground"]
-scale = Vector2(2.5, 2.5)
-scroll_scale = Vector2(0.9, 0.1)
-scroll_offset = Vector2(0, 243)
-repeat_size = Vector2(576, 0)
-repeat_times = 200
-follow_viewport = false
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D"]
-texture = ExtResource("14_gar71")
+[node name="LabBackground" parent="." instance=ExtResource("2_e1y88")]
 
 [node name="LoadOrSave" parent="." instance=ExtResource("5_dx1w1")]
 
