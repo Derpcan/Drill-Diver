@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://cu2183edopvth" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/Diamond.png" id="4_1bmts"]
 [ext_resource type="Texture2D" uid="uid://dsjcog8rud0d2" path="res://assets/sprites/goal/GoalImage.png" id="4_ll7yy"]
 [ext_resource type="Texture2D" uid="uid://j3ll8yipnw8p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Alien/Alien_idle.png" id="5_1bmts"]
-[ext_resource type="Texture2D" uid="uid://b6vqiyjggel7x" path="res://assets/lab-game-tileset-pixel-art/LabTileCenter.png" id="6_pswwc"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ll7yy"]
+load_path = "res://.godot/imported/LabTileCenter.png-0747117f9c26fad8ac1d8c8735640338.ctex"
 
 [sub_resource type="Animation" id="Animation_qv4l2"]
 length = 0.001
@@ -267,7 +269,7 @@ text = "SuperDrillable"
 
 [node name="Lab" parent="ColorRect/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
-image = ExtResource("6_pswwc")
+image = SubResource("CompressedTexture2D_ll7yy")
 text = "Lab"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/VBoxContainer"]

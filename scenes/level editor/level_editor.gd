@@ -517,7 +517,7 @@ func fix_physics_tile_map(physics_tile_map:TileMapLayer) -> void:
 	for tile_position:Vector2i in decorative_tilemap.get_used_cells():
 		var tile_atlas_coords:Vector2i = decorative_tilemap.get_cell_atlas_coords(tile_position)
 		var source_id:int = decorative_tilemap.get_cell_source_id(tile_position)
-		if decorative_tiles_slope_to_physics_slope.has(tile_atlas_coords):
+		if decorative_tiles_slope_to_physics_slope.has(tile_atlas_coords) and source_id == 6:
 			var new_tile_data = physics_tile_type_to_tile_data_dictionary[decorative_tiles_slope_to_physics_slope[tile_atlas_coords]]
 			physics_tile_map.set_cell(tile_position, new_tile_data[0], new_tile_data[1], new_tile_data[2])
 		else:
@@ -926,6 +926,7 @@ func _physics_process(delta: float) -> void:
 	
 	camera.global_position.x += dir_x*4
 	camera.global_position.y += dir_y*4
+	camera.global_position.y = clampf(camera.global_position.y, -948, 8)
 	# End Camera Movement
 
 
@@ -1073,7 +1074,6 @@ func save_logic() -> void:
 		11: decorative_tilemap.get_used_cells_by_id(11),
 	}
 	
-	print(decorative_source_id_to_tile_name)
 	
 	# Save the decorative map
 	file.store_string("\"DecorativeTilemap\":\n")
