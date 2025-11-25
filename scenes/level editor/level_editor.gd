@@ -391,6 +391,16 @@ func _load_level_logic() -> void:
 
 
 func tile_selected_changed(tile_string:String, bonus_parameters:Dictionary={}) -> void:
+	
+	if "Background" in tile_string:
+		if tile_string == "Lab Background":
+			$LabBackground.show()
+			$CaveBackground.hide()
+		if tile_string == "Cave Background":
+			$LabBackground.hide()
+			$CaveBackground.show()
+		return
+	
 	if tile_string in decorative_tiles_to_physics:
 		selected_object = null
 		selected_tile = tile_string

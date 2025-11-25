@@ -18,6 +18,8 @@ var time_to_complete_level:float = 0
 
 var time:float = 0
 
+@export var s_rank_time:float = 30
+
 func _physics_process(delta: float) -> void:
 	time += delta # Update time passed
 

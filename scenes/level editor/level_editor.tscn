@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=28 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
 [ext_resource type="PackedScene" uid="uid://dioff8s7qnbas" path="res://scenes/level editor/lab_background.tscn" id="2_e1y88"]
 [ext_resource type="PackedScene" uid="uid://blnst3na25i2i" path="res://scenes/level editor/level_editor_hud.tscn" id="3_ackq3"]
+[ext_resource type="PackedScene" uid="uid://bjshmay3nbdaf" path="res://scenes/level editor/cave_background.tscn" id="3_vqyq1"]
 [ext_resource type="Texture2D" uid="uid://dr5dfxylf3hfs" path="res://scenes/level editor/PreviewTile.png" id="4_g8j7s"]
 [ext_resource type="Script" uid="uid://b1p5pk5wugdfx" path="res://scenes/tile_map_layer.gd" id="5_cwu4w"]
 [ext_resource type="PackedScene" uid="uid://dlby0tn0le6uv" path="res://scenes/level editor/load_or_save.tscn" id="5_dx1w1"]
@@ -1235,6 +1236,8 @@ sources/0 = SubResource("TileSetAtlasSource_dx1w1")
 script = ExtResource("1_s4d5t")
 
 [node name="LabBackground" parent="." instance=ExtResource("2_e1y88")]
+
+[node name="CaveBackground" parent="." instance=ExtResource("3_vqyq1")]
 
 [node name="LoadOrSave" parent="." instance=ExtResource("5_dx1w1")]
 

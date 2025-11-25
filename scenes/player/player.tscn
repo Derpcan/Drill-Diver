@@ -206,6 +206,7 @@ debug_color = Color(0.968203, 0, 0.469374, 0.42)
 script = ExtResource("16_kvlxm")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 offset_top = -11.0
 offset_right = 40.0
 offset_bottom = 12.0

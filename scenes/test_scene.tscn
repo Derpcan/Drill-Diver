@@ -540,6 +540,6 @@ position = Vector2(591, 347)
 enabled = false
 
 [node name="Goal" parent="." instance=ExtResource("18_qq5q4")]
-position = Vector2(291, 139)
+position = Vector2(824, 440)
 
 [editable path="Ghost"]

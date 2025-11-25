@@ -6,9 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cu2183edopvth" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/Diamond.png" id="4_1bmts"]
 [ext_resource type="Texture2D" uid="uid://dsjcog8rud0d2" path="res://assets/sprites/goal/GoalImage.png" id="4_ll7yy"]
 [ext_resource type="Texture2D" uid="uid://j3ll8yipnw8p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Alien/Alien_idle.png" id="5_1bmts"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ll7yy"]
-load_path = "res://.godot/imported/LabTileCenter.png-0747117f9c26fad8ac1d8c8735640338.ctex"
+[ext_resource type="Texture2D" uid="uid://cmk1ubstgth2f" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/LabTileCenter.png" id="6_pswwc"]
 
 [sub_resource type="Animation" id="Animation_qv4l2"]
 length = 0.001
@@ -201,91 +199,96 @@ grow_horizontal = 2
 rotation = -1.5708
 text = ">"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
-layout_mode = 0
+[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect"]
+layout_mode = 2
 offset_left = 30.0
-offset_top = 14.0
+offset_top = 1.0
 offset_right = 1126.0
-offset_bottom = 585.0
-theme_override_constants/separation = 16
+offset_bottom = 600.0
+horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ScrollContainer"]
+custom_minimum_size = Vector2(1096, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ColorRect/VBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Objects"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer/VBoxContainer" groups=["tile_selector_holder"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="SpawnPoint" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="SpawnPoint" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("3_1t62o")
 text = "Spawnpoint"
 
-[node name="Goal" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="Goal" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("4_ll7yy")
 text = "Goal"
 
-[node name="CheckPoint" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="CheckPoint" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("3_1t62o")
 text = "Checkpoint"
 
-[node name="Gem" parent="ColorRect/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="Gem" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("4_1bmts")
 text = "Gem"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ColorRect/VBoxContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2"]
 layout_mode = 2
-text = "Physics Tiles"
+text = "Tiles"
 horizontal_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/VBoxContainer/VBoxContainer2" groups=["tile_selector_holder"]]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Ground" parent="ColorRect/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Ground" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "Ground"
 
-[node name="Dirt" parent="ColorRect/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Dirt" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "Dirt"
 
-[node name="SuperDrillable" parent="ColorRect/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="SuperDrillable" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "SuperDrillable"
 
-[node name="Lab" parent="ColorRect/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Lab" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
-image = SubResource("CompressedTexture2D_ll7yy")
+image = ExtResource("6_pswwc")
 text = "Lab"
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/VBoxContainer"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ColorRect/VBoxContainer/VBoxContainer3"]
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer3"]
 layout_mode = 2
 text = "Enemies"
 horizontal_alignment = 1
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/VBoxContainer/VBoxContainer3" groups=["tile_selector_holder"]]
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer3" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Alien" parent="ColorRect/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+[node name="Alien" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("5_1bmts")
 text = "Alien"
@@ -296,10 +299,31 @@ bonus_parameters = Dictionary[String, int]({
 "Range": 10
 })
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer4"]
+layout_mode = 2
+text = "Backgrounds"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer4" groups=["tile_selector_holder"]]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="LabBackground" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+text = "Lab Background"
+
+[node name="CaveBackground" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+text = "Cave Background"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
