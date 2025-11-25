@@ -29,6 +29,19 @@ static var bonus_parameters_viewer_scene:PackedScene = preload("res://scenes/lev
 
 signal tile_placed()
 
+
+var background_type:String = "Cave Background":
+	set(new_string):
+		background_type = new_string
+		
+		if background_type == "Lab Background":
+			$LabBackground.show()
+			$CaveBackground.hide()
+		if background_type == "Cave Background":
+			$LabBackground.hide()
+			$CaveBackground.show()
+
+
 var best_time_completed:float = 9223372036854775807:
 	set(new_value):
 		# Reset the time
@@ -393,12 +406,7 @@ func _load_level_logic() -> void:
 func tile_selected_changed(tile_string:String, bonus_parameters:Dictionary={}) -> void:
 	
 	if "Background" in tile_string:
-		if tile_string == "Lab Background":
-			$LabBackground.show()
-			$CaveBackground.hide()
-		if tile_string == "Cave Background":
-			$LabBackground.hide()
-			$CaveBackground.show()
+		background_type = tile_string
 		return
 	
 	if tile_string in decorative_tiles_to_physics:
@@ -1076,6 +1084,8 @@ func save_logic() -> void:
 	file.store_string("{\"BestTimeCompleted\":")
 	file.store_string(JSON.stringify(JSON.from_native(best_time_completed)) + ",\n")
 	
+	file.store_string("\"BackgroundType\":")
+	file.store_string(JSON.stringify(JSON.from_native(background_type)) + ",\n")
 	
 	var decorative_tile_map_dict:Dictionary[int, Array] = {
 		6: decorative_tilemap.get_used_cells_by_id(6),
@@ -1152,6 +1162,10 @@ func load_logic(path_name:String="") -> void:
 			var tile_pos_to_bonus_params:Dictionary[Vector2i, Dictionary] = {}
 			if "TilePosBonusParameters" in json:
 				tile_pos_to_bonus_params = JSON.to_native(json["TilePosBonusParameters"])
+			
+			
+			if "BackgroundType" in json:
+				background_type = JSON.to_native(json["BackgroundType"])
 			
 			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
 			
