@@ -188,7 +188,7 @@ static var decorative_tiles_to_physics:Dictionary = {
 static var decorative_source_id_to_tile_name:Dictionary = {
 	6:"Ground",
 	2:"SuperDrillable",
-	3:"Dirt",
+	12:"Dirt",
 	11:"Lab"
 }
 
@@ -206,7 +206,7 @@ static var decorative_tiles_data_dictionary:Dictionary = {
 	"Lab":[11,Vector2i(0,2),0],
 	#"Ground":[1,Vector2i(21,0),0],
 	"SuperDrillable":[2,Vector2(7,9),0],
-	"Dirt":[3,Vector2i(3,1),0],
+	"Dirt":[12,Vector2i(3,1),0],
 }
 
 # The data associated with the physics Tiles
@@ -944,7 +944,18 @@ func _physics_process(delta: float) -> void:
 	
 	camera.global_position.x += dir_x*4
 	camera.global_position.y += dir_y*4
-	camera.global_position.y = clampf(camera.global_position.y, -948, 8)
+	
+	var viewport_size = get_viewport_rect().size
+	var x_offset = viewport_size.x / (2 * camera.zoom.x)
+	var y_offset = viewport_size.y / (2 * camera.zoom.y)
+	
+	var clamped_x = clamp(camera.global_position.x, camera.limit_left + x_offset, camera.limit_right - x_offset)
+	var clamped_y = clamp(camera.global_position.y, camera.limit_top + y_offset, camera.limit_bottom - y_offset)
+	
+	camera.global_position = Vector2(clamped_x, clamped_y)
+	
+	#camera.global_position.y = clampf(camera.global_position.y, -948, 8)
+	#camera.global_position.y = clampf(camera.global_position.y, camera.limit_top*(1/camera.zoom.y), camera.limit_bottom*(1/camera.zoom.y))
 	# End Camera Movement
 
 
@@ -1090,7 +1101,7 @@ func save_logic() -> void:
 	var decorative_tile_map_dict:Dictionary[int, Array] = {
 		6: decorative_tilemap.get_used_cells_by_id(6),
 		2: decorative_tilemap.get_used_cells_by_id(2),
-		3: decorative_tilemap.get_used_cells_by_id(3),
+		12: decorative_tilemap.get_used_cells_by_id(12),
 		11: decorative_tilemap.get_used_cells_by_id(11),
 	}
 	
@@ -1155,19 +1166,25 @@ func load_logic(path_name:String="") -> void:
 		if json != null: # If there was no error parsing the text
 			#var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) 
 			# Convert json into native Godot types
+			
+			# Get the decorative tilemap data if it exists
 			var decorative_tilemap_data:Dictionary[int, Array] = {}
 			if "DecorativeTilemap" in json:
 				decorative_tilemap_data = JSON.to_native(json["DecorativeTilemap"])
 			
+			# Get bonus params if they exist in the file
 			var tile_pos_to_bonus_params:Dictionary[Vector2i, Dictionary] = {}
 			if "TilePosBonusParameters" in json:
 				tile_pos_to_bonus_params = JSON.to_native(json["TilePosBonusParameters"])
 			
-			
+			# Load the background type if it exists
 			if "BackgroundType" in json:
 				background_type = JSON.to_native(json["BackgroundType"])
 			
-			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
+			
+			var object_string_tile_pos = {}
+			if "ObjectStringTilePos" in json:
+				object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
 			
 			
 			
@@ -1237,10 +1254,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	# Camera Zooming In and Out
 	if Input.is_action_pressed("camera_scroll_out"):
-		camera.zoom *= 0.8
-		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
+		var temp_zoom = camera.zoom - Vector2(0.5,0.5)
+		
+		camera.zoom = temp_zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
 	if Input.is_action_pressed("camera_scroll_in"):
-		camera.zoom *= 1.2
+		camera.zoom += Vector2(0.5,0.5)
 		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
 	if Input.is_action_just_pressed("camera_scroll_reset"):
 		camera.zoom = Vector2(1,1)
@@ -1251,6 +1269,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	# When pause is pressed
 	if Input.is_action_just_pressed("escape"):
 		place_held_down = false
+
+
 
 
 

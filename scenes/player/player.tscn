@@ -145,6 +145,7 @@ position = Vector2(3, 0)
 scale = Vector2(1.8, 0.8)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
+debug_color = Color(0.633638, 0.528005, 5.77569e-07, 0.42)
 
 [node name="SuperHitbox" type="Area2D" parent="."]
 position = Vector2(0, 1)

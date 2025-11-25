@@ -115,13 +115,16 @@ func _enable_drill_detector(_vel:Vector2):
 			sprite.flip_h = false
 	elif sprite.flip_h == true:
 		sprite.rotation += PI
-		
+	
+	if _vel.y > 0 and _vel.x < 0:
+		collision.position.y = -4.0
+	
 		#sprite.rotation += PI
 	
 	# Allows drilling from  at weird angles
 	if _vel.angle() >= -2.35619449615479 && _vel.angle() <= -0.78539818525314:
 		#collision.rotation += PI
-		#collision.position.y = -2.0
+		#collision.position.y = 2.0
 		pass
 
 # Re-enable movement after a bounce
