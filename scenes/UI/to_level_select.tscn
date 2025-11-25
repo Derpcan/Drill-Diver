@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cw4tuxjyhynfu" path="res://scenes/UI/to_level_select.gd" id="1_jxaos"]
 [ext_resource type="Script" uid="uid://ci8mvuro6jqfh" path="res://scripts/UI/menus/level_select_button.gd" id="1_vm4vn"]
-[ext_resource type="Material" uid="uid://bjh6wpqn61kv5" path="res://scenes/main_menu.tres" id="2_5yme4"]
+[ext_resource type="Material" uid="uid://bllu6maur3p6f" path="res://scenes/main_menu.tres" id="2_5yme4"]
 [ext_resource type="Texture2D" uid="uid://cuemrkgn6e26i" path="res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export3.png" id="2_a3f7q"]
 [ext_resource type="Texture2D" uid="uid://b0dwfsjh4xp03" path="res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export4.png" id="3_5yme4"]
 [ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="5_0v8uv"]
@@ -31,6 +31,7 @@ texture_pressed = ExtResource("3_5yme4")
 script = ExtResource("1_vm4vn")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Button"]
+layout_mode = 0
 offset_left = 7.00002
 offset_top = 6.00002
 offset_right = 445.0

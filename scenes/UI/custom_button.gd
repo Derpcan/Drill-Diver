@@ -5,7 +5,7 @@ class_name CustomButton
 var mat = material
 
 @onready var label:Label = $HBoxContainer/Label
-
+@onready var textBox:HBoxContainer = $HBoxContainer
 @export var button_string:String:
 	set(new_string):
 		button_string = new_string
@@ -23,9 +23,15 @@ func _handle_on_press():
 
 
 func _on_mouse_entered():
-	mat.set_shader_parameter("useHologram", true)
-	scale *= 1.1
+	#mat.set_shader_parameter("useHologram", true)
+	textBox.position.y = 4.579
+	
  
 func _on_mouse_exited():
-	mat.set_shader_parameter("useHologram", false)
-	scale /= 1.1
+	#mat.set_shader_parameter("useHologram", false)
+	textBox.position.y = 2.579
+	
+
+
+func _on_button_down():
+	textBox.position.y = 6.579
