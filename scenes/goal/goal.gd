@@ -22,7 +22,7 @@ func _on_area_2d_area_entered(area):
 	if blown_up == false:
 		get_tree().get_first_node_in_group("hud").visible = false
 		if Sranktime == 0:
-			ranking._set_S_rank_time(get_parent().s_rank_time)
+			ranking._set_S_rank_time(get_tree().current_scene.s_rank_time)
 		else:
 			ranking._set_S_rank_time(Sranktime)
 		

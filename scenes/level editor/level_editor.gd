@@ -1109,9 +1109,6 @@ func save_logic() -> void:
 	# Save the decorative map
 	file.store_string("\"DecorativeTilemap\":\n")
 	file.store_string(JSON.stringify(JSON.from_native(decorative_tile_map_dict)))
-	#file.store_string(JSON.stringify(JSON.from_native(6)) + ":" + JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(6)))+",\n")
-	#file.store_string(JSON.stringify(JSON.from_native(2)) + ":" + JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(2)))+",\n")
-	#file.store_string(JSON.stringify(JSON.from_native(3)) + ":" + JSON.stringify(JSON.from_native(decorative_tilemap.get_used_cells_by_id(3)))+"\n")
 	file.store_string(",\n")
 	
 	

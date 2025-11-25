@@ -15,6 +15,9 @@ class_name TestCustomLevelEditor
 
 @export var object_node:Node2D
 
+
+@export var to_level_select:CanvasLayer
+
 func _ready() -> void:
 	load_logic(level_file_path)
 
@@ -22,6 +25,10 @@ func _ready() -> void:
 var selected_tile:String = "Ground"
 var selected_object:PackedScene = null
 var object_string:String = ""
+
+var background_type:String = "Cave Background":
+	set(new_string):
+		background_type = new_string
 
 enum tile_types {
 	UNDRILLABLE, # Hard material, used for floors or roofs that can't be passed
@@ -82,29 +89,49 @@ func load_logic(path_name:String="") -> void:
 		# Parse the text from the file in json style
 		var json = JSON.parse_string(json_string)
 		if json != null: # If there was no error parsing the text
-			#var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) 
-			# Convert json into native Godot types
-			var decorative_tilemap_data
+			
+			# Get the decorative tilemap data if it exists
+			var decorative_tilemap_data:Dictionary[int, Array] = {}
 			if "DecorativeTilemap" in json:
 				decorative_tilemap_data = JSON.to_native(json["DecorativeTilemap"])
 			
-			var tile_pos_to_bonus_params:Dictionary = {}
+			# Get bonus params if they exist in the file
+			var tile_pos_to_bonus_params:Dictionary[Vector2i, Dictionary] = {}
 			if "TilePosBonusParameters" in json:
 				tile_pos_to_bonus_params = JSON.to_native(json["TilePosBonusParameters"])
 			
-			var object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
+			# Load the background type if it exists
+			if "BackgroundType" in json:
+				background_type = JSON.to_native(json["BackgroundType"])
+			
+			
+			var object_string_tile_pos = {}
+			if "ObjectStringTilePos" in json:
+				object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
+			
 			
 			selected_object = null
 			object_string = ""
 			
 			var object_bonus_parameters = {}
 			
+			
 			if decorative_tilemap_data:
-				for id in range(len(decorative_tilemap_data)):
-					for pos:Vector2i in decorative_tilemap_data[id]:
-						selected_tile = decorative_source_id_to_tile_name[id]
-						LevelEditor.static_set_tile(physics_tilemap, "Physics", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
-						LevelEditor.static_set_tile(decorative_tilemap, "Decorative", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
+				for id:int in LevelEditor.decorative_source_id_to_tile_name.keys():#range(len(decorative_tilemap_data)):
+					print(id)
+					print(decorative_tilemap_data.has(id))
+					if decorative_tilemap_data.has(id):
+						for pos:Vector2i in decorative_tilemap_data[id]:
+							selected_tile = LevelEditor.decorative_source_id_to_tile_name[id]
+							LevelEditor.static_set_tile(physics_tilemap, "Physics", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
+							LevelEditor.static_set_tile(decorative_tilemap, "Decorative", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
+			
+			#if decorative_tilemap_data:
+				#for id in range(len(decorative_tilemap_data)):
+					#for pos:Vector2i in decorative_tilemap_data[id]:
+						#selected_tile = decorative_source_id_to_tile_name[id]
+						#LevelEditor.static_set_tile(physics_tilemap, "Physics", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
+						#LevelEditor.static_set_tile(decorative_tilemap, "Decorative", pos, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, true)
 			
 			
 			selected_tile = "Ground"
@@ -133,6 +160,16 @@ func load_logic(path_name:String="") -> void:
 						$Player.global_position = obj.global_position
 						$GameCamera.global_position = $Player.global_position
 						pass
+					
+					if object_string == "Goal":
+						var obj:Goal = tile_pos_to_object_dictionary[object_string_name_to_tile_pos[object_string][0]]["object"]
+						obj.score_shown.connect(to_level_select._make_visible)
+			
+			
+			if "BestTimeCompleted" in json:
+				s_rank_time = JSON.to_native(json["BestTimeCompleted"])
+			print(s_rank_time)
+			
 			
 			object_string = ""
 			selected_object = null
@@ -143,15 +180,17 @@ func load_logic(path_name:String="") -> void:
 func fix_physics_tile_map() -> void:
 	for tile_position:Vector2i in decorative_tilemap.get_used_cells():
 		var tile_atlas_coords:Vector2i = decorative_tilemap.get_cell_atlas_coords(tile_position)
-		if LevelEditor.decorative_tiles_slope_to_physics_slope.has(tile_atlas_coords):
+		var source_id:int = decorative_tilemap.get_cell_source_id(tile_position)
+		if LevelEditor.decorative_tiles_slope_to_physics_slope.has(tile_atlas_coords) and source_id == 6:
 			var new_tile_data = LevelEditor.physics_tile_type_to_tile_data_dictionary[LevelEditor.decorative_tiles_slope_to_physics_slope[tile_atlas_coords]]
 			physics_tilemap.set_cell(tile_position, new_tile_data[0], new_tile_data[1], new_tile_data[2])
 		else:
+			selected_tile = LevelEditor.decorative_source_id_to_tile_name[source_id]
 			var tile_data:Array = LevelEditor.static_get_tile(physics_tilemap, selected_tile)["Physics"]
-			var source_id:int = tile_data[0]
+			var source_id2:int = tile_data[0]
 			var atlas_coord:Vector2i = tile_data[1]
 			var alt_tile:int = tile_data[2]
-			physics_tilemap.set_cell(tile_position, source_id,atlas_coord, alt_tile)
+			physics_tilemap.set_cell(tile_position, source_id2, atlas_coord, alt_tile)
 
 
 func load_level() -> void:
