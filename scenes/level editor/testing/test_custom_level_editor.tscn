@@ -1,9 +1,11 @@
-[gd_scene load_steps=25 format=4 uid="uid://b2hwgsvgpc2ci"]
+[gd_scene load_steps=27 format=4 uid="uid://b2hwgsvgpc2ci"]
 
 [ext_resource type="PackedScene" uid="uid://bjlp87podhpig" path="res://scenes/system/OnLevelLoaded.tscn" id="1_kn7qf"]
 [ext_resource type="Script" uid="uid://bwj82v7g3kfuu" path="res://scenes/level editor/testing/test_custom_level_editor.gd" id="1_ve8og"]
+[ext_resource type="PackedScene" uid="uid://bjshmay3nbdaf" path="res://scenes/level editor/cave_background.tscn" id="2_ug80q"]
 [ext_resource type="PackedScene" uid="uid://by6028i8q3uht" path="res://scenes/UI/hud.tscn" id="2_ve8og"]
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="3_2bioa"]
+[ext_resource type="PackedScene" uid="uid://dioff8s7qnbas" path="res://scenes/level editor/lab_background.tscn" id="3_p8fkf"]
 [ext_resource type="Script" uid="uid://b1p5pk5wugdfx" path="res://scenes/tile_map_layer.gd" id="5_0m4ro"]
 [ext_resource type="Texture2D" uid="uid://cfjggk5f6sk0p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Tiles/RunnerTileSet.png" id="5_es2ws"]
 [ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="6_7oqvf"]
@@ -1813,6 +1815,10 @@ physics_tilemap = NodePath("PhysicsTileMap")
 decorative_tilemap = NodePath("DecorativeTileMap")
 object_node = NodePath("ObjectNode")
 to_level_select = NodePath("ToLevelSelect")
+
+[node name="CaveBackground" parent="." instance=ExtResource("2_ug80q")]
+
+[node name="LabBackground" parent="." instance=ExtResource("3_p8fkf")]
 
 [node name="OnLevelLoaded" parent="." instance=ExtResource("1_kn7qf")]
 

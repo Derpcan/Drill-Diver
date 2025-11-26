@@ -29,6 +29,13 @@ var object_string:String = ""
 var background_type:String = "Cave Background":
 	set(new_string):
 		background_type = new_string
+		
+		if background_type == "Lab Background":
+			$LabBackground.show()
+			$CaveBackground.hide()
+		if background_type == "Cave Background":
+			$LabBackground.hide()
+			$CaveBackground.show()
 
 enum tile_types {
 	UNDRILLABLE, # Hard material, used for floors or roofs that can't be passed
