@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=31 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://xx6j5sqf5pti" path="res://assets/lab-game-tileset-pixel-art/LabTileSet.png" id="9_0qn5d"]
 [ext_resource type="Texture2D" uid="uid://rriysr434m0u" path="res://assets/Dirt.png" id="10_gar71"]
 [ext_resource type="PackedScene" uid="uid://3yxhmq851bsq" path="res://scenes/level editor/check_to_edit.tscn" id="11_r6hoa"]
+[ext_resource type="PackedScene" uid="uid://jr7yio3vpmam" path="res://scenes/UI/loading_screen/loading_screen.tscn" id="16_jqrrb"]
 
 [sub_resource type="Animation" id="Animation_cwu4w"]
 length = 0.001
@@ -1985,3 +1986,5 @@ text = "Stop Testing"
 
 [node name="CheckToEdit" parent="." instance=ExtResource("11_r6hoa")]
 visible = false
+
+[node name="LoadingScreen" parent="." instance=ExtResource("16_jqrrb")]

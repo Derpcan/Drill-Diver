@@ -7,6 +7,18 @@ class_name KeyLogger
 @export var input_component:InputComponent
 var folder_path:String = "user://test_data/inputlogs"
 var save_path:String = folder_path + "/intputlog.json"
+var file_name:String = "":
+	set(new_file_name):
+		file_name = new_file_name
+		
+		_set_up_key_logger()
+
+
+var time_to_beat_level:float = 9999999999999:
+	set(new_time):
+		time_to_beat_level = new_time
+		
+
 
 # The frame offset (When this scene is created, set in _ready function)
 var frame_offset:int = 0
@@ -33,7 +45,7 @@ func _ready() -> void:
 	
 	# Set the frame offset
 	frame_offset = Engine.get_physics_frames()
-	print("Test Data is found in: ", OS.get_user_data_dir() + "/test_data/")
+	#print("Test Data is found in: ", OS.get_user_data_dir() + "/test_data/")
 	
 	# Connect the input components inputs
 	input_component.all_inputs.connect(_log_key_input)
@@ -53,15 +65,19 @@ func _set_up_key_logger() -> void:
 	DirAccess.make_dir_recursive_absolute(folder_path)
 	
 	# Create variables to store path of folders and the saved keylog
-	var temp_name:String = "inputlog"
-	var value:int = 0
+	#var temp_name:String = "inputlog"
+	#var value:int = 0
+	#
+	## Make a new file with a new name
+	#while FileAccess.file_exists(folder_path + "/" + temp_name + str(value) + ".json"):
+		#value += 1
 	
-	# Make a new file with a new name
-	while FileAccess.file_exists(folder_path + "/" + temp_name + str(value) + ".json"):
-		value += 1
+	if file_name == "":
+		return
 	
 	# Make a new savepath
-	save_path = folder_path + "/" + temp_name + str(value) + ".json"
+	save_path = folder_path + "temp.ghst"
+	#save_path = folder_path + "/" + temp_name + str(value) + ".json"
 	
 	# Open the file for writing
 	file = FileAccess.open(save_path, FileAccess.WRITE)
@@ -72,7 +88,8 @@ func _set_up_key_logger() -> void:
 
 # Log the keys this frame from the InputComponent
 func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_pressed:bool, dash_dir:Vector2, drill_vector:Vector2) -> void:
-	
+	if file == null:
+		return
 	
 	# Get the current frame (subtract frame offset to make replaying better)
 	var current_frame:int = Engine.get_physics_frames() - frame_offset
@@ -129,5 +146,40 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 
 # When the game is being closed we end the JSON string and then close the file
 func _exiting() -> void:
-	file.store_string("]\n}")
+	if file == null:
+		return
+	#file.store_string("]\n}")
+	file.store_string("],\n")
+	file.store_string("\"BestTime\":")
+	file.store_string(JSON.stringify(JSON.from_native(time_to_beat_level)) + "\n}")
 	file.close()
+	
+	var old_path:String = folder_path + "temp.ghst"
+	var new_path:String = folder_path + file_name
+	
+	
+	# Checks to see if a ghost already exists and if the time to beat is better
+	if FileAccess.file_exists(new_path):
+		var file:FileAccess = FileAccess.open(new_path, FileAccess.READ)
+		
+		# Get the text from the file
+		var json_string = file.get_as_text()
+		
+		if json_string == "": # See if the file is empty
+			return # Return early to not cause any errors
+		
+		# Parse the text from the file in json style
+		var json = JSON.parse_string(json_string)
+		if json != null: # If there was no error parsing the text
+			var best_time:float
+			if "BestTime" in json:
+				best_time = JSON.to_native(json["BestTime"])
+				
+				if time_to_beat_level > best_time:
+					DirAccess.remove_absolute(old_path)
+					return
+	
+	
+	
+	var error = DirAccess.rename_absolute(old_path, new_path)
+	print(error)

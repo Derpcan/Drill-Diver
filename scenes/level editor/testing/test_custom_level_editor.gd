@@ -4,6 +4,8 @@ class_name TestCustomLevelEditor
 ## Temporary to test Completion Times and Ending screen
 @export var s_rank_time:float = 10000
 
+@export var goal:Goal
+
 
 @export var level_file_path:String = "":
 	set(new_path):
@@ -18,8 +20,60 @@ class_name TestCustomLevelEditor
 
 @export var to_level_select:CanvasLayer
 
+var ghost_file_name:String:
+	set(new_file_name):
+		ghost_file_name = new_file_name + ".ghst"
+		
+		print(ghost_file_name)
+
+
+var ghost_folder_path:String = "user://ghosts/"
+
+
+
+func _relay_time_got_to_player(new_value:float) -> void:
+	var input_logger:KeyLogger = ($Player.get_node("InputLogger") as KeyLogger)
+	input_logger.time_to_beat_level = new_value
+
+
+
+func load_ghost_path() -> void:
+	$Ghost.input_component.folder_path = ghost_folder_path
+	$Ghost.input_component.json_name = ghost_file_name
+
+
+
 func _ready() -> void:
+	ghost_file_name = _slice_level_file_path_to_name(level_file_path)
+	set_up_ghost_directory()
+	set_up_player_input_saver()
+	load_ghost_path()
 	load_logic(level_file_path)
+
+
+func set_up_player_input_saver() -> void:
+	var input_logger:KeyLogger = ($Player.get_node("InputLogger") as KeyLogger)
+	input_logger.folder_path = ghost_folder_path
+	input_logger.file_name = ghost_file_name
+
+
+func set_up_ghost_directory() -> void:
+	# Create the directories needed to save the file
+	DirAccess.make_dir_recursive_absolute(ghost_folder_path)
+
+
+
+static func _slice_level_file_path_to_name(file_path:String) -> String:
+	var last_slash:int = file_path.rfind("/")
+	
+	var last_dot:int = file_path.find(".", last_slash)
+	
+	var output:String = file_path.substr(last_slash+1, last_dot)
+	output = output.trim_suffix(".lvl")
+	
+	return output
+
+
 
 
 var selected_tile:String = "Ground"
@@ -125,8 +179,6 @@ func load_logic(path_name:String="") -> void:
 			
 			if decorative_tilemap_data:
 				for id:int in LevelEditor.decorative_source_id_to_tile_name.keys():#range(len(decorative_tilemap_data)):
-					print(id)
-					print(decorative_tilemap_data.has(id))
 					if decorative_tilemap_data.has(id):
 						for pos:Vector2i in decorative_tilemap_data[id]:
 							selected_tile = LevelEditor.decorative_source_id_to_tile_name[id]
@@ -166,11 +218,16 @@ func load_logic(path_name:String="") -> void:
 						var obj:Node2D = tile_pos_to_object_dictionary[object_string_name_to_tile_pos[object_string][0]]["object"]
 						$Player.global_position = obj.global_position
 						$GameCamera.global_position = $Player.global_position
+						$Ghost.global_position = obj.global_position
+						$CheckpointManager.last_checkpoint_position = $Player.global_position
 						pass
 					
 					if object_string == "Goal":
 						var obj:Goal = tile_pos_to_object_dictionary[object_string_name_to_tile_pos[object_string][0]]["object"]
 						obj.score_shown.connect(to_level_select._make_visible)
+						goal = obj
+						goal.new_time_got.connect(_relay_time_got_to_player)
+						goal.new_time_got.connect(_compare_old_and_new_times)
 			
 			
 			if "BestTimeCompleted" in json:
@@ -183,6 +240,39 @@ func load_logic(path_name:String="") -> void:
 			file.close()
 			BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells())
 			fix_physics_tile_map()
+			
+			
+
+
+
+func _compare_old_and_new_times(new_time:float) -> void:
+	var old_time:float = -1
+	
+	var file_path:String = ghost_folder_path + ghost_file_name
+	# Checks to see if a ghost already exists and if the time to beat is better
+	if FileAccess.file_exists(file_path):
+		var file:FileAccess = FileAccess.open(file_path, FileAccess.READ)
+		
+		# Get the text from the file
+		var json_string = file.get_as_text()
+		
+		
+		if json_string == "": # See if the file is empty
+			return # Return early to not cause any errors
+		
+		# Parse the text from the file in json style
+		var json = JSON.parse_string(json_string)
+		if json.has("BestTime"):
+			old_time = JSON.to_native(json["BestTime"])
+	
+	
+	# Can use these values to determine which is better
+	# Old_time will be -1 if there wasn't a previous time
+	print("OLD: ", old_time)
+	print("NEW: ", new_time)
+	
+
+
 
 func fix_physics_tile_map() -> void:
 	for tile_position:Vector2i in decorative_tilemap.get_used_cells():

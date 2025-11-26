@@ -109,7 +109,8 @@ func _get_cache(ts: TileSet) -> Array:
 	watcher.set_script(load("res://addons/better-terrain/Watcher.gd"))
 	watcher.tileset = ts
 	watcher.trigger.connect(_purge_cache.bind(ts))
-	add_child(watcher)
+	call_deferred("add_child", watcher)
+	#add_child(watcher)
 	ts.changed.connect(watcher.activate)
 	
 	var types = {}

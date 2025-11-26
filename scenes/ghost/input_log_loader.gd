@@ -2,7 +2,20 @@ extends Node
 class_name KeyLogLoader
 
 ## The json_name for the file that should be read of input logs
-@export var json_name:String = "inputlog0.json"
+@export var json_name:String = "inputlog0.json":
+	set(new_json_name):
+		json_name = new_json_name
+		
+		# Load the key log file
+		_load_key_log_json()
+		
+		# Update the remove_up_to_frame value to the first input frame
+		remove_up_to_frame = find_first_input()
+		# Skip to the first input value
+		skip_to_frame(remove_up_to_frame)
+		
+		frame_to_input_dict = set_up_frame_to_dict()
+
 
 # The folder path to the input logs
 var folder_path:String = "user://test_data/inputlogs"
@@ -51,6 +64,7 @@ func _ready() -> void:
 	
 	# If the parent has a different name for the json file, swap to the override
 	json_name = parent.input_log_file_name
+	
 	
 	# If the parent has a different name for the folder path, swap to the override
 	folder_path = parent.input_log_folder_path
@@ -176,8 +190,9 @@ func skip_to_frame(remove_up_to_frame:int) -> void:
 
 func _load_key_log_json() -> void:
 	# Make a variable to store the path to the input log file
-	var save_path:String = folder_path + "/" + json_name
+	var save_path:String = folder_path + "" + json_name
 	
+	print(save_path)
 	# Check if the file exists
 	if FileAccess.file_exists(save_path):
 		# If the file exists, open it for reading
@@ -194,7 +209,11 @@ func _load_key_log_json() -> void:
 		if json != null: # If there was no error parsing the text
 			var native = JSON.to_native(json["D"]) # Convert json into native Godot types
 			key_array = native # Update the key_array
-			
+		
+		var best_time:float
+		if "BestTime" in json:
+			best_time = JSON.to_native(json["BestTime"])
+		
 			#
 			#for dict in native:
 				#print("move_dir = ",dict["move_dir"])
@@ -241,6 +260,7 @@ func _physics_process(delta: float) -> void:
 	
 	elapsed_time += delta # Update the elapsed time that has passed for input replaying
 	current_counted_frames += 1 # Increment the current counted frames
+	
 	
 	
 	# If there are no more inputs to replay

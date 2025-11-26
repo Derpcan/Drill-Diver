@@ -30,16 +30,20 @@ static var bonus_parameters_viewer_scene:PackedScene = preload("res://scenes/lev
 signal tile_placed()
 
 
+
+
+@onready var lab_background:ParallaxBackground = $LabBackground
+@onready var cave_background:ParallaxBackground = $CaveBackground
 var background_type:String = "Cave Background":
 	set(new_string):
 		background_type = new_string
 		
 		if background_type == "Lab Background":
-			$LabBackground.show()
-			$CaveBackground.hide()
+			lab_background.call_deferred("show")
+			cave_background.call_deferred("hide")
 		if background_type == "Cave Background":
-			$LabBackground.hide()
-			$CaveBackground.show()
+			lab_background.call_deferred("hide")
+			cave_background.call_deferred("show")
 
 
 var best_time_completed:float = 9223372036854775807:
@@ -289,6 +293,7 @@ func _ready() -> void:
 	$TestingHud/StopTestingButton.pressed.connect(_stop_testing)
 	
 	tile_placed.connect(_handle_level_changed)
+	finished_loading.connect(_hide_loading_screen)
 
 
 
@@ -558,7 +563,7 @@ static func static_delete_tile(
 	avoid_stack:bool, undo_stack:UndoStack
 ) -> void:
 	
-	tilemap.changed.emit()
+	#tilemap.changed.emit()
 	
 	# Decide if the Undo Stack should be avoided
 	if avoid_stack == false:
@@ -727,7 +732,8 @@ static func static_set_object(
 		static_add_bonus_params_to_objects(testing_mode, tile_position, object, tile_position_to_bonus_parameters)
 		
 		object.global_position = tilemap.map_to_local(tile_position)
-		object_node.add_child(object)
+		object_node.call_deferred("add_child", object)
+		#object_node.add_child(object)
 		
 		tile_position_to_object_dictionary[tile_position] = {"object":null, "object_name":""}
 		tile_position_to_object_dictionary[tile_position]["object"] = object
@@ -812,7 +818,6 @@ static func static_set_tile(
 	undo_stack:UndoStack = null,
 ) -> void:
 	if selected_object == null:
-		
 		# Get the tile data necessary to place selected tile
 		var tile_data:Array = static_get_tile(tilemap, selected_tile)[tilemap_type]
 		var source_id:int = tile_data[0]
@@ -840,7 +845,7 @@ static func static_set_tile(
 var loading_level:bool = true
 func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=false) -> void:
 	
-	decorative_tilemap.changed.emit()
+	#decorative_tilemap.changed.emit()
 	
 	# Check is level creator wants to reset time to continue working on level
 	if check_to_edit != null and players_beat_level and not loading_level:
@@ -1068,7 +1073,11 @@ var level_name:String = "level_0.json"
 func save_beat_level() -> void:
 	var temp_time:float = best_time_completed
 	
-	reload_tilemap_beat_level()
+	#reload_tilemap_beat_level()
+	
+	
+	#loading_thread.wait_to_finish()
+	
 	
 	best_time_completed = temp_time
 	
@@ -1105,6 +1114,9 @@ func save_logic() -> void:
 		11: decorative_tilemap.get_used_cells_by_id(11),
 	}
 	
+	if testing_mode:
+		decorative_tile_map_dict = testing_save_for_level_complete
+	
 	
 	# Save the decorative map
 	file.store_string("\"DecorativeTilemap\":\n")
@@ -1131,9 +1143,7 @@ func save_logic() -> void:
 
 
 
-
-# Loading Level
-func load_logic(path_name:String="") -> void:
+func _load_logic_async(path_name:String = "") -> void:
 	if load_or_save_ui:
 		load_or_save_ui.queue_free()
 		load_or_save_ui = null
@@ -1141,8 +1151,9 @@ func load_logic(path_name:String="") -> void:
 	save_path = path_name
 	
 	# Disconnect the signal
-	if decorative_tilemap.changed.is_connected(_handle_beat_level):
-		decorative_tilemap.changed.disconnect(_handle_beat_level)
+	#decorative_tilemap.call_deferred("disconnect", "changed", "_handle_beat_level")
+	#if decorative_tilemap.changed.is_connected(_handle_beat_level):
+		#decorative_tilemap.changed.disconnect(_handle_beat_level)
 	
 	# Load level from json file
 	if FileAccess.file_exists(save_path):
@@ -1192,14 +1203,14 @@ func load_logic(path_name:String="") -> void:
 			selected_object = null
 			object_string = ""
 			
+			
 			if decorative_tilemap_data:
 				for id:int in decorative_source_id_to_tile_name.keys():#range(len(decorative_tilemap_data)):
 					if decorative_tilemap_data.has(id):
 						for pos:Vector2i in decorative_tilemap_data[id]:
 							selected_tile = decorative_source_id_to_tile_name[id]
-							set_tile(physics_tilemap, pos)
+							#set_tile(physics_tilemap, pos)
 							set_tile(decorative_tilemap, pos,)
-			
 			
 			selected_tile = "Ground"
 			
@@ -1226,14 +1237,54 @@ func load_logic(path_name:String="") -> void:
 			if "BestTimeCompleted" in json:
 				best_time_completed = JSON.to_native(json["BestTimeCompleted"])
 			print(best_time_completed)
+			
+			
 	
-	
-	level_editor_hud.show()
+	if testing_mode == false:
+		level_editor_hud.call_deferred("show")
 	
 	prevent_tile_placement = false
 	
-	decorative_tilemap.changed.connect(_handle_level_changed)
+	#decorative_tilemap.changed.connect(_handle_level_changed)
 	loading_level = false
+	call_deferred("emit_signal", "finished_loading")
+
+
+
+signal finished_loading()
+
+
+func _hide_loading_screen() -> void:
+	if $LoadingScreen.visible or $LoadingScreen.hidden == false:
+		$LoadingScreen._stop_loading()
+		pass
+
+
+var loading_thread:Thread =  null
+# Loading Level
+func load_logic(path_name:String="") -> void:
+	
+	$LoadingScreen._start_loading()
+	
+	
+	
+	#_load_logic_async(path_name)
+	if loading_thread != null and not loading_thread.is_alive():
+		loading_thread = Thread.new()
+		loading_thread.start(
+			func() -> void:
+				_load_logic_async(path_name)
+		)
+	elif loading_thread == null:
+		loading_thread = Thread.new()
+		loading_thread.start(
+			func() -> void:
+				_load_logic_async(path_name)
+		)
+	
+	#thread.start(_load_logic_async, [path_name])
+	
+	
 
 
 func _input(event: InputEvent) -> void:
@@ -1279,8 +1330,21 @@ var on_level_loaded:Node = null
 
 var temp_bonus:Dictionary
 
+var testing_save_for_level_complete:Dictionary[int, Array] = {
+	
+}
+
 func test_level() -> void:
 	testing_mode = true
+	
+	
+	
+	testing_save_for_level_complete = {
+		6: decorative_tilemap.get_used_cells_by_id(6),
+		2: decorative_tilemap.get_used_cells_by_id(2),
+		12: decorative_tilemap.get_used_cells_by_id(12),
+		11: decorative_tilemap.get_used_cells_by_id(11),
+	}
 	
 	
 	save_logic()
@@ -1291,6 +1355,10 @@ func test_level() -> void:
 	
 	
 	reload_tilemaps()
+	
+	
+	if loading_thread != null and loading_thread.is_alive():
+		loading_thread.wait_to_finish()
 	
 	fix_physics_tile_map(physics_tilemap)
 	
@@ -1355,7 +1423,6 @@ func _handle_beat_level(new_time:float) -> void:
 
 
 func _stop_testing() -> void:
-	
 	testing_mode = false
 	game_camera.queue_free()
 	player.queue_free()
@@ -1365,7 +1432,7 @@ func _stop_testing() -> void:
 	
 	GameManager._handle_set_meter(0)
 	
-	level_editor_hud.show()
+	#level_editor_hud.show()
 	$TestingHud.hide()
 	
 	$LevelEditorHud/TestLevelButton.show()
@@ -1377,6 +1444,12 @@ func _stop_testing() -> void:
 	
 	
 	reload_tilemaps()
+	
+	if loading_thread != null and loading_thread.is_alive():
+		loading_thread.wait_to_finish()
+	
+	#level_editor_hud.show()
+	
 	object_bonus_parameters = temp_bonus
 
 
@@ -1392,7 +1465,9 @@ func reload_tilemap_beat_level() -> void:
 	tile_pos_to_object_dictionary.clear()
 	ignore_tiles.clear()
 	
-	load_logic(save_path)
+	_load_logic_async(save_path)
+	
+	#load_logic(save_path)
 
 
 func reload_tilemaps() -> void:
@@ -1411,7 +1486,9 @@ func reload_tilemaps() -> void:
 	tile_pos_to_object_dictionary.clear()
 	ignore_tiles.clear()
 	
-	load_logic(save_path)
+	_load_logic_async(save_path)
+	#load_logic(save_path)
+	
 	
 
 

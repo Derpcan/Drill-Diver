@@ -1843,17 +1843,30 @@ physics_tile_map = NodePath("../PhysicsTileMap")
 
 [node name="ObjectNode" type="Node2D" parent="."]
 
-[node name="CheckpointManager" parent="." node_paths=PackedStringArray("player", "game_camera") instance=ExtResource("6_es2ws")]
+[node name="CheckpointManager" parent="." node_paths=PackedStringArray("player", "ghost", "game_camera") instance=ExtResource("6_es2ws")]
 player = NodePath("../Player")
+ghost = NodePath("../Ghost")
 last_checkpoint_position = Vector2(204, 150)
 game_camera = NodePath("../GameCamera")
 
 [node name="Player" parent="." instance=ExtResource("7_2bioa")]
+position = Vector2(0, 1000)
 
 [node name="GameCamera" parent="." instance=ExtResource("8_www0j")]
 zoom = Vector2(4, 4)
 
 [node name="Ghost" parent="." instance=ExtResource("9_www0j")]
-input_log_file_name = "inputlog144.json"
+collision_mask = 1
+input_log_file_name = ""
+
+[node name="HurtBox" parent="Ghost" index="18"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Ghost/HurtBox" index="0"]
+shape = null
+disabled = true
 
 [node name="ToLevelSelect" parent="." instance=ExtResource("15_sm865")]
+
+[editable path="Ghost"]
