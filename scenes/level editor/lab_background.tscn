@@ -19,7 +19,6 @@ repeat_times = 200
 follow_viewport = false
 
 [node name="Sprite2D6" type="Sprite2D" parent="Parallax2D6"]
-scale = Vector2(1, 1)
 texture = ExtResource("1_7gmjb")
 
 [node name="Parallax2D5" type="Parallax2D" parent="."]
@@ -31,7 +30,6 @@ repeat_times = 200
 follow_viewport = false
 
 [node name="Sprite2D5" type="Sprite2D" parent="Parallax2D5"]
-scale = Vector2(1, 1)
 texture = ExtResource("2_poc7v")
 
 [node name="Parallax2D4" type="Parallax2D" parent="."]
@@ -43,7 +41,6 @@ repeat_times = 200
 follow_viewport = false
 
 [node name="Sprite2D4" type="Sprite2D" parent="Parallax2D4"]
-scale = Vector2(1, 1)
 texture = ExtResource("3_yjmug")
 
 [node name="Parallax2D3" type="Parallax2D" parent="."]
@@ -55,7 +52,6 @@ repeat_times = 200
 follow_viewport = false
 
 [node name="Sprite2D3" type="Sprite2D" parent="Parallax2D3"]
-scale = Vector2(1, 1)
 texture = ExtResource("4_pcae4")
 
 [node name="Parallax2D2" type="Parallax2D" parent="."]

@@ -16,7 +16,6 @@ repeat_times = 200
 follow_viewport = false
 
 [node name="Sprite2D3" type="Sprite2D" parent="Parallax2D3"]
-scale = Vector2(1, 1)
 texture = ExtResource("1_i3wjp")
 
 [node name="Parallax2D2" type="Parallax2D" parent="."]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://byidv4a683rw2"]
+[gd_scene load_steps=10 format=3 uid="uid://byidv4a683rw2"]
 
 [ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="1_3a4kp"]
-[ext_resource type="Texture2D" uid="uid://bo4jd7j6lh3fc" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button1.png" id="2_y5465"]
-[ext_resource type="Texture2D" uid="uid://cjf3agshmo73n" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button2.png" id="3_27sk0"]
+[ext_resource type="Texture2D" uid="uid://dckht6tau0u0u" path="res://assets/sprites/menu/UI_Gradient_Button_Medium_Lock_01a1.png" id="2_y5465"]
+[ext_resource type="Texture2D" uid="uid://b0t7erab26wxq" path="res://assets/sprites/menu/UI_Gradient_Button_Medium_Lock_01a3.png" id="3_27sk0"]
 [ext_resource type="Script" uid="uid://s3wewoj2cpm2" path="res://scenes/UI/custom_button.gd" id="4_3a4kp"]
+[ext_resource type="Texture2D" uid="uid://r4fvceb24nh5" path="res://assets/sprites/menu/UI_Gradient_Button_Medium_Lock_01a2.png" id="4_uugvw"]
 [ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="5_f1fa4"]
 
 [sub_resource type="Shader" id="Shader_gw5y6"]
@@ -70,7 +71,6 @@ shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
 [sub_resource type="LabelSettings" id="LabelSettings_fe07c"]
 font = ExtResource("5_f1fa4")
 font_size = 96
-font_color = Color(0.533333, 1, 0.105882, 1)
 
 [node name="CustomButtonSmall" type="TextureButton"]
 material = SubResource("ShaderMaterial_8dw33")
@@ -79,15 +79,16 @@ offset_bottom = 29.0
 scale = Vector2(3.49, 3.49)
 texture_normal = ExtResource("2_y5465")
 texture_pressed = ExtResource("3_27sk0")
+texture_hover = ExtResource("4_uugvw")
 script = ExtResource("4_3a4kp")
 button_string = "Back"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 16.0458
-offset_top = -1.14613
-offset_right = 367.046
-offset_bottom = 94.8538
+offset_left = 11.461
+offset_top = 2.579
+offset_right = 362.461
+offset_bottom = 98.5789
 scale = Vector2(0.219, 0.185)
 
 [node name="Label" type="Label" parent="HBoxContainer"]
@@ -96,5 +97,6 @@ text = "Back"
 label_settings = SubResource("LabelSettings_fe07c")
 horizontal_alignment = 1
 
+[connection signal="button_down" from="." to="." method="_on_button_down"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
