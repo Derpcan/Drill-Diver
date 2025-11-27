@@ -45,7 +45,11 @@ func load_ghost_path() -> void:
 
 func _ready() -> void:
 	ghost_file_name = _slice_level_file_path_to_name(level_file_path)
-	set_up_ghost_directory()
+	set_up_folder_directory(ghost_folder_path)
+	
+	if not check_file_exists(ghost_folder_path + ghost_file_name):
+		$Ghost.queue_free()
+	
 	set_up_player_input_saver()
 	load_ghost_path()
 	load_logic(level_file_path)
@@ -57,9 +61,13 @@ func set_up_player_input_saver() -> void:
 	input_logger.file_name = ghost_file_name
 
 
-func set_up_ghost_directory() -> void:
+static func check_file_exists(file_path:String) -> bool:
+	return FileAccess.file_exists(file_path)
+
+
+static func set_up_folder_directory(folder_path:String) -> void:
 	# Create the directories needed to save the file
-	DirAccess.make_dir_recursive_absolute(ghost_folder_path)
+	DirAccess.make_dir_recursive_absolute(folder_path)
 
 
 

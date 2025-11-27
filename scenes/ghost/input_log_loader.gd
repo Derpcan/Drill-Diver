@@ -192,7 +192,6 @@ func _load_key_log_json() -> void:
 	# Make a variable to store the path to the input log file
 	var save_path:String = folder_path + "" + json_name
 	
-	print(save_path)
 	# Check if the file exists
 	if FileAccess.file_exists(save_path):
 		# If the file exists, open it for reading

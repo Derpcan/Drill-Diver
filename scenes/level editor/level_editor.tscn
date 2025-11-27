@@ -396,6 +396,8 @@ texture = ExtResource("10_gar71")
 0: [2],
 3: [2],
 4: [2],
+8: [0],
+12: [0],
 &"type": 2
 }
 1:0/0 = 0
@@ -436,9 +438,11 @@ texture = ExtResource("10_gar71")
 }
 5:0/0 = 0
 5:0/0/metadata/_better_terrain = {
+0: [0],
 4: [2],
 7: [2],
 8: [2],
+12: [0],
 &"type": 2
 }
 6:0/0 = 0
@@ -802,6 +806,8 @@ texture = ExtResource("10_gar71")
 0:5/0 = 0
 0:5/0/metadata/_better_terrain = {
 0: [2],
+4: [0],
+8: [0],
 12: [2],
 15: [2],
 &"type": 2
@@ -1689,8 +1695,8 @@ margins = Vector2i(0, 1)
 0:6/0/metadata/_better_terrain = {
 0: [0],
 4: [0],
-8: [2],
-12: [2],
+8: [2, 1],
+12: [2, 1],
 &"type": 0
 }
 1:6/0 = 0
@@ -1713,8 +1719,10 @@ margins = Vector2i(0, 1)
 2:6/0/terrains_peering_bit/bottom_side = 0
 2:6/0/terrains_peering_bit/left_side = 0
 2:6/0/metadata/_better_terrain = {
+0: [1, 2],
 4: [0],
 8: [0],
+12: [2, 1],
 &"type": 0
 }
 3:6/0 = 0
@@ -1772,6 +1780,8 @@ margins = Vector2i(0, 1)
 0:8/0/terrains_peering_bit/top_side = 0
 0:8/0/metadata/_better_terrain = {
 0: [0],
+4: [2, 1],
+8: [2, 1],
 12: [0],
 &"type": 0
 }
@@ -1795,6 +1805,8 @@ margins = Vector2i(0, 1)
 2:8/0/terrains_peering_bit/left_side = 0
 2:8/0/terrains_peering_bit/top_side = 0
 2:8/0/metadata/_better_terrain = {
+0: [2, 1],
+4: [2, 1],
 8: [0],
 12: [0],
 &"type": 0

@@ -577,8 +577,10 @@ static func static_delete_tile(
 					undo_stack.push(["Ground", "", tile_position, {}], true)
 				2: # 2 Is the source ID for SuperDrillable in the Decorative Tilemap
 					undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
-				3: # 3 Is the source ID for Dirt in the Decorative Tilemap
+				12: # 3 Is the source ID for Dirt in the Decorative Tilemap
 					undo_stack.push(["Dirt", "", tile_position, {}], true)
+				11:
+					undo_stack.push(["Lab", "", tile_position, {}], true)
 	
 	# Set the cell to nothing hence deleting it
 	tilemap.set_cell(tile_position, -1, Vector2i(-1,-1), 0)
@@ -709,10 +711,16 @@ static func static_set_object(
 	if not static_check_can_add_goal(object_string_to_tile_position) and object_string == "Goal" and tile_position not in ignore_tiles:
 		static_delete_all_by_object_name("Goal", tilemap, tile_position, object_string_to_tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, ignore_tiles, avoid_stack, undo_stack)
 	
-	static_delete_tile(tilemap, tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, true, ignore_tiles, avoid_stack, undo_stack)
-	
+	#if object_string != "Gem":
+	if (tilemap.get_cell_tile_data(tile_position) == null and object_string == "Gem"):
+		static_delete_tile(tilemap, tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, true, ignore_tiles, avoid_stack, undo_stack)
+	#else:
+		#static_delete_tile(tilemap, tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, true, ignore_tiles, avoid_stack, undo_stack)
+		
+		
+		
 	# Check to see if a tile is there already
-	if tilemap.get_cell_tile_data(tile_position) != null:
+	if tilemap.get_cell_tile_data(tile_position) != null and object_string != "Gem":
 		tilemap.erase_cell(tile_position)
 	
 	if tile_position not in ignore_tiles:
