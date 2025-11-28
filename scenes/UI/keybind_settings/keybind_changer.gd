@@ -1,5 +1,5 @@
 @tool
-extends HBoxContainer
+extends PanelContainer
 class_name KeybindChanger
 
 
@@ -33,8 +33,8 @@ var current_keyboard_input_bind:InputEvent:
 		
 		if keyboard_bind_button != null :
 			if current_keyboard_input_bind == null:
-				keyboard_bind_button.text = ""
-				keyboard_bind_button.hide()
+				keyboard_bind_button.text = "No Keyboard Input Set"
+				#keyboard_bind_button.hide()
 			else:
 				keyboard_bind_button.text = current_keyboard_input_bind.as_text()
 				keyboard_bind_button.show()
@@ -54,8 +54,8 @@ var current_controller_input_bind:InputEvent:
 		
 		if controller_bind_button != null:
 			if current_controller_input_bind == null:
-				controller_bind_button.text = ""
-				controller_bind_button.hide()
+				controller_bind_button.text = "No Controller Input Set"
+				#controller_bind_button.hide()
 			else:
 				controller_bind_button.text = current_controller_input_bind.as_text()
 				controller_bind_button.show()
@@ -76,26 +76,26 @@ var current_mouse_input_bind:InputEvent:
 		
 		if mouse_bind_button != null:
 			if current_mouse_input_bind == null:
-				mouse_bind_button.text = ""
-				mouse_bind_button.hide()
+				mouse_bind_button.text = "No Mouse Input Set"
+				#mouse_bind_button.hide()
 			else:
 				mouse_bind_button.text = current_mouse_input_bind.as_text()
 				mouse_bind_button.show()
 
 
-@onready var action_name_label:Label = $ActionName
-@onready var keyboard_bind_button:Button = $KeyboardBind
-@onready var controller_bind_button:Button = $ControllerBind
-@onready var reset_binds_button:Button = $Reset
-@onready var mouse_bind_button:Button = $MouseBind
+@export var action_name_label:Label
+@export var keyboard_bind_button:Button
+@export var controller_bind_button:Button
+@export var mouse_bind_button:Button
+@export var reset_binds_button:Button
 
 func _ready() -> void:
 	
 	action_name_label.text = action_name_display
 	
-	keyboard_bind_button.hide()
-	controller_bind_button.hide()
-	mouse_bind_button.hide()
+	#keyboard_bind_button.hide()
+	#controller_bind_button.hide()
+	#mouse_bind_button.hide()
 	
 	if keyboard_bind_button:
 		keyboard_bind_button.pressed.connect(_listen_for_input)

@@ -2,35 +2,58 @@
 
 [ext_resource type="Script" uid="uid://bnbfy4pataog8" path="res://scenes/UI/keybind_settings/keybind_changer.gd" id="1_rtft6"]
 
-[node name="KeybindChanger" type="HBoxContainer"]
-offset_right = 40.0
+[node name="KeybindChanger" type="PanelContainer" node_paths=PackedStringArray("action_name_label", "keyboard_bind_button", "controller_bind_button", "mouse_bind_button", "reset_binds_button")]
+self_modulate = Color(1, 1, 1, 0.411765)
+offset_right = 722.0
 offset_bottom = 40.0
-size_flags_horizontal = 3
-theme_override_constants/separation = 15
 script = ExtResource("1_rtft6")
+action_name_label = NodePath("MarginContainer/Panel/ActionName")
+keyboard_bind_button = NodePath("MarginContainer/Panel/KeyboardBind")
+controller_bind_button = NodePath("MarginContainer/Panel/ControllerBind")
+mouse_bind_button = NodePath("MarginContainer/Panel/MouseBind")
+reset_binds_button = NodePath("MarginContainer/Panel/Reset")
 
-[node name="ActionName" type="Label" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ActionName" type="Label" parent="MarginContainer/Panel"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Example: "
 horizontal_alignment = 1
 
-[node name="KeyboardBind" type="Button" parent="."]
-visible = false
+[node name="VSeparator4" type="VSeparator" parent="MarginContainer/Panel"]
+layout_mode = 2
+
+[node name="KeyboardBind" type="Button" parent="MarginContainer/Panel"]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
-text = "Space Bar"
+text = "No Keyboard Input Set"
 
-[node name="ControllerBind" type="Button" parent="."]
-visible = false
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Panel"]
 layout_mode = 2
-text = "Joypad Button 0"
 
-[node name="MouseBind" type="Button" parent="."]
-visible = false
+[node name="ControllerBind" type="Button" parent="MarginContainer/Panel"]
 layout_mode = 2
-text = "Mouse Click"
+text = "No Controller Input Set"
 
-[node name="Reset" type="Button" parent="."]
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/Panel"]
+layout_mode = 2
+
+[node name="MouseBind" type="Button" parent="MarginContainer/Panel"]
+layout_mode = 2
+text = "No Mouse Input Set"
+
+[node name="VSeparator3" type="VSeparator" parent="MarginContainer/Panel"]
+layout_mode = 2
+
+[node name="Reset" type="Button" parent="MarginContainer/Panel"]
 layout_mode = 2
 text = "Reset"
