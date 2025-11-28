@@ -729,7 +729,7 @@ static func static_set_object(
 	if tilemap.get_cell_tile_data(tile_position) != null and object_string != "Gem":
 		tilemap.erase_cell(tile_position)
 	
-	if tile_position not in ignore_tiles:
+	if tile_position not in ignore_tiles or object_string == "Gem":
 		# Add new object to tree and dictionary
 		var object:Object = selected_object.instantiate()
 		
