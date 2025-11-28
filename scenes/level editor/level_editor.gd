@@ -124,6 +124,10 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 		
 		# If the place button is being held down
 		if place_held_down:
+			
+			if loading_level == true:
+				return
+			
 			# Complete the line between the two points in case there are skips
 			for point in line(previous_tilemap_mouse_postion, tilemap_mouse_position):
 				if is_deleting == false:
@@ -294,6 +298,8 @@ func _ready() -> void:
 	
 	tile_placed.connect(_handle_level_changed)
 	finished_loading.connect(_hide_loading_screen)
+	
+	tree_exiting.connect(_reconnect_threads)
 
 
 
@@ -1039,6 +1045,9 @@ func place_tile_input_logic(event:InputEvent) -> void:
 	if testing_mode == true:
 		return
 	
+	if loading_level == true:
+		return
+	
 	if event is InputEventMouse:
 		# Get the mouse position
 		mouse_position = get_global_mouse_position()
@@ -1263,32 +1272,43 @@ signal finished_loading()
 
 
 func _hide_loading_screen() -> void:
-	if $LoadingScreen.visible or $LoadingScreen.hidden == false:
-		$LoadingScreen._stop_loading()
-		pass
+	#if $LoadingScreen.visible or $LoadingScreen.hidden == false:
+		#$LoadingScreen._stop_loading()
+	pass
 
 
 var loading_thread:Thread =  null
 # Loading Level
 func load_logic(path_name:String="") -> void:
 	
-	$LoadingScreen._start_loading()
+	#$LoadingScreen._start_loading()
 	
-	
+	_load_logic_async(path_name)
 	
 	#_load_logic_async(path_name)
-	if loading_thread != null and not loading_thread.is_alive():
-		loading_thread = Thread.new()
-		loading_thread.start(
-			func() -> void:
-				_load_logic_async(path_name)
-		)
-	elif loading_thread == null:
-		loading_thread = Thread.new()
-		loading_thread.start(
-			func() -> void:
-				_load_logic_async(path_name)
-		)
+	#if loading_thread != null and not loading_thread.is_alive():
+		#if loading_thread.is_started():
+			#loading_thread.wait_to_finish()
+		#loading_thread = Thread.new()
+		#
+		#loading_thread.start(
+			#func() -> void:
+				#_load_logic_async(path_name)
+		#)
+	#if loading_thread == null:
+		#loading_thread = Thread.new()
+		#loading_thread.start(
+			#func() -> void:
+				#_load_logic_async(path_name)
+		#)
+	#elif loading_thread != null:
+		#loading_thread.wait_to_finish()
+		#loading_thread = Thread.new()
+		#
+		#loading_thread.start(
+			#func() -> void:
+				#_load_logic_async(path_name)
+		#)
 	
 	#thread.start(_load_logic_async, [path_name])
 	
@@ -1299,6 +1319,9 @@ func _input(event: InputEvent) -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
+	if loading_level == true:
+		return
+	
 	if Input.is_action_just_pressed("editor_save_level_editor"):
 		print("Saved")
 		save_logic()
@@ -1342,32 +1365,8 @@ var testing_save_for_level_complete:Dictionary[int, Array] = {
 	
 }
 
-func test_level() -> void:
-	testing_mode = true
-	
-	
-	
-	testing_save_for_level_complete = {
-		6: decorative_tilemap.get_used_cells_by_id(6),
-		2: decorative_tilemap.get_used_cells_by_id(2),
-		12: decorative_tilemap.get_used_cells_by_id(12),
-		11: decorative_tilemap.get_used_cells_by_id(11),
-	}
-	
-	
-	save_logic()
-	
-	
-	temp_bonus = object_bonus_parameters
-	object_bonus_parameters = {}
-	
-	
-	reload_tilemaps()
-	
-	
-	if loading_thread != null and loading_thread.is_alive():
-		loading_thread.wait_to_finish()
-	
+
+func _finish_test_play_setup() -> void:
 	fix_physics_tile_map(physics_tilemap)
 	
 	
@@ -1422,6 +1421,41 @@ func test_level() -> void:
 	
 	
 	$TestingHud.show()
+	
+	finished_loading.disconnect(_finish_test_play_setup)
+
+
+func test_level() -> void:
+	testing_mode = true
+	
+	
+	
+	testing_save_for_level_complete = {
+		6: decorative_tilemap.get_used_cells_by_id(6),
+		2: decorative_tilemap.get_used_cells_by_id(2),
+		12: decorative_tilemap.get_used_cells_by_id(12),
+		11: decorative_tilemap.get_used_cells_by_id(11),
+	}
+	
+	
+	save_logic()
+	
+	
+	temp_bonus = object_bonus_parameters
+	object_bonus_parameters = {}
+	
+	
+	# Connect to signal so it continues to load
+	finished_loading.connect(_finish_test_play_setup)
+	
+	
+	reload_tilemaps()
+	
+	#if loading_thread != null and loading_thread.is_alive():
+		#loading_thread.wait_to_finish()
+	
+	
+	
 
 
 func _handle_beat_level(new_time:float) -> void:
@@ -1430,8 +1464,20 @@ func _handle_beat_level(new_time:float) -> void:
 	#save_logic()
 
 
+
+func _finish_stop_testing() -> void:
+	object_bonus_parameters = temp_bonus
+	
+	place_held_down = false
+	
+	
+	finished_loading.disconnect(_finish_stop_testing)
+
+
 func _stop_testing() -> void:
 	testing_mode = false
+	
+	
 	game_camera.queue_free()
 	player.queue_free()
 	checkpoint_mangager.queue_free()
@@ -1450,15 +1496,21 @@ func _stop_testing() -> void:
 	physics_tilemap.player = null
 	
 	
+	# Connect to signal so it continues to load
+	finished_loading.connect(_finish_stop_testing)
 	
 	reload_tilemaps()
+	#_load_logic_async(save_path)
 	
-	if loading_thread != null and loading_thread.is_alive():
-		loading_thread.wait_to_finish()
+	
+	#if loading_thread != null and loading_thread.is_alive():
+		#loading_thread.wait_to_finish()
+	
+	_finish_stop_testing()
 	
 	#level_editor_hud.show()
 	
-	object_bonus_parameters = temp_bonus
+	
 
 
 func reload_tilemap_beat_level() -> void:
@@ -1494,8 +1546,8 @@ func reload_tilemaps() -> void:
 	tile_pos_to_object_dictionary.clear()
 	ignore_tiles.clear()
 	
-	_load_logic_async(save_path)
-	#load_logic(save_path)
+	#_load_logic_async(save_path)
+	load_logic(save_path)
 	
 	
 
@@ -1525,3 +1577,8 @@ func line(p0:Vector2i, p1:Vector2i):
 			err += dx
 			p0[1] += sy
 	return points
+
+
+func _reconnect_threads() -> void:
+	if loading_thread != null:
+		loading_thread.wait_to_finish()

@@ -9,8 +9,11 @@ func _ready() -> void:
 	hide()
 
 func _start_loading() -> void:
+	$StopLoadingAnimationPlayer.stop()
 	print("STARTING")
 	visible = true
+	hidden = false
+	$Node2D.modulate = Color(1,1,1,1)
 	$LoadingAnimationPlayer.play("start_load")
 
 
