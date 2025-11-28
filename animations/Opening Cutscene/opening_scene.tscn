@@ -1,0 +1,450 @@
+[gd_scene load_steps=29 format=3 uid="uid://cx3g6mgf1m8q3"]
+
+[ext_resource type="Script" uid="uid://dxea6gd4doond" path="res://animations/Opening Cutscene/opening_scene.gd" id="1_4w2sj"]
+[ext_resource type="Texture2D" uid="uid://bg6sokvsvjiy2" path="res://assets/sprites/Opening Scene/Capsule4.png" id="1_n7284"]
+[ext_resource type="Texture2D" uid="uid://baip20778wd55" path="res://assets/sprites/Opening Scene/Capsule5.png" id="2_3su5e"]
+[ext_resource type="Texture2D" uid="uid://ffmhfwi80afm" path="res://assets/sprites/bit/Bit_Dash.png" id="3_4dq0o"]
+[ext_resource type="Texture2D" uid="uid://cmddoqvfkkupo" path="res://assets/sprites/bit/Bit_Jump.png" id="4_4dq0o"]
+[ext_resource type="Texture2D" uid="uid://6lsoxu5vonks" path="res://assets/sprites/bit/Bit_Die.png" id="4_4w2sj"]
+[ext_resource type="PackedScene" uid="uid://bylp3hel486as" path="res://scenes/player/player.tscn" id="4_miunn"]
+[ext_resource type="Texture2D" uid="uid://dqmtakpt8vxfo" path="res://assets/sprites/bit/Bit_Idle.png" id="6_4w2sj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_07ype"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_n7284")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_3su5e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57sjv"]
+atlas = ExtResource("3_4dq0o")
+region = Rect2(0, 0, 55, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d72iw"]
+atlas = ExtResource("3_4dq0o")
+region = Rect2(55, 0, 55, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klpl6"]
+atlas = ExtResource("3_4dq0o")
+region = Rect2(110, 0, 55, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07ype"]
+atlas = ExtResource("4_4dq0o")
+region = Rect2(111, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1a0fr"]
+atlas = ExtResource("4_4w2sj")
+region = Rect2(0, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhyf5"]
+atlas = ExtResource("4_4w2sj")
+region = Rect2(37, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4jmp"]
+atlas = ExtResource("4_4w2sj")
+region = Rect2(74, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtk0p"]
+atlas = ExtResource("4_4w2sj")
+region = Rect2(111, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8l5f"]
+atlas = ExtResource("4_4w2sj")
+region = Rect2(148, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rl5k"]
+atlas = ExtResource("4_4w2sj")
+region = Rect2(185, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1jcm"]
+atlas = ExtResource("4_4w2sj")
+region = Rect2(222, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnx8f"]
+atlas = ExtResource("6_4w2sj")
+region = Rect2(0, 0, 33, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hocmx"]
+atlas = ExtResource("6_4w2sj")
+region = Rect2(33, 0, 33, 56)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rnx8f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57sjv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d72iw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klpl6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07ype")
+}],
+"loop": true,
+"name": &"Dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1a0fr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhyf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4jmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtk0p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m8l5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rl5k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1jcm")
+}],
+"loop": true,
+"name": &"Float",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rnx8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hocmx")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_ypeqt"]
+resource_name = "Floating_2"
+length = 4.16667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tube:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bit:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.336967, 0.433333, 0.533333, 1.00173, 1.30054),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 0, 1, 2, 3, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bit:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.00281811, 0.469485, 0.736151, 1.00833, 1.27003),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(3, -9), Vector2(3, -9), Vector2(95, -9), Vector2(95, -9), Vector2(95, 6)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Bit:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.334263, 0.420804),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.756863), Color(1, 1, 1, 0.756863), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Bit:animation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.336427, 1.26667, 3.53333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"Float", &"Dash", &"Idle", &"Float"]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Bit:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 2.06667, 2.86784),
+"transitions": PackedFloat32Array(1, 1, 1.07177),
+"update": 1,
+"values": [Vector2(1, 1), Vector2(-1, 1), Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Player:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.466667, 0.733333, 1.00552, 1.26721),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(3, -9), Vector2(3, -9), Vector2(95, -9), Vector2(95, -9), Vector2(95, 9.31)]
+}
+
+[sub_resource type="Animation" id="Animation_hocmx"]
+resource_name = "Floating"
+length = 2.66667
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tube:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bit:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bit:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.33333, 2.63333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(3, -9), Vector2(3, -8.5), Vector2(3, -9.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Bit:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.756863)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Bit:animation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Float"]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Player:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, -8.75)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Player:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_r8ir6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tube:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bit:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bit:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, -8.75)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Bit:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.756863)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Bit:animation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Float"]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Bit:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_miunn"]
+resource_name = "Start Gameplay"
+length = 0.333337
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bit:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bit:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ypeqt"]
+_data = {
+&"Break Out": SubResource("Animation_ypeqt"),
+&"Floating": SubResource("Animation_hocmx"),
+&"RESET": SubResource("Animation_r8ir6"),
+&"Start Gameplay": SubResource("Animation_miunn")
+}
+
+[node name="OpeningScene" type="Node2D" node_paths=PackedStringArray("animation")]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_4w2sj")
+animation = NodePath("AnimationPlayer")
+
+[node name="Tube" type="AnimatedSprite2D" parent="."]
+position = Vector2(10, -8)
+scale = Vector2(1.4375, 1.4375)
+sprite_frames = SubResource("SpriteFrames_07ype")
+
+[node name="Player" parent="." instance=ExtResource("4_miunn")]
+visible = false
+position = Vector2(3, -9)
+scale = Vector2(2, 2)
+
+[node name="Bit" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.756863)
+position = Vector2(3, -8.75)
+sprite_frames = SubResource("SpriteFrames_rnx8f")
+animation = &"Float"
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ypeqt")
+}
+
+[connection signal="break_out_ended" from="." to="." method="_on_break_out_ended"]

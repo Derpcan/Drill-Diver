@@ -1,12 +1,12 @@
-[gd_resource type="SpriteFrames" load_steps=40 format=3]
+[gd_resource type="SpriteFrames" load_steps=40 format=3 uid="uid://csf5i5ch8xaey"]
 
-[ext_resource type="Texture2D" path="res://assets/sprites/bit/Bit_Dash.png" id="1_pk8w4"]
-[ext_resource type="Texture2D" path="res://assets/sprites/bit/Bit_Die.png" id="2_6gksw"]
-[ext_resource type="Texture2D" path="res://assets/sprites/bit/Bit_Drill.png" id="3_o46cj"]
-[ext_resource type="Texture2D" path="res://assets/sprites/bit/Bit_Idle.png" id="4_unji1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/bit/Bit_Jump.png" id="5_iomgh"]
-[ext_resource type="Texture2D" path="res://assets/sprites/bit/Bit_run.png" id="6_v0607"]
-[ext_resource type="Texture2D" path="res://assets/sprites/bit/Bit_Super_Drill.png" id="7_u78ts"]
+[ext_resource type="Texture2D" uid="uid://ffmhfwi80afm" path="res://assets/sprites/bit/Bit_Dash.png" id="1_pk8w4"]
+[ext_resource type="Texture2D" uid="uid://6lsoxu5vonks" path="res://assets/sprites/bit/Bit_Die.png" id="2_6gksw"]
+[ext_resource type="Texture2D" uid="uid://cdt5gmvxi8xw" path="res://assets/sprites/bit/Bit_Drill.png" id="3_o46cj"]
+[ext_resource type="Texture2D" uid="uid://dqmtakpt8vxfo" path="res://assets/sprites/bit/Bit_Idle.png" id="4_unji1"]
+[ext_resource type="Texture2D" uid="uid://cmddoqvfkkupo" path="res://assets/sprites/bit/Bit_Jump.png" id="5_iomgh"]
+[ext_resource type="Texture2D" uid="uid://c78xh6qn3f8a3" path="res://assets/sprites/bit/Bit_run.png" id="6_v0607"]
+[ext_resource type="Texture2D" uid="uid://nc1g2lyuelns" path="res://assets/sprites/bit/Bit_Super_Drill.png" id="7_u78ts"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvtir"]
 atlas = ExtResource("1_pk8w4")

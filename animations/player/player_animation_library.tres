@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=8 format=3]
+[gd_resource type="AnimationLibrary" load_steps=8 format=3 uid="uid://c7hky4if3baw2"]
 
 [sub_resource type="Animation" id="Animation_7aoul"]
 length = 0.3
