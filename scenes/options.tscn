@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://xvhmd2g8ebjj"]
+[gd_scene load_steps=3 format=3 uid="uid://xvhmd2g8ebjj"]
 
 [ext_resource type="Script" uid="uid://cj1uoehvt0dbw" path="res://scripts/UI/menus/escape_options_button.gd" id="1_c2u1v"]
+[ext_resource type="Script" uid="uid://cb3ks14m5sple" path="res://scenes/keybind_button.gd" id="2_yjkok"]
 
 [node name="Options" type="Node2D"]
 
@@ -18,3 +19,11 @@ offset_right = 541.0
 offset_bottom = 438.0
 text = "Back"
 script = ExtResource("1_c2u1v")
+
+[node name="KeybindButton" type="Button" parent="."]
+offset_left = 585.0
+offset_top = 407.0
+offset_right = 715.0
+offset_bottom = 438.0
+text = "Edit Keybinds"
+script = ExtResource("2_yjkok")

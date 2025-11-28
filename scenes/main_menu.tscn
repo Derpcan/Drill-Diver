@@ -31,6 +31,8 @@ func _ready() -> void:
 	$TestDataPath.text = \"Test Data is found in:\\n\" + OS.get_user_data_dir() + \"/test_data/\"
 	$CopyPath.pressed.connect(_copy_path_to_clipboard)
 	
+	KeybindSettings.load_user_keybinds()
+	
 
 func _copy_path_to_clipboard() -> void:
 	DisplayServer.clipboard_set(OS.get_user_data_dir() + \"/test_data/\")

@@ -8,7 +8,7 @@ script/source = "extends CanvasLayer
 
 func _unhandled_input(event: InputEvent) -> void:
 	
-	if event.is_action_pressed(\"escape\"):
+	if event.is_action_pressed(\"game_escape\"):
 		get_viewport().set_input_as_handled()
 		SceneManager.pop_scene()
 "

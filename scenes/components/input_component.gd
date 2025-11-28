@@ -29,7 +29,7 @@ func _enable_inputs() -> void:
 # Get inputs during each physics process frame
 func _physics_process(delta: float) -> void:
 	# Get the direction of the characters input
-	var dir:Vector2 = Vector2(Input.get_action_strength("move_right")-Input.get_action_strength("move_left"), 0).normalized()
+	var dir:Vector2 = Vector2(Input.get_action_strength("game_move_right")-Input.get_action_strength("game_move_left"), 0).normalized()
 	
 	# --- NEW: Update the last facing direction ---
 	if dir.x != 0:
@@ -40,14 +40,14 @@ func _physics_process(delta: float) -> void:
 	var jump_direction:Vector2 = Vector2.ZERO
 	var dash_dir:Vector2 = Vector2.ZERO
 	var super_drill_dir:Vector2 = Vector2.ZERO
-	if Input.is_action_pressed("jump"):
+	if Input.is_action_pressed("game_jump"):
 		is_jump_pressed = true
 		jump_direction = Vector2.UP
 	
-	if Input.is_action_just_pressed("dash"):
+	if Input.is_action_just_pressed("game_dash"):
 		# Get explicit directional inputs for the dash
-		var dir_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
-		var dir_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
+		var dir_x:float = Input.get_action_strength("game_move_right")-Input.get_action_strength("game_move_left")
+		var dir_y:float = Input.get_action_strength("game_move_down")-Input.get_action_strength("game_move_up")
 		
 		var raw_dash_dir:Vector2 = Vector2(dir_x, dir_y)
 		
@@ -62,11 +62,11 @@ func _physics_process(delta: float) -> void:
 		#print("Dash direction: ", dash_dir)
 		# ---------------------------
 		
-	if Input.is_action_just_pressed("super_drill"):
+	if Input.is_action_just_pressed("game_super_drill"):
 			
 		# Get explicit directional inputs for the super drill
-		var super_drill_dir_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
-		var super_drill_dir_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
+		var super_drill_dir_x:float = Input.get_action_strength("game_move_right")-Input.get_action_strength("game_move_left")
+		var super_drill_dir_y:float = Input.get_action_strength("game_move_down")-Input.get_action_strength("game_move_up")
 		
 		var raw_super_drill_dir:Vector2 = Vector2(super_drill_dir_x, super_drill_dir_y)
 		
@@ -80,8 +80,8 @@ func _physics_process(delta: float) -> void:
 			
 		#print("Dash direction: ", dash_dir)
 		
-	var drill_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
-	var drill_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
+	var drill_x:float = Input.get_action_strength("game_move_right")-Input.get_action_strength("game_move_left")
+	var drill_y:float = Input.get_action_strength("game_move_down")-Input.get_action_strength("game_move_up")
 	var drill_dir:Vector2 = Vector2(drill_x, drill_y)
 	
 	all_inputs.emit(dir, jump_direction, is_jump_pressed, dash_dir, drill_dir)

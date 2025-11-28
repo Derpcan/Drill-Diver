@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://t32j187y2kyb"]
+
+[ext_resource type="Script" uid="uid://bnbfy4pataog8" path="res://scenes/UI/keybind_settings/keybind_changer.gd" id="1_rtft6"]
+
+[node name="KeybindChanger" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+script = ExtResource("1_rtft6")
+
+[node name="ActionName" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Example: "
+horizontal_alignment = 1
+
+[node name="KeyboardBind" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+text = "Space Bar"
+
+[node name="ControllerBind" type="Button" parent="."]
+visible = false
+layout_mode = 2
+text = "Joypad Button 0"
+
+[node name="MouseBind" type="Button" parent="."]
+visible = false
+layout_mode = 2
+text = "Mouse Click"
+
+[node name="Reset" type="Button" parent="."]
+layout_mode = 2
+text = "Reset"

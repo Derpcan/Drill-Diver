@@ -948,12 +948,12 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	# Prevent the camera from moving when pressing the quick save keybind
-	if Input.is_action_pressed("save_level_editor"):
+	if Input.is_action_pressed("editor_save_level_editor"):
 		return
 	
 	# Allows for the camera to move
-	var dir_x:float = Input.get_action_strength("move_right")-Input.get_action_strength("move_left")
-	var dir_y:float = Input.get_action_strength("move_down")-Input.get_action_strength("move_up")
+	var dir_x:float = Input.get_action_strength("editor_move_right")-Input.get_action_strength("editor_move_left")
+	var dir_y:float = Input.get_action_strength("editor_move_down")-Input.get_action_strength("editor_move_up")
 	
 	camera.global_position.x += dir_x*4
 	camera.global_position.y += dir_y*4
@@ -974,7 +974,7 @@ func _physics_process(delta: float) -> void:
 
 
 func undo_logic() -> void:
-	if Input.is_action_just_pressed("undo_level_editor"):
+	if Input.is_action_just_pressed("editor_undo_level_editor"):
 		var stack_value:Dictionary = undo_stack.pop()
 		
 		#print(undo_stack.stack_array)
@@ -1053,20 +1053,20 @@ func place_tile_input_logic(event:InputEvent) -> void:
 	
 	
 	# Place down a tile
-	if Input.is_action_pressed("place_tile") and not prevent_tile_placement:
+	if Input.is_action_pressed("editor_place_tile") and not prevent_tile_placement:
 		place_held_down = true
 		
 	
 	
-	elif Input.is_action_just_released("place_tile"):
+	elif Input.is_action_just_released("editor_place_tile"):
 		place_held_down = false
 	
-	if Input.is_action_pressed("delete_tile") and not prevent_tile_placement:
+	if Input.is_action_pressed("editor_delete_tile") and not prevent_tile_placement:
 		place_held_down = true
 		
 		if is_deleting == false:
 			is_deleting = true
-	elif Input.is_action_just_released("delete_tile"):
+	elif Input.is_action_just_released("editor_delete_tile"):
 		place_held_down = false
 		is_deleting = false
 
@@ -1299,31 +1299,31 @@ func _input(event: InputEvent) -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("save_level_editor"):
+	if Input.is_action_just_pressed("editor_save_level_editor"):
 		print("Saved")
 		save_logic()
 	
-	if Input.is_action_just_pressed("toggle_delete_tile_mode"):
+	if Input.is_action_just_pressed("editor_toggle_delete_tile_mode"):
 		is_deleting = not is_deleting
-		if Input.is_action_pressed("delete_tile"):
+		if Input.is_action_pressed("editor_delete_tile"):
 			is_deleting = not is_deleting
 	
 	# Camera Zooming In and Out
-	if Input.is_action_pressed("camera_scroll_out"):
+	if Input.is_action_pressed("editor_camera_scroll_out"):
 		var temp_zoom = camera.zoom - Vector2(0.5,0.5)
 		
 		camera.zoom = temp_zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
-	if Input.is_action_pressed("camera_scroll_in"):
+	if Input.is_action_pressed("editor_camera_scroll_in"):
 		camera.zoom += Vector2(0.5,0.5)
 		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
-	if Input.is_action_just_pressed("camera_scroll_reset"):
+	if Input.is_action_just_pressed("editor_camera_scroll_reset"):
 		camera.zoom = Vector2(1,1)
 	
 	
 	place_tile_input_logic(event)
 	
 	# When pause is pressed
-	if Input.is_action_just_pressed("escape"):
+	if Input.is_action_just_pressed("game_escape"):
 		place_held_down = false
 
 

@@ -30,7 +30,7 @@ func _tile_selected_handler(text:String, bonus_params:Dictionary) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("quick_toggle_tile_selector") and get_parent().visible == true:
+	if Input.is_action_just_pressed("editor_quick_toggle_tile_selector") and get_parent().visible == true:
 		open_close_button_pressed()
 	
 	

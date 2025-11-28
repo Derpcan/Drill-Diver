@@ -31,7 +31,24 @@ func change_scene_extra_args(scene:String, args:Array) -> void:
 	
 	scene_stack.push_back(get_tree().current_scene)
 	get_tree().current_scene.level_file_path = args[0]
+
+
+
+func push_scene_with_return(scene:String) -> Object:
+	if scene_stack.size() > 0:
+		# If we are rendering multiple scenes, disable all previous scenes
+		_pause_scene()
+		scene_stack.back().process_mode = Node.PROCESS_MODE_PAUSABLE
 	
+	# Load the scene and attach it to the stack root
+	var overlay_scene = load(scene).instantiate()
+	overlay_scene.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	
+	scene_stack.push_back(overlay_scene)
+	get_tree().root.add_child(overlay_scene)
+	
+	return overlay_scene
+
 
 
 ## Pushes the given scene onto the scene stack, rendering all scenes
