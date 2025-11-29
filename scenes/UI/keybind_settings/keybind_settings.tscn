@@ -11,6 +11,7 @@ offset_right = 1152.0
 offset_bottom = 648.0
 
 [node name="TabBar" type="TabBar" parent="Panel"]
+layout_mode = 0
 offset_right = 1151.0
 offset_bottom = 40.0
 current_tab = 0
