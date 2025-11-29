@@ -140,12 +140,14 @@ func _listen_for_input() -> void:
 
 
 func _disconnect_from_change_button(change_button:ChangeButton) -> void:
+	keyboard_bind_button.grab_focus()
 	change_button.destroying.disconnect(_disconnect_from_change_button)
 	change_button.save_new_input.disconnect(_set_bind)
 
 
 
 func _set_bind(input_event:InputEvent, change_button:ChangeButton):
+	keyboard_bind_button.grab_focus()
 	if input_event == null:
 		change_button.destroying.disconnect(_disconnect_from_change_button)
 		change_button.save_new_input.disconnect(_set_bind)

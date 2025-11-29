@@ -6,11 +6,12 @@ class_name KeybindSettings
 var user_keybinds_folder:String = "user://keybinds/"
 var user_keybinds_filename:String = "keybinds.kb"
 
-@onready var tab_bar:TabBar = $TabBar
+@onready var tab_bar:TabBar = $Panel/TabBar
 
 var had_first_editor:bool = false
 
 func _ready() -> void:
+	
 	save_actions(user_keybinds_folder, user_keybinds_filename)
 	
 	create_keybind_editors("game")
@@ -29,24 +30,27 @@ static func load_user_keybinds() -> void:
 	var user_keybinds_folder:String = "user://keybinds/"
 	var user_keybinds_filename:String = "keybinds.kb"
 	
+	
 	if not FileAccess.file_exists(user_keybinds_folder + user_keybinds_filename):
 		return
 	
 	for action_name in InputMap.get_actions():
-		InputMap.action_erase_events(action_name.to_lower())
+		if action_name.begins_with("game_") or action_name.begins_with("editor_"):
 	
-	
-		var file:FileAccess = FileAccess.open(user_keybinds_folder + user_keybinds_filename,FileAccess.READ)
+			InputMap.action_erase_events(action_name.to_lower())
+			
 		
-		var text:String = file.get_as_text()
-		var result:Dictionary = JSON.parse_string(text)
-		#var result:Dictionary = JSON.to_native(JSON.parse_string(text))
-		
-		if action_name in result:
-			var arr:Array = result[action_name]
-			for dict:Dictionary in arr:
-				var event:InputEvent = _dict_to_input_event(dict)
-				InputMap.action_add_event(action_name, event)
+			var file:FileAccess = FileAccess.open(user_keybinds_folder + user_keybinds_filename,FileAccess.READ)
+			
+			var text:String = file.get_as_text()
+			var result:Dictionary = JSON.parse_string(text)
+			#var result:Dictionary = JSON.to_native(JSON.parse_string(text))
+			
+			if action_name in result:
+				var arr:Array = result[action_name]
+				for dict:Dictionary in arr:
+					var event:InputEvent = _dict_to_input_event(dict)
+					InputMap.action_add_event(action_name, event)
 
 
 
@@ -98,6 +102,7 @@ func clear_keybinds() -> void:
 
 
 func create_keybind_editors(type_of_keybind:String="game") -> void:
+	var first = true
 	for action in InputMap.get_actions():
 		if action.begins_with(type_of_keybind):
 			var keybind_editor:KeybindChanger = preload("res://scenes/UI/keybind_settings/keybind_changer.tscn").instantiate()
@@ -135,7 +140,9 @@ func create_keybind_editors(type_of_keybind:String="game") -> void:
 			keybind_editor.action_name_display = display_name
 			$Panel/MarginContainer/ScrollContainer/VBoxContainer.add_child(h_sep)
 			$Panel/MarginContainer/ScrollContainer/VBoxContainer.add_child(keybind_editor)
-
+			if first:
+				keybind_editor.keyboard_bind_button.grab_focus()
+				
 
 
 

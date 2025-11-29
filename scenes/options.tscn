@@ -25,5 +25,6 @@ offset_left = 585.0
 offset_top = 407.0
 offset_right = 715.0
 offset_bottom = 438.0
+focus_neighbor_left = NodePath("../BackButton")
 text = "Edit Keybinds"
 script = ExtResource("2_yjkok")

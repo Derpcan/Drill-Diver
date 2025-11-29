@@ -18,6 +18,7 @@ script/source = "extends Button
 
 
 func _ready():
+	grab_focus()
 	self.pressed.connect(_handle_on_press)
 
 func _handle_on_press():
@@ -54,6 +55,7 @@ offset_left = 531.0
 offset_top = 424.0
 offset_right = 630.0
 offset_bottom = 455.0
+focus_neighbor_top = NodePath("../MainMenuButton")
 text = "Resume"
 script = ExtResource("1_0a7f6")
 
@@ -62,5 +64,6 @@ offset_left = 531.0
 offset_top = 356.0
 offset_right = 630.0
 offset_bottom = 387.0
+focus_neighbor_bottom = NodePath("../BackButton")
 text = "Main Menu"
 script = SubResource("GDScript_n87rw")
