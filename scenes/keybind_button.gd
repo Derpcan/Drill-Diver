@@ -2,6 +2,7 @@ extends Button
 
 
 func _ready():
+	grab_focus()
 	self.pressed.connect(_handle_on_press)
 
 func _handle_on_press():

@@ -10,34 +10,18 @@ script = ExtResource("1_20yak")
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 80
+[node name="TabBar" type="TabBar" parent="Panel"]
+offset_right = 1151.0
+offset_bottom = 40.0
+current_tab = 0
+tab_alignment = 1
+tab_count = 2
+tab_0/title = "Game Keybinds"
+tab_1/title = "Editor Keybinds"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 20
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Change Keybinds"
-
-[node name="BackButton" type="Button" parent="."]
+[node name="BackButton" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -52,11 +36,29 @@ grow_vertical = 0
 text = "Back"
 script = ExtResource("2_8o2g5")
 
-[node name="TabBar" type="TabBar" parent="."]
-offset_right = 1151.0
-offset_bottom = 40.0
-current_tab = 0
-tab_alignment = 1
-tab_count = 2
-tab_0/title = "Game Keybinds"
-tab_1/title = "Editor Keybinds"
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 80
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Change Keybinds"

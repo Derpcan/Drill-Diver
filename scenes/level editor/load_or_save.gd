@@ -11,6 +11,7 @@ signal create_new_level()
 @export var back_button:TextureButton
 
 func _ready() -> void:
+	back_button.grab_focus()
 	load_button.pressed.connect(_emit_load_level_signal)
 	create_button.pressed.connect(_emit_create_new_level_signal)
 	back_button.pressed.connect(_load_main_menu)
@@ -26,3 +27,8 @@ func _emit_load_level_signal() -> void:
 
 func _emit_create_new_level_signal() -> void:
 	create_new_level.emit()
+
+func _unhandled_input(event):
+			if Input.is_action_pressed("ui_down"):
+				print("Down")
+			

@@ -414,6 +414,8 @@ offset_top = 110.0
 offset_right = 641.0
 offset_bottom = 142.0
 scale = Vector2(3.5, 3.5)
+focus_neighbor_top = NodePath("../Create")
+focus_neighbor_bottom = NodePath("../Back")
 button_string = "Load"
 
 [node name="Create" parent="Control2" instance=ExtResource("2_arkj1")]

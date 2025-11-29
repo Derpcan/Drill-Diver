@@ -21,6 +21,7 @@ var event_pressed:InputEvent = null:
 @onready var save_button:Button = $PanelContainer/MarginContainer/VFlowContainer/HFlowContainer/SaveButton
 
 func _ready() -> void:
+	save_button.grab_focus()
 	cancel_button.pressed.connect(_cancel)
 	save_button.pressed.connect(_save)
 
