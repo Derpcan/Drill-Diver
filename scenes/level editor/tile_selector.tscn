@@ -209,127 +209,153 @@ offset_top = 1.0
 offset_right = 1126.0
 offset_bottom = 600.0
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer"]
 custom_minimum_size = Vector2(1096, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Objects"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer" groups=["tile_selector_holder"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="SpawnPoint" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="SpawnPoint" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("3_1t62o")
 text = "Spawnpoint"
 
-[node name="Goal" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="Goal" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("4_ll7yy")
 text = "Goal"
 
-[node name="CheckPoint" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="CheckPoint" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("3_1t62o")
 text = "Checkpoint"
 
-[node name="Gem" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+[node name="Gem" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("4_1bmts")
 text = "Gem"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2"]
 layout_mode = 2
 text = "Tiles"
 horizontal_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2" groups=["tile_selector_holder"]]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Ground" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Ground" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("6_0klqo")
 text = "Ground"
 
-[node name="Lab" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Lab" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("6_pswwc")
 text = "Lab"
 
-[node name="Dirt" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="Dirt" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("8_s2r5n")
 text = "Dirt"
 
-[node name="SuperDrillable" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="SuperDrillable" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("9_rug43")
 text = "SuperDrillable"
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
+[node name="HSeparator3" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer3"]
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3"]
 layout_mode = 2
 text = "Enemies"
 horizontal_alignment = 1
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer3" groups=["tile_selector_holder"]]
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Alien" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+[node name="Alien" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("5_1bmts")
 text = "Alien"
 distance_parameter = true
-range_parameter = true
 bonus_parameters = Dictionary[String, int]({
-"Distance": 10,
-"Range": 10
+"Distance": 10
 })
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
+[node name="HSeparator4" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer4"]
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4"]
 layout_mode = 2
 text = "Backgrounds"
 horizontal_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer4" groups=["tile_selector_holder"]]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4" groups=["tile_selector_holder"]]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="LabBackground" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="LabBackground" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "Lab Background"
 
-[node name="CaveBackground" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
+[node name="CaveBackground" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 text = "Cave Background"
+
+[node name="HSeparator5" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

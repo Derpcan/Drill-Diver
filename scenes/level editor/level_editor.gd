@@ -132,6 +132,21 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 			if loading_level == true:
 				return
 			
+			# Check is level creator wants to reset time to continue working on level
+			if check_to_edit != null and players_beat_level and not loading_level:
+				
+				check_to_edit.prompt_for_decision(best_time_completed)
+				
+				var can_edit:bool = await check_to_edit.user_decided
+				
+				# If user doesn't want to remove their best time
+				if can_edit == false:
+					return
+				
+				# Reset the time
+				best_time_completed = -1
+				return
+			
 			# Complete the line between the two points in case there are skips
 			for point in line(previous_tilemap_mouse_postion, tilemap_mouse_position):
 				if is_deleting == false:
@@ -142,6 +157,9 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 					if object_string != "Goal" and object_string != "Spawnpoint":
 						undo_stack.push(Vector2i(point[0], point[1]), false)
 					set_tile(decorative_tilemap, Vector2i(point[0], point[1]))
+					
+					
+					
 					placed_tiles.append(Vector2i(point[0], point[1]))
 					
 					
