@@ -195,7 +195,7 @@ static var decorative_tiles_to_physics:Dictionary = {
 
 static var decorative_source_id_to_tile_name:Dictionary = {
 	6:"Ground",
-	2:"SuperDrillable",
+	5:"SuperDrillable",
 	12:"Dirt",
 	11:"Lab"
 }
@@ -213,7 +213,7 @@ static var decorative_tiles_data_dictionary:Dictionary = {
 	"Ground":[6,Vector2i(1,6),0],
 	"Lab":[11,Vector2i(0,2),0],
 	#"Ground":[1,Vector2i(21,0),0],
-	"SuperDrillable":[2,Vector2(7,9),0],
+	"SuperDrillable":[5,Vector2(0,0),0],
 	"Dirt":[12,Vector2i(3,1),0],
 }
 
@@ -1127,10 +1127,11 @@ func save_logic() -> void:
 	
 	var decorative_tile_map_dict:Dictionary[int, Array] = {
 		6: decorative_tilemap.get_used_cells_by_id(6),
-		2: decorative_tilemap.get_used_cells_by_id(2),
+		5: decorative_tilemap.get_used_cells_by_id(5),
 		12: decorative_tilemap.get_used_cells_by_id(12),
 		11: decorative_tilemap.get_used_cells_by_id(11),
 	}
+	
 	
 	if testing_mode:
 		decorative_tile_map_dict = testing_save_for_level_complete
@@ -1320,6 +1321,8 @@ func _input(event: InputEvent) -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
+	if prevent_tile_placement:
+		return
 	if loading_level == true:
 		return
 	
@@ -1433,7 +1436,7 @@ func test_level() -> void:
 	
 	testing_save_for_level_complete = {
 		6: decorative_tilemap.get_used_cells_by_id(6),
-		2: decorative_tilemap.get_used_cells_by_id(2),
+		5: decorative_tilemap.get_used_cells_by_id(5),
 		12: decorative_tilemap.get_used_cells_by_id(12),
 		11: decorative_tilemap.get_used_cells_by_id(11),
 	}

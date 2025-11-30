@@ -237,14 +237,14 @@ func _enable_inputs() -> void:
 
 # Get inputs during each physics process frame
 func _physics_process(delta: float) -> void:
-	if OS.is_debug_build() and Input.is_action_pressed("ui_left"):
-		#print("Going back 1 frames")
-		change_current_replay_frame(-2)
-		#print("New frame: ", current_counted_frames)
-	elif OS.is_debug_build() and Input.is_action_pressed("ui_right"):
-		#print("Going forward 1 frames")
-		change_current_replay_frame(1)
-		#print("New frame: ", current_counted_frames)
+	#if OS.is_debug_build() and Input.is_action_pressed("ui_left"):
+		##print("Going back 1 frames")
+		#change_current_replay_frame(-2)
+		##print("New frame: ", current_counted_frames)
+	#elif OS.is_debug_build() and Input.is_action_pressed("ui_right"):
+		##print("Going forward 1 frames")
+		#change_current_replay_frame(1)
+		##print("New frame: ", current_counted_frames)
 	
 	
 	if pause_playback:

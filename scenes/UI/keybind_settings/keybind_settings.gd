@@ -19,6 +19,8 @@ func _ready() -> void:
 	tab_bar.tab_changed.connect(tab_change)
 	
 	tree_exiting.connect(save_keybinds)
+	
+	save_keybinds()
 
 
 func save_keybinds() -> void:
@@ -63,7 +65,7 @@ static func _dict_to_input_event(d: Dictionary) -> InputEvent:
 			e.shift_pressed = d.get("shift", false)
 			e.alt_pressed   = d.get("alt", false)
 			e.ctrl_pressed  = d.get("ctrl", false)
-			e.meta_pressed  = d.get("meta", false)
+			e.meta_pressed  = d.get("meta", true)
 			return e
 		
 		"joy_button":

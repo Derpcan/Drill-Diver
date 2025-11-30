@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=33 format=3 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://xx6j5sqf5pti" path="res://assets/lab-game-tileset-pixel-art/LabTileSet.png" id="9_0qn5d"]
 [ext_resource type="Texture2D" uid="uid://rriysr434m0u" path="res://assets/Dirt.png" id="10_gar71"]
 [ext_resource type="PackedScene" uid="uid://3yxhmq851bsq" path="res://scenes/level editor/check_to_edit.tscn" id="11_r6hoa"]
+[ext_resource type="Texture2D" uid="uid://d4mh46v6twlqu" path="res://assets/superdrillable.png" id="12_wv7w3"]
 [ext_resource type="PackedScene" uid="uid://jr7yio3vpmam" path="res://scenes/UI/loading_screen/loading_screen.tscn" id="16_jqrrb"]
 
 [sub_resource type="Animation" id="Animation_cwu4w"]
@@ -1582,6 +1583,10 @@ texture = ExtResource("6_vdwei")
 texture = ExtResource("7_ckxsl")
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0qn5d"]
+texture = ExtResource("12_wv7w3")
+0:0/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vqyq1"]
 texture = ExtResource("8_a25ho")
 margins = Vector2i(0, 1)
@@ -1890,6 +1895,7 @@ sources/4 = SubResource("TileSetAtlasSource_e1y88")
 sources/6 = SubResource("TileSetAtlasSource_vqyq1")
 sources/11 = SubResource("TileSetAtlasSource_prn34")
 sources/12 = SubResource("TileSetAtlasSource_jqrrb")
+sources/5 = SubResource("TileSetAtlasSource_0qn5d")
 metadata/_better_terrain = {
 &"decoration": ["Decoration", Color(0.411765, 0.411765, 0.411765, 1), 3, [], {
 &"path": "res://addons/better-terrain/icons/Decoration.svg"

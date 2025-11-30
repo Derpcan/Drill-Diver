@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=15 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://j3ll8yipnw8p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Alien/Alien_idle.png" id="5_1bmts"]
 [ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="6_0klqo"]
 [ext_resource type="Texture2D" uid="uid://cmk1ubstgth2f" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/LabTileCenter.png" id="6_pswwc"]
+[ext_resource type="Texture2D" uid="uid://dl2yg7fvrwua7" path="res://assets/dirt_single.png" id="8_s2r5n"]
+[ext_resource type="Texture2D" uid="uid://08gh7sintjvt" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/Tiles_37.png" id="9_rug43"]
 
 [sub_resource type="Animation" id="Animation_qv4l2"]
 length = 0.001
@@ -271,10 +273,12 @@ text = "Lab"
 
 [node name="Dirt" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
+image = ExtResource("8_s2r5n")
 text = "Dirt"
 
 [node name="SuperDrillable" parent="ColorRect/ScrollContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
+image = ExtResource("9_rug43")
 text = "SuperDrillable"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]

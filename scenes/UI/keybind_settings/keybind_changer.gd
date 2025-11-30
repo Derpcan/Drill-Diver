@@ -4,7 +4,7 @@ class_name KeybindChanger
 
 
 ## Default key binds
-var default_binds_file_path:String = "res://default_keybinds/keybind.kb"
+var default_binds_file_path:Array[String] = ["res://default_keybinds/mac_keybind.kb", "res://default_keybinds/windows_keybind.kb"]
 
 
 @export var action_name_display:String = "Example: ":
@@ -191,8 +191,11 @@ func set_keyboard_bind(new_input:InputEventKey) -> void:
 func _reset_binds() -> void:
 	InputMap.action_erase_events(action_name.to_lower())
 	
-	
-	var file:FileAccess = FileAccess.open(default_binds_file_path,FileAccess.READ)
+	var file:FileAccess
+	if OS.get_name() == "Windows":
+		file = FileAccess.open(default_binds_file_path[1],FileAccess.READ)
+	else:
+		file = FileAccess.open(default_binds_file_path[0],FileAccess.READ)
 	
 	var text:String = file.get_as_text()
 	var result:Dictionary = JSON.parse_string(text)
