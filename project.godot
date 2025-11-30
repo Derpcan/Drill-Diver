@@ -30,16 +30,22 @@ directories/dch_directory={
 "Dr Iver": "res://dialogue/characters/Dr Iver.dch"
 }
 directories/dtl_directory={
+"Drill": "res://assets/sprites/computer/Drill.dtl",
+"Drill Jump": "res://assets/sprites/computer/Drill Jump.dtl",
+"Jump and Dash Tutorial": "res://assets/sprites/computer/Jump and Dash Tutorial.dtl",
+"Opening": "res://dialogue/Timelines/Opening.dtl",
+"Opening2": "res://dialogue/Timelines/Opening2.dtl",
+"drone": "res://assets/sprites/computer/drone.dtl",
+"gem": "res://assets/sprites/computer/gem.dtl",
+"generator": "res://assets/sprites/computer/generator.dtl",
 "timeline": "res://dialogue/Timelines/timeline.dtl"
 }
 layout/style_directory={
-"": "res://dialogue/Style.tres",
 "Computer Style": "res://assets/sprites/Dr. Iver/Computer Style.tres",
-"Speaker": "res://dialogue/Timelines/Speaker.tres",
-"Style": "res://dialogue/Style.tres"
+"Speaker": "res://dialogue/Timelines/Speaker.tres"
 }
-layout/style_list=["res://dialogue/Style.tres", "res://dialogue/Timelines/Speaker.tres", "res://assets/sprites/Dr. Iver/Computer Style.tres"]
-layout/default_style="res://dialogue/Style.tres"
+layout/style_list=["res://dialogue/Timelines/Speaker.tres", "res://assets/sprites/Dr. Iver/Computer Style.tres"]
+layout/default_style=""
 variables={}
 glossary/default_case_sensitive=true
 

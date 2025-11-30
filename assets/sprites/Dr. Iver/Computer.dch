@@ -6,16 +6,46 @@
 &"custom_info": {
 "prefix": "",
 "sound_mood_default": "",
-"sound_moods": {},
+"sound_moods": {
+"Mood 1": {
+"mode": 0,
+"name": "Mood 1",
+"pitch_base": 0.0,
+"pitch_variance": 20.0,
+"skip_characters": 0.0,
+"sound_path": "",
+"volume_base": 0.0,
+"volume_variance": 0.0
+}
+},
 "style": "Computer Style",
 "suffix": ""
 },
-&"default_portrait": "",
+&"default_portrait": "Neutral",
 &"description": "",
 &"display_name": "Computer",
 &"mirror": false,
 &"nicknames": [""],
 &"offset": Vector2(0, 0),
-&"portraits": {},
+&"portraits": {
+"Error": {
+"export_overrides": {
+"image": "\"res://assets/sprites/computer/computer1.png\""
+},
+"mirror": false,
+"offset": Vector2(-35, -145),
+"scale": 0.25,
+"scene": ""
+},
+"Neutral": {
+"export_overrides": {
+"image": "\"res://assets/sprites/computer/computer2.png\""
+},
+"mirror": false,
+"offset": Vector2(-35, -145),
+"scale": 0.25,
+"scene": ""
+}
+},
 &"scale": 1.0
 }

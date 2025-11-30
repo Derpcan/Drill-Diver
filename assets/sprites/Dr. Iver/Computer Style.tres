@@ -15,7 +15,11 @@
 [sub_resource type="Resource" id="Resource_thed7"]
 script = ExtResource("2_asgn0")
 scene = ExtResource("1_6b1ex")
-overrides = {}
+overrides = {
+"global_bg_color": "Color(1, 1, 1, 1)",
+"global_font": "\"res://assets/fonts/fs-pixel-sans-unicode-regular.ttf\"",
+"global_font_size": "35.0"
+}
 
 [sub_resource type="Resource" id="Resource_2aqpx"]
 script = ExtResource("2_asgn0")
@@ -36,9 +40,17 @@ overrides = {}
 script = ExtResource("2_asgn0")
 scene = ExtResource("6_v1ymv")
 overrides = {
-"name_label_custom_color": "Color(0.141176, 0.811765, 0, 1)",
-"text_custom_color": "Color(0.141176, 0.811765, 0, 1)",
-"text_size": "30.0",
+"box_animation_in": "1",
+"box_animation_out": "1",
+"box_color_custom": "Color(0, 0, 0, 0.278431)",
+"box_panel": "\"res://dialogue/new_style_box_texture.tres\"",
+"name_label_box_panel": "\"res://dialogue/name.tres\"",
+"name_label_custom_color": "Color(0.533333, 1, 0.105882, 1)",
+"name_label_custom_font_size": "45.0",
+"name_label_use_global_color": "false",
+"name_label_use_global_font_size": "false",
+"text_custom_color": "Color(0.533333, 1, 0.105882, 1)",
+"text_size": "45.0",
 "text_use_global_color": "false"
 }
 
@@ -82,4 +94,4 @@ layer_info = {
 }
 base_overrides = {}
 layers = Array[ExtResource("2_asgn0")]([])
-metadata/_latest_layer = "13"
+metadata/_latest_layer = "17"
