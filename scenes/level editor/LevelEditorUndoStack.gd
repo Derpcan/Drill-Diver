@@ -4,7 +4,7 @@ class_name UndoStack
 
 var stack_array:Array = []
 
-var max_len:int = 50
+var max_len:int = 100
 
 
 func push_array(new_array:Array) -> void:
