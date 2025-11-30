@@ -121,8 +121,8 @@
 	"editor_save_level_editor": [
 		{
 			"alt": false,
-			"ctrl": false,
-			"meta": true,
+			"ctrl": true,
+			"meta": false,
 			"physical_keycode": 83,
 			"shift": false,
 			"type": "key"
@@ -146,8 +146,8 @@
 	"editor_undo_level_editor": [
 		{
 			"alt": false,
-			"ctrl": false,
-			"meta": true,
+			"ctrl": true,
+			"meta": false,
 			"physical_keycode": 90,
 			"shift": false,
 			"type": "key"

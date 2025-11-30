@@ -106,6 +106,7 @@ var place_held_down:bool = false:
 				#undo_stack.push(is_deleting)
 				pass
 		else:
+			placed_tiles = []
 			# Pop the empty dictionary after place button is released
 			if undo_stack.peek() == {false:[], true:[]}:
 				undo_stack.pop()
@@ -132,10 +133,12 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 			for point in line(previous_tilemap_mouse_postion, tilemap_mouse_position):
 				if is_deleting == false:
 					#set_tile(physics_tilemap, Vector2i(point[0], point[1]))
-					set_tile(decorative_tilemap, Vector2i(point[0], point[1]))
-					
 					
 					undo_stack.push(Vector2i(point[0], point[1]), false)
+					set_tile(decorative_tilemap, Vector2i(point[0], point[1]))
+					placed_tiles.append(Vector2i(point[0], point[1]))
+					
+					
 				elif is_deleting == true:
 					#delete_tile(physics_tilemap, Vector2i(point[0], point[1]))
 					delete_tile(decorative_tilemap, Vector2i(point[0], point[1]))
@@ -195,7 +198,7 @@ static var decorative_tiles_to_physics:Dictionary = {
 
 static var decorative_source_id_to_tile_name:Dictionary = {
 	6:"Ground",
-	2:"SuperDrillable",
+	5:"SuperDrillable",
 	12:"Dirt",
 	11:"Lab"
 }
@@ -213,7 +216,7 @@ static var decorative_tiles_data_dictionary:Dictionary = {
 	"Ground":[6,Vector2i(1,6),0],
 	"Lab":[11,Vector2i(0,2),0],
 	#"Ground":[1,Vector2i(21,0),0],
-	"SuperDrillable":[2,Vector2(7,9),0],
+	"SuperDrillable":[5,Vector2(0,0),0],
 	"Dirt":[12,Vector2i(3,1),0],
 }
 
@@ -397,6 +400,7 @@ func _create_new_level_logic(nam:String) -> void:
 	var file:FileAccess = FileAccess.open(nam+".lvl", FileAccess.WRITE)
 	
 	prevent_tile_placement = false
+	loading_level = false
 	
 	save_path = nam+".lvl"
 	
@@ -558,7 +562,6 @@ func fix_physics_tile_map(physics_tile_map:TileMapLayer) -> void:
 			physics_tile_map.set_cell(tile_position, source_id2,atlas_coord, alt_tile)
 
 
-
 static func static_delete_tile(
 	tilemap:TileMapLayer, tile_position:Vector2i, 
 	tile_position_to_object_dictionary:Dictionary[Vector2i, Dictionary], 
@@ -581,7 +584,7 @@ static func static_delete_tile(
 			match tile_at_point:
 				6: # 6 Is the source ID for ground in the Decorative Tilemap
 					undo_stack.push(["Ground", "", tile_position, {}], true)
-				2: # 2 Is the source ID for SuperDrillable in the Decorative Tilemap
+				5: # 5 Is the source ID for SuperDrillable in the Decorative Tilemap
 					undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
 				12: # 3 Is the source ID for Dirt in the Decorative Tilemap
 					undo_stack.push(["Dirt", "", tile_position, {}], true)
@@ -695,6 +698,7 @@ static func static_get_spawnpoint(
 	return null
 
 
+static var placed_tiles:Array[Vector2i] = []
 static func static_set_object(
 	object_string:String,
 	tilemap:TileMapLayer, 
@@ -707,7 +711,7 @@ static func static_set_object(
 	object_string_to_tile_position:Dictionary[String, Array],
 	object_bonus_parameters,
 	ignore_tiles:Dictionary[Vector2i, bool],
-	avoid_stack:bool, undo_stack:UndoStack,
+	avoid_stack:bool, undo_stack:UndoStack, editing_mode:bool = false
 	
 ) -> void:
 	
@@ -717,19 +721,206 @@ static func static_set_object(
 	if not static_check_can_add_goal(object_string_to_tile_position) and object_string == "Goal" and tile_position not in ignore_tiles:
 		static_delete_all_by_object_name("Goal", tilemap, tile_position, object_string_to_tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, ignore_tiles, avoid_stack, undo_stack)
 	
-	#if object_string != "Gem":
+	# If there is no tilemap data at the position and the object selected is a gem
 	if (tilemap.get_cell_tile_data(tile_position) == null and object_string == "Gem"):
 		static_delete_tile(tilemap, tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, true, ignore_tiles, avoid_stack, undo_stack)
-	#else:
-		#static_delete_tile(tilemap, tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, true, ignore_tiles, avoid_stack, undo_stack)
-		
-		
-		
-	# Check to see if a tile is there already
+	elif tilemap.get_cell_tile_data(tile_position) == null:
+		static_delete_tile(tilemap, tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, true, ignore_tiles, avoid_stack, undo_stack)
+	
+	
+		#else:
+			#static_delete_tile(tilemap, tile_position, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, false, {}, true, undo_stack)
+	
+	
+	# Check to see if a tile is there already and delete it only if the object selected is not gem
 	if tilemap.get_cell_tile_data(tile_position) != null and object_string != "Gem":
+		
+		# Adds to undo stack if an object is placed on a tile. Does not include Gem
+		# Decide if the Undo Stack should be avoided
+		if avoid_stack == false and editing_mode:
+			# Get the tile's source id
+			var tile_at_point:int = tilemap.get_cell_source_id(tile_position)
+			
+			# Check if there is tile data at the point
+			if tile_at_point != -1 and (tile_position not in ignore_tiles): # If there is a tile
+				match tile_at_point:
+					6: # 6 Is the source ID for ground in the Decorative Tilemap
+						undo_stack.push(["Ground", "", tile_position, {}], true)
+					5: # 5 Is the source ID for SuperDrillable in the Decorative Tilemap
+						undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
+					12: # 12 Is the source ID for Dirt in the Decorative Tilemap
+						undo_stack.push(["Dirt", "", tile_position, {}], true)
+					11:
+						undo_stack.push(["Lab", "", tile_position, {}], true)
+		
+		
 		tilemap.erase_cell(tile_position)
 	
-	if tile_position not in ignore_tiles or object_string == "Gem":
+	
+	
+	# Check to see if an object is already placed in the tile position
+	if tile_position in tile_position_to_object_dictionary:
+		# If the object names match
+		if tile_position_to_object_dictionary[tile_position]["object_name"] != object_string:#"" and tile_position_to_object_dictionary[tile_position]["object_name"] != object_string:
+			pass
+			#if avoid_stack == false and editing_mode:
+				## Get the tile's source id
+				#var tile_at_point:int = tilemap.get_cell_source_id(tile_position)
+				#
+				#undo_stack.push(tile_position, false)
+				## Check if there is tile data at the point
+				#if tile_at_point != -1 and (tile_position not in ignore_tiles): # If there is a tile
+					#match tile_at_point:
+						#6: # 6 Is the source ID for ground in the Decorative Tilemap
+							#undo_stack.push(["Ground", "", tile_position, {}], true)
+						#5: # 5 Is the source ID for SuperDrillable in the Decorative Tilemap
+							#undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
+						#12: # 12 Is the source ID for Dirt in the Decorative Tilemap
+							#undo_stack.push(["Dirt", "", tile_position, {}], true)
+						#11:
+							#undo_stack.push(["Lab", "", tile_position, {}], true)
+				#
+			#if tile_position_to_object_dictionary.has(tile_position):
+				## Check if the object at the location is null.. Safety Check
+				#if tile_position_to_object_dictionary[tile_position]["object"] != null:
+					#
+					## Check whether the stack should be avoided
+					#if avoid_stack == false and editing_mode:
+						## Check if the object has bonus parameters
+						#if tile_position_to_bonus_parameters.has(tile_position):
+							## Push the deletion with the Bonus Parameters so an Undo can bring back parameters
+							## Push. [Tile Name, Object Name, Tile Position, Bonus Params], Is Deletion
+							#undo_stack.push(["", tile_position_to_object_dictionary[tile_position]["object_name"], tile_position, tile_position_to_bonus_parameters[tile_position]], true)
+						#else:
+							#undo_stack.push(["", tile_position_to_object_dictionary[tile_position]["object_name"], tile_position, {}], true)
+					## Now queue free on the object, since it exists
+					#tile_position_to_object_dictionary[tile_position]["object"].queue_free()
+					#tile_position_to_object_dictionary[tile_position]["object"] = null
+					#tile_position_to_object_dictionary[tile_position]["object_name"] = ""
+			#undo_stack.pop()
+			# If the object string is a gem
+			#if object_string == "Gem":
+			#return # return so it doesn't overlay multiple gems on top of each other
+	
+	if object_string == "Gem":
+		
+		if tile_position in placed_tiles:
+			return
+		
+		if avoid_stack == false and object_string == "Gem" and editing_mode:
+			# Get the tile's source id
+			var tile_at_point:int = tilemap.get_cell_source_id(tile_position)
+			
+			undo_stack.push(tile_position, false)
+			# Check if there is tile data at the point
+			if tile_at_point != -1 and (tile_position not in ignore_tiles): # If there is a tile
+				match tile_at_point:
+					6: # 6 Is the source ID for ground in the Decorative Tilemap
+						undo_stack.push(["Ground", "", tile_position, {}], true)
+					5: # 5 Is the source ID for SuperDrillable in the Decorative Tilemap
+						undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
+					12: # 12 Is the source ID for Dirt in the Decorative Tilemap
+						undo_stack.push(["Dirt", "", tile_position, {}], true)
+					11:
+						undo_stack.push(["Lab", "", tile_position, {}], true)
+		
+		if tile_position in tile_position_to_object_dictionary:
+			if tile_position_to_object_dictionary[tile_position]["object"] != null:
+				# Check whether the stack should be avoided
+				if avoid_stack == false:
+						# Check if the object has bonus parameters
+					if tile_position_to_bonus_parameters.has(tile_position):
+						# Push the deletion with the Bonus Parameters so an Undo can bring back parameters
+						
+						# Push. [Tile Name, Object Name, Tile Position, Bonus Params], Is Deletion
+						undo_stack.push(["", tile_position_to_object_dictionary[tile_position]["object_name"], tile_position, tile_position_to_bonus_parameters[tile_position]], true)
+					else:
+						undo_stack.push(["", tile_position_to_object_dictionary[tile_position]["object_name"], tile_position, {}], true)
+				tile_position_to_object_dictionary[tile_position]["object"].queue_free()
+				tile_position_to_object_dictionary[tile_position]["object"] = null
+				tile_position_to_object_dictionary[tile_position]["object_name"] = ""
+		
+		# Add new object to tree and dictionary
+		var object:Object = selected_object.instantiate()
+		
+		# Check if there is parameters to take into account
+		if object_bonus_parameters != {}:
+			tile_position_to_bonus_parameters[tile_position] = object_bonus_parameters.duplicate()
+		elif object_bonus_parameters == {} and tile_position_to_bonus_parameters.has(tile_position):
+			tile_position_to_bonus_parameters.erase(tile_position)
+		
+		# Pause enemy Tiles
+		static_pause_enemy_tiles(testing_mode, tile_position, object, selected_object, tile_position_to_bonus_parameters)
+		
+		# Add bonus Params
+		static_add_bonus_params_to_objects(testing_mode, tile_position, object, tile_position_to_bonus_parameters)
+		
+		object.global_position = tilemap.map_to_local(tile_position)
+		object_node.call_deferred("add_child", object)
+		#object_node.add_child(object)
+		
+		tile_position_to_object_dictionary[tile_position] = {"object":null, "object_name":""}
+		tile_position_to_object_dictionary[tile_position]["object"] = object
+		tile_position_to_object_dictionary[tile_position]["object_name"] = object_string
+		
+		if object_string in object_string_to_tile_position:
+			if tile_position not in object_string_to_tile_position[object_string]:
+				object_string_to_tile_position[object_string].append(tile_position)
+		else:
+			object_string_to_tile_position[object_string] = [tile_position]
+		
+		ignore_tiles[tile_position] = true
+		
+		return
+	
+	
+	
+	if tile_position not in ignore_tiles:
+		
+		
+		# If object is gem, add current tile to be replaced and current tile to be deleted
+		# Deletion happens first then placement
+		# Decide if the Undo Stack should be avoided
+		if avoid_stack == false and object_string == "Gem" and editing_mode:
+			# Get the tile's source id
+			var tile_at_point:int = tilemap.get_cell_source_id(tile_position)
+			
+			undo_stack.push(tile_position, false)
+			# Check if there is tile data at the point
+			if tile_at_point != -1 and (tile_position not in ignore_tiles): # If there is a tile
+				match tile_at_point:
+					6: # 6 Is the source ID for ground in the Decorative Tilemap
+						undo_stack.push(["Ground", "", tile_position, {}], true)
+					5: # 5 Is the source ID for SuperDrillable in the Decorative Tilemap
+						undo_stack.push(["SuperDrillable", "", tile_position, {}], true)
+					12: # 12 Is the source ID for Dirt in the Decorative Tilemap
+						undo_stack.push(["Dirt", "", tile_position, {}], true)
+					11:
+						undo_stack.push(["Lab", "", tile_position, {}], true)
+		
+		
+		if tile_position in tile_position_to_object_dictionary:
+			if tile_position_to_object_dictionary[tile_position]["object"] != null:
+				# Check whether the stack should be avoided
+				if avoid_stack == false:
+					
+					#if not (tile_position_to_object_dictionary[tile_position]["object_name"] == "Gem" and object_string == "Gem"):
+					
+						# Check if the object has bonus parameters
+					if tile_position_to_bonus_parameters.has(tile_position):
+						# Push the deletion with the Bonus Parameters so an Undo can bring back parameters
+						
+						# Push. [Tile Name, Object Name, Tile Position, Bonus Params], Is Deletion
+						undo_stack.push(["", tile_position_to_object_dictionary[tile_position]["object_name"], tile_position, tile_position_to_bonus_parameters[tile_position]], true)
+					else:
+						undo_stack.push(["", tile_position_to_object_dictionary[tile_position]["object_name"], tile_position, {}], true)
+				
+				
+				tile_position_to_object_dictionary[tile_position]["object"].queue_free()
+				tile_position_to_object_dictionary[tile_position]["object"] = null
+				tile_position_to_object_dictionary[tile_position]["object_name"] = ""
+		
+		
 		# Add new object to tree and dictionary
 		var object:Object = selected_object.instantiate()
 		
@@ -763,6 +954,22 @@ static func static_set_object(
 	
 
 
+static func add_to_stack_background_and_object(
+	object_string:String,
+	tilemap:TileMapLayer, 
+	tile_position:Vector2i, 
+	selected_object:PackedScene,
+	testing_mode:bool,
+	object_node:Node2D,
+	tile_position_to_object_dictionary:Dictionary[Vector2i, Dictionary], 
+	tile_position_to_bonus_parameters:Dictionary[Vector2i,Dictionary],
+	object_string_to_tile_position:Dictionary[String, Array],
+	object_bonus_parameters,
+	ignore_tiles:Dictionary[Vector2i, bool],
+	avoid_stack:bool, undo_stack:UndoStack, editing_mode:bool = false
+) -> void:
+	if avoid_stack:
+		return
 
 
 static func update_object_bonus_parameters(
@@ -830,6 +1037,7 @@ static func static_set_tile(
 	ignore_tiles:Dictionary[Vector2i, bool] = {},
 	avoid_stack:bool=false,
 	undo_stack:UndoStack = null,
+	editing_mode:bool = false
 ) -> void:
 	if selected_object == null:
 		# Get the tile data necessary to place selected tile
@@ -852,7 +1060,7 @@ static func static_set_tile(
 		
 		ignore_tiles[tile_position] = true
 	else:
-		static_set_object(object_string, tilemap, tile_position, selected_object, testing_mode, object_node, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, object_bonus_parameters, ignore_tiles,avoid_stack, undo_stack)
+		static_set_object(object_string, tilemap, tile_position, selected_object, testing_mode, object_node, tile_position_to_object_dictionary, tile_position_to_bonus_parameters, object_string_to_tile_position, object_bonus_parameters, ignore_tiles,avoid_stack, undo_stack, editing_mode)
 	
 
 
@@ -876,7 +1084,7 @@ func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=fal
 		best_time_completed = -1
 		
 		
-	static_set_tile(decorative_tilemap, "Decorative", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, testing_mode, ignore_tiles, false, undo_stack)
+	static_set_tile(decorative_tilemap, "Decorative", tile_position, selected_object, selected_tile, object_string, object_node, tile_pos_to_object_dictionary, tile_pos_to_bonus_parameters, object_string_name_to_tile_pos, object_bonus_parameters, testing_mode, ignore_tiles, avoid_stack, undo_stack, not loading_level)
 	
 
 
@@ -983,6 +1191,7 @@ func undo_logic() -> void:
 	if Input.is_action_just_pressed("editor_undo_level_editor"):
 		var stack_value:Dictionary = undo_stack.pop()
 		
+		
 		#print(undo_stack.stack_array)
 		#print(stack_value)
 		
@@ -999,7 +1208,7 @@ func undo_logic() -> void:
 		
 		
 		
-		
+		print(stack_value)
 		for pos:Vector2i in stack_value[false]:
 			delete_tile(physics_tilemap, pos, true)
 			delete_tile(decorative_tilemap, pos, true)
@@ -1032,8 +1241,8 @@ func undo_logic() -> void:
 				selected_object = object_dictionary[object_string]
 			else:
 				selected_object = null
-			set_tile(physics_tilemap, arr[2])
-			set_tile(decorative_tilemap, arr[2])
+			set_tile(physics_tilemap, arr[2], true)
+			set_tile(decorative_tilemap, arr[2], true)
 		selected_tile = temp_selected_tile
 		object_string = temp_object
 		selected_object = temp_selected_object
@@ -1126,10 +1335,11 @@ func save_logic() -> void:
 	
 	var decorative_tile_map_dict:Dictionary[int, Array] = {
 		6: decorative_tilemap.get_used_cells_by_id(6),
-		2: decorative_tilemap.get_used_cells_by_id(2),
+		5: decorative_tilemap.get_used_cells_by_id(5),
 		12: decorative_tilemap.get_used_cells_by_id(12),
 		11: decorative_tilemap.get_used_cells_by_id(11),
 	}
+	
 	
 	if testing_mode:
 		decorative_tile_map_dict = testing_save_for_level_complete
@@ -1319,6 +1529,8 @@ func _input(event: InputEvent) -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
+	if prevent_tile_placement:
+		return
 	if loading_level == true:
 		return
 	
@@ -1432,7 +1644,7 @@ func test_level() -> void:
 	
 	testing_save_for_level_complete = {
 		6: decorative_tilemap.get_used_cells_by_id(6),
-		2: decorative_tilemap.get_used_cells_by_id(2),
+		5: decorative_tilemap.get_used_cells_by_id(5),
 		12: decorative_tilemap.get_used_cells_by_id(12),
 		11: decorative_tilemap.get_used_cells_by_id(11),
 	}

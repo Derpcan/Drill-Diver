@@ -35,6 +35,11 @@ layout_mode = 2
 mouse_filter = 2
 alignment = 2
 
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VFlowContainer"]
+layout_mode = 2
+text = "Time Remaining: "
+horizontal_alignment = 1
+
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VFlowContainer"]
 layout_mode = 2
 text = "Pressed Button:"
@@ -57,11 +62,13 @@ theme_override_constants/separation = 40
 alignment = 1
 
 [node name="CancelButton" type="Button" parent="PanelContainer/MarginContainer/VFlowContainer/HFlowContainer"]
+visible = false
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 text = "Cancel"
 
 [node name="SaveButton" type="Button" parent="PanelContainer/MarginContainer/VFlowContainer/HFlowContainer"]
+visible = false
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 text = "Save"

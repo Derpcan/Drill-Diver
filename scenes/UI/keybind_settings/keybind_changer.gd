@@ -4,7 +4,7 @@ class_name KeybindChanger
 
 
 ## Default key binds
-var default_binds_file_path:String = "res://default_keybinds/keybind.kb"
+var default_binds_file_path:Array[String] = ["res://default_keybinds/mac_keybind.kb", "res://default_keybinds/windows_keybind.kb"]
 
 
 @export var action_name_display:String = "Example: ":
@@ -191,12 +191,19 @@ func set_keyboard_bind(new_input:InputEventKey) -> void:
 func _reset_binds() -> void:
 	InputMap.action_erase_events(action_name.to_lower())
 	
-	
-	var file:FileAccess = FileAccess.open(default_binds_file_path,FileAccess.READ)
+	var file:FileAccess
+	if OS.get_name() == "Windows":
+		file = FileAccess.open(default_binds_file_path[1],FileAccess.READ)
+	else:
+		file = FileAccess.open(default_binds_file_path[0],FileAccess.READ)
 	
 	var text:String = file.get_as_text()
 	var result:Dictionary = JSON.parse_string(text)
 	#var result:Dictionary = JSON.to_native(JSON.parse_string(text))
+	
+	var has_mouse_input:bool = false
+	var has_keyboard_input:bool = false
+	var has_controller_input:bool = false
 	
 	if action_name in result:
 		var arr:Array = result[action_name]
@@ -205,20 +212,32 @@ func _reset_binds() -> void:
 			InputMap.action_add_event(action_name, event)
 			match dict["type"]:
 				"key":
+					has_keyboard_input = true
 					current_keyboard_input_bind = event
 				"joy_button":
+					has_controller_input = true
 					current_controller_input_bind = event
 				"joy_axis":
+					has_controller_input = true
 					current_controller_input_bind = event
 				"mouse_button":
+					has_mouse_input = true
 					current_mouse_input_bind = event
+	
+	if not has_keyboard_input:
+		current_keyboard_input_bind = null
+	
+	if not has_controller_input:
+		current_controller_input_bind = null
+	
+	if not has_mouse_input:
+		current_mouse_input_bind = null
 	
 	#print(InputMap.action_get_events(action_name.to_lower()))
 	#InputMap.action_add_event(action_name.to_lower(), keyboard_input_bind)
 	#InputMap.action_add_event(action_name.to_lower(), controller_input_bind)
 	#current_keyboard_input_bind = keyboard_input_bind
 	#current_controller_input_bind = controller_input_bind
-	current_mouse_input_bind = null
 	#print(InputMap.action_get_events(action_name.to_lower()))
 
 
@@ -249,6 +268,7 @@ func _dict_to_input_event(d: Dictionary) -> InputEvent:
 		"mouse_button":
 			var e := InputEventMouseButton.new()
 			e.button_index = d["button_index"]
+			e.pressed = d.get("pressed", true)
 			return e
 	
 	return null

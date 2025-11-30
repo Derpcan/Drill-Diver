@@ -1,6 +1,6 @@
-[gd_scene load_steps=27 format=4 uid="uid://vwroqldnp2qj"]
+[gd_scene load_steps=27 format=4 uid="uid://cwx2aurw8e2nt"]
 
-[ext_resource type="Script" uid="uid://cv1ardidub6eq" path="res://scenes/level editor/testing/tutorial_level_loader.gd" id="1_fah3i"]
+[ext_resource type="Script" path="res://scenes/level editor/testing/tutorial_level_loader.gd" id="1_fah3i"]
 [ext_resource type="PackedScene" uid="uid://bjshmay3nbdaf" path="res://scenes/level editor/cave_background.tscn" id="2_hl4jw"]
 [ext_resource type="PackedScene" uid="uid://dioff8s7qnbas" path="res://scenes/level editor/lab_background.tscn" id="3_qtett"]
 [ext_resource type="PackedScene" uid="uid://bjlp87podhpig" path="res://scenes/system/OnLevelLoaded.tscn" id="4_kgfpq"]

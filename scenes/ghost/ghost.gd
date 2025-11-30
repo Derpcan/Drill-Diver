@@ -112,7 +112,9 @@ func _physics_process(delta: float) -> void:
 func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0.0) -> void:
 	animated_sprite.scale = Vector2(0.5, 0.5)
 	
-	animated_sprite.position.y = -2.2
+	animated_sprite.scale = Vector2(0.5, 0.5)
+	
+	animated_sprite.position.y = -2.0
 	if health_component.current_hp == 0:
 		state_machine._enter_state("death")
 		return
@@ -125,15 +127,16 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		
 		# Correct the drill angle depending on sprite flip
 		if animated_sprite.flip_h == false:
-			animated_sprite.rotation = PI/4
+			animated_sprite.rotation = PI/2
 		else:
-			animated_sprite.rotation = -PI/4
+			animated_sprite.rotation = -PI/2
 	
 	# Flip the character Sprite depending on which direction is being pressed
 	if dir.x > 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = false
 	elif dir.x < 0 and (not drill_component.drill_enabled):
 		animated_sprite.flip_h = true
+	
 		
 	# Drill transition lags when this logic is running
 	#if dash_component.is_dashing():            
