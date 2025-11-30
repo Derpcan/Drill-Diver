@@ -397,6 +397,7 @@ func _create_new_level_logic(nam:String) -> void:
 	var file:FileAccess = FileAccess.open(nam+".lvl", FileAccess.WRITE)
 	
 	prevent_tile_placement = false
+	loading_level = false
 	
 	save_path = nam+".lvl"
 	

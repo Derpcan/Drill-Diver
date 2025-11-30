@@ -2,7 +2,7 @@
 	"editor_camera_scroll_in": [
 		{
 			"button_index": 4,
-			"pressed": false,
+			"pressed": true,
 			"type": "mouse_button"
 		},
 		{
@@ -17,7 +17,7 @@
 	"editor_camera_scroll_out": [
 		{
 			"button_index": 5,
-			"pressed": false,
+			"pressed": true,
 			"type": "mouse_button"
 		},
 		{

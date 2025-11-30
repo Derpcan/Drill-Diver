@@ -102,7 +102,7 @@ func clear_keybinds() -> void:
 
 
 func create_keybind_editors(type_of_keybind:String="game") -> void:
-	var first = true
+	var first:bool = true
 	for action in InputMap.get_actions():
 		if action.begins_with(type_of_keybind):
 			var keybind_editor:KeybindChanger = preload("res://scenes/UI/keybind_settings/keybind_changer.tscn").instantiate()
@@ -141,6 +141,7 @@ func create_keybind_editors(type_of_keybind:String="game") -> void:
 			$Panel/MarginContainer/ScrollContainer/VBoxContainer.add_child(h_sep)
 			$Panel/MarginContainer/ScrollContainer/VBoxContainer.add_child(keybind_editor)
 			if first:
+				first = false
 				keybind_editor.keyboard_bind_button.grab_focus()
 				
 

@@ -10,33 +10,6 @@ script = ExtResource("1_20yak")
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="TabBar" type="TabBar" parent="Panel"]
-layout_mode = 0
-offset_right = 1151.0
-offset_bottom = 40.0
-current_tab = 0
-tab_alignment = 1
-tab_count = 2
-tab_0/title = "Game Keybinds"
-tab_1/title = "Editor Keybinds"
-
-[node name="BackButton" type="Button" parent="Panel"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -75.0
-offset_top = -56.0
-offset_right = 75.0
-offset_bottom = -25.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Back"
-script = ExtResource("2_8o2g5")
-
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 0
 offset_right = 1152.0
@@ -63,3 +36,30 @@ alignment = 1
 [node name="Label" type="Label" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Change Keybinds"
+
+[node name="TabBar" type="TabBar" parent="Panel"]
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 40.0
+current_tab = 0
+tab_alignment = 1
+tab_count = 2
+tab_0/title = "Game Keybinds"
+tab_1/title = "Editor Keybinds"
+
+[node name="BackButton" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -56.0
+offset_right = 75.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Back"
+script = ExtResource("2_8o2g5")
