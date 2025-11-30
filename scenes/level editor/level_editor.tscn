@@ -1990,6 +1990,7 @@ root_subfolder = "./level_editor/levels/"
 use_native_dialog = true
 
 [node name="TestingHud" type="CanvasLayer" parent="."]
+process_mode = 3
 layer = 2
 visible = false
 
@@ -2006,3 +2007,5 @@ text = "Stop Testing"
 visible = false
 
 [node name="LoadingScreen" parent="." instance=ExtResource("16_jqrrb")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

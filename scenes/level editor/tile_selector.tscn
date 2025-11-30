@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=24 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
@@ -64,7 +64,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_gmssj"]
 resource_name = "close"
-length = 0.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -113,10 +113,20 @@ tracks/3/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FadeInOut")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("fade_out_close", "fade_in"),
+"times": PackedFloat32Array(0, 0.3)
+}
 
 [sub_resource type="Animation" id="Animation_1t62o"]
 resource_name = "open"
-length = 0.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -165,12 +175,183 @@ tracks/3/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FadeInOut")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("fade_out", "fade_in_close"),
+"times": PackedFloat32Array(0, 0.3)
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qv4l2"]
 _data = {
 &"RESET": SubResource("Animation_qv4l2"),
 &"close": SubResource("Animation_gmssj"),
 &"open": SubResource("Animation_1t62o")
+}
+
+[sub_resource type="Animation" id="Animation_s2r5n"]
+resource_name = "hover"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenLabel:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 606), Vector2(0, 596), Vector2(0, 606)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CloseLabel:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 10), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rug43"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(508, 606)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CloseLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n7spv"]
+_data = {
+&"RESET": SubResource("Animation_rug43"),
+&"hover": SubResource("Animation_s2r5n")
+}
+
+[sub_resource type="Animation" id="Animation_n7spv"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenLabel:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vvict"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CloseLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iibak"]
+resource_name = "fade_out"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7o6a2"]
+resource_name = "fade_in_close"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CloseLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8ogwd"]
+resource_name = "fade_out_close"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CloseLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vvict"]
+_data = {
+&"RESET": SubResource("Animation_vvict"),
+&"fade_in": SubResource("Animation_n7spv"),
+&"fade_in_close": SubResource("Animation_7o6a2"),
+&"fade_out": SubResource("Animation_iibak"),
+&"fade_out_close": SubResource("Animation_8ogwd")
 }
 
 [node name="TileSelector" type="Control" node_paths=PackedStringArray("open_close_button", "anim_player")]
@@ -361,3 +542,38 @@ theme_override_constants/separation = 15
 libraries = {
 &"": SubResource("AnimationLibrary_qv4l2")
 }
+
+[node name="OpenLabel" type="Label" parent="."]
+layout_mode = 1
+offset_top = 604.522
+offset_right = 1152.0
+offset_bottom = 627.522
+text = "Press \"E\" to open!"
+horizontal_alignment = 1
+
+[node name="CloseLabel" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+offset_top = 1.47781
+offset_right = 1152.0
+offset_bottom = 24.4778
+text = "Press \"E\" to open!"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_n7spv")
+}
+
+[node name="FadeInOut" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vvict")
+}
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 472.0
+offset_top = 195.0
+offset_right = 684.0
+offset_bottom = 218.0
+text = "Use WASD to move around!"

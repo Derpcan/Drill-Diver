@@ -1577,6 +1577,16 @@ func _finish_test_play_setup() -> void:
 
 
 func test_level() -> void:
+	
+	place_held_down = false
+	if get_spawnpoint() == null:
+		var popup:PopupDialog = preload("res://scenes/level editor/popup/popup_dialog.tscn").instantiate()
+		popup.text = "There is no Spawnpoint, add one before testing!"
+		#popup.global_position = camera.global_position
+		$CanvasLayer.add_child(popup)
+		return
+	
+	
 	testing_mode = true
 	
 	
@@ -1620,6 +1630,9 @@ func _finish_stop_testing() -> void:
 	object_bonus_parameters = temp_bonus
 	
 	place_held_down = false
+	if get_tree().paused:
+		print("DSIDHSD")
+		SceneManager.pop_scene()
 	
 	
 	finished_loading.disconnect(_finish_stop_testing)
