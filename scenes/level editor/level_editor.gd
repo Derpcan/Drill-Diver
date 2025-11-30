@@ -1126,8 +1126,8 @@ func undo_logic() -> void:
 		#undo_stack.push_dictionary({false:[],true:[]})
 		
 		
-		print(undo_stack.stack_array)
-		print(stack_value)
+		#print(undo_stack.stack_array)
+		#print(stack_value)
 		for pos:Vector2i in stack_value[false]:
 			delete_tile(physics_tilemap, pos, true)
 			delete_tile(decorative_tilemap, pos, true)
@@ -1384,7 +1384,7 @@ func _load_logic_async(path_name:String = "") -> void:
 			
 			if "BestTimeCompleted" in json:
 				best_time_completed = JSON.to_native(json["BestTimeCompleted"])
-			print(best_time_completed)
+			print("Best Time Completed: ", best_time_completed)
 			
 			
 	
