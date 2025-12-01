@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="17_yiw6g"]
 [ext_resource type="PackedScene" uid="uid://4qfhiuw7i8j" path="res://scenes/UI/to_level_select.tscn" id="18_427sq"]
 [ext_resource type="PackedScene" uid="uid://cx3g6mgf1m8q3" path="res://animations/Opening Cutscene/opening_scene.tscn" id="19_hl4jw"]
-[ext_resource type="Resource" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
+[ext_resource type="Resource" uid="uid://siicvn1xm4v6" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
 [ext_resource type="PackedScene" uid="uid://cuvysegbb8cm5" path="res://scenes/dialogue/dialogue.tscn" id="19_qtett"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a25ho"]
