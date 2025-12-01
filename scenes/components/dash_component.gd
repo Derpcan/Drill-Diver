@@ -13,6 +13,7 @@ var on_dash_cooldown:bool = false
 
 @export var dash_time:float = 0.25
 var can_dash:bool = true
+var enemy_dash = false
 
 signal dash_start(new_velocity:Vector2)
 signal dash_end
@@ -31,11 +32,15 @@ func _ready() -> void:
 	dash_cooldown_timer.autostart = false
 	add_child(dash_cooldown_timer)
 
-
+func _enemy_dash():
+	enemy_dash = true
+	
 func _enable_dashing() -> void:
 	on_dash_cooldown = false
 
 func _disable_dashing() -> void:
+	if enemy_dash==true:
+		return
 	on_dash_cooldown = true
 	dash_cooldown_timer.start(dash_time_cooldown)
 

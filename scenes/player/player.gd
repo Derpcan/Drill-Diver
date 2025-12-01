@@ -294,3 +294,10 @@ func _play_super_drill(vel:Vector2):
 	
 func _play_item_collect():
 	$ItemCollect.play()
+
+
+func _on_dash_hitbox_hit_something():
+	print("mslmdls")
+	dash_component._enable_dash()
+	dash_component._enable_dashing()
+	dash_component._enemy_dash()

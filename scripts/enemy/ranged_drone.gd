@@ -50,6 +50,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if in_editor:
 		return
+	if player.global_position.x < global_position.x:
+		$AnimatedSprite2D.flip_h = true
+	else:
+		$AnimatedSprite2D.flip_h = false
 	
 	_calc_vec_to_player()
 	state_machine._process(delta)

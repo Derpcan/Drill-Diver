@@ -89,6 +89,7 @@ func _on_enemy_hurtbox_area_entered(area: Area2D) -> void:
 	print("ENEMY HIT! Colliding Area: ", area.name, " Group: ", area.is_in_group("DashHitbox"))
 	if area.name == "DashHitbox": # Checks for the specific Area2D name
 		if not is_dead:
+			get_tree().get_first_node_in_group("player")._on_dash_hitbox_hit_something()
 			die()
 			emit_signal("died", self)
 
