@@ -1,134 +1,77 @@
 fc8a56933c4b1c8d796fdb8f7a9f9475
-::res://::1764555727
+::res://::1764555777
 default_bus_layout.tres::AudioBusLayout/AudioBusLayout::4990131669289352484::1764545589::0::1::::<><><>0<>0<><>::
-icon.svg::CompressedTexture2D/CompressedTexture2D::8027820198647243577::1764456414::1764555693::1::::<><><>0<>0<>b9ede9d3a3eb8b5836e2192c205bfd23<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+icon.svg::CompressedTexture2D/CompressedTexture2D::8027820198647243577::1764456414::1764555828::1::::<><><>0<>0<>b9ede9d3a3eb8b5836e2192c205bfd23<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 super_drill_component.gd::GDScript/GDScript::4829184205129420488::1764456423::0::1::::SuperDrillComponent<>Node<><>0<>0<><>::
 super_drill_component.tscn::PackedScene/PackedScene::6367207286463541999::1764456423::0::1::::<><><>0<>0<><>::uid://ca2j7t2iuei5m::::res://super_drill_component.gd
-::res://addons/::1764555727
-::res://addons/better-terrain/::1764555659
+::res://addons/::1764555777
+::res://addons/better-terrain/::1764555777
 ::res://addons/better-terrain/editor/::1764555651
 TerrainEntry.tscn::PackedScene::1461025636277516956::1764555618::0::1::::<><><>0<>0<><>::res://addons/better-terrain/editor/TerrainEntry.gd<>uid://kmypxsqhynyv::::res://addons/better-terrain/icons/Decoration.svg
-::res://addons/better-terrain/icons/::1764555659
-::res://addons/better-terrain/icons/paint-symmetry/::1764555659
-::res://addons/dialogic/::1764555727
+::res://addons/better-terrain/icons/::1764555777
+::res://addons/better-terrain/icons/paint-symmetry/::1764555777
+::res://addons/dialogic/::1764555777
 plugin.cfg::TextFile/TextFile::-1::1764456821::0::1::::<><><>0<>0<><>::
 plugin.gd::GDScript/GDScript::3847838834304660710::1764456821::0::1::::<>EditorPlugin<><>0<>1<><>::
 ::res://addons/dialogic/Core/::1764555651
-::res://addons/dialogic/Editor/::1764555727
+::res://addons/dialogic/Editor/::1764555777
 ::res://addons/dialogic/Editor/CharacterEditor/::1764555651
 ::res://addons/dialogic/Editor/Common/::1764555651
-::res://addons/dialogic/Editor/Events/::1764555727
+::res://addons/dialogic/Editor/Events/::1764555743
 ::res://addons/dialogic/Editor/Events/EventBlock/::1764555651
-::res://addons/dialogic/Editor/Events/Fields/::1764555727
+::res://addons/dialogic/Editor/Events/Fields/::1764555743
 ::res://addons/dialogic/Editor/Events/styles/::1764555727
-::res://addons/dialogic/Editor/HomePage/::1764555709
-::res://addons/dialogic/Editor/Images/::1764555709
-::res://addons/dialogic/Editor/Images/Dropdown/::1764555660
-::res://addons/dialogic/Editor/Images/Interactable/::1764555659
-::res://addons/dialogic/Editor/Images/Pieces/::1764555659
-::res://addons/dialogic/Editor/Images/Resources/::1764555659
-::res://addons/dialogic/Editor/Images/Toolbar/::1764555659
+::res://addons/dialogic/Editor/HomePage/::1764555761
+::res://addons/dialogic/Editor/Images/::1764555777
+::res://addons/dialogic/Editor/Images/Dropdown/::1764555777
+::res://addons/dialogic/Editor/Images/Interactable/::1764555777
+::res://addons/dialogic/Editor/Images/Pieces/::1764555777
+::res://addons/dialogic/Editor/Images/Resources/::1764555761
+::res://addons/dialogic/Editor/Images/Toolbar/::1764555761
 ::res://addons/dialogic/Editor/Inspector/::1764555709
-::res://addons/dialogic/Editor/Settings/::1764555709
-::res://addons/dialogic/Editor/Settings/CoreSettingsPages/::1764457173
-settings_editor.tscn::PackedScene/PackedScene::7236398590679088256::0::0::1::::<><><>0<>0<><>::uid://3akc4p71r5rn::::res://addons/dialogic/Editor/Settings/CoreSettingsPages/settings_editor.gd<>uid://dbpkta2tjsqim::::res://addons/dialogic/Editor/Common/hint_tooltip_icon.tscn
-settings_general.tscn::PackedScene/PackedScene::4770425969564889479::0::0::1::::<><><>0<>0<><>::uid://chb81lvjh47jr::::res://addons/dialogic/Editor/Settings/CoreSettingsPages/settings_general.gd<>uid://bo0dfmsyky1mm::::res://addons/dialogic/Editor/Settings/CoreSettingsPages/settings_tools.gd<>uid://dbpkta2tjsqim::::res://addons/dialogic/Editor/Common/hint_tooltip_icon.tscn<>uid://vg4wbm0n64ws::::res://addons/dialogic/Editor/Settings/CoreSettingsPages/tool_resave.gd<>uid://7mvxuaulctcq::::res://addons/dialogic/Editor/Events/Fields/field_file.tscn
-settings_modules.tscn::PackedScene/PackedScene::1049388304965887887::0::0::1::::<><><>0<>0<><>::uid://bcu347pvraog6::::res://addons/dialogic/Editor/Settings/CoreSettingsPages/settings_modules.gd
-settings_translation.tscn::PackedScene/PackedScene::5295236732155278879::0::0::1::::<><><>0<>0<><>::uid://b0bm772xo8n2j::::res://addons/dialogic/Editor/Settings/CoreSettingsPages/settings_translation.gd<>uid://dbpkta2tjsqim::::res://addons/dialogic/Editor/Common/hint_tooltip_icon.tscn<>uid://dpwhshre1n4t6::::res://addons/dialogic/Editor/Events/Fields/field_options_dynamic.tscn<>uid://7mvxuaulctcq::::res://addons/dialogic/Editor/Events/Fields/field_file.tscn
+::res://addons/dialogic/Editor/Settings/::1764555743
+::res://addons/dialogic/Editor/Settings/CoreSettingsPages/::1764555743
 ::res://addons/dialogic/Editor/Theme/::1764555709
 ::res://addons/dialogic/Editor/TimelineEditor/::1764555727
 ::res://addons/dialogic/Editor/TimelineEditor/TextEditor/::1764555727
 ::res://addons/dialogic/Editor/TimelineEditor/VisualEditor/::1764555727
-::res://addons/dialogic/Example Assets/::1764555727
-::res://addons/dialogic/Example Assets/backgrounds/::1764555709
+::res://addons/dialogic/Example Assets/::1764555777
+::res://addons/dialogic/Example Assets/backgrounds/::1764555761
 ::res://addons/dialogic/Example Assets/bbcode_transitions/::1764555709
-::res://addons/dialogic/Example Assets/Fonts/::1764555709
-::res://addons/dialogic/Example Assets/next-indicator/::1764555709
-::res://addons/dialogic/Example Assets/portraits/::1764555727
-::res://addons/dialogic/Example Assets/portraits/Antonio/::1764555727
-::res://addons/dialogic/Example Assets/portraits/Jane/::1764555727
-::res://addons/dialogic/Example Assets/portraits/Princess/::1764555727
-::res://addons/dialogic/Example Assets/portraits/rpg_portraits/::1764555727
-::res://addons/dialogic/Example Assets/sound-effects/::1764555709
-::res://addons/dialogic/Modules/::1764555727
-::res://addons/dialogic/Modules/Audio/::1764555727
-::res://addons/dialogic/Modules/Background/::1764555709
-::res://addons/dialogic/Modules/Background/DefaultBackgroundScene/::1764457194
-default_background.gd::GDScript/GDScript::5401559425333649390::0::0::1::::<>DialogicBackground<><>0<>0<><>::
-default_background.tscn::PackedScene/PackedScene::5609335298910205153::0::0::1::::<><><>0<>0<><>::uid://ci7s5odxo7543::::res://addons/dialogic/Modules/Background/DefaultBackgroundScene/default_background.gd
-::res://addons/dialogic/Modules/Background/Transitions/::1764457194
-default_transition_shader.gdshader::Shader/Shader::5544997065938995453::0::0::1::::<><><>0<>0<><>::
-push_transition_shader.gdshader::Shader/Shader::6196818314243087368::0::0::1::::<><><>0<>0<><>::
-simple_push_transitions.gd::GDScript/GDScript::3800060778759560386::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-simple_swipe_gradient.tres::GradientTexture2D/GradientTexture2D::6325365462525035453::0::0::1::::<><><>0<>0<><>::
-simple_swipe_transitions.gd::GDScript/GDScript::3108485044441273999::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-::res://addons/dialogic/Modules/Background/Transitions/Defaults/::1764457194
-push_down.gd::GDScript/GDScript::3158499613636948749::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-push_left.gd::GDScript/GDScript::64357288329035004::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-push_right.gd::GDScript/GDScript::900093207961932780::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-push_up.gd::GDScript/GDScript::8114302060492854216::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-simple_fade.gd::GDScript/GDScript::2675003563057848491::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-simple_fade.tres::GradientTexture2D/GradientTexture2D::1123686471488500410::0::0::1::::<><><>0<>0<><>::
-swipe_diagonal_up_left.gd::GDScript/GDScript::6135501164756614034::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-swipe_left_to_right.gd::GDScript/GDScript::7888014442292326935::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-swipe_right_to_left.gd::GDScript/GDScript::8718724160635766148::0::0::1::::<>DialogicBackgroundTransition<><>0<>0<><>::
-::res://addons/dialogic/Modules/Call/::1764555727
-::res://addons/dialogic/Modules/Character/::1764555727
-::res://addons/dialogic/Modules/Character/DefaultAnimations/::1764457194
-::res://addons/dialogic/Modules/Choice/::1764555727
-::res://addons/dialogic/Modules/Clear/::1764555727
-::res://addons/dialogic/Modules/Comment/::1764555727
-::res://addons/dialogic/Modules/Condition/::1764555709
-::res://addons/dialogic/Modules/Core/::1764555709
-::res://addons/dialogic/Modules/DefaultLayoutParts/::1764555709
-::res://addons/dialogic/Modules/DefaultLayoutParts/Base_Default/::1764457184
-part_config.cfg::TextFile/TextFile::-1::0::0::1::::<><><>0<>0<><>::
-::res://addons/dialogic/Modules/DefaultLayoutParts/Base_TextBubble/::1764457173
-part_config.cfg::TextFile/TextFile::-1::0::0::1::::<><><>0<>0<><>::
-text_bubble_base.gd::GDScript/GDScript::1542491300650441718::0::0::1::::<>DialogicLayoutBase<><>0<>1<><>::
-text_bubble_base.tscn::PackedScene/PackedScene::1313567352675269338::0::0::1::::<><><>0<>0<><>::uid://v8guu7n6gv8a::::res://addons/dialogic/Modules/DefaultLayoutParts/Base_TextBubble/text_bubble_base.gd
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_FullBackground/::1764555689
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Glossary/::1764555689
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_History/::1764555689
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Input/::1764555689
-part_config.cfg::TextFile/TextFile::-1::0::0::1::::<><><>0<>0<><>::
-preview.png::CompressedTexture2D/CompressedTexture2D::8114332401028912007::0::1764555753::0::::<><><>0<>0<>b4948eb6f944f1a72d23adad39c5a3df<>::
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_SpeakerPortraitTextbox/::1764457184
-default_stylebox.tres::StyleBoxFlat/StyleBoxFlat::5646424049282425802::0::0::1::::<><><>0<>0<><>::
-part_config.cfg::TextFile/TextFile::-1::0::0::1::::<><><>0<>0<><>::
-preview.png::CompressedTexture2D/CompressedTexture2D::3131810110868930832::0::1764555753::0::::<><><>0<>0<>57df5305740dbdfcae912a53726c3565<>::
-speaker-textbox-icon.svg::CompressedTexture2D/CompressedTexture2D::2371003488701911052::0::1764555753::0::::<><><>0<>0<>43f10fdbd6a3d2cea71f1eb63d4e1238<>::
-speaker_portrait_textbox_layer.gd::GDScript/GDScript::3158226406090215546::0::0::1::::<>DialogicLayoutLayer<><>0<>1<><>::
-textbox_with_speaker_portrait.tscn::PackedScene/PackedScene::4136285383422450981::0::0::1::::<><><>0<>0<><>::uid://d0ptqnbudhkyj::::res://addons/dialogic/Modules/Character/node_portrait_container.gd<>uid://bk84r61kckpxa::::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_SpeakerPortraitTextbox/speaker_portrait_textbox_layer.gd<>uid://bak74s0kcr0ao::::res://addons/dialogic/Modules/Text/node_name_label.gd<>uid://drhfq6rmdeuri::::res://addons/dialogic/Modules/Text/node_dialog_text.gd<>uid://dpv2dfiv5dhmr::::res://addons/dialogic/Modules/Text/node_type_sound.gd
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Textbubble/::1764457184
-part_config.cfg::TextFile/TextFile::-1::0::0::1::::<><><>0<>0<><>::
-preview.png::CompressedTexture2D/CompressedTexture2D::9090702769295074042::0::1764555753::0::::<><><>0<>0<>51440a64da91ad1beec869cba40ec39f<>::
-speech_bubble.gdshader::Shader/Shader::6092876677169649742::0::0::1::::<><><>0<>0<><>::
-text_bubble.gd::GDScript/GDScript::3246012511594670952::0::0::1::::<>Control<><>0<>0<><>::
-text_bubble.gdshader::Shader/Shader::4108745790483627497::0::0::1::::<><><>0<>0<><>::
-text_bubble.tscn::PackedScene/PackedScene::7980779173428697354::0::0::1::::<><><>0<>0<><>::uid://bminl7x3r40vc::::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Textbubble/text_bubble.gd<>uid://byskpb7ypvuab::::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Textbubble/text_bubble.gdshader<>uid://drhfq6rmdeuri::::res://addons/dialogic/Modules/Text/node_dialog_text.gd<>uid://dpv2dfiv5dhmr::::res://addons/dialogic/Modules/Text/node_type_sound.gd<>uid://bak74s0kcr0ao::::res://addons/dialogic/Modules/Text/node_name_label.gd
-text_bubble_layer.gd::GDScript/GDScript::7299938676909868101::0::0::1::::<>DialogicLayoutLayer<><>0<>1<><>::
-text_bubble_layer.tscn::PackedScene/PackedScene::9072075339465482549::0::0::1::::<><><>0<>0<><>::uid://dcae6nsh8fgtp::::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Textbubble/text_bubble_layer.gd
-text_bubble_layer_icon.svg::CompressedTexture2D/CompressedTexture2D::4496364783827209545::0::1764555753::0::::<><><>0<>0<>4cb2c9aed3ab0de2bde98e9ec680095d<>::
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_TextInput/::1764457184
-part_config.cfg::TextFile/TextFile::-1::0::0::1::::<><><>0<>0<><>::
-preview.png::CompressedTexture2D/CompressedTexture2D::5413395814348104778::0::1764555753::0::::<><><>0<>0<>5a172d6523418b4e6c9d6e4968e31b35<>::
-text_input_layer.gd::GDScript/GDScript::5412026392586618337::0::0::1::::<>DialogicLayoutLayer<><>0<>1<><>::
-text_input_layer.tscn::PackedScene/PackedScene::6259548876513588080::0::0::1::::<><><>0<>0<><>::uid://cjdvjwjrj86sj::::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_TextInput/text_input_layer.gd<>uid://biqpjv0qyefvf::::res://addons/dialogic/Modules/TextInput/node_text_input.gd
-text_input_layer_icon.svg::CompressedTexture2D/CompressedTexture2D::1365142666605984321::0::1764555753::0::::<><><>0<>0<>2fbdd2de2662cdd25bfe6d85d7283c50<>::
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Choices/::1764457184
-choices_layer_icon.svg::CompressedTexture2D/CompressedTexture2D::7717702675883716805::0::1764555753::0::::<><><>0<>0<>42d338482a85cd2287e0e47d5d657eb7<>::
-choice_panel_focus.tres::StyleBoxFlat/StyleBoxFlat::3842993240234113681::0::0::1::::<><><>0<>0<><>::
-choice_panel_hover.tres::StyleBoxFlat/StyleBoxFlat::1653175341677166036::0::0::1::::<><><>0<>0<><>::
-choice_panel_normal.tres::StyleBoxFlat/StyleBoxFlat::1580218980019447892::0::0::1::::<><><>0<>0<><>::
-part_config.cfg::TextFile/TextFile::-1::0::0::1::::<><><>0<>0<><>::
-preview.png::CompressedTexture2D/CompressedTexture2D::4923066865483440921::0::1764555753::0::::<><><>0<>0<>b5ac41a0fd26f9560aebbd6d84a331f5<>::
-vn_choice_layer.gd::GDScript/GDScript::581637318614735199::0::0::1::::<>DialogicLayoutLayer<><>0<>1<><>::
-vn_choice_layer.tscn::PackedScene/PackedScene::225680225514622240::0::0::1::::<><><>0<>0<><>::uid://ij0qm2ew6plv::::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Choices/vn_choice_layer.gd<>uid://bldt7xlfum7ov::::res://addons/dialogic/Modules/Choice/node_choice_button.gd<>uid://b1stj4ljd2vo7::::res://addons/dialogic/Modules/Choice/node_button_sound.gd<>uid://b6c1p14bc20p1::::res://addons/dialogic/Example Assets/sound-effects/typing1.wav<>uid://c2viukvbub6v6::::res://addons/dialogic/Example Assets/sound-effects/typing4.wav
-::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Portraits/::1764457184
-part_config.cfg::TextFile/TextFile::-1::0::0::1::::<><><>0<>0<><>::
-portrait_layer_icon.svg::CompressedTexture2D/CompressedTexture2D::1716696148084122946::0::1764555753::0::::<><><>0<>0<>e936855569db14118c9a954f92ce36b9<>::
-preview.png::CompressedTexture2D/CompressedTexture2D::6767644610319719947::0::1764555753::0::::<><><>0<>0<>9885250f3f643951fa45e51340c3bf86<>::
+::res://addons/dialogic/Example Assets/Fonts/::1764555761
+::res://addons/dialogic/Example Assets/next-indicator/::1764555761
+::res://addons/dialogic/Example Assets/portraits/::1764555777
+::res://addons/dialogic/Example Assets/portraits/Antonio/::1764555777
+::res://addons/dialogic/Example Assets/portraits/Jane/::1764555777
+::res://addons/dialogic/Example Assets/portraits/Princess/::1764555777
+::res://addons/dialogic/Example Assets/portraits/rpg_portraits/::1764555761
+::res://addons/dialogic/Example Assets/sound-effects/::1764555777
+::res://addons/dialogic/Modules/::1764555777
+::res://addons/dialogic/Modules/Audio/::1764555777
+::res://addons/dialogic/Modules/Background/::1764555777
+::res://addons/dialogic/Modules/Background/DefaultBackgroundScene/::1764555743
+::res://addons/dialogic/Modules/Background/Transitions/::1764555743
+::res://addons/dialogic/Modules/Background/Transitions/Defaults/::1764555743
+::res://addons/dialogic/Modules/Call/::1764555777
+::res://addons/dialogic/Modules/Character/::1764555777
+::res://addons/dialogic/Modules/Character/DefaultAnimations/::1764555743
+::res://addons/dialogic/Modules/Choice/::1764555777
+::res://addons/dialogic/Modules/Clear/::1764555777
+::res://addons/dialogic/Modules/Comment/::1764555777
+::res://addons/dialogic/Modules/Condition/::1764555777
+::res://addons/dialogic/Modules/Core/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Base_Default/::1764555743
+::res://addons/dialogic/Modules/DefaultLayoutParts/Base_TextBubble/::1764555743
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_FullBackground/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Glossary/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_History/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Input/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_SpeakerPortraitTextbox/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Textbubble/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_TextInput/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Choices/::1764555777
+::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Portraits/::1764555777
 vn_portrait_layer.gd::GDScript/GDScript::6441397668861425393::1764456821::0::1::::<>DialogicLayoutLayer<><>0<>1<><>::
 vn_portrait_layer.tscn::PackedScene/PackedScene::6512552610928516099::1764456821::0::1::::<><><>0<>0<><>::uid://cx1i44s2olq2d::::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Portraits/vn_portrait_layer.gd<>uid://d0ptqnbudhkyj::::res://addons/dialogic/Modules/Character/node_portrait_container.gd
 ::res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/::1764538517
@@ -304,7 +247,7 @@ opening_scene.tscn::PackedScene::6445407649553731680::1764555477::0::1::::<><><>
 ::res://animations/player/::1764456490
 player_animation_library.tres::AnimationLibrary/AnimationLibrary::7033986572863263087::1764456423::0::1::::<><><>0<>0<><>::
 player_sprite_frames.tres::SpriteFrames/SpriteFrames::6048399816928481352::1764456423::0::1::::<><><>0<>0<><>::uid://ffmhfwi80afm::::res://assets/sprites/bit/Bit_Dash.png<>uid://6lsoxu5vonks::::res://assets/sprites/bit/Bit_Die.png<>uid://cdt5gmvxi8xw::::res://assets/sprites/bit/Bit_Drill.png<>uid://dqmtakpt8vxfo::::res://assets/sprites/bit/Bit_Idle.png<>uid://cmddoqvfkkupo::::res://assets/sprites/bit/Bit_Jump.png<>uid://c78xh6qn3f8a3::::res://assets/sprites/bit/Bit_run.png<>uid://nc1g2lyuelns::::res://assets/sprites/bit/Bit_Super_Drill.png
-::res://assets/::1764555578
+::res://assets/::1764555777
 Dirt.png::CompressedTexture2D/CompressedTexture2D::1228834331699592862::1764456423::1764456468::1::::<><><>0<>0<>04b1aae5319ea7104befb21bb6a403c5<>res://.godot/imported/Dirt.png-f7386bcbb1b325a79f83d3b15e64eb7e.ctex::
 dirt_single.png::CompressedTexture2D/CompressedTexture2D::7988547142496074000::1764527278::1764527356::1::::<><><>0<>0<>ff735d49ebcceb8425888029a4cc44f6<>res://.godot/imported/dirt_single.png-f16b5b94f21410015a30e97ad361f39c.ctex::
 dirt_single_2.png::CompressedTexture2D/CompressedTexture2D::4628611882230240270::1764527278::1764527356::1::::<><><>0<>0<>c41b026af1cbb12ab4044a443be860e5<>res://.godot/imported/dirt_single_2.png-42e66d0c87ed258578c4838b9e96102c.ctex::
@@ -753,7 +696,7 @@ l0_sprite_6.png::CompressedTexture2D/CompressedTexture2D::6204765025029464096::1
 l0_sprite_7.png::CompressedTexture2D/CompressedTexture2D::1508708299293080401::1764527278::1764527356::1::::<><><>0<>0<>853e2ade5b07da1190744468b2d91c7b<>res://.godot/imported/l0_sprite_7.png-da70b396c3931a9134b229f7efe4241a.ctex::
 l0_sprite_8.png::CompressedTexture2D/CompressedTexture2D::3946997966332898083::1764527278::1764527356::1::::<><><>0<>0<>4c9ca3af502c22bf36fe9172b1d9ab47<>res://.godot/imported/l0_sprite_8.png-05ce9bb03d19d26577687901f74d888d.ctex::
 ::res://assets/music/::1764456441
-::res://assets/sounds/::1764555740
+::res://assets/sounds/::1764555777
 Build Up.wav::AudioStreamWAV/AudioStreamWAV::381018019849646442::1764544275::1764544275::1::::<><><>0<>0<>fa017d606fb7c09db14c81a1aee68383<>res://.godot/imported/Build Up.wav-edf312787b58d8d0064c9bb424fcec44.sample::
 dd - 8bit robot death.wav::AudioStreamWAV/AudioStreamWAV::8738369473695262636::1764527663::1764527663::1::::<><><>0<>0<>5c9759050047b7b6702f2ef0f84abecf<>res://.godot/imported/dd - 8bit robot death.wav-a27e949665aa80bf086fbad89a26b1b2.sample::
 dd - a rank motif.wav::AudioStreamWAV/AudioStreamWAV::4902947583914021562::1764527663::1764527663::1::::<><><>0<>0<>17c17e595d3bb8d967f497059d4e2a77<>res://.godot/imported/dd - a rank motif.wav-60cdd582141af5e85f0f8a745ea1646b.sample::
@@ -933,7 +876,7 @@ Speaker.tres::Resource/DialogicStyle::4527363143337221285::1764540757::0::1::::<
 timeline.dtl::Resource/DialogicTimeline::75060427698594790::1764463384::0::1::::<><>uid://j7ym07anlusi<>0<>0<><>::uid://dgrjhqtx0mrra<>uid://bunmr4i3pljdt<>uid://danfvrk3541ln
 ::res://save_info/::1764456612
 MainMenuGhost.json::JSON/JSON::-1::1764456423::0::1::::<><><>0<>0<><>::
-::res://scenes/::1764555741
+::res://scenes/::1764555764
 control.gd::GDScript/GDScript::8247301842139600726::1764456423::0::1::::<>Control<><>0<>0<><>::
 keybind_button.gd::GDScript/GDScript::4901473513348333158::1764456423::0::1::::<>Button<><>0<>0<><>::
 level_select.tscn::PackedScene/PackedScene::1503213842600540276::1764456423::0::1::::<><><>0<>0<><>::uid://cpynp5hce3wao::::res://scripts/UI/menus/test_level_button.gd<>uid://bif3lw721as3v::::res://scripts/UI/menus/escape_level_select_button.gd<>uid://bjsuhmk5kibpv::::res://scenes/level editor/custom_level_button.tscn<>uid://dwvdxgukv2pia::::res://scenes/level editor/Tutorial_Level_Button.gd
@@ -941,7 +884,7 @@ main_menu 3.tscn::PackedScene/PackedScene::5569723916717729151::1764456423::0::1
 main_menu 4.tscn::PackedScene/PackedScene::3396082187294277765::1764456423::0::1::::<><><>0<>0<><>::uid://tf8is18n6kq::::res://scripts/UI/menus/option_button.gd<>uid://ci8mvuro6jqfh::::res://scripts/UI/menus/level_select_button.gd<>uid://bq44h40hohica::::res://tilesets/TerrainTileSet.tres<>uid://bxj8xb4x6rpdq::::res://scripts/UI/menus/quit_button.gd<>uid://cfjggk5f6sk0p::::res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Tiles/RunnerTileSet.png<>uid://td0yfq73gf1f::::res://scripts/UI/menus/level_editor_button.gd<>uid://d1qjh238xsdgr::::res://scenes/enemy/enemy.tscn<>uid://c82ds1yobrg78::::res://scenes/checkpoint/checkpoint.tscn<>uid://nv87e5t72j7o::::res://scenes/hitbox/agents/spikes.tscn<>uid://dtdwaqv8e3mdq::::res://scenes/ghost/ghost.tscn<>uid://b7yg6ow7ysjaj::::res://scenes/items/MeterItem.tscn<>uid://bllu6maur3p6f::::res://scenes/main_menu.tres<>uid://d3nl1b8v1uujd::::res://assets/sprites/bit/Bit S .png<>uid://bpmxvvqsdpvcy::::res://assets/sprites/menu/UI_Metal_Frame_Standard_02a-export.png<>uid://b8450g0cxosxk::::res://assets/sprites/menu/Drill Diver.png<>uid://dj1yl4q6pswi7::::res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png<>uid://cuemrkgn6e26i::::res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export3.png<>uid://b0dwfsjh4xp03::::res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export4.png<>uid://bo4jd7j6lh3fc::::res://assets/sprites/menu/Spritesheet_Animation_UISmall button1.png<>uid://cqtchojl03shb::::res://assets/fonts/fs-pixel-sans-unicode-regular.ttf<>uid://cjf3agshmo73n::::res://assets/sprites/menu/Spritesheet_Animation_UISmall button2.png
 main_menu.gdshader::Shader/Shader::6995500957066755416::1764456423::0::1::::<><><>0<>0<><>::
 main_menu.tres::ShaderMaterial/ShaderMaterial::3182476449685242703::1764538517::0::1::::<><><>0<>0<><>::uid://dj1yl4q6pswi7::::res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png
-main_menu.tscn::PackedScene::8857941852916730082::1764555741::0::1::::<><><>0<>0<><>::uid://tf8is18n6kq::::res://scripts/UI/menus/option_button.gd<>uid://ci8mvuro6jqfh::::res://scripts/UI/menus/level_select_button.gd<>uid://bxj8xb4x6rpdq::::res://scripts/UI/menus/quit_button.gd<>uid://td0yfq73gf1f::::res://scripts/UI/menus/level_editor_button.gd<>uid://bllu6maur3p6f::::res://scenes/main_menu.tres<>uid://d3nl1b8v1uujd::::res://assets/sprites/bit/Bit S .png<>uid://bpmxvvqsdpvcy::::res://assets/sprites/menu/UI_Metal_Frame_Standard_02a-export.png<>uid://b8450g0cxosxk::::res://assets/sprites/menu/Drill Diver.png<>uid://bjshmay3nbdaf::::res://scenes/level editor/cave_background.tscn<>uid://dj1yl4q6pswi7::::res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png<>uid://cuemrkgn6e26i::::res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export3.png<>uid://b0dwfsjh4xp03::::res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export4.png<>uid://bo4jd7j6lh3fc::::res://assets/sprites/menu/Spritesheet_Animation_UISmall button1.png<>uid://cqtchojl03shb::::res://assets/fonts/fs-pixel-sans-unicode-regular.ttf<>uid://cjf3agshmo73n::::res://assets/sprites/menu/Spritesheet_Animation_UISmall button2.png
+main_menu.tscn::PackedScene::8857941852916730082::1764555764::0::1::::<><><>0<>0<><>::uid://tf8is18n6kq::::res://scripts/UI/menus/option_button.gd<>uid://ci8mvuro6jqfh::::res://scripts/UI/menus/level_select_button.gd<>uid://bxj8xb4x6rpdq::::res://scripts/UI/menus/quit_button.gd<>uid://td0yfq73gf1f::::res://scripts/UI/menus/level_editor_button.gd<>uid://bllu6maur3p6f::::res://scenes/main_menu.tres<>uid://d3nl1b8v1uujd::::res://assets/sprites/bit/Bit S .png<>uid://bpmxvvqsdpvcy::::res://assets/sprites/menu/UI_Metal_Frame_Standard_02a-export.png<>uid://b8450g0cxosxk::::res://assets/sprites/menu/Drill Diver.png<>uid://bjshmay3nbdaf::::res://scenes/level editor/cave_background.tscn<>uid://dj1yl4q6pswi7::::res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png<>uid://cuemrkgn6e26i::::res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export3.png<>uid://b0dwfsjh4xp03::::res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export4.png<>uid://bo4jd7j6lh3fc::::res://assets/sprites/menu/Spritesheet_Animation_UISmall button1.png<>uid://cqtchojl03shb::::res://assets/fonts/fs-pixel-sans-unicode-regular.ttf<>uid://cjf3agshmo73n::::res://assets/sprites/menu/Spritesheet_Animation_UISmall button2.png
 options.tscn::PackedScene/PackedScene::1658141984582864111::1764527278::0::1::::<><><>0<>0<><>::uid://cj1uoehvt0dbw::::res://scripts/UI/menus/escape_options_button.gd<>uid://cb3ks14m5sple::::res://scenes/keybind_button.gd
 pause_menu.tscn::PackedScene/PackedScene::5484880890310431135::1764548315::0::1::::<><><>0<>0<><>::uid://cvfnylfjoajta::::res://scripts/UI/menus/escape_pause_button.gd
 test_drillable_terrain_scene.tscn::PackedScene/PackedScene::3626202031456206673::1764456423::0::1::::<><><>0<>0<><>::uid://bq44h40hohica::::res://tilesets/TerrainTileSet.tres<>uid://cyunk6h3or5vy::::res://scripts/terrain/TerrainDrill.gd
