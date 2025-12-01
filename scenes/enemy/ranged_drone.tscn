@@ -195,9 +195,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amfcc"]
 size = Vector2(25.7143, 24.2857)
 
-[node name="RangedDrone" type="CharacterBody2D"]
+[node name="RangedDrone" type="CharacterBody2D" node_paths=PackedStringArray("start_state", "drone_hurtbox")]
 collision_layer = 0
 script = ExtResource("1_y4eq4")
+start_state = NodePath("States/Idle")
+drone_hurtbox = NodePath("Hurtbox")
 
 [node name="States" type="Node" parent="."]
 script = ExtResource("2_368ic")

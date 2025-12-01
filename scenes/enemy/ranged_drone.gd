@@ -4,21 +4,21 @@ class_name RangedDrone
 @export var start_state : Node
 @export var drone_hurtbox : Area2D
 
-@export var idle_to_patrol_delay : float
-@export var patrol_to_idle_delay : float
-@export var engage_to_action_delay : float
-@export var detection_range : float
-@export var fire_range : float
-@export var approach_speed : float
-@export var patrol_dist : float
-@export var patrol_speed : float
-@export var reposition_speed : float
-@export var reposition_angle : float
-@export var return_speed : float
-@export var acceleration : float
-@export var fire_probability : float
-@export var entity_health : int
-@export var projectile_offset : float
+@export var idle_to_patrol_delay : float = 1
+@export var patrol_to_idle_delay : float = 3
+@export var engage_to_action_delay : float = 1.5
+@export var detection_range : float = 200
+@export var fire_range : float = 80
+@export var approach_speed : float = 40
+@export var patrol_dist : float = 10
+@export var patrol_speed : float = 30
+@export var reposition_speed : float = 50
+@export var reposition_angle : float = 65
+@export var return_speed : float = 30
+@export var acceleration : float = 20
+@export var fire_probability : float = 0.6
+@export var entity_health : int = 1
+@export var projectile_offset : float = 10
 
 @onready var sprites : AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine : Node = $States

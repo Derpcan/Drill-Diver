@@ -393,7 +393,7 @@ offset_left = 30.0
 offset_top = 1.0
 offset_right = 1126.0
 offset_bottom = 600.0
-scroll_vertical = 281
+scroll_vertical = 100
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
