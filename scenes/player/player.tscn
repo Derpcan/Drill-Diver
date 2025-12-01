@@ -247,51 +247,41 @@ text = "Speed:"
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamWAV_lgqa7")
 volume_db = -30.264
-bus = &"Sound Effects"
 
 [node name="MovementSound" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamWAV_uf5tr")
 volume_db = -20.0
-bus = &"Sound Effects"
 
 [node name="DashSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("19_lgqa7")
 volume_db = -20.0
-bus = &"Sound Effects"
 
 [node name="DrillSound" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamWAV_3j4b4")
 volume_db = -10.0
-bus = &"Sound Effects"
 
 [node name="DrillStartSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("20_3j4b4")
 volume_db = -10.0
-bus = &"Sound Effects"
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("20_8ydkj")
-bus = &"Sound Effects"
 
 [node name="SuperDrillSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("22_ioxgp")
 volume_db = -15.0
-bus = &"Sound Effects"
 
 [node name="ItemCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("23_cnsyf")
 volume_db = -20.0
-bus = &"Sound Effects"
 
 [node name="BounceSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("22_yj68g")
 volume_db = -15.0
-bus = &"Sound Effects"
 
 [node name="DirtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("25_007i1")
 volume_db = -10.0
-bus = &"Sound Effects"
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]

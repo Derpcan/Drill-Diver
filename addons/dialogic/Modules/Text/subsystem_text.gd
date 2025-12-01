@@ -101,6 +101,7 @@ func load_game_state(_load_flag:=LoadFlags.FULL_LOAD) -> void:
 
 	if character:
 		update_name_label(character)
+		update_typing_sound_mood_from_character(character, "Mood 1")
 
 
 func post_install() -> void:

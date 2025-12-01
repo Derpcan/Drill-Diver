@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://cd15okv44ycyj"]
+[gd_scene load_steps=31 format=4 uid="uid://bwjqpd1ibweqs"]
 
 [ext_resource type="Script" uid="uid://cv1ardidub6eq" path="res://scenes/level editor/testing/tutorial_level_loader.gd" id="1_fah3i"]
 [ext_resource type="PackedScene" uid="uid://bjshmay3nbdaf" path="res://scenes/level editor/cave_background.tscn" id="2_hl4jw"]
@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="17_yiw6g"]
 [ext_resource type="PackedScene" uid="uid://4qfhiuw7i8j" path="res://scenes/UI/to_level_select.tscn" id="18_427sq"]
 [ext_resource type="PackedScene" uid="uid://cx3g6mgf1m8q3" path="res://animations/Opening Cutscene/opening_scene.tscn" id="19_hl4jw"]
-[ext_resource type="Resource" uid="uid://siicvn1xm4v6" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
+[ext_resource type="Resource" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
 [ext_resource type="PackedScene" uid="uid://cuvysegbb8cm5" path="res://scenes/dialogue/dialogue.tscn" id="19_qtett"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a25ho"]
@@ -1829,7 +1829,7 @@ stereo = true
 [node name="TutorialLevelLoader" type="Node2D" node_paths=PackedStringArray("opening", "physics_tilemap", "decorative_tilemap", "object_node", "to_level_select")]
 script = ExtResource("1_fah3i")
 opening = NodePath("OpeningScene")
-level_file_path = "/Users/logangeorgi/Documents/GitHub/Drill-Diver/scenes/level editor/testing/Tutorial.lvl"
+level_file_path = "res://Tutorial/Tutorial.lvl"
 physics_tilemap = NodePath("PhysicsTileMap")
 decorative_tilemap = NodePath("DecorativeTileMap")
 object_node = NodePath("ObjectNode")

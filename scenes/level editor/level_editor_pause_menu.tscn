@@ -250,8 +250,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_k0jg8"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_8lmil"]
+resource_name = "Close"
+length = 0.133337
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -259,10 +260,10 @@ tracks/0/path = NodePath("..:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(1, 1e-05)]
+"values": [Vector2(1, 1), Vector2(1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_mkhpj"]
@@ -281,9 +282,8 @@ tracks/0/keys = {
 "values": [Vector2(1, 1e-05), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_8lmil"]
-resource_name = "Close"
-length = 0.133337
+[sub_resource type="Animation" id="Animation_k0jg8"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -291,10 +291,10 @@ tracks/0/path = NodePath("..:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1, 0)]
+"values": [Vector2(1, 1e-05)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8lmil"]

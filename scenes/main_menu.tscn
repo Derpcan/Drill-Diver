@@ -537,13 +537,11 @@ horizontal_alignment = 1
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamWAV_gw5y6")
 volume_db = 10.0
-bus = &"Music"
 
 [node name="ButtonSound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(230, 241)
 scale = Vector2(3.49, 3.49)
 stream = SubResource("AudioStreamWAV_svtp6")
-bus = &"Sound Effects"
 
 [node name="AnimationPlay" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimationPlayer")
