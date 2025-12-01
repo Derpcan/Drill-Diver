@@ -8,7 +8,7 @@
 [ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="5_k6imf"]
 [ext_resource type="AudioStream" uid="uid://djmmo20hp5wwa" path="res://assets/sounds/DD - pause click (UI).wav" id="7_axlt5"]
 
-[sub_resource type="Shader" id="Shader_hstxw"]
+[sub_resource type="Shader" id="Shader_j7ex8"]
 code = "shader_type canvas_item;
 
 uniform bool useHologram = true;
@@ -61,7 +61,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_axlt5"]
 resource_local_to_scene = true
-shader = SubResource("Shader_hstxw")
+shader = SubResource("Shader_j7ex8")
 shader_parameter/useHologram = false
 shader_parameter/baseColor = Color(0.227451, 0.835294, 0.921569, 0.772549)
 shader_parameter/speed = 0.3
