@@ -2077,7 +2077,8 @@ visible = false
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamWAV_wv7w3")
-volume_db = -5.0
+volume_db = 5.0
 autoplay = true
+bus = &"Music"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
