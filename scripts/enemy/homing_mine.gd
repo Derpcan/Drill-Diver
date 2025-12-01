@@ -24,7 +24,30 @@ const EPSILON := 1.0 # Margin of error for comparisons
 
 var to_player : Vector2 = Vector2(-1.0, -1.0) # The distance vector between this entity and the player
 
+
+var line_2d:Line2D = null
+
+var in_editor:bool = false
+
+
+
+
 func _ready() -> void:
+	if in_editor:
+		line_2d = Line2D.new()
+		#line_2d.draw_circle(Vector2(0,0), detection_range, Color(1,1,1), false, 1)
+		var pos_list: PackedVector2Array = PackedVector2Array()
+		var total_cuts = 512
+		var step = (2 * PI) / total_cuts
+		
+		for cut in range(total_cuts):
+			var radian = (2 * PI / 360) * (360 / float(total_cuts)) * (cut + 3)
+			var radian_pos = Vector2(cos(radian), sin(radian))
+			pos_list.append(radian_pos)
+			line_2d.add_point(radian_pos)
+		add_child(line_2d)
+		return
+	
 	# Disable the explosion hitbox
 	detonation_hitbox.monitoring = false
 	
@@ -36,11 +59,15 @@ func _ready() -> void:
 	state_machine.change_state(start_state)
 
 func _physics_process(delta: float) -> void:
+	if in_editor:
+		return
 	_calc_vec_to_player()
 	state_machine._process(delta)
 	move_and_slide()
 
 func _calc_vec_to_player() -> void:
+	if player == null:
+		return
 	var player_glb = player.global_position
 	var enemy_glb = self.global_position
 	to_player = player_glb - enemy_glb

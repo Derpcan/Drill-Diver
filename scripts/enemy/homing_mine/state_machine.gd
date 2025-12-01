@@ -12,4 +12,5 @@ func change_state(state: Node) -> void:
 	current_state.enter()
 
 func _process(delta: float) -> void:
-	current_state.update(delta)
+	if current_state:
+		current_state.update(delta)

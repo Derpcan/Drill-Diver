@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bfpv28j5cf26r"]
+[gd_scene load_steps=24 format=3 uid="uid://csivye50658l1"]
 
 [ext_resource type="Script" uid="uid://ddlyt2ctjnhhs" path="res://scripts/enemy/homing_mine.gd" id="1_wnfp0"]
 [ext_resource type="Script" uid="uid://be0e6jpjxku5k" path="res://scripts/enemy/homing_mine/state_machine.gd" id="2_18xc7"]
@@ -166,10 +166,9 @@ script = ExtResource("5_21x35")
 script = ExtResource("6_0uo1l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_1blu5")
-animation = &"explosion"
-frame = 9
-frame_progress = 1.0
+animation = &"close"
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -178,5 +177,5 @@ script = ExtResource("21_y7bb1")
 metadata/_custom_type_script = "uid://c3dxq7yaj2k6o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(0, 2)
+position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_y0nwa")

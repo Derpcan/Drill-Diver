@@ -214,7 +214,7 @@ static var tile_map_to_tile_dictionary:Dictionary[String, Dictionary] = {
 static var placed_tiles:Array[Vector2i] = []
 
 # Objects in this array are allowed to be placed over tiles, add the name of an object to allow it to be placed over tiles
-static var object_allowed_placed_on_tiles:Array[String] = ["Gem"]
+static var object_allowed_placed_on_tiles:Array[String] = ["Gem", "Homing Mine"]
 
 # The conversion from decorative to physics tiles
 static var decorative_tiles_to_physics:Dictionary = {
@@ -267,6 +267,8 @@ static var object_dictionary:Dictionary = {
 	"Spawnpoint":preload("res://scenes/checkpoint/spawnpoint.tscn"),
 	"Goal":preload("res://scenes/goal/goal.tscn"),
 	"Alien":preload("res://scenes/enemy/enemy.tscn"),
+	"Ranged Drone":preload("res://scenes/enemy/ranged_drone.tscn"),
+	"Homing Mine":preload("res://scenes/enemy/homing_mine.tscn"),
 }
 
 static var scene_dictionary:Dictionary = {
@@ -275,6 +277,8 @@ static var scene_dictionary:Dictionary = {
 	preload("res://scenes/checkpoint/spawnpoint.tscn"):"Spawnpoint",
 	preload("res://scenes/goal/goal.tscn"):"Goal",
 	preload("res://scenes/enemy/enemy.tscn"):"Alien",
+	preload("res://scenes/enemy/ranged_drone.tscn"):"Ranged Drone",
+	preload("res://scenes/enemy/homing_mine.tscn"):"Homing Mine",
 }
 
 # Keeps track of unique locations and stores the associated object at the location
@@ -920,6 +924,8 @@ static func update_object_bonus_parameters(
 	
 	if tile_position_to_bonus_parameters[tile_position].has("Distance"):
 		tile_pos_to_object_dictionary[tile_position]["object"].patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
+	if tile_position_to_bonus_parameters[tile_position].has("Range"):
+		tile_pos_to_object_dictionary[tile_position]["object"].detection_range = tile_position_to_bonus_parameters[tile_position]["Range"]
 
 
 static func static_pause_enemy_tiles(
@@ -933,6 +939,10 @@ static func static_pause_enemy_tiles(
 		return
 	
 	if scene_dictionary[selected_object] == "Alien":
+		object.in_editor = true
+	if scene_dictionary[selected_object] == "Ranged Drone":
+		object.in_editor = true
+	if scene_dictionary[selected_object] == "Homing Mine":
 		object.in_editor = true
 	
 	if not tile_position_to_bonus_parameters.has(tile_position):
@@ -958,6 +968,8 @@ static func static_add_bonus_params_to_objects(
 	
 	if tile_position_to_bonus_parameters[tile_position].has("Distance"):
 		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
+	if tile_position_to_bonus_parameters[tile_position].has("Range"):
+		object.detection_range = tile_position_to_bonus_parameters[tile_position]["Range"]
 
 
 
@@ -1562,6 +1574,7 @@ func _finish_test_play_setup() -> void:
 		goal.Sranktime = best_time_completed
 		goal.new_time_got.connect(_handle_beat_level)
 	
+	player.add_to_group("player")
 	add_child(player)
 	add_child(checkpoint_mangager)
 	add_child(game_camera)
@@ -1607,10 +1620,75 @@ func test_level() -> void:
 	
 	
 	# Connect to signal so it continues to load
-	finished_loading.connect(_finish_test_play_setup)
+	#finished_loading.connect(_finish_test_play_setup)
+	
+	var player_scene:PackedScene = preload("res://scenes/player/player.tscn")
+	player = player_scene.instantiate()
+	player.add_to_group("player")
+	add_child(player)
 	
 	
 	reload_tilemaps()
+	
+	
+	
+	fix_physics_tile_map(physics_tilemap)
+	
+	
+	
+	var checkpoint_manager_scene:PackedScene = preload("res://scenes/checkpoint/checkpoint_manager.tscn")
+	var game_camera_scene:PackedScene = preload("res://scenes/Camera/game_camera.tscn")
+	
+	var hud_scene:PackedScene = preload("res://scenes/UI/hud.tscn")
+	var level_loaded_scene:PackedScene = preload("res://scenes/system/OnLevelLoaded.tscn")
+	
+	hud = hud_scene.instantiate()
+	on_level_loaded = level_loaded_scene.instantiate()
+	
+	
+	checkpoint_mangager = checkpoint_manager_scene.instantiate()
+	game_camera = game_camera_scene.instantiate()
+	
+	
+	checkpoint_mangager.game_camera = game_camera
+	checkpoint_mangager.player = player
+	
+	hud.add_to_group("hud")
+	
+	
+	$LevelEditorHud/TestLevelButton.hide()
+	$Camera2D.hide()
+	$Camera2D.enabled = false
+	
+	game_camera.enabled = true
+	game_camera.zoom = Vector2(3,3)
+	
+	physics_tilemap.player = player
+	
+	var spawn_point:Node2D = get_spawnpoint()
+	
+	if spawn_point:
+		player.global_position = spawn_point.global_position
+	
+	var goal:Goal = get_goal() as Goal
+	
+	if goal:
+		goal.Sranktime = best_time_completed
+		goal.new_time_got.connect(_handle_beat_level)
+	
+	
+	add_child(checkpoint_mangager)
+	add_child(game_camera)
+	add_child(hud)
+	add_child(on_level_loaded)
+	
+	level_editor_hud.hide()
+	
+	
+	$TestingHud.show()
+	
+	finished_loading.disconnect(_finish_test_play_setup)
+	
 	
 	#if loading_thread != null and loading_thread.is_alive():
 		#loading_thread.wait_to_finish()

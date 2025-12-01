@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=26 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://cmk1ubstgth2f" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/LabTileCenter.png" id="6_pswwc"]
 [ext_resource type="Texture2D" uid="uid://dl2yg7fvrwua7" path="res://assets/dirt_single.png" id="8_s2r5n"]
 [ext_resource type="Texture2D" uid="uid://08gh7sintjvt" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/Tiles_37.png" id="9_rug43"]
+[ext_resource type="Texture2D" uid="uid://wwdb3tu4s46t" path="res://assets/sprites/homing_mine/mine_4.png" id="11_rug43"]
+[ext_resource type="Texture2D" uid="uid://b5030oitn54xc" path="res://assets/sprites/ranged_drone/ranged_drone.png" id="12_n7spv"]
 
 [sub_resource type="Animation" id="Animation_qv4l2"]
 length = 0.001
@@ -503,6 +505,16 @@ distance_parameter = true
 bonus_parameters = Dictionary[String, int]({
 "Distance": 10
 })
+
+[node name="HomingMine" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("11_rug43")
+text = "Homing Mine"
+
+[node name="RangedDron" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("12_n7spv")
+text = "Ranged Drone"
 
 [node name="HSeparator4" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

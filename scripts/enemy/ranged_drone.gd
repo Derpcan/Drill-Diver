@@ -32,7 +32,12 @@ var to_player : Vector2 = Vector2(-1.0, -1.0) # The distance vector between this
 var can_be_hurt : bool = true
 var collided_last_frame : bool = false
 
+var in_editor:bool = false
+
 func _ready() -> void:
+	if in_editor:
+		return
+	
 	start_position = self.global_position
 	
 	# Wire up each state
@@ -42,7 +47,10 @@ func _ready() -> void:
 	# Start the state machine at the designated state
 	state_machine.change_state(start_state)
 
-func _physics_process(delta: float) -> void:	
+func _physics_process(delta: float) -> void:
+	if in_editor:
+		return
+	
 	_calc_vec_to_player()
 	state_machine._process(delta)
 	collided_last_frame = move_and_slide()
@@ -54,6 +62,8 @@ func _physics_process(delta: float) -> void:
 			state_machine.change_state(state_machine.hurt_state)
 
 func _calc_vec_to_player() -> void:
+	if player == null:
+		return
 	var player_glb = player.global_position
 	var enemy_glb = self.global_position
 	to_player = player_glb - enemy_glb
