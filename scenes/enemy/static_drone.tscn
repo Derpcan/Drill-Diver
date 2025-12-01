@@ -1,6 +1,6 @@
-[gd_scene load_steps=41 format=3 uid="uid://bwubgssrpau65"]
+[gd_scene load_steps=44 format=3 uid="uid://bwubgssrpau65"]
 
-[ext_resource type="Script" uid="uid://boy258uxex56p" path="res://scripts/enemy/ranged_drone.gd" id="1_e3q7h"]
+[ext_resource type="Script" uid="uid://ce7yjt1m71oou" path="res://scenes/enemy/ranged_drone.gd" id="1_e3q7h"]
 [ext_resource type="Script" uid="uid://b4enj00tgciaq" path="res://scripts/enemy/ranged_drone/state_machine.gd" id="2_gmaum"]
 [ext_resource type="Script" uid="uid://dwk3xo5xhcv74" path="res://scripts/enemy/ranged_drone/idle.gd" id="3_x5w4o"]
 [ext_resource type="Script" uid="uid://cn5v4hwktgud3" path="res://scripts/enemy/ranged_drone/patrol.gd" id="4_ghuub"]
@@ -195,17 +195,57 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amfcc"]
 size = Vector2(25.7143, 24.2857)
 
+[sub_resource type="Animation" id="Animation_7un2g"]
+resource_name = "Respawn"
+length = 0.333337
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_e3q7h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gmaum"]
+_data = {
+&"RESET": SubResource("Animation_e3q7h"),
+&"Respawn": SubResource("Animation_7un2g")
+}
+
 [node name="StaticDrone" type="CharacterBody2D" node_paths=PackedStringArray("start_state", "drone_hurtbox")]
 collision_layer = 0
 script = ExtResource("1_e3q7h")
 start_state = NodePath("States/Idle")
 drone_hurtbox = NodePath("Hurtbox")
+<<<<<<< Updated upstream
 idle_to_patrol_delay = 1.0
 patrol_to_idle_delay = 3.0
 engage_to_action_delay = 1.5
 detection_range = 200.0
 entity_health = 1
 projectile_offset = 10.0
+=======
+>>>>>>> Stashed changes
 
 [node name="States" type="Node" parent="."]
 script = ExtResource("2_gmaum")
@@ -257,3 +297,11 @@ shape = SubResource("RectangleShape2D_amfcc")
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("17_jmhfx")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_gmaum")
+}

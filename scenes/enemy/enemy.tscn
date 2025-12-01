@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://d1qjh238xsdgr"]
+[gd_scene load_steps=34 format=3 uid="uid://d1qjh238xsdgr"]
 
 [ext_resource type="Script" uid="uid://3rjwh56w1t76" path="res://scripts/enemy/enemy.gd" id="1_gl05p"]
 [ext_resource type="Texture2D" uid="uid://bwxfasjx1ygs6" path="res://assets/sprites/dog_enemy/Death.png" id="2_cwlon"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ddut0dk2w0ijs" path="res://assets/sprites/dog_enemy/Attack.png" id="4_13gj6"]
 [ext_resource type="Texture2D" uid="uid://dsme7phagkrgu" path="res://assets/sprites/dog_enemy/Run.png" id="5_4efjx"]
 [ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="6_cwlon"]
+[ext_resource type="AudioStream" uid="uid://dqw1yowtmdn60" path="res://assets/sounds/dd - explosion.wav" id="7_nbhyu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hvxgb"]
 atlas = ExtResource("2_cwlon")
@@ -225,5 +226,8 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHurtbox"]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_13gj6")
+
+[node name="DieSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_nbhyu")
 
 [connection signal="area_entered" from="EnemyHurtbox" to="." method="_on_enemy_hurtbox_area_entered"]
