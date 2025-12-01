@@ -5,7 +5,7 @@ func _ready():
 	self.pressed.connect(_handle_on_press)
 
 func _handle_on_press():
-	get_parent().get_parent().get_node("ButtonSound").play()
+	get_parent().get_node("ButtonSound").play()
 	get_tree().quit()
 	
 func _on_mouse_entered():
