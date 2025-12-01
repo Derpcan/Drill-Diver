@@ -39,11 +39,13 @@ func _ready():
 		
 func _reveal_time():
 	var tween = create_tween()
+	$BuildUpSound.play()
 	tween.set_parallel()
 	tween.tween_method(Callable(self, "_update_minutes"), minutes, completeTimeMin, 2)
 	tween.tween_method(Callable(self, "_update_seconds"), seconds, completeTimeSec, 2)
 	tween.tween_method(Callable(self, "_update_mili"), miliseconds, completeTimeMili, 2)
 	await tween.finished
+	$BuildUpSound.stop()
 	timer.start()
 	await timer.timeout
 	_decide_rank()
@@ -62,18 +64,24 @@ func _decide_rank():
 	if (completeTime <= sranktime):
 		rankletter._play_S_rank()
 		bit._play_S_rank()
+		$"S Rank".play()
+		
 	elif (completeTime <= sranktime*1.5):
 		rankletter._play_A_rank()
 		bit._play_A_rank()
+		$"A Rank".play()
 	elif (completeTime <= sranktime*1.8):
 		rankletter._play_B_rank()
 		bit._play_B_rank()
+		$"B Rank".play()
 	elif (completeTime <= sranktime*2):
 		rankletter._play_C_rank()
 		bit._play_C_rank()
+		$"C Rank".play()
 	else:
 		rankletter._play_D_rank()
 		bit._play_D_rank()
+		$"D Rank".play()
 
 func _set_complete_time(timetaken:float):
 	completeTime = timetaken
@@ -87,19 +95,24 @@ func _set_S_rank_time(s_rank_time:float):
 func _A_rank():
 	bit._play_A_rank()
 	rankletter._play_A_rank()
+	$"A Rank".play()
 
 func _B_rank():
 	bit._play_B_rank()
 	rankletter._play_B_rank()
+	$"B Rank".play()
 	
 func _C_rank():
 	bit._play_C_rank()
 	rankletter._play_C_rank()
+	$"C Rank".play()
 	
 func _D_rank():
 	bit._play_D_rank()
 	rankletter._play_D_rank()
+	$"D Rank".play()
 	
 func _S_rank():
 	bit._play_S_rank()
 	rankletter._play_S_rank()
+	$"S Rank".play()

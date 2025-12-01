@@ -103,6 +103,7 @@ func _process(delta):
 ## Super Drill Meter -----------------------------------------------------------
 func _handle_fill_meter(amount: int) -> void:
 	_drill_meter_charge = clamp(_drill_meter_charge + amount, DRILL_METER_MIN, DRILL_METER_MAX)
+	
 	self.update_meter.emit(_drill_meter_charge)
 	
 func _handle_deplete_meter(amount: int) -> void:
@@ -116,3 +117,7 @@ func _handle_set_meter(amount: int) -> void:
 # Public accessor for the current drill meter charge
 func get_current_charge() -> int:
 	return _drill_meter_charge
+
+#Restart Level
+func _restart_level():
+	get_tree().reload_current_scene()

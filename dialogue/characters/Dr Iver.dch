@@ -6,7 +6,18 @@
 &"custom_info": {
 "prefix": "",
 "sound_mood_default": "",
-"sound_moods": {},
+"sound_moods": {
+"Mood 1": {
+"mode": 1,
+"name": "Mood 1",
+"pitch_base": -2.0,
+"pitch_variance": 0.0,
+"skip_characters": 3.0,
+"sound_path": "res://assets/sounds/Text Beep.wav",
+"volume_base": 0.0,
+"volume_variance": 0.0
+}
+},
 "style": "Computer Style",
 "suffix": ""
 },
@@ -24,7 +35,18 @@
 "mirror": false,
 "offset": Vector2(-35, -140),
 "scale": 0.3,
-"scene": ""
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"New portrait": {
+"export_overrides": {
+"image": ""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
 }
 },
 &"scale": 1.0

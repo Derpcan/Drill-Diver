@@ -5,7 +5,7 @@ Computer (Error): EXPERIMENT 1257 HAS ESCAPED, ALERTING DR. IVER.
 leave Computer [animation="Fade Out"]
 Bit (C Rank): Dr. Iver? Who’s that? What’s going on!
 join "Dr Iver" right [animation="Fade In"]
-"Dr Iver": Erm…Ahem, can you hear me?
+"Dr Iver" (Neutral): Erm…Ahem, can you hear me?
 Bit (D Rank): Who’s there?!
 "Dr Iver": Hello experiment 12.. -I-I mean Bit. My name is Dr.Iver, I’m talking to you over the lab intercom.
 "Dr Iver": I am but a humble scientist, conducting 100% legal and ethical work on willing test subjects such as yourself.

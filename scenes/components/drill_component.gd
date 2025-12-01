@@ -170,7 +170,7 @@ func _start_bump(_body):
 		can_move = false
 		parent.bounce_timer.start(0.2)
 		drill_shape_cast.force_shapecast_update()
-		
+		bounce.emit()
 
 
 

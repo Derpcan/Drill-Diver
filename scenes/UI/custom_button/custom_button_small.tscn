@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://byidv4a683rw2"]
+[gd_scene load_steps=11 format=3 uid="uid://byidv4a683rw2"]
 
 [ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="1_3a4kp"]
 [ext_resource type="Texture2D" uid="uid://dckht6tau0u0u" path="res://assets/sprites/menu/UI_Gradient_Button_Medium_Lock_01a1.png" id="2_y5465"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://s3wewoj2cpm2" path="res://scenes/UI/custom_button.gd" id="4_3a4kp"]
 [ext_resource type="Texture2D" uid="uid://r4fvceb24nh5" path="res://assets/sprites/menu/UI_Gradient_Button_Medium_Lock_01a2.png" id="4_uugvw"]
 [ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="5_f1fa4"]
+[ext_resource type="AudioStream" uid="uid://trj0oi5g38j0" path="res://assets/sounds/DD - resume click (UI).wav" id="7_27sk0"]
 
 [sub_resource type="Shader" id="Shader_gw5y6"]
 code = "shader_type canvas_item;
@@ -96,6 +97,10 @@ layout_mode = 2
 text = "Back"
 label_settings = SubResource("LabelSettings_fe07c")
 horizontal_alignment = 1
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_27sk0")
+bus = &"Sound Effects"
 
 [connection signal="button_down" from="." to="." method="_on_button_down"]
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

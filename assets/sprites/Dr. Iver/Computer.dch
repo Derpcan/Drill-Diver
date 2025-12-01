@@ -8,12 +8,12 @@
 "sound_mood_default": "",
 "sound_moods": {
 "Mood 1": {
-"mode": 0,
+"mode": 1,
 "name": "Mood 1",
-"pitch_base": 0.0,
-"pitch_variance": 20.0,
-"skip_characters": 0.0,
-"sound_path": "",
+"pitch_base": -5.0,
+"pitch_variance": 0.0,
+"skip_characters": 3.0,
+"sound_path": "res://assets/sounds/Text Beep.wav",
 "volume_base": 0.0,
 "volume_variance": 0.0
 }
@@ -35,7 +35,8 @@
 "mirror": false,
 "offset": Vector2(-35, -145),
 "scale": 0.25,
-"scene": ""
+"scene": "",
+"sound_mood": "Mood 1"
 },
 "Neutral": {
 "export_overrides": {
@@ -44,7 +45,8 @@
 "mirror": false,
 "offset": Vector2(-35, -145),
 "scale": 0.25,
-"scene": ""
+"scene": "",
+"sound_mood": "Mood 1"
 }
 },
 &"scale": 1.0
