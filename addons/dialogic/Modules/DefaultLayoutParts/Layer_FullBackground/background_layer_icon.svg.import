@@ -2,12 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d06rgq1mpfnsq"
-valid=false
+uid="uid://cm8w3lr5o038d"
+path="res://.godot/imported/background_layer_icon.svg-021cd7ab7c646ee621f9b89b8dfc9d60.ctex"
+metadata={
+"has_editor_variant": true,
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_FullBackground/background_layer_icon.svg"
+dest_files=["res://.godot/imported/background_layer_icon.svg-021cd7ab7c646ee621f9b89b8dfc9d60.ctex"]
 
 [params]
 
@@ -29,5 +34,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

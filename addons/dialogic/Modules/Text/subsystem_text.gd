@@ -95,14 +95,11 @@ func clear_game_state(_clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR) ->
 
 
 func load_game_state(_load_flag:=LoadFlags.FULL_LOAD) -> void:
-	
 	update_textbox(dialogic.current_state_info.get('text', ''), true)
 	update_dialog_text(dialogic.current_state_info.get('text', ''), true)
 	var character: DialogicCharacter = get_current_speaker()
-	
 
 	if character:
-		update_typing_sound_mood_from_character(character, "Mood 1")
 		update_name_label(character)
 
 

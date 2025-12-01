@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsxt8nsu55kl0"
-valid=false
+uid="uid://ch4hvrgmq3j7t"
+path="res://.godot/imported/pl5 hate.png-004951da12b71d275d61f3fe7af6c760.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Antonio/pl5 hate.png"
+dest_files=["res://.godot/imported/pl5 hate.png-004951da12b71d275d61f3fe7af6c760.ctex"]
 
 [params]
 

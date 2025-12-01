@@ -6,47 +6,8 @@ res://assets/sprites/Dr. Iver/Computer Style.tres
 res://tilesets/Tile_HardDrillable.tres
 res://tilesets/TerrainTileSet.tres
 res://scenes/main_menu.tres
-res://scenes/dialogue/dialogue.tscn
-res://dialogue/characters/Dr Iver.dch
-res://scenes/level editor/testing/tutorial_level_loader.tscn
-res://scenes/items/MeterItem.tscn
-res://scenes/goal/goal.tscn
-res://scenes/player/player.tscn
-res://scenes/UI/custom_button.tscn
-res://scenes/UI/custom_button/custom_button_small.tscn
-res://scenes/level editor/custom_level_button.tscn
-res://scenes/level editor/tile_selector_button.tscn
-res://scenes/ghost/ghost.tscn
-res://animations/Opening Cutscene/opening_scene.tscn
-res://scenes/level editor/testing/tutorial_level_loader 2.tscn
-res://scenes/level editor/testing/test_custom_level_editor 2.tscn
-res://assets/sprites/computer/Drill.dtl
-res://dialogue/characters/Bit.dch
 res://assets/sprites/Dr. Iver/Computer.dch
-res://addons/dialogic/Modules/Text/subsystem_text.gd
-res://dialogue/Timelines/Opening2.dtl
-res://addons/dialogic/Modules/Text/node_type_sound.gd
-res://default_bus_layout.tres
-res://addons/dialogic/Modules/Text/character_settings/character_moods_settings.tscn
-res://scenes/player/player.gd
-res://scenes/UI/ranking.tscn
-res://scenes/goal/goal.gd
-res://scenes/UI/ranking.gd
-res://scenes/level editor/level_editor.tscn
-res://scenes/UI/hud.tscn
-res://scripts/UI/HUD/super_drill_meter.gd
-res://scripts/UI/menus/pause_button.gd
-res://scenes/pause_menu.tscn
-res://scenes/level editor/level_editor_pause_menu.tscn
-res://scripts/UI/menus/escape_pause_button.gd
-res://scenes/level editor/testing/test_custom_level_editor.tscn
-res://scenes/level editor/bonus_parameters/custom_line_edit.tscn
-res://scripts/system/game_manager.gd
-res://scenes/level editor/level_editor_hud.tscn
-res://scenes/level editor/load_or_save.tscn
-res://scenes/level editor/cave_background.tscn
 res://scripts/UI/menus/level_editor_button.gd
 res://scripts/UI/menus/level_select_button.gd
-res://scripts/UI/menus/quit_button.gd
 res://scripts/UI/menus/option_button.gd
-res://addons/better-terrain/editor/TerrainEntry.tscn
+res://scripts/UI/menus/quit_button.gd

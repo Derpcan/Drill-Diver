@@ -2,12 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d08ljvctb1174"
-valid=false
+uid="uid://babwe22dqjta"
+path="res://.godot/imported/add-folder.svg-41a970370f904038e63c13bddbdb6450.ctex"
+metadata={
+"has_editor_variant": true,
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Editor/Images/Pieces/add-folder.svg"
+dest_files=["res://.godot/imported/add-folder.svg-41a970370f904038e63c13bddbdb6450.ctex"]
 
 [params]
 
@@ -29,5 +34,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

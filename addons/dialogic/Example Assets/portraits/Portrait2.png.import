@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7po34p6e8y6u"
-valid=false
+uid="uid://2u3n3yp222uh"
+path="res://.godot/imported/Portrait2.png-c9d044982430f12029c2193cba14c11f.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Portrait2.png"
+dest_files=["res://.godot/imported/Portrait2.png-c9d044982430f12029c2193cba14c11f.ctex"]
 
 [params]
 

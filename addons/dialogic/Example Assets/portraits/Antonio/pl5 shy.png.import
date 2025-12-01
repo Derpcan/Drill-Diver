@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://20u8b8j2uqip"
-valid=false
+uid="uid://gaol7fi1ifkx"
+path="res://.godot/imported/pl5 shy.png-db66f14e608e1c150163af82c8a9f341.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Antonio/pl5 shy.png"
+dest_files=["res://.godot/imported/pl5 shy.png-db66f14e608e1c150163af82c8a9f341.ctex"]
 
 [params]
 

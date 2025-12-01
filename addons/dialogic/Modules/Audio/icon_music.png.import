@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bovudllycktq"
-valid=false
+uid="uid://buvpjsvdt4evk"
+path="res://.godot/imported/icon_music.png-ffc971ba1265164a55f745186974be5f.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/Audio/icon_music.png"
+dest_files=["res://.godot/imported/icon_music.png-ffc971ba1265164a55f745186974be5f.ctex"]
 
 [params]
 

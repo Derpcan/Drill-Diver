@@ -2,12 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g1xw4esviaml"
-valid=false
+uid="uid://my600mb32ydt"
+path="res://.godot/imported/add-character.svg-a658b65c1225b02657a50d5c965e0d5e.ctex"
+metadata={
+"has_editor_variant": true,
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Editor/Images/Toolbar/add-character.svg"
+dest_files=["res://.godot/imported/add-character.svg-a658b65c1225b02657a50d5c965e0d5e.ctex"]
 
 [params]
 
@@ -29,5 +34,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ce15nilyp5day"
-valid=false
+uid="uid://c8ctomgkvxnta"
+path="res://.godot/imported/pl3 surprise.png-92cfd8f7846a35eec2d62e62d532d7e6.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Jane/pl3 surprise.png"
+dest_files=["res://.godot/imported/pl3 surprise.png-92cfd8f7846a35eec2d62e62d532d7e6.ctex"]
 
 [params]
 

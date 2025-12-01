@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mpvyhom1hx37"
-valid=false
+uid="uid://cmshygun2cd0j"
+path="res://.godot/imported/pl3 concept.png-baa2419b24f73cd7e47554567e865964.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Jane/pl3 concept.png"
+dest_files=["res://.godot/imported/pl3 concept.png-baa2419b24f73cd7e47554567e865964.ctex"]
 
 [params]
 

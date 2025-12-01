@@ -2,12 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq24bqke1vgi2"
-valid=false
+uid="uid://bsx8dtqf3vych"
+path="res://.godot/imported/default.svg-3f34de5e45bef5de4d9c15ef78c00c6c.ctex"
+metadata={
+"has_editor_variant": true,
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Editor/Images/Dropdown/default.svg"
+dest_files=["res://.godot/imported/default.svg-3f34de5e45bef5de4d9c15ef78c00c6c.ctex"]
 
 [params]
 
@@ -29,5 +34,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

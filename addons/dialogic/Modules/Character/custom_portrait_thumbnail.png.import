@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqex01135e1vj"
-valid=false
+uid="uid://c5tu88x32sjkf"
+path="res://.godot/imported/custom_portrait_thumbnail.png-0513583853d87342a634d56bc0bec965.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/Character/custom_portrait_thumbnail.png"
+dest_files=["res://.godot/imported/custom_portrait_thumbnail.png-0513583853d87342a634d56bc0bec965.ctex"]
 
 [params]
 

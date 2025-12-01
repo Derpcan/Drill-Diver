@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3okeamtfwphb"
-valid=false
+uid="uid://ypmfci4n2abt"
+path="res://.godot/imported/preview.png-8a6dae1a8e205382d354326ea6961ed2.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Portraits/preview.png"
+dest_files=["res://.godot/imported/preview.png-8a6dae1a8e205382d354326ea6961ed2.ctex"]
 
 [params]
 

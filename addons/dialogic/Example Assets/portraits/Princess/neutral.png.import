@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxk63eqw7icwn"
-valid=false
+uid="uid://bu3631ymfqxi3"
+path="res://.godot/imported/neutral.png-b67f36561d5798f6bdf0e487c71053f7.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Princess/neutral.png"
+dest_files=["res://.godot/imported/neutral.png-b67f36561d5798f6bdf0e487c71053f7.ctex"]
 
 [params]
 

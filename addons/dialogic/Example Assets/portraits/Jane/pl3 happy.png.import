@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g7sb850jq0ut"
-valid=false
+uid="uid://dgteot3g2xw78"
+path="res://.godot/imported/pl3 happy.png-7a49313244ae7097b2150a258b29afbc.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Jane/pl3 happy.png"
+dest_files=["res://.godot/imported/pl3 happy.png-7a49313244ae7097b2150a258b29afbc.ctex"]
 
 [params]
 

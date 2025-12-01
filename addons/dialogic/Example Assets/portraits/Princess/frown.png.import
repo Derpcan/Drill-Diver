@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpk5m8qmtxerm"
-valid=false
+uid="uid://5bruuhj5cqu4"
+path="res://.godot/imported/frown.png-2ea012492bc6286b36736d621adfd96a.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Princess/frown.png"
+dest_files=["res://.godot/imported/frown.png-2ea012492bc6286b36736d621adfd96a.ctex"]
 
 [params]
 

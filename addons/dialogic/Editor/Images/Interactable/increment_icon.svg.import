@@ -2,12 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cg1516g7k1vsg"
-valid=false
+uid="uid://dh1ycbmw8anqh"
+path="res://.godot/imported/increment_icon.svg-081e6509e76349f0628c55a41e85fd65.ctex"
+metadata={
+"has_editor_variant": true,
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Editor/Images/Interactable/increment_icon.svg"
+dest_files=["res://.godot/imported/increment_icon.svg-081e6509e76349f0628c55a41e85fd65.ctex"]
 
 [params]
 
@@ -29,5 +34,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

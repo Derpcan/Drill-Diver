@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cu1obrpyvm2kr"
-valid=false
+uid="uid://bgn2ci6nu85t5"
+path="res://.godot/imported/next-indicator-dialogic-1.png-694f122eff55e969b54cc43e62eb4758.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/next-indicator/next-indicator-dialogic-1.png"
+dest_files=["res://.godot/imported/next-indicator-dialogic-1.png-694f122eff55e969b54cc43e62eb4758.ctex"]
 
 [params]
 

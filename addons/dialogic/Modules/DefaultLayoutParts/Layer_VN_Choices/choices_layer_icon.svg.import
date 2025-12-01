@@ -2,12 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dh7ro2o7dxluj"
-valid=false
+uid="uid://xcxex6r1v6xk"
+path="res://.godot/imported/choices_layer_icon.svg-2f676308da08dddba733cb2bfba8fc69.ctex"
+metadata={
+"has_editor_variant": true,
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Choices/choices_layer_icon.svg"
+dest_files=["res://.godot/imported/choices_layer_icon.svg-2f676308da08dddba733cb2bfba8fc69.ctex"]
 
 [params]
 
@@ -28,6 +33,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+svg/scale=0.3
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

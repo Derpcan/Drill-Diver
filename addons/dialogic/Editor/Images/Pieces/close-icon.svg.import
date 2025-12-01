@@ -2,12 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://twxnra2x3jn8"
-valid=false
+uid="uid://bff65e82555qr"
+path="res://.godot/imported/close-icon.svg-c630c93ada599b08938f4854f5376f2f.ctex"
+metadata={
+"has_editor_variant": true,
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Editor/Images/Pieces/close-icon.svg"
+dest_files=["res://.godot/imported/close-icon.svg-c630c93ada599b08938f4854f5376f2f.ctex"]
 
 [params]
 
@@ -29,5 +34,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg737vd3aj58x"
-valid=false
+uid="uid://uqa1ygtex8sj"
+path="res://.godot/imported/pl3 plot.png-92e4eb96f6aac50f2afc301dcb1954fb.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Jane/pl3 plot.png"
+dest_files=["res://.godot/imported/pl3 plot.png-92e4eb96f6aac50f2afc301dcb1954fb.ctex"]
 
 [params]
 

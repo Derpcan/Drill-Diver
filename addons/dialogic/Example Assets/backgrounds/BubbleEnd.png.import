@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvkmysnu2mwha"
-valid=false
+uid="uid://b3sccqj6l42w6"
+path="res://.godot/imported/BubbleEnd.png-a2bd812e4aeb33a7c97291d41dcc1793.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/backgrounds/BubbleEnd.png"
+dest_files=["res://.godot/imported/BubbleEnd.png-a2bd812e4aeb33a7c97291d41dcc1793.ctex"]
 
 [params]
 

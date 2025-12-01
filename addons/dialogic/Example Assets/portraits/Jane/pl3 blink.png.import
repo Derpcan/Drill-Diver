@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpfubnulkh5o"
-valid=false
+uid="uid://khlo6wd16qcd"
+path="res://.godot/imported/pl3 blink.png-bc002e72d459c371c5ebb5d3d237500e.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Jane/pl3 blink.png"
+dest_files=["res://.godot/imported/pl3 blink.png-bc002e72d459c371c5ebb5d3d237500e.ctex"]
 
 [params]
 

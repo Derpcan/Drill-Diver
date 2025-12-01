@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1okesb56uf0y"
-valid=false
+uid="uid://bt87p6qlso0ya"
+path="res://.godot/imported/dialogic-logo.svg-e43201cabc9573eeb3f78fd91ea9d909.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/dialogic/Editor/Images/dialogic-logo.svg"
+dest_files=["res://.godot/imported/dialogic-logo.svg-e43201cabc9573eeb3f78fd91ea9d909.ctex"]
 
 [params]
 
