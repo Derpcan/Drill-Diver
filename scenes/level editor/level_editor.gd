@@ -27,6 +27,12 @@ class_name LevelEditor
 static var bonus_parameters_viewer_scene:PackedScene = preload("res://scenes/level editor/bonus_parameters/show_and_edit_bonus_parameters.tscn")
 
 
+static var hide_range_visualizer:bool = false:
+	set(new_value):
+		hide_range_visualizer = new_value
+		
+signal hide_range_visualizer_changed(new_value:bool)
+
 signal tile_placed()
 
 
@@ -346,6 +352,29 @@ func _ready() -> void:
 	finished_loading.connect(_hide_loading_screen)
 	
 	tree_exiting.connect(_reconnect_threads)
+	
+	tile_selector.toggle_visual_ranges.connect(toggle_visual_mine_ranges)
+	tile_selector.toggle_visual_paths.connect(toggle_visual_paths)
+	#$LevelEditorHud/Button.connect("button_down", toggle_visual_mine_ranges)
+
+
+static var dog_paths_disabled:bool = false
+func toggle_visual_paths() -> void:
+	var arr:Array[Object] = get_all_objects_of_name("Dog", tile_pos_to_object_dictionary, object_string_name_to_tile_pos)
+	
+	for obj in arr:
+		obj.change_hidden_visualize(not dog_paths_disabled)
+	dog_paths_disabled = not dog_paths_disabled
+
+
+static var mines_ranges_disabled:bool = false
+
+func toggle_visual_mine_ranges() -> void:
+	var arr:Array[Object] = get_all_objects_of_name("Homing Mine", tile_pos_to_object_dictionary, object_string_name_to_tile_pos)
+	
+	for obj in arr:
+		obj.change_hidden_visualize(not mines_ranges_disabled)
+	mines_ranges_disabled = not mines_ranges_disabled
 
 
 
@@ -541,6 +570,9 @@ func get_goal() -> Node2D:
 	return null
 
 
+
+
+
 func delete_all_by_object_name(obj_name:String) -> void:
 	
 	for pos:Vector2i in object_string_name_to_tile_pos[obj_name]:
@@ -607,6 +639,23 @@ func fix_physics_tile_map(physics_tile_map:TileMapLayer) -> void:
 			var atlas_coord:Vector2i = tile_data[1]
 			var alt_tile:int = tile_data[2]
 			physics_tile_map.set_cell(tile_position, source_id2,atlas_coord, alt_tile)
+
+
+static func get_all_objects_of_name(
+	object_name:String,
+	tile_pos_to_object_dictionary:Dictionary[Vector2i, Dictionary],
+	object_string_name_to_tile_pos:Dictionary[String, Array],
+) -> Array[Object]:
+	var array:Array[Object] = []
+	
+	if object_name in object_string_name_to_tile_pos:
+		for pos:Vector2i in object_string_name_to_tile_pos[object_name]:
+			if pos in tile_pos_to_object_dictionary:
+				array.append(tile_pos_to_object_dictionary[pos]["object"]) 
+	
+	return array
+	
+
 
 
 static func static_delete_tile(
@@ -939,10 +988,13 @@ static func static_pause_enemy_tiles(
 	
 	if scene_dictionary[selected_object] == "Dog":
 		object.in_editor = true
+		object.change_hidden_visualize(dog_paths_disabled)
 	if scene_dictionary[selected_object] == "Ranged Drone":
 		object.in_editor = true
 	if scene_dictionary[selected_object] == "Homing Mine":
 		object.in_editor = true
+		object.change_hidden_visualize(mines_ranges_disabled)
+		
 	if scene_dictionary[selected_object] == "Static Mine":
 		object.in_editor = true
 	if scene_dictionary[selected_object] == "Static Drone":

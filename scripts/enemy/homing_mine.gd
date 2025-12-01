@@ -32,15 +32,21 @@ var to_player : Vector2 = Vector2(-1.0, -1.0) # The distance vector between this
 var line_2d:Line2D = null
 
 var in_editor:bool = false
+var prevent_visualize_range:bool = false
+
+func change_hidden_visualize(disabled:bool) -> void:
+	prevent_visualize_range = disabled
+	queue_redraw()
 
 func _draw() -> void:
-	if in_editor:
-		draw_arc(Vector2(0,0), detection_range, 0, TAU, 32, Color(1,1,1))
+	if in_editor and not prevent_visualize_range:
+		draw_arc(Vector2(0,0), detection_range, 0, TAU, 32, Color(1,1,1, 0.4))
 
 
 func _ready() -> void:
 	if in_editor:
 		line_2d = Line2D.new()
+		line_2d.z_index = -2
 		add_child(line_2d)
 		return
 	

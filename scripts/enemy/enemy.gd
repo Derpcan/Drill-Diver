@@ -9,7 +9,7 @@ class_name Enemy
 		if not in_editor:
 			return
 		
-		if line_2d != null:
+		if line_2d != null and not visualize_hidden:
 			line_2d.clear_points()
 			line_2d.add_point(Vector2(-patrol_distance, 0))
 			line_2d.add_point(Vector2(+patrol_distance, 0))
@@ -40,11 +40,26 @@ var line_2d:Line2D = null
 
 signal died(enemy)
 
+var visualize_hidden:bool = false
+func change_hidden_visualize(disabled:bool) -> void:
+	visualize_hidden = disabled
+	if disabled:
+		if line_2d != null:
+			line_2d.clear_points()
+	else:
+		if line_2d != null:
+			line_2d.clear_points()
+			line_2d.add_point(Vector2(-patrol_distance, 0))
+			line_2d.add_point(Vector2(+patrol_distance, 0))
+	
+
+
 func _ready():
 	if in_editor:
 		line_2d = Line2D.new()
-		line_2d.add_point(Vector2(-patrol_distance, 0))
-		line_2d.add_point(Vector2(+patrol_distance, 0))
+		if not visualize_hidden:
+			line_2d.add_point(Vector2(-patrol_distance, 0))
+			line_2d.add_point(Vector2(+patrol_distance, 0))
 		line_2d.default_color = Color.from_rgba8(255, 255, 255, 200)
 		line_2d.width = 3
 		add_child(line_2d)
