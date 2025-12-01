@@ -2,17 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c70ten8d456b5"
-path="res://.godot/imported/clear_music.svg-ab19a5f3dc85de8ba17b7c720b838a73.ctex"
-metadata={
-"has_editor_variant": true,
-"vram_texture": false
-}
+uid="uid://duwilye6hpdus"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/Clear/clear_music.svg"
-dest_files=["res://.godot/imported/clear_music.svg-ab19a5f3dc85de8ba17b7c720b838a73.ctex"]
 
 [params]
 
@@ -34,5 +29,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=true
-editor/convert_colors_with_editor_theme=true
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

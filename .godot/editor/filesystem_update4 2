@@ -1,0 +1,22 @@
+res://scenes/main_menu.tscn
+res://dialogue/Timelines/Speaker.tres
+res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_default_panel.tres
+res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_name_label_panel.tres
+res://assets/sprites/Dr. Iver/Computer Style.tres
+res://tilesets/Tile_HardDrillable.tres
+res://tilesets/TerrainTileSet.tres
+res://scenes/main_menu.tres
+res://scenes/dialogue/dialogue.tscn
+res://dialogue/characters/Dr Iver.dch
+res://scenes/level editor/testing/tutorial_level_loader.tscn
+res://scenes/items/MeterItem.tscn
+res://scenes/goal/goal.tscn
+res://scenes/player/player.tscn
+res://scenes/UI/custom_button.tscn
+res://scenes/UI/custom_button/custom_button_small.tscn
+res://scenes/level editor/custom_level_button.tscn
+res://scenes/level editor/tile_selector_button.tscn
+res://scenes/ghost/ghost.tscn
+res://animations/Opening Cutscene/opening_scene.tscn
+res://scenes/level editor/testing/tutorial_level_loader 2.tscn
+res://scenes/level editor/testing/test_custom_level_editor 2.tscn

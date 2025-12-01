@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://s5s4lmhfnav2"
-path="res://.godot/imported/preview.png-dcc8befd9aebdd8b4c988971a734c72f.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://bkvcpp64g8leu"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_SpeakerPortraitTextbox/preview.png"
-dest_files=["res://.godot/imported/preview.png-dcc8befd9aebdd8b4c988971a734c72f.ctex"]
 
 [params]
 

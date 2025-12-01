@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dydv1g180rqex"
-path="res://.godot/imported/preview.png-573567ffd6162e40c78fe5aca0af73c9.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://bhkt1lu51i3o"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Glossary/preview.png"
-dest_files=["res://.godot/imported/preview.png-573567ffd6162e40c78fe5aca0af73c9.ctex"]
 
 [params]
 

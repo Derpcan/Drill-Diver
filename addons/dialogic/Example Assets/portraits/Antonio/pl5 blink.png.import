@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://s2jsr1aqiu84"
-path="res://.godot/imported/pl5 blink.png-dd40283850366d49ae61df7b137ffd77.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://dy3bgp0yqmxiu"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Antonio/pl5 blink.png"
-dest_files=["res://.godot/imported/pl5 blink.png-dd40283850366d49ae61df7b137ffd77.ctex"]
 
 [params]
 

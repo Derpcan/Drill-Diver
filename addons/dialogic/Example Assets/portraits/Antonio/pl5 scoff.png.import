@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://675isgfym2tw"
-path="res://.godot/imported/pl5 scoff.png-f0b3e5d0a8895f55d2377978a0992a32.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://c5q4244dn2isu"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Antonio/pl5 scoff.png"
-dest_files=["res://.godot/imported/pl5 scoff.png-f0b3e5d0a8895f55d2377978a0992a32.ctex"]
 
 [params]
 

@@ -2,17 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brjikovneb63n"
-path="res://.godot/imported/decrement_icon.svg-9556cf56db91e200fb946372e010fd5e.ctex"
-metadata={
-"has_editor_variant": true,
-"vram_texture": false
-}
+uid="uid://bwol1x0bccvej"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Editor/Images/Interactable/decrement_icon.svg"
-dest_files=["res://.godot/imported/decrement_icon.svg-9556cf56db91e200fb946372e010fd5e.ctex"]
 
 [params]
 
@@ -34,5 +29,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=true
-editor/convert_colors_with_editor_theme=true
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

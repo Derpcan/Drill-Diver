@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcky1dfn4umac"
-path="res://.godot/imported/SymmetryRotateAll.svg-795a9b37a8f5df7e7376c9f762121b21.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://dc22b0d5wtlhh"
+valid=false
 
 [deps]
 
 source_file="res://addons/better-terrain/icons/paint-symmetry/SymmetryRotateAll.svg"
-dest_files=["res://.godot/imported/SymmetryRotateAll.svg-795a9b37a8f5df7e7376c9f762121b21.ctex"]
 
 [params]
 
@@ -32,6 +28,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=4.0
+svg/scale=1.0
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false

@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://p1dnehrtjq1o"
-path="res://.godot/imported/icon.png-b4986c88bf1e20891dc480c8f4703ca4.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://gtgkemjef7jp"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Modules/Clear/icon.png"
-dest_files=["res://.godot/imported/icon.png-b4986c88bf1e20891dc480c8f4703ca4.ctex"]
 
 [params]
 

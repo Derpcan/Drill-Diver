@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb3tpn3u3wtis"
-path="res://.godot/imported/pl3 avoid.png-f8f5fd2a91f270ef9417e3b4bda0f35d.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://v2ldhkodicvs"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Jane/pl3 avoid.png"
-dest_files=["res://.godot/imported/pl3 avoid.png-f8f5fd2a91f270ef9417e3b4bda0f35d.ctex"]
 
 [params]
 

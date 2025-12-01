@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dokv225cp85ja"
-path="res://.godot/imported/anger.png-dbcae35ced97cd8763301ede55f7634a.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://ridbhhcrmnvl"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Princess/anger.png"
-dest_files=["res://.godot/imported/anger.png-dbcae35ced97cd8763301ede55f7634a.ctex"]
 
 [params]
 

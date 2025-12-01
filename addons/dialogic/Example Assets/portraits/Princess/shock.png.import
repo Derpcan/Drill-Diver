@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5aku2g01k6c6"
-path="res://.godot/imported/shock.png-8c83d26226ef9a4e882afabd3875355f.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://dhd34xyhdiiw6"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Princess/shock.png"
-dest_files=["res://.godot/imported/shock.png-8c83d26226ef9a4e882afabd3875355f.ctex"]
 
 [params]
 

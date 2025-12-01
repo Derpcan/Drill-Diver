@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c66nal373iwgd"
-path="res://.godot/imported/icon.svg-7d4870855c0daec5051feb4adbea0091.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://cx46nm7cfemlb"
+valid=false
 
 [deps]
 
 source_file="res://addons/better-terrain/icon.svg"
-dest_files=["res://.godot/imported/icon.svg-7d4870855c0daec5051feb4adbea0091.ctex"]
 
 [params]
 

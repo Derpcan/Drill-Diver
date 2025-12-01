@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vtajb1cdcso"
-path="res://.godot/imported/base3.png-65e60d03716a9b546a46a38772fc2ace.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://byg6xbkknalht"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/rpg_portraits/base3.png"
-dest_files=["res://.godot/imported/base3.png-65e60d03716a9b546a46a38772fc2ace.ctex"]
 
 [params]
 

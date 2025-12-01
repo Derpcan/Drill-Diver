@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://41634vnjwsfw"
-path="res://.godot/imported/preview_character.png-54f0625ad8281c635fea35a4930d95b6.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://fhqjpibp0egy"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Editor/Images/preview_character.png"
-dest_files=["res://.godot/imported/preview_character.png-54f0625ad8281c635fea35a4930d95b6.ctex"]
 
 [params]
 

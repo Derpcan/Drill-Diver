@@ -2,16 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0xc8omj2n6h2"
-path="res://.godot/imported/pl3 doubt.png-ad639761c380e37b578d46414772df73.ctex"
-metadata={
-"vram_texture": false
-}
+uid="uid://b8btr6y122vpw"
+valid=false
 
 [deps]
 
 source_file="res://addons/dialogic/Example Assets/portraits/Jane/pl3 doubt.png"
-dest_files=["res://.godot/imported/pl3 doubt.png-ad639761c380e37b578d46414772df73.ctex"]
 
 [params]
 
