@@ -545,18 +545,18 @@ libraries = {
 
 [node name="OpenLabel" type="Label" parent="."]
 layout_mode = 1
-offset_top = 604.522
+offset_top = 605.273
 offset_right = 1152.0
-offset_bottom = 627.522
+offset_bottom = 628.273
 text = "Press \"E\" to open!"
 horizontal_alignment = 1
 
 [node name="CloseLabel" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-offset_top = 1.47781
+offset_top = 0.727479
 offset_right = 1152.0
-offset_bottom = 24.4778
+offset_bottom = 23.7275
 text = "Press \"E\" to open!"
 horizontal_alignment = 1
 
@@ -577,3 +577,12 @@ offset_top = 195.0
 offset_right = 684.0
 offset_bottom = 218.0
 text = "Use WASD to move around!"
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 165.0
+offset_top = 616.0
+offset_right = 409.0
+offset_bottom = 639.0
+text = "Press \"X\" to toggle Delete Mode"

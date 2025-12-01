@@ -8,7 +8,7 @@ func _ready():
 	print("Scene Manager running...")
 	
 	# Set the main menu as the starting scene
-	change_scene(DEFAULT_SCENE)
+	#change_scene(DEFAULT_SCENE)
 
 ## Immediately switches to the given scene, overriding the scene stack
 func change_scene(scene: String) -> void:

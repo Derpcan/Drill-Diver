@@ -61,14 +61,6 @@
 			"physical_keycode": 65,
 			"shift": false,
 			"type": "key"
-		},
-		{
-			"alt": false,
-			"ctrl": false,
-			"meta": false,
-			"physical_keycode": 4194308,
-			"shift": false,
-			"type": "key"
 		}
 	],
 	"editor_move_right": [

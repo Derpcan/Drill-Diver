@@ -28,6 +28,7 @@ func _ready() -> void:
 	
 	$OpenLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to open!"
 	$CloseLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to close!"
+	$Label2.text = "Press \"" + InputMap.action_get_events("editor_toggle_delete_tile_mode")[0].as_text() + "\" to toggle Delete Mode!"
 	
 
 
@@ -43,6 +44,9 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_pressed("editor_move_down") or Input.is_action_pressed("editor_move_left") or\
 Input.is_action_pressed("editor_move_up") or  Input.is_action_pressed("editor_move_right"):
 		$Label.hide()
+	
+	if Input.is_action_just_pressed("editor_toggle_delete_tile_mode"):
+		$Label2.hide()
 
 
 var times_opened_or_closed:int = 0:
