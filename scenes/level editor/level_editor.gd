@@ -1631,7 +1631,6 @@ func _finish_stop_testing() -> void:
 	
 	place_held_down = false
 	if get_tree().paused:
-		print("DSIDHSD")
 		SceneManager.pop_scene()
 	
 	

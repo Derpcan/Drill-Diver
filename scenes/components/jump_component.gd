@@ -43,7 +43,7 @@ func _calculate_jump(dir:Vector2, is_pressed:bool) -> void:
 		can_still_jump = false
 	# If the character is in the air and jump is pressed
 	elif not on_floor and is_pressed:
-		emit_signal("change_gravity_scale", 0.5) # Lower the gravity scale
+		emit_signal("change_gravity_scale", 0.6) # Lower the gravity scale
 	# If the character is in the air and jump is not pressed
 	elif not on_floor and not is_pressed:
 		emit_signal("change_gravity_scale", 1) # Reset the gravity scale
