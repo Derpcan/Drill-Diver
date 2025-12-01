@@ -1300,6 +1300,9 @@ func save_logic() -> void:
 	file.store_string("\"BackgroundType\":")
 	file.store_string(JSON.stringify(JSON.from_native(background_type)) + ",\n")
 	
+	file.store_string("\"MusicType\":")
+	file.store_string(JSON.stringify(JSON.from_native(music_type)) + ",\n")
+	
 	var decorative_tile_map_dict:Dictionary[int, Array] = {
 		6: decorative_tilemap.get_used_cells_by_id(6),
 		5: decorative_tilemap.get_used_cells_by_id(5),
@@ -1337,7 +1340,7 @@ func save_logic() -> void:
 
 
 
-func _load_logic_async(path_name:String = "") -> void:
+func _load_logic(path_name:String = "") -> void:
 	if load_or_save_ui:
 		load_or_save_ui.queue_free()
 		load_or_save_ui = null
@@ -1382,6 +1385,9 @@ func _load_logic_async(path_name:String = "") -> void:
 			# Load the background type if it exists
 			if "BackgroundType" in json:
 				background_type = JSON.to_native(json["BackgroundType"])
+			
+			if "MusicType" in json:
+				music_type = JSON.to_native(json["MusicType"])
 			
 			
 			var object_string_tile_pos = {}
@@ -1460,7 +1466,7 @@ func load_logic(path_name:String="") -> void:
 	
 	#$LoadingScreen._start_loading()
 	
-	_load_logic_async(path_name)
+	_load_logic(path_name)
 	
 	#_load_logic_async(path_name)
 	#if loading_thread != null and not loading_thread.is_alive():
@@ -1712,16 +1718,12 @@ func test_level() -> void:
 		"Main Music":
 			music_player.stream = preload("res://assets/music/dd - song 2.wav")
 			music_player.stream.loop_end = 4300800
-			
-			print("Main Muisc")
 		"Lab Music":
 			music_player.stream = preload("res://assets/music/dd - song 1.wav")
 			music_player.stream.loop_end = 4608000
-			print("Lab muisc")
 		"Underground Music":
 			music_player.stream = preload("res://assets/music/dd - song 3.wav")
 			music_player.stream.loop_end = 4962240
-			print("undergrouhd music")
 	
 	music_player.stream.mix_rate = 48000
 	music_player.play()
@@ -1810,9 +1812,9 @@ func reload_tilemap_beat_level() -> void:
 	tile_pos_to_object_dictionary.clear()
 	ignore_tiles.clear()
 	
-	_load_logic_async(save_path)
+	#_load_logic(save_path)
 	
-	#load_logic(save_path)
+	load_logic(save_path)
 
 
 func reload_tilemaps() -> void:

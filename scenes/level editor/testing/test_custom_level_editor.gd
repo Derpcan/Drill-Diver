@@ -99,6 +99,8 @@ var background_type:String = "Cave Background":
 			$LabBackground.hide()
 			$CaveBackground.show()
 
+var music_type:String = "Menu Music"
+
 enum tile_types {
 	UNDRILLABLE, # Hard material, used for floors or roofs that can't be passed
 	DRILLABLE, # Material you can drill through
@@ -177,6 +179,9 @@ func load_logic(path_name:String="") -> void:
 			var object_string_tile_pos = {}
 			if "ObjectStringTilePos" in json:
 				object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
+				
+			if "MusicType" in json:
+				music_type = JSON.to_native(json["MusicType"])
 			
 			
 			selected_object = null
@@ -242,6 +247,28 @@ func load_logic(path_name:String="") -> void:
 				s_rank_time = JSON.to_native(json["BestTimeCompleted"])
 			print(s_rank_time)
 			
+			
+			
+			var music_player:AudioStreamPlayer = AudioStreamPlayer.new()
+			music_player.autoplay = true
+			
+			#music_player.stream.loop_mode
+			match music_type:
+				"Main Music":
+					music_player.stream = preload("res://assets/music/dd - song 2.wav")
+					music_player.stream.loop_end = 4300800
+					
+				"Lab Music":
+					music_player.stream = preload("res://assets/music/dd - song 1.wav")
+					music_player.stream.loop_end = 4608000
+				"Underground Music":
+					music_player.stream = preload("res://assets/music/dd - song 3.wav")
+					music_player.stream.loop_end = 4962240
+			
+			music_player.stream.mix_rate = 48000
+			music_player.play()
+			
+			object_node.add_child(music_player)
 			
 			object_string = ""
 			selected_object = null
