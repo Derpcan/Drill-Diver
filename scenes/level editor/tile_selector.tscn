@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=29 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bpmb77snj2n4h" path="res://assets/sprites/dog_enemy/dog_still.png" id="10_n7spv"]
 [ext_resource type="Texture2D" uid="uid://wwdb3tu4s46t" path="res://assets/sprites/homing_mine/mine_4.png" id="11_rug43"]
 [ext_resource type="Texture2D" uid="uid://b5030oitn54xc" path="res://assets/sprites/ranged_drone/ranged_drone.png" id="12_n7spv"]
+[ext_resource type="Texture2D" uid="uid://yglr46luj5sr" path="res://assets/sprites/Spikeball/Spike Ball.png" id="13_7o6a2"]
 [ext_resource type="Texture2D" uid="uid://dsdoa1foi5cma" path="res://assets/lab-game-tileset-pixel-art/layered_lab_background.png" id="13_iibak"]
 [ext_resource type="Texture2D" uid="uid://wr1myh16iilm" path="res://assets/cave/layered_cave_background.png" id="14_7o6a2"]
 
@@ -557,6 +558,17 @@ texture = ExtResource("12_n7spv")
 [node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone/MarginContainer/VBoxContainer2" index="2"]
 text = "Static Drone"
 
+[node name="Spike Ball" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("13_7o6a2")
+text = "Spike Ball"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Spike Ball/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("13_7o6a2")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Spike Ball/MarginContainer/VBoxContainer2" index="2"]
+text = "Spike Ball"
+
 [node name="HSeparator4" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 15
@@ -687,5 +699,6 @@ text = "Press \"X\" to toggle Delete Mode"
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Spike Ball"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/LabBackground"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/CaveBackground"]

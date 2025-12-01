@@ -246,15 +246,15 @@ text = "Speed:"
 
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamWAV_lgqa7")
-volume_db = -30.264
+volume_db = -10.0
 
 [node name="MovementSound" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamWAV_uf5tr")
-volume_db = -20.0
+volume_db = -10.0
 
 [node name="DashSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("19_lgqa7")
-volume_db = -20.0
+volume_db = -10.0
 
 [node name="DrillSound" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamWAV_3j4b4")
@@ -277,7 +277,7 @@ volume_db = -20.0
 
 [node name="BounceSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("22_yj68g")
-volume_db = -15.0
+volume_db = -10.0
 
 [node name="DirtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("25_007i1")

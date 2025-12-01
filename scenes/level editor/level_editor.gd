@@ -218,7 +218,7 @@ static var tile_map_to_tile_dictionary:Dictionary[String, Dictionary] = {
 static var placed_tiles:Array[Vector2i] = []
 
 # Objects in this array are allowed to be placed over tiles, add the name of an object to allow it to be placed over tiles
-static var object_allowed_placed_on_tiles:Array[String] = ["Gem", "Homing Mine", "Static Mine"]
+static var object_allowed_placed_on_tiles:Array[String] = ["Gem", "Homing Mine", "Static Mine", "Spike Ball"]
 
 # The conversion from decorative to physics tiles
 static var decorative_tiles_to_physics:Dictionary = {
@@ -275,6 +275,7 @@ static var object_dictionary:Dictionary = {
 	"Homing Mine":preload("res://scenes/enemy/homing_mine.tscn"),
 	"Static Drone":preload("res://scenes/enemy/static_drone.tscn"),
 	"Static Mine":preload("res://scenes/enemy/static_mine.tscn"),
+	"Spike Ball":preload("res://scenes/enemy/Spike.tscn"),
 }
 
 static var scene_dictionary:Dictionary = {
@@ -287,6 +288,7 @@ static var scene_dictionary:Dictionary = {
 	preload("res://scenes/enemy/homing_mine.tscn"):"Homing Mine",
 	preload("res://scenes/enemy/static_drone.tscn"):"Static Drone",
 	preload("res://scenes/enemy/static_mine.tscn"):"Static Mine",
+	preload("res://scenes/enemy/Spike.tscn"): "Spike Ball",
 }
 
 # Keeps track of unique locations and stores the associated object at the location
@@ -1712,15 +1714,18 @@ func test_level() -> void:
 		"Main Music":
 			music_player.stream = preload("res://assets/music/dd - song 2.wav")
 			music_player.stream.loop_end = 4300800
+			music_player.bus = "Music"
 			
 			print("Main Muisc")
 		"Lab Music":
 			music_player.stream = preload("res://assets/music/dd - song 1.wav")
 			music_player.stream.loop_end = 4608000
+			music_player.bus = "Music"
 			print("Lab muisc")
 		"Underground Music":
 			music_player.stream = preload("res://assets/music/dd - song 3.wav")
 			music_player.stream.loop_end = 4962240
+			music_player.bus = "Music"
 			print("undergrouhd music")
 	
 	music_player.stream.mix_rate = 48000
