@@ -1666,7 +1666,7 @@ func test_level() -> void:
 	$Camera2D.enabled = false
 	
 	game_camera.enabled = true
-	game_camera.zoom = Vector2(3,3)
+	game_camera.zoom = Vector2(4,4)
 	
 	physics_tilemap.player = player
 	
@@ -1711,6 +1711,8 @@ func test_level() -> void:
 			music_player.stream = preload("res://assets/music/dd - song 3.wav")
 			music_player.stream.loop_end = 4962240
 			music_player.bus = "Music"
+	#music_player.volume_db = -5
+	music_player.bus = "Music"
 	
 	music_player.stream.mix_rate = 48000
 	

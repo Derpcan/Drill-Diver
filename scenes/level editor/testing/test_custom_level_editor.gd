@@ -270,7 +270,7 @@ func load_logic(path_name:String="") -> void:
 				"Underground Music":
 					music_player.stream = preload("res://assets/music/dd - song 3.wav")
 					music_player.stream.loop_end = 4962240
-			
+			music_player.bus = "Music"
 			music_player.stream.mix_rate = 48000
 			music_player.play()
 			
