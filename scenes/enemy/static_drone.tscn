@@ -1,6 +1,6 @@
 [gd_scene load_steps=41 format=3 uid="uid://bwubgssrpau65"]
 
-[ext_resource type="Script" path="res://scenes/enemy/ranged_drone.gd" id="1_e3q7h"]
+[ext_resource type="Script" uid="uid://ce7yjt1m71oou" path="res://scenes/enemy/ranged_drone.gd" id="1_e3q7h"]
 [ext_resource type="Script" uid="uid://b4enj00tgciaq" path="res://scripts/enemy/ranged_drone/state_machine.gd" id="2_gmaum"]
 [ext_resource type="Script" uid="uid://dwk3xo5xhcv74" path="res://scripts/enemy/ranged_drone/idle.gd" id="3_x5w4o"]
 [ext_resource type="Script" uid="uid://cn5v4hwktgud3" path="res://scripts/enemy/ranged_drone/patrol.gd" id="4_ghuub"]
@@ -200,12 +200,15 @@ collision_layer = 0
 script = ExtResource("1_e3q7h")
 start_state = NodePath("States/Idle")
 drone_hurtbox = NodePath("Hurtbox")
-idle_to_patrol_delay = 1.0
-patrol_to_idle_delay = 3.0
-engage_to_action_delay = 1.5
-detection_range = 200.0
-entity_health = 1
-projectile_offset = 10.0
+fire_range = 0.0
+approach_speed = 0.0
+patrol_dist = 0.0
+patrol_speed = 0.0
+reposition_speed = 0.0
+reposition_angle = 0.0
+return_speed = 0.0
+acceleration = 0.0
+fire_probability = 0.0
 
 [node name="States" type="Node" parent="."]
 script = ExtResource("2_gmaum")
