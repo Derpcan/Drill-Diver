@@ -31,6 +31,7 @@ var in_editor:bool = false
 
 func _draw() -> void:
 	if in_editor:
+		print(detection_range)
 		draw_arc(Vector2(0,0), detection_range, 0, TAU, 32, Color(1,1,1))
 
 

@@ -510,6 +510,10 @@ bonus_parameters = Dictionary[String, int]({
 layout_mode = 2
 image = ExtResource("11_rug43")
 text = "Homing Mine"
+range_parameter = true
+bonus_parameters = Dictionary[String, int]({
+"Range": 10
+})
 
 [node name="RangedDron" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
 layout_mode = 2
@@ -557,18 +561,18 @@ libraries = {
 
 [node name="OpenLabel" type="Label" parent="."]
 layout_mode = 1
-offset_top = 605.273
-offset_right = 1152.0
-offset_bottom = 628.273
+offset_left = 508.0
+offset_top = 606.0
+offset_right = 1660.0
+offset_bottom = 629.0
 text = "Press \"E\" to open!"
 horizontal_alignment = 1
 
 [node name="CloseLabel" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-offset_top = 0.727479
 offset_right = 1152.0
-offset_bottom = 23.7275
+offset_bottom = 23.0
 text = "Press \"E\" to open!"
 horizontal_alignment = 1
 
