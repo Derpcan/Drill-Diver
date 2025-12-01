@@ -1,0 +1,182 @@
+[gd_scene load_steps=24 format=3 uid="uid://bfpv28j5cf26r"]
+
+[ext_resource type="Script" uid="uid://ddlyt2ctjnhhs" path="res://scripts/enemy/homing_mine.gd" id="1_wnfp0"]
+[ext_resource type="Script" uid="uid://be0e6jpjxku5k" path="res://scripts/enemy/homing_mine/state_machine.gd" id="2_18xc7"]
+[ext_resource type="Script" uid="uid://cuflsrwnfbbyj" path="res://scripts/enemy/homing_mine/idle.gd" id="3_rf07v"]
+[ext_resource type="Script" uid="uid://cug0rm1gt706" path="res://scripts/enemy/homing_mine/following.gd" id="4_hqosf"]
+[ext_resource type="Script" uid="uid://cbg61gtqn5wxd" path="res://scripts/enemy/homing_mine/evaded.gd" id="5_21x35"]
+[ext_resource type="Script" uid="uid://870xbcc56esu" path="res://scripts/enemy/homing_mine/detonate.gd" id="6_0uo1l"]
+[ext_resource type="Texture2D" uid="uid://wwdb3tu4s46t" path="res://assets/sprites/homing_mine/mine_4.png" id="7_0uo1l"]
+[ext_resource type="Texture2D" uid="uid://urcyddduqr1f" path="res://assets/sprites/homing_mine/mine_3.png" id="8_asxug"]
+[ext_resource type="Texture2D" uid="uid://4aruj8wu255t" path="res://assets/sprites/homing_mine/mine_2.png" id="9_vxeqi"]
+[ext_resource type="Texture2D" uid="uid://33c8kafq8b2m" path="res://assets/sprites/homing_mine/mine_1.png" id="10_0pffs"]
+[ext_resource type="Texture2D" uid="uid://cy2r5617x7jil" path="res://assets/sprites/homing_mine/mine_5.png" id="11_3tv2g"]
+[ext_resource type="Texture2D" uid="uid://ddcf6210x0387" path="res://assets/sprites/homing_mine/mine_6.png" id="12_772wc"]
+[ext_resource type="Texture2D" uid="uid://betrqye4748ee" path="res://assets/sprites/homing_mine/mine_explode_1.png" id="13_y7bb1"]
+[ext_resource type="Texture2D" uid="uid://bmq8u7mygw0un" path="res://assets/sprites/homing_mine/mine_explode_2.png" id="14_y0nwa"]
+[ext_resource type="Texture2D" uid="uid://dnxhsekvrbrr6" path="res://assets/sprites/homing_mine/mine_explode_3.png" id="15_mwjf1"]
+[ext_resource type="Texture2D" uid="uid://kwgo5jwplmj7" path="res://assets/sprites/homing_mine/mine_explode_4.png" id="16_xqfps"]
+[ext_resource type="Texture2D" uid="uid://b1r38gw5h20kj" path="res://assets/sprites/homing_mine/mine_explode_5.png" id="17_3cb06"]
+[ext_resource type="Texture2D" uid="uid://dna5vrwehcx3j" path="res://assets/sprites/homing_mine/mine_explode_6.png" id="18_7ri04"]
+[ext_resource type="Texture2D" uid="uid://cb0ey4wv8sxnm" path="res://assets/sprites/homing_mine/mine_explode_7.png" id="19_b8mea"]
+[ext_resource type="Texture2D" uid="uid://baqdtmjjkt0pn" path="res://assets/sprites/homing_mine/mine_explode_8.png" id="20_72g44"]
+[ext_resource type="Script" uid="uid://c3dxq7yaj2k6o" path="res://scripts/hitbox/hit_box.gd" id="21_y7bb1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1blu5"]
+animations = [{
+"frames": [{
+"duration": 0.3,
+"texture": ExtResource("7_0uo1l")
+}, {
+"duration": 0.6,
+"texture": ExtResource("11_3tv2g")
+}],
+"loop": true,
+"name": &"armed_fast",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.7,
+"texture": ExtResource("7_0uo1l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_3tv2g")
+}],
+"loop": true,
+"name": &"armed_slow",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_0uo1l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_asxug")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_vxeqi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_0pffs")
+}],
+"loop": false,
+"name": &"close",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 0.7,
+"texture": ExtResource("11_3tv2g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_772wc")
+}, {
+"duration": 0.3,
+"texture": ExtResource("13_y7bb1")
+}, {
+"duration": 0.3,
+"texture": ExtResource("14_y0nwa")
+}, {
+"duration": 0.4,
+"texture": ExtResource("15_mwjf1")
+}, {
+"duration": 0.4,
+"texture": ExtResource("16_xqfps")
+}, {
+"duration": 0.4,
+"texture": ExtResource("17_3cb06")
+}, {
+"duration": 0.4,
+"texture": ExtResource("18_7ri04")
+}, {
+"duration": 0.6,
+"texture": ExtResource("19_b8mea")
+}, {
+"duration": 0.8,
+"texture": ExtResource("20_72g44")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_0pffs")
+}],
+"loop": false,
+"name": &"idle_close",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_0uo1l")
+}],
+"loop": false,
+"name": &"idle_open",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_0pffs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_vxeqi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_asxug")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0uo1l")
+}],
+"loop": false,
+"name": &"open",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y0nwa"]
+
+[node name="HomingMine" type="CharacterBody2D" node_paths=PackedStringArray("start_state")]
+collision_layer = 0
+script = ExtResource("1_wnfp0")
+start_state = NodePath("States/Idle")
+hit_delay = 0.2
+hit_linger = 0.5
+detection_range = 60.0
+follow_range = 200.0
+detonate_range = 20.0
+evaded_lifetime = 5.0
+initial_speed = 10.0
+max_speed = 120.0
+acceleration = 120.0
+turn_speed = 40.0
+idle_drift = 2.0
+
+[node name="States" type="Node" parent="."]
+script = ExtResource("2_18xc7")
+
+[node name="Idle" type="Node" parent="States"]
+script = ExtResource("3_rf07v")
+
+[node name="Following" type="Node" parent="States"]
+script = ExtResource("4_hqosf")
+
+[node name="Evaded" type="Node" parent="States"]
+script = ExtResource("5_21x35")
+
+[node name="Detonate" type="Node" parent="States"]
+script = ExtResource("6_0uo1l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1blu5")
+animation = &"explosion"
+frame = 9
+frame_progress = 1.0
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("21_y7bb1")
+metadata/_custom_type_script = "uid://c3dxq7yaj2k6o"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_y0nwa")
