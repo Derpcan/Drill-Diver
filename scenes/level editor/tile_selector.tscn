@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=28 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://bpmb77snj2n4h" path="res://assets/sprites/dog_enemy/dog_still.png" id="10_n7spv"]
 [ext_resource type="Texture2D" uid="uid://wwdb3tu4s46t" path="res://assets/sprites/homing_mine/mine_4.png" id="11_rug43"]
 [ext_resource type="Texture2D" uid="uid://b5030oitn54xc" path="res://assets/sprites/ranged_drone/ranged_drone.png" id="12_n7spv"]
+[ext_resource type="Texture2D" uid="uid://dsdoa1foi5cma" path="res://assets/lab-game-tileset-pixel-art/layered_lab_background.png" id="13_iibak"]
+[ext_resource type="Texture2D" uid="uid://wr1myh16iilm" path="res://assets/cave/layered_cave_background.png" id="14_7o6a2"]
 
 [sub_resource type="Animation" id="Animation_qv4l2"]
 length = 0.001
@@ -371,7 +373,7 @@ layout_mode = 0
 offset_top = 648.0
 offset_right = 1152.0
 offset_bottom = 1248.0
-color = Color(0, 0, 0, 0.313726)
+color = Color(0, 0, 0, 0.619608)
 
 [node name="OpenCloseButton" type="Button" parent="ColorRect"]
 layout_mode = 1
@@ -391,6 +393,7 @@ offset_left = 30.0
 offset_top = 1.0
 offset_right = 1126.0
 offset_bottom = 600.0
+scroll_vertical = 281
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
@@ -558,11 +561,6 @@ text = "Static Drone"
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 16
-alignment = 1
-
 [node name="VBoxContainer4" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -578,11 +576,59 @@ alignment = 1
 
 [node name="LabBackground" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
+image = ExtResource("13_iibak")
+text = "Lab Background"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/LabBackground/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("13_iibak")
+expand_mode = 3
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/LabBackground/MarginContainer/VBoxContainer2" index="2"]
 text = "Lab Background"
 
 [node name="CaveBackground" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
 layout_mode = 2
+image = ExtResource("14_7o6a2")
 text = "Cave Background"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/CaveBackground/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("14_7o6a2")
+expand_mode = 3
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/CaveBackground/MarginContainer/VBoxContainer2" index="2"]
+text = "Cave Background"
+
+[node name="HSeparator6" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5"]
+layout_mode = 2
+text = "Music"
+horizontal_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5" groups=["tile_selector_holder"]]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="MainMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("11_rug43")
+text = "Main Music"
+
+[node name="UndergroundMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("11_rug43")
+text = "Underground Music"
+
+[node name="LabMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("10_n7spv")
+text = "Lab Music"
 
 [node name="HSeparator5" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -621,6 +667,7 @@ libraries = {
 }
 
 [node name="Label" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 472.0
 offset_top = 195.0
@@ -640,3 +687,5 @@ text = "Press \"X\" to toggle Delete Mode"
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/LabBackground"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/CaveBackground"]

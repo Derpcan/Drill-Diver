@@ -31,6 +31,10 @@ signal tile_placed()
 
 
 
+var music_type:String = "Main Music":
+	set(new_music_type):
+		music_type = new_music_type
+		
 
 @onready var lab_background:ParallaxBackground = $LabBackground
 @onready var cave_background:ParallaxBackground = $CaveBackground
@@ -459,6 +463,10 @@ func tile_selected_changed(tile_string:String, bonus_parameters:Dictionary={}) -
 	
 	if "Background" in tile_string:
 		background_type = tile_string
+		return
+	
+	if "Music" in tile_string:
+		music_type = tile_string
 		return
 	
 	if tile_string in decorative_tiles_to_physics:
@@ -1695,7 +1703,33 @@ func test_level() -> void:
 	
 	$TestingHud.show()
 	
-	finished_loading.disconnect(_finish_test_play_setup)
+	
+	var music_player:AudioStreamPlayer = AudioStreamPlayer.new()
+	music_player.autoplay = true
+	
+	#music_player.stream.loop_mode
+	match music_type:
+		"Main Music":
+			music_player.stream = preload("res://assets/music/dd - song 2.wav")
+			music_player.stream.loop_end = 4300800
+			
+			print("Main Muisc")
+		"Lab Music":
+			music_player.stream = preload("res://assets/music/dd - song 1.wav")
+			music_player.stream.loop_end = 4608000
+			print("Lab muisc")
+		"Underground Music":
+			music_player.stream = preload("res://assets/music/dd - song 3.wav")
+			music_player.stream.loop_end = 4962240
+			print("undergrouhd music")
+	
+	music_player.stream.mix_rate = 48000
+	music_player.play()
+	$Music.stop()
+	
+	object_node.add_child(music_player)
+	
+	#finished_loading.disconnect(_finish_test_play_setup)
 	
 	
 	#if loading_thread != null and loading_thread.is_alive():
@@ -1725,6 +1759,8 @@ func _finish_stop_testing() -> void:
 
 func _stop_testing() -> void:
 	testing_mode = false
+	
+	$Music.play($Music.get_playback_position())
 	
 	
 	game_camera.queue_free()

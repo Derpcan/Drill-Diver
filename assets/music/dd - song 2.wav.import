@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c4hn107s3pes5"
-path="res://.godot/imported/dd - song 2.wav-247f37f36f7190db54ff6cb84913fe2b.sample"
+path="res://.godot/imported/dd - song 2.wav-bd0371deccd1ef0f1f604ad8570f325d.sample"
 
 [deps]
 
-source_file="res://assets/sounds/dd - song 2.wav"
-dest_files=["res://.godot/imported/dd - song 2.wav-247f37f36f7190db54ff6cb84913fe2b.sample"]
+source_file="res://assets/music/dd - song 2.wav"
+dest_files=["res://.godot/imported/dd - song 2.wav-bd0371deccd1ef0f1f604ad8570f325d.sample"]
 
 [params]
 
@@ -18,7 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop_mode=0
+edit/loop_mode=2
 edit/loop_begin=0
 edit/loop_end=-1
 compress/mode=2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://br6ntaepbduq1"]
+[gd_scene load_steps=38 format=4 uid="uid://br6ntaepbduq1"]
 
 [ext_resource type="TileSet" uid="uid://bq44h40hohica" path="res://tilesets/TerrainTileSet.tres" id="1_e806q"]
 [ext_resource type="Script" uid="uid://cfnvl4bgtjgl1" path="res://scenes/level editor/level_editor.gd" id="1_s4d5t"]
@@ -19,68 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://be1u7dex0aqss" path="res://scenes/UI/custom_button.tscn" id="16_17hkw"]
 [ext_resource type="PackedScene" uid="uid://jr7yio3vpmam" path="res://scenes/UI/loading_screen/loading_screen.tscn" id="16_jqrrb"]
 [ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="17_xubjd"]
-
-[sub_resource type="Shader" id="Shader_17hkw"]
-code = "shader_type canvas_item;
-
-uniform bool useHologram = true;
-
-uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
-uniform float speed = 0.5;
-
-uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
-uniform float linesColorIntensity = 5.0;
-
-uniform sampler2D hologramTexture : filter_linear, repeat_enable;
-uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
-
-vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
-    return mod(uv * tiling + offset, 1.0);
-}
-
-void fragment() {
-
-    // Always sample the base texture
-    vec4 baseTex = texture(TEXTURE, UV);
-    vec4 finalColor = baseTex;
-
-    if (useHologram) {
-        vec2 offset = vec2(TIME * speed);
-        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
-
-        vec4 noise = texture(hologramTexture, tiling);
-
-        float fresnel = 0.71;
-        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
-        vec4 emission = colorLines * fresnel * noise;
-
-        vec4 albedo = baseColor;
-        float alpha = dot(noise.rgb, vec3(1.0));
-
-        vec4 hologram;
-        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
-        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
-        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
-        hologram.a   = clamp(hologram.a, 0.0, 1.0);
-
-        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
-        finalColor.a   = min(baseTex.a, hologram.a);
-    }
-
-    COLOR = finalColor;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7jvr"]
-resource_local_to_scene = true
-shader = SubResource("Shader_17hkw")
-shader_parameter/useHologram = false
-shader_parameter/baseColor = Color(0.227451, 0.835294, 0.921569, 0.772549)
-shader_parameter/speed = 0.3
-shader_parameter/linesColor = Color(0.219608, 0.25098, 0.713726, 1)
-shader_parameter/linesColorIntensity = 0.4
-shader_parameter/hologramTexture = ExtResource("17_xubjd")
-shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
 
 [sub_resource type="Animation" id="Animation_cwu4w"]
 length = 0.001
@@ -1983,6 +1921,57 @@ texture = ExtResource("4_g8j7s")
 [sub_resource type="TileSet" id="TileSet_cwu4w"]
 sources/0 = SubResource("TileSetAtlasSource_dx1w1")
 
+[sub_resource type="Shader" id="Shader_17hkw"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_17hkw"]
 resource_local_to_scene = true
 shader = SubResource("Shader_17hkw")
@@ -2014,15 +2003,6 @@ script = ExtResource("1_s4d5t")
 [node name="LevelEditorHud" parent="." instance=ExtResource("3_ackq3")]
 process_mode = 1
 visible = false
-
-[node name="TestLevelButton" parent="LevelEditorHud" instance=ExtResource("16_17hkw")]
-material = SubResource("ShaderMaterial_w7jvr")
-offset_left = 35.0
-offset_top = 569.0
-offset_right = 131.0
-offset_bottom = 601.0
-scale = Vector2(1.8, 1.8)
-button_string = "Test Level"
 
 [node name="SavedLabel" type="Label" parent="LevelEditorHud"]
 modulate = Color(1, 1, 1, 0)
