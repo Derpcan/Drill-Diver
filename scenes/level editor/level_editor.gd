@@ -949,9 +949,10 @@ static func static_pause_enemy_tiles(
 		return
 	
 	if tile_position_to_bonus_parameters[tile_position].has("Distance"):
-		
 		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
-		#print(object.patrol_distance)
+	if tile_position_to_bonus_parameters[tile_position].has("Range"):
+		object.detection_range = tile_position_to_bonus_parameters[tile_position]["Range"]
+		print("here2")
 
 
 static func static_add_bonus_params_to_objects(
@@ -970,6 +971,7 @@ static func static_add_bonus_params_to_objects(
 		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
 	if tile_position_to_bonus_parameters[tile_position].has("Range"):
 		object.detection_range = tile_position_to_bonus_parameters[tile_position]["Range"]
+		print("here")
 
 
 

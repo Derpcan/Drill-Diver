@@ -5,7 +5,11 @@ class_name HomingMine
 
 @export var hit_delay : float		# The amount of time in seconds between the detection range proc and hitbox activation
 @export var hit_linger : float		# The amount of time in seconds between the hitbox activating and deactivating
-@export var detection_range : float	# Range in meters for the mine to begin following
+@export var detection_range : float: # Range in meters for the mine to begin following
+	set(new_value):
+		detection_range = new_value
+		queue_redraw()
+
 @export var follow_range : float	# Range in meters for the mine to continue following
 @export var detonate_range : float	# Range in meters for the mine to detonate manually
 @export var evaded_lifetime : float	# The lifetime of the mine after being evaded
@@ -31,7 +35,6 @@ var in_editor:bool = false
 
 func _draw() -> void:
 	if in_editor:
-		print(detection_range)
 		draw_arc(Vector2(0,0), detection_range, 0, TAU, 32, Color(1,1,1))
 
 

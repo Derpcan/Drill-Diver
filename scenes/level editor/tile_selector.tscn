@@ -512,7 +512,7 @@ image = ExtResource("11_rug43")
 text = "Homing Mine"
 range_parameter = true
 bonus_parameters = Dictionary[String, int]({
-"Range": 10
+"Range": 60
 })
 
 [node name="RangedDron" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]

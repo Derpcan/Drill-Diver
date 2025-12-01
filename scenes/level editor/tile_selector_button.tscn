@@ -44,7 +44,7 @@ class_name TileSelectorButton
 		
 		if distance_parameter:
 			distance_edit.show()
-			bonus_parameters[\"Distance\"] = 10
+			#bonus_parameters[\"Distance\"] = 10
 		else:
 			distance_edit.hide()
 			bonus_parameters.erase(\"Distance\")
@@ -67,7 +67,7 @@ class_name TileSelectorButton
 		
 		if range_parameter:
 			range_edit.show()
-			bonus_parameters[\"Range\"] = 10
+			#bonus_parameters[\"Range\"] = 10
 		else:
 			range_edit.hide()
 			bonus_parameters.erase(\"Range\")
