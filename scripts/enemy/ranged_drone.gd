@@ -48,8 +48,9 @@ func _ready() -> void:
 	state_machine.change_state(start_state)
 
 func _physics_process(delta: float) -> void:
-	if in_editor:
+	if in_editor or player == null:
 		return
+	
 	if player.global_position.x < global_position.x:
 		$AnimatedSprite2D.flip_h = true
 	else:

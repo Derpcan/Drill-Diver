@@ -196,7 +196,6 @@ animations = [{
 size = Vector2(25.7143, 24.2857)
 
 [node name="StaticDrone" type="CharacterBody2D" node_paths=PackedStringArray("start_state", "drone_hurtbox")]
-modulate = Color(0.929412, 0.968627, 0.301961, 1)
 collision_layer = 0
 script = ExtResource("1_e3q7h")
 start_state = NodePath("States/Idle")
@@ -205,11 +204,6 @@ idle_to_patrol_delay = 1.0
 patrol_to_idle_delay = 3.0
 engage_to_action_delay = 1.5
 detection_range = 200.0
-approach_speed = 40.0
-reposition_speed = 50.0
-reposition_angle = 65.0
-return_speed = 30.0
-acceleration = 20.0
 entity_health = 1
 projectile_offset = 10.0
 

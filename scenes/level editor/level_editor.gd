@@ -214,7 +214,7 @@ static var tile_map_to_tile_dictionary:Dictionary[String, Dictionary] = {
 static var placed_tiles:Array[Vector2i] = []
 
 # Objects in this array are allowed to be placed over tiles, add the name of an object to allow it to be placed over tiles
-static var object_allowed_placed_on_tiles:Array[String] = ["Gem", "Homing Mine"]
+static var object_allowed_placed_on_tiles:Array[String] = ["Gem", "Homing Mine", "Static Mine"]
 
 # The conversion from decorative to physics tiles
 static var decorative_tiles_to_physics:Dictionary = {
@@ -266,9 +266,11 @@ static var object_dictionary:Dictionary = {
 	"Gem":preload("res://scenes/items/MeterItem.tscn"),
 	"Spawnpoint":preload("res://scenes/checkpoint/spawnpoint.tscn"),
 	"Goal":preload("res://scenes/goal/goal.tscn"),
-	"Alien":preload("res://scenes/enemy/enemy.tscn"),
+	"Dog":preload("res://scenes/enemy/enemy.tscn"),
 	"Ranged Drone":preload("res://scenes/enemy/ranged_drone.tscn"),
 	"Homing Mine":preload("res://scenes/enemy/homing_mine.tscn"),
+	"Static Drone":preload("res://scenes/enemy/static_drone.tscn"),
+	"Static Mine":preload("res://scenes/enemy/static_mine.tscn"),
 }
 
 static var scene_dictionary:Dictionary = {
@@ -276,9 +278,11 @@ static var scene_dictionary:Dictionary = {
 	preload("res://scenes/items/MeterItem.tscn"):"Gem",
 	preload("res://scenes/checkpoint/spawnpoint.tscn"):"Spawnpoint",
 	preload("res://scenes/goal/goal.tscn"):"Goal",
-	preload("res://scenes/enemy/enemy.tscn"):"Alien",
+	preload("res://scenes/enemy/enemy.tscn"):"Dog",
 	preload("res://scenes/enemy/ranged_drone.tscn"):"Ranged Drone",
 	preload("res://scenes/enemy/homing_mine.tscn"):"Homing Mine",
+	preload("res://scenes/enemy/static_drone.tscn"):"Static Drone",
+	preload("res://scenes/enemy/static_mine.tscn"):"Static Mine",
 }
 
 # Keeps track of unique locations and stores the associated object at the location
@@ -938,11 +942,15 @@ static func static_pause_enemy_tiles(
 	if testing_mode:
 		return
 	
-	if scene_dictionary[selected_object] == "Alien":
+	if scene_dictionary[selected_object] == "Dog":
 		object.in_editor = true
 	if scene_dictionary[selected_object] == "Ranged Drone":
 		object.in_editor = true
 	if scene_dictionary[selected_object] == "Homing Mine":
+		object.in_editor = true
+	if scene_dictionary[selected_object] == "Static Mine":
+		object.in_editor = true
+	if scene_dictionary[selected_object] == "Static Drone":
 		object.in_editor = true
 	
 	if not tile_position_to_bonus_parameters.has(tile_position):
@@ -1041,7 +1049,7 @@ func pause_enemy_tiles(object:Object, tile_position:Vector2i) -> void:
 	if testing_mode:
 		return
 	
-	if scene_dictionary[selected_object] == "Alien":
+	if scene_dictionary[selected_object] == "Dog":
 		object.in_editor = true
 	
 	if not tile_pos_to_bonus_parameters.has(tile_position):

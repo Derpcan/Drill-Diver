@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://cso12yd5vwp87" path="res://scenes/level editor/tile_selector_button.tscn" id="3_igrm3"]
 [ext_resource type="Texture2D" uid="uid://cu2183edopvth" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/Diamond.png" id="4_1bmts"]
 [ext_resource type="Texture2D" uid="uid://dsjcog8rud0d2" path="res://assets/sprites/goal/GoalImage.png" id="4_ll7yy"]
-[ext_resource type="Texture2D" uid="uid://j3ll8yipnw8p" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Alien/Alien_idle.png" id="5_1bmts"]
 [ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="6_0klqo"]
 [ext_resource type="Texture2D" uid="uid://cmk1ubstgth2f" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/LabTileCenter.png" id="6_pswwc"]
 [ext_resource type="Texture2D" uid="uid://dl2yg7fvrwua7" path="res://assets/dirt_single.png" id="8_s2r5n"]
 [ext_resource type="Texture2D" uid="uid://08gh7sintjvt" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/Tiles_37.png" id="9_rug43"]
+[ext_resource type="Texture2D" uid="uid://bpmb77snj2n4h" path="res://assets/sprites/dog_enemy/dog_still.png" id="10_n7spv"]
 [ext_resource type="Texture2D" uid="uid://wwdb3tu4s46t" path="res://assets/sprites/homing_mine/mine_4.png" id="11_rug43"]
 [ext_resource type="Texture2D" uid="uid://b5030oitn54xc" path="res://assets/sprites/ranged_drone/ranged_drone.png" id="12_n7spv"]
 
@@ -497,10 +497,10 @@ layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Alien" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+[node name="Dog" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
 layout_mode = 2
-image = ExtResource("5_1bmts")
-text = "Alien"
+image = ExtResource("10_n7spv")
+text = "Dog"
 distance_parameter = true
 bonus_parameters = Dictionary[String, int]({
 "Distance": 10
@@ -515,10 +515,44 @@ bonus_parameters = Dictionary[String, int]({
 "Range": 60
 })
 
+[node name="Static Mine" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("11_rug43")
+text = "Static Mine"
+range_parameter = true
+bonus_parameters = Dictionary[String, int]({
+"Range": 60
+})
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+modulate = Color(1, 0.517647, 0.992157, 1)
+texture = ExtResource("11_rug43")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine/MarginContainer/VBoxContainer2" index="2"]
+text = "Static Mine"
+
 [node name="RangedDron" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
 layout_mode = 2
 image = ExtResource("12_n7spv")
 text = "Ranged Drone"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+modulate = Color(0.929412, 0.968627, 0.301961, 1)
+texture = ExtResource("12_n7spv")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron/MarginContainer/VBoxContainer2" index="2"]
+text = "Ranged Drone"
+
+[node name="Static Drone" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("12_n7spv")
+text = "Static Drone"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("12_n7spv")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone/MarginContainer/VBoxContainer2" index="2"]
+text = "Static Drone"
 
 [node name="HSeparator4" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -602,3 +636,7 @@ offset_top = 616.0
 offset_right = 409.0
 offset_bottom = 639.0
 text = "Press \"X\" to toggle Delete Mode"
+
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone"]

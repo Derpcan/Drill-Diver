@@ -138,7 +138,7 @@ animations = [{
 collision_layer = 0
 script = ExtResource("1_wnfp0")
 start_state = NodePath("States/Idle")
-hit_delay = 0.2
+hit_delay = 0.1
 hit_linger = 0.5
 detection_range = 60.0
 follow_range = 200.0
@@ -177,5 +177,6 @@ script = ExtResource("21_y7bb1")
 metadata/_custom_type_script = "uid://c3dxq7yaj2k6o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_y0nwa")
