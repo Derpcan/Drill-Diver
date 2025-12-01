@@ -53,6 +53,9 @@ func _ready() -> void:
 	set_up_player_input_saver()
 	load_ghost_path()
 	load_logic(level_file_path)
+	
+	await get_tree().create_timer(0.1).timeout
+	$CheckpointManager._ready()
 
 
 func set_up_player_input_saver() -> void:
@@ -241,6 +244,9 @@ func load_logic(path_name:String="") -> void:
 						goal = obj
 						goal.new_time_got.connect(_relay_time_got_to_player)
 						goal.new_time_got.connect(_compare_old_and_new_times)
+					
+					if object_string == "Checkpoint":
+						tile_pos_to_object_dictionary[pos]["object"].add_to_group("checkpoint")
 			
 			
 			if "BestTimeCompleted" in json:
@@ -276,7 +282,12 @@ func load_logic(path_name:String="") -> void:
 			BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells())
 			fix_physics_tile_map()
 			
+			#await get_tree().create_timer(0.1).timeout
+			#$CheckpointManager.game_camera = null
+			#$CheckpointManager.player = null
+			#$CheckpointManager.ghost = null
 			
+			#$GameCamera.global_position = $Player.global_position
 
 
 

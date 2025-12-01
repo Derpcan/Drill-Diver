@@ -1467,6 +1467,10 @@ func _load_logic(path_name:String = "") -> void:
 						object_bonus_parameters = {}
 					
 					set_tile(physics_tilemap, pos)
+					
+					
+					if object_string == "Checkpoint":
+						tile_pos_to_object_dictionary[pos]["object"].add_to_group("checkpoint")
 			
 			object_string = ""
 			selected_object = null
@@ -1589,66 +1593,6 @@ var testing_save_for_level_complete:Dictionary[int, Array] = {
 }
 
 
-func _finish_test_play_setup() -> void:
-	fix_physics_tile_map(physics_tilemap)
-	
-	
-	var player_scene:PackedScene = preload("res://scenes/player/player.tscn")
-	var checkpoint_manager_scene:PackedScene = preload("res://scenes/checkpoint/checkpoint_manager.tscn")
-	var game_camera_scene:PackedScene = preload("res://scenes/Camera/game_camera.tscn")
-	
-	var hud_scene:PackedScene = preload("res://scenes/UI/hud.tscn")
-	var level_loaded_scene:PackedScene = preload("res://scenes/system/OnLevelLoaded.tscn")
-	
-	hud = hud_scene.instantiate()
-	on_level_loaded = level_loaded_scene.instantiate()
-	
-	player = player_scene.instantiate()
-	checkpoint_mangager = checkpoint_manager_scene.instantiate()
-	game_camera = game_camera_scene.instantiate()
-	
-	
-	checkpoint_mangager.game_camera = game_camera
-	checkpoint_mangager.player = player
-	
-	hud.add_to_group("hud")
-	player.add_to_group("player")
-	
-	$LevelEditorHud/TestLevelButton.hide()
-	$Camera2D.hide()
-	$Camera2D.enabled = false
-	
-	game_camera.enabled = true
-	game_camera.zoom = Vector2(3,3)
-	
-	physics_tilemap.player = player
-	
-	var spawn_point:Node2D = get_spawnpoint()
-	
-	if spawn_point:
-		player.global_position = spawn_point.global_position
-	
-	var goal:Goal = get_goal() as Goal
-	
-	if goal:
-		goal.Sranktime = best_time_completed
-		goal.new_time_got.connect(_handle_beat_level)
-	
-	player.add_to_group("player")
-	add_child(player)
-	add_child(checkpoint_mangager)
-	add_child(game_camera)
-	add_child(hud)
-	add_child(on_level_loaded)
-	
-	level_editor_hud.hide()
-	
-	
-	$TestingHud.show()
-	
-	#finished_loading.disconnect(_finish_test_play_setup)
-
-
 func test_level() -> void:
 	
 	place_held_down = false
@@ -1713,6 +1657,7 @@ func test_level() -> void:
 	checkpoint_mangager.game_camera = game_camera
 	checkpoint_mangager.player = player
 	
+	
 	hud.add_to_group("hud")
 	
 	
@@ -1735,6 +1680,7 @@ func test_level() -> void:
 	if goal:
 		goal.Sranktime = best_time_completed
 		goal.new_time_got.connect(_handle_beat_level)
+	
 	
 	
 	add_child(checkpoint_mangager)
@@ -1779,7 +1725,8 @@ func test_level() -> void:
 	#if loading_thread != null and loading_thread.is_alive():
 		#loading_thread.wait_to_finish()
 	
-	
+	await get_tree().create_timer(0.01).timeout
+	checkpoint_mangager._ready()
 	
 
 

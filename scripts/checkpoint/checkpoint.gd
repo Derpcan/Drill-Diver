@@ -41,7 +41,7 @@ func activate_checkpoint() -> void:
 	
 	# Emit the signal to CheckpointManager to update respawn point
 	checkpoint_activated.emit(global_position)
-	
+	print_rich("[color=#00FFB3]Checkpoint Activated at: ", global_position, "[/color]")
 	if sprite:
 		# Initialize tween
 		var activation_tween = create_tween()
@@ -61,7 +61,7 @@ func activate_checkpoint() -> void:
 		await activation_tween.finished
 		_start_bobbing()
 		
-	print_rich("[color=#00FFB3]Checkpoint Activated at: ", global_position, "[/color]")
+	
 
 
 # Runs bobbing loop

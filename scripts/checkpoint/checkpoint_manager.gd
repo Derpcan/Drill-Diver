@@ -84,6 +84,7 @@ func _ready() -> void:
 
 # Receives the new position from an activated checkpoint and updates the respawn position.
 func _update_checkpoint_position(new_position: Vector2) -> void:
+	print('wahts up')
 	last_checkpoint_position = new_position
 	print_rich("[color=#66FF66]RESPAWN POSITION UPDATED to: ", last_checkpoint_position, "[/color]")
 	
@@ -94,7 +95,7 @@ func _update_checkpoint_position(new_position: Vector2) -> void:
 # Connects the camera to the player
 func connect_camera_to_player() -> void:
 	game_camera.call_deferred("reparent", player)
-	game_camera.position = player.position
+	game_camera.global_position = player.global_position
 	
 
 # Connects the camera's necessary signals to this manager
@@ -108,7 +109,7 @@ func _camera_returned_restart() -> void:
 	player.state_machine._enter_state("idle")
 	# Use the dynamically updated last_checkpoint_position for respawn
 	player.global_position = last_checkpoint_position
-	
+	game_camera.global_position = player.global_position
 	
 	# Tween the modulation for the player to show up overtime
 	var tween:Tween = create_tween()
@@ -126,12 +127,15 @@ func _camera_returned_restart() -> void:
 	
 	# Attach the camera back to the player
 	game_camera.reparent(player)
+	game_camera.global_position = player.global_position
 	
 	# Christian: Moved from _player_animation_finished so it starts when input is re-enabled
 	# Charlie: When the death animation is finished, stop the timer and reenable it to start again
 	#GameManager.set_timer_to(GameManager.get_time_at_checkpoint()) # Turn this off to not reset timer
 	GameManager.set_timer_can_start(true)
 	
+	await get_tree().create_timer(0.3).timeout
+	(player.get_node("HurtBox").get_child(0) as CollisionShape2D).set_deferred("disabled", false)
 
 
 # Will connect the player's necessary signals to this manager
@@ -153,7 +157,7 @@ func _player_animation_finished(animation_name:String) -> void:
 
 func _player_died() -> void:
 	print("Player died")
-	
+	(player.get_node("HurtBox").get_child(0) as CollisionShape2D).set_deferred("disabled", true)
 	# Charlie: When the player dies, we want to stop the timer
 	GameManager.stop_timer.emit()
 

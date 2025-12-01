@@ -453,6 +453,9 @@ shape = SubResource("RectangleShape2D_h3xc6")
 [node name="Checkpoint" parent="." instance=ExtResource("10_s36qc")]
 position = Vector2(64, 354)
 
+[node name="Checkpoint2" parent="." instance=ExtResource("10_s36qc")]
+position = Vector2(276, 150)
+
 [node name="Enemy1" parent="." groups=["enemy"] instance=ExtResource("11_6qxox")]
 position = Vector2(345, 152)
 patrol_distance = 75.0
