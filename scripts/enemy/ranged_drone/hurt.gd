@@ -13,9 +13,11 @@ func enter() -> void:
 		entity.sprites.play("death")
 		get_parent().get_parent().player._on_dash_hitbox_hit_something()
 		get_parent().get_parent().get_node("DieSound").play()
-		await get_parent().get_parent().get_node("DieSound").finished
 		
-		entity.queue_free()
+		await get_parent().get_parent().get_node("DieSound").finished
+		if  get_parent().get_parent().can_be_hurt == false
+			get_parent().get_parent().visible = falsed
+	
 		return
 
 	await entity.sprites.animation_finished

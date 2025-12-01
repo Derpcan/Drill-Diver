@@ -17,6 +17,7 @@ class_name Player
 @export var ray:ShapeCast2D
 @export var super_drill_component:SuperDrillComponent
 var play_jump = false
+signal died
 
 
 
@@ -135,6 +136,7 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		state_machine._enter_state("death")
 		$DeathSound.play()
 		$MovementSound.stop()
+		died.emit()
 		
 		return
 		

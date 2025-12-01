@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://o3w2a1kpmte" path="res://scripts/enemy/ranged_drone/engage.gd" id="7_r8nhf"]
 [ext_resource type="Script" uid="uid://c3cab8biw3qgg" path="res://scripts/enemy/ranged_drone/reposition.gd" id="8_unv6f"]
 [ext_resource type="Script" uid="uid://dulpn4qa4yg5u" path="res://scripts/enemy/ranged_drone/fire.gd" id="9_gjifs"]
-[ext_resource type="Script" uid="uid://dkbwyieytmvhe" path="res://scripts/enemy/ranged_drone/hurt.gd" id="10_5xyq2"]
+[ext_resource type="Script" uid="uid://diah2nlypdept" path="res://scripts/enemy/ranged_drone/hurt.gd" id="10_5xyq2"]
 [ext_resource type="Texture2D" uid="uid://bmjfettxqrsxg" path="res://assets/sprites/ranged_drone/Attack.png" id="11_81bw5"]
 [ext_resource type="Texture2D" uid="uid://dku3tr3p0677g" path="res://assets/sprites/ranged_drone/Death.png" id="12_q6ogi"]
 [ext_resource type="Texture2D" uid="uid://bc8wkqgnm60e3" path="res://assets/sprites/ranged_drone/Hurt.png" id="13_mrdem"]
