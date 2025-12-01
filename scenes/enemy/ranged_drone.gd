@@ -37,7 +37,7 @@ var in_editor:bool = false
 func _ready() -> void:
 	if in_editor:
 		return
-	
+	player.died.connect(_respawn)
 	start_position = self.global_position
 	
 	# Wire up each state
@@ -72,3 +72,13 @@ func _calc_vec_to_player() -> void:
 	var player_glb = player.global_position
 	var enemy_glb = self.global_position
 	to_player = player_glb - enemy_glb
+
+func _respawn():
+	print("respawn")
+	if can_be_hurt == false:
+		
+		state_machine.change_state(start_state)
+		
+		visible = true
+		can_be_hurt = true
+	global_position = start_position
