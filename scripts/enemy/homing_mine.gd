@@ -29,22 +29,14 @@ var line_2d:Line2D = null
 
 var in_editor:bool = false
 
-
+func _draw() -> void:
+	if in_editor:
+		draw_arc(Vector2(0,0), detection_range, 0, TAU, 32, Color(1,1,1))
 
 
 func _ready() -> void:
 	if in_editor:
 		line_2d = Line2D.new()
-		#line_2d.draw_circle(Vector2(0,0), detection_range, Color(1,1,1), false, 1)
-		var pos_list: PackedVector2Array = PackedVector2Array()
-		var total_cuts = 512
-		var step = (2 * PI) / total_cuts
-		
-		for cut in range(total_cuts):
-			var radian = (2 * PI / 360) * (360 / float(total_cuts)) * (cut + 3)
-			var radian_pos = Vector2(cos(radian), sin(radian))
-			pos_list.append(radian_pos)
-			line_2d.add_point(radian_pos)
 		add_child(line_2d)
 		return
 	
