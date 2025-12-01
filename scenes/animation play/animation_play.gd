@@ -54,7 +54,7 @@ func _ready() -> void:
 
 
 # Is connected to the state machines enter_state so it will start the animation for the state
-func _start_state_animation(state_name:String, state_index:int) -> void:
+func _start_state_animation(state_name:String, _state_index:int) -> void:
 	#print_rich("[color=#E4ED98]Started the State ", state_name, "[/color]")
 	#print("Started the State " + state_name)
 	play("default/"+state_name)

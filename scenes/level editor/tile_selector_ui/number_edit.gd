@@ -20,7 +20,7 @@ func _ready() -> void:
 
 
 
-func _send_submitted_change(new_text:String) -> void:
+func _send_submitted_change(_new_text:String) -> void:
 	input_value_submitted.emit(input_int_value, placeholder_text)
 
 
@@ -33,13 +33,13 @@ func _check_is_int(new_text:String) -> void:
 		input_int_value = new_text.to_int()
 	else:
 		var num_removed:int = 0
-		var text_length:int = new_text.length()
+		
 		var index:int = 0
 		while index < new_text.length():
 			if not new_text.substr(index, 1).is_valid_int():
 				num_removed += 1
 				new_text = new_text.erase(index, 1)
-				text_length = new_text.length()
+				
 			else:
 				index += 1
 		

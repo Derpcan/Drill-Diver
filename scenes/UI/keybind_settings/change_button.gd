@@ -37,7 +37,7 @@ func _ready() -> void:
 	#save_button.pressed.connect(_save)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	$PanelContainer/MarginContainer/VFlowContainer/Label2.text = "Time Remaining: " + "%.3f" % timer.time_left
 
 

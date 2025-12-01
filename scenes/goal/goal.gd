@@ -20,7 +20,7 @@ func _ready():
 
 
 
-func _on_area_2d_area_entered(area):
+func _on_area_2d_area_entered(_area):
 	if blown_up == false:
 		get_tree().get_first_node_in_group("hud").visible = false
 		if Sranktime == 0:

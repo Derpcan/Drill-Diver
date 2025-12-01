@@ -55,7 +55,7 @@ func _ready() -> void:
 	tree_exiting.connect(_exiting)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	elapsed_time += get_physics_process_delta_time()
 	frame += 1
 
@@ -92,7 +92,7 @@ func _log_key_input(movement_dir:Vector2, jump_direction:Vector2, is_jump_presse
 		return
 	
 	# Get the current frame (subtract frame offset to make replaying better)
-	var current_frame:int = Engine.get_physics_frames() - frame_offset
+	#var current_frame:int = Engine.get_physics_frames() - frame_offset
 	
 	# Save the keys pressed each frame into a dictionary to save into JSON
 	var keys_pressed_dict:Dictionary = {}

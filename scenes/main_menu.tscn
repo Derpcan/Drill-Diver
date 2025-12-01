@@ -19,7 +19,6 @@
 [sub_resource type="GDScript" id="GDScript_5dd4i"]
 script/source = "extends Node2D
 
-@onready var ghost:Ghost = $Player
 
 func _ready() -> void:
 	$AnimationPlayer.play(\"Start\")
@@ -39,23 +38,18 @@ func _copy_path_to_clipboard() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if ghost and ghost.global_position.y > 750:
-		
-		ghost.queue_free()
-		return 
-		ghost = preload(\"res://scenes/ghost/ghost.tscn\").instantiate()
-		ghost.input_log_file_name = \"MainMenuGhost.json\"
-		ghost.input_log_folder_path = \"res://save_info/\"
-		add_child(ghost)
-		
-		ghost.global_position = Vector2(160, 102)
-		ghost.name = \"Player\"
-
-func _unhandled_input(event):
-			if Input.is_action_pressed(\"ui_down\"):
-				print(\"Down\")
-			
-			
+	pass
+	#if ghost and ghost.global_position.y > 750:
+		#
+		#ghost.queue_free()
+		#return 
+		#ghost = preload(\"res://scenes/ghost/ghost.tscn\").instantiate()
+		#ghost.input_log_file_name = \"MainMenuGhost.json\"
+		#ghost.input_log_folder_path = \"res://save_info/\"
+		#add_child(ghost)
+		#
+		#ghost.global_position = Vector2(160, 102)
+		#ghost.name = \"Player\"
 "
 
 [sub_resource type="Animation" id="Animation_5pajh"]

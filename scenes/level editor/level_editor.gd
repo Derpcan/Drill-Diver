@@ -413,7 +413,6 @@ func get_object_at_mouse(tile_position:Vector2i) -> Object:
 	if tile_pos_to_object_dictionary.has(tile_position):
 		return tile_pos_to_object_dictionary[tile_position]["object"]
 		#print(tile_pos_to_object_dictionary[tile_position])
-		pass
 	#print(tile_pos_to_bonus_parameters)
 	
 	return null
@@ -441,6 +440,7 @@ func _create_new_level_logic(nam:String) -> void:
 	
 	# Open the file for writing
 	var file:FileAccess = FileAccess.open(nam+".lvl", FileAccess.WRITE)
+	file.close()
 	
 	prevent_tile_placement = false
 	loading_level = false
@@ -909,22 +909,7 @@ static func static_set_object(
 	
 
 
-static func add_to_stack_background_and_object(
-	object_string:String,
-	tilemap:TileMapLayer, 
-	tile_position:Vector2i, 
-	selected_object:PackedScene,
-	testing_mode:bool,
-	object_node:Node2D,
-	tile_position_to_object_dictionary:Dictionary[Vector2i, Dictionary], 
-	tile_position_to_bonus_parameters:Dictionary[Vector2i,Dictionary],
-	object_string_to_tile_position:Dictionary[String, Array],
-	object_bonus_parameters,
-	ignore_tiles:Dictionary[Vector2i, bool],
-	avoid_stack:bool, undo_stack:UndoStack, editing_mode:bool = false
-) -> void:
-	if avoid_stack:
-		return
+
 
 
 static func update_object_bonus_parameters(
@@ -1032,7 +1017,7 @@ static func static_set_tile(
 
 
 var loading_level:bool = true
-func set_tile(tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=false) -> void:
+func set_tile(_tile_map:TileMapLayer, tile_position:Vector2i,avoid_stack:bool=false) -> void:
 	
 	#decorative_tilemap.changed.emit()
 	
@@ -1121,7 +1106,7 @@ func show_tile_place_preview(tile_position:Vector2) -> void:
 
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if testing_mode == true: # If in testing mode
 		return
 	
@@ -1499,7 +1484,7 @@ func load_logic(path_name:String="") -> void:
 	
 
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -1730,10 +1715,11 @@ func test_level() -> void:
 			music_player.bus = "Music"
 	
 	music_player.stream.mix_rate = 48000
-	music_player.play()
+	
 	$Music.stop()
 	
 	object_node.add_child(music_player)
+	music_player.play()
 	
 	#finished_loading.disconnect(_finish_test_play_setup)
 	

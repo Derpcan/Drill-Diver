@@ -115,7 +115,7 @@ func _ready() -> void:
 
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	$Label.text = "Speed: " + str(movement_component.velocity.x)
 	
 	if (is_on_floor() or is_on_wall() or is_on_ceiling()) and drill_component.drill_enabled:
@@ -271,10 +271,10 @@ func _leave_dialogue():
 	movement_component._enable_movement()
 	input_component._enable_inputs()
 	
-func _play_jump(vel:Vector2):
+func _play_jump(_vel:Vector2):
 	$JumpSound.play()
 
-func _play_dash(vel:Vector2):
+func _play_dash(_vel:Vector2):
 	$DashSound.play()
 	
 func _play_drill(_body):
@@ -289,7 +289,7 @@ func _stop_drill(_body):
 func _play_bounce():
 	$BounceSound.play()
 	
-func _play_super_drill(vel:Vector2):
+func _play_super_drill(_vel:Vector2):
 	$SuperDrillSound.play()
 	
 func _play_item_collect():

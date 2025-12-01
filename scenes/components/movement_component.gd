@@ -83,7 +83,7 @@ func _physics_process(delta: float) -> void:
 				velocity.x += lerp(0.0 , abs(parent.velocity.x), 0.1)
 				#print(velocity.x)
 			if velocity.x == 0.0:
-				exiting_ground == false
+				exiting_ground = false
 				max_speed = og_max_speed
 		
 			
@@ -125,7 +125,7 @@ func force_velocity(vel:Vector2) -> void:
 func force_velocity_y(vel:Vector2) -> void:
 	velocity.y = vel.y
 
-func _disable_vel_x_clamp(value = 0) -> void:
+func _disable_vel_x_clamp(_value = 0) -> void:
 	prevent_vel_x_clamp = true
 
 func _enable_vel_x_clamp() -> void:
@@ -136,5 +136,5 @@ func _enable_vel_x_clamp() -> void:
 func _is_exiting_ground():
 	exiting_ground = true
 
-func _not_exiting_ground(vel:Vector2) -> void:
+func _not_exiting_ground(_vel:Vector2) -> void:
 	exiting_ground = false

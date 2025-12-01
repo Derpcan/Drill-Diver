@@ -53,7 +53,7 @@ func _enable_drill() -> void:
 	drill_enabled = true
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# If the parent exists and is in the drilling state
 	if parent and drill_enabled:
 		
@@ -87,7 +87,7 @@ func rotate_player(rot:float):
 
 # Disables the drill detector
 func _disable_drill_detector():
-	var sprite = get_parent().animated_sprite
+	#var sprite = get_parent().animated_sprite
 	
 	if not drill_enabled:
 		var collision: CollisionShape2D = drill_detector.get_child(0)
@@ -129,7 +129,7 @@ func _enable_drill_detector(_vel:Vector2):
 
 # Re-enable movement after a bounce
 func _enable_movement_after_bounce():
-	var bump: CollisionShape2D = bump_detector.get_child(0)
+	#var bump: CollisionShape2D = bump_detector.get_child(0)
 	can_move = true
 
 
@@ -279,7 +279,7 @@ func _enter_drill_state(_body) -> void:
 		parent.move_and_slide()
 		
 		# Get the shape and bump
-		var shape:CollisionShape2D = drill_detector.get_child(0)
+		#var shape:CollisionShape2D = drill_detector.get_child(0)
 		var bump: CollisionShape2D = bump_detector.get_child(0)
 		
 		# Enable drill

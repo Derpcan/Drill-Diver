@@ -84,7 +84,7 @@ func _ready() -> void:
 
 
 # Pauses the playback
-func _enable_pause_playback(any=null) -> void:
+func _enable_pause_playback(_any=null) -> void:
 	pause_playback = true
 	
 	var parent:Ghost = get_parent() as Ghost
@@ -92,7 +92,7 @@ func _enable_pause_playback(any=null) -> void:
 	parent.drill_component._disable_drill()
 
 # Unpauses the playback
-func _disable_pause_playback(any=null) -> void:
+func _disable_pause_playback(_any=null) -> void:
 	pause_playback = false
 	
 	var parent:Ghost = get_parent() as Ghost

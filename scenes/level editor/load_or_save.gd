@@ -27,8 +27,3 @@ func _emit_load_level_signal() -> void:
 
 func _emit_create_new_level_signal() -> void:
 	create_new_level.emit()
-
-func _unhandled_input(event):
-			if Input.is_action_pressed("ui_down"):
-				print("Down")
-			

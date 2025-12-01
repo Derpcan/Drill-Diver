@@ -90,7 +90,7 @@ func add_bonus_parameters(dict:Dictionary) -> void:
 		line_edit.input_value_submitted.connect(_send_updated_bonus_parameters)
 
 
-func _send_updated_bonus_parameters(new_value, place_holder_text) -> void:
+func _send_updated_bonus_parameters(_new_value, _place_holder_text) -> void:
 	#if bonus_parameters_dictionary[place_holder_text] != new_value:
 		#bonus_parameters_dictionary[place_holder_text] = new_value
 	emit_signal("bonus_parameter_submitted", tile_position, bonus_parameters_dictionary)

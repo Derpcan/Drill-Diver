@@ -100,7 +100,7 @@ func _ready() -> void:
 
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if (is_on_floor() or is_on_wall()) and drill_component.drill_enabled :
 		emit_signal("on_floor_dirt",null)
 	if is_on_floor():
