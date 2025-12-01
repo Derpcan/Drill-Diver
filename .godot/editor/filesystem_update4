@@ -1,10 +1,13 @@
-res://scenes/test_scene.tscn
+res://scenes/enemy/enemy.tscn
 res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_default_panel.tres
 res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_name_label_panel.tres
 res://assets/sprites/Dr. Iver/Computer Style.tres
 res://tilesets/Tile_HardDrillable.tres
 res://tilesets/TerrainTileSet.tres
 res://scenes/main_menu.tres
+res://scripts/enemy/enemy.gd
+res://scenes/enemy/ranged_drone.tscn
+res://scenes/test_scene.tscn
 res://scenes/player/player.tscn
 res://scenes/UI/hud.tscn
 res://scenes/level editor/level_editor.tscn
@@ -19,11 +22,8 @@ res://scenes/level editor/popup/popup_dialog.tscn
 res://scenes/enemy/homing_mine.tscn
 res://scenes/components/super_drill_component.tscn
 res://scenes/level editor/testing/tutorial_level_loader.tscn
-res://scenes/enemy/ranged_drone.tscn
-res://scripts/enemy/ranged_drone.gd
-res://scenes/player/player.gd
-res://scripts/enemy/ranged_drone/hurt.gd
-res://scenes/components/dash_component.gd
-res://scenes/enemy/enemy.tscn
-res://scripts/enemy/enemy.gd
 res://scenes/enemy/static_drone.tscn
+res://scripts/enemy/ranged_drone/hurt.gd
+res://scenes/enemy/static_drone.gd
+res://scenes/enemy/ranged_drone.gd
+res://scenes/enemy/hurt.gd
