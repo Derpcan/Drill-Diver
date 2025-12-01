@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://crb1pa2ol8e6h"]
+[gd_scene load_steps=41 format=3 uid="uid://crb1pa2ol8e6h"]
 
 [ext_resource type="Script" uid="uid://boy258uxex56p" path="res://scripts/enemy/ranged_drone.gd" id="1_ut3sk"]
 [ext_resource type="Script" uid="uid://b4enj00tgciaq" path="res://scripts/enemy/ranged_drone/state_machine.gd" id="2_368ic"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://c3cab8biw3qgg" path="res://scripts/enemy/ranged_drone/reposition.gd" id="8_ycbge"]
 [ext_resource type="Script" uid="uid://dulpn4qa4yg5u" path="res://scripts/enemy/ranged_drone/fire.gd" id="9_q217s"]
 [ext_resource type="Script" uid="uid://dkbwyieytmvhe" path="res://scripts/enemy/ranged_drone/hurt.gd" id="10_amfcc"]
+[ext_resource type="AudioStream" uid="uid://dqw1yowtmdn60" path="res://assets/sounds/dd - explosion.wav" id="17_y4eq4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4eq4"]
 size = Vector2(17.1429, 14.2857)
@@ -262,3 +263,6 @@ metadata/_custom_type_script = "uid://devg2gyk7qrec"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(-1.42857, -0.714287)
 shape = SubResource("RectangleShape2D_amfcc")
+
+[node name="DieSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_y4eq4")

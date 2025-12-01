@@ -11,7 +11,10 @@ func enter() -> void:
 
 	if entity.entity_health <= 0:
 		entity.sprites.play("death")
-		await entity.sprites.animation_finished
+		get_parent().get_parent().player._on_dash_hitbox_hit_something()
+		get_parent().get_parent().get_node("DieSound").play()
+		await get_parent().get_parent().get_node("DieSound").finished
+		
 		entity.queue_free()
 		return
 

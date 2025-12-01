@@ -1,8 +1,9 @@
+AudioStreamPlayer2D
+CanvasLayer
 AnimationPlayer
 AnimationPlay
 Control
 AudioStreamPlayer
-AudioStreamPlayer2D
 Container
 Label
 AnimatedSprite2D

@@ -2098,3 +2098,5 @@ visible = false
 stream = SubResource("AudioStreamWAV_wv7w3")
 volume_db = -5.0
 autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
