@@ -11,6 +11,6 @@ func change_state(state: Node) -> void:
 	current_state = state
 	current_state.enter()
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if current_state:
 		current_state.update(delta)

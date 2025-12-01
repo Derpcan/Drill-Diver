@@ -58,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	if in_editor:
 		return
 	_calc_vec_to_player()
-	state_machine._process(delta)
+	state_machine._physics_process(delta)
 	move_and_slide()
 
 func _calc_vec_to_player() -> void:

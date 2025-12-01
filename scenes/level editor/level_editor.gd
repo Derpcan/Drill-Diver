@@ -952,7 +952,6 @@ static func static_pause_enemy_tiles(
 		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
 	if tile_position_to_bonus_parameters[tile_position].has("Range"):
 		object.detection_range = tile_position_to_bonus_parameters[tile_position]["Range"]
-		print("here2")
 
 
 static func static_add_bonus_params_to_objects(
@@ -971,7 +970,6 @@ static func static_add_bonus_params_to_objects(
 		object.patrol_distance = tile_position_to_bonus_parameters[tile_position]["Distance"]
 	if tile_position_to_bonus_parameters[tile_position].has("Range"):
 		object.detection_range = tile_position_to_bonus_parameters[tile_position]["Range"]
-		print("here")
 
 
 
@@ -1588,7 +1586,7 @@ func _finish_test_play_setup() -> void:
 	
 	$TestingHud.show()
 	
-	finished_loading.disconnect(_finish_test_play_setup)
+	#finished_loading.disconnect(_finish_test_play_setup)
 
 
 func test_level() -> void:

@@ -2075,6 +2075,7 @@ root_subfolder = "./level_editor/levels/"
 use_native_dialog = true
 
 [node name="TestingHud" type="CanvasLayer" parent="."]
+process_mode = 3
 layer = 2
 visible = false
 
@@ -2098,3 +2099,5 @@ visible = false
 stream = SubResource("AudioStreamWAV_wv7w3")
 volume_db = -5.0
 autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

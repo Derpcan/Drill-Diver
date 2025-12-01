@@ -16,6 +16,7 @@ func enter() -> void:
 func update(delta: float) -> void:
 	var dist = entity.to_player.length()
 	# The player moved within follow range, transition to following
+	
 	if dist <= entity.detection_range:
 		state_machine.change_state(state_machine.following_state)
 		return

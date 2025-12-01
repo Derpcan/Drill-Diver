@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cedmewjb2l37j" path="res://scenes/components/player_stat_loader_component.gd" id="1_gliib"]
 [ext_resource type="PackedScene" uid="uid://s3d4wjd0wc53" path="res://scenes/components/json_loader.tscn" id="1_lhcia"]
-[ext_resource type="JSON" path="res://assets/JSON/PlayerStat.JSON" id="2_nujen"]
+[ext_resource type="JSON" path="res://assets/JSON/PlayerStat.json" id="2_nujen"]
 
 [node name="PlayerStatLoaderComponent" type="Node" node_paths=PackedStringArray("json_loader")]
 script = ExtResource("1_gliib")
