@@ -1,4 +1,4 @@
-extends ProgressBar
+extends TextureProgressBar
 
 func _ready():
 	# Set an arbitrary initial value (will be handled dynamically later)

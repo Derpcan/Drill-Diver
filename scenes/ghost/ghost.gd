@@ -203,3 +203,6 @@ func _dev_super():
 func _set_last_dash(dir: Vector2):
 	if dir != Vector2.ZERO:
 		last_dash = dir
+
+func _play_item_collect():
+	pass

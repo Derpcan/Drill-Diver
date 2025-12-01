@@ -23,7 +23,8 @@ func _ready():
 	
 
 func _handle_on_press():
-	pass
+	$Sound.play()
+	
 
 
 func _on_mouse_entered():

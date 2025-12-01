@@ -8,8 +8,8 @@ func _ready():
 func _on_body_entered(body):
 	if body.name == "Player":
 		# Emit the same signal the button uses
+		body._play_item_collect()
 		GameManager.fill_meter.emit(fill_amount)
-		
 		# Optionally print for debugging
 		print("Item collected: emitting fill_meter(", fill_amount, ")")
 		

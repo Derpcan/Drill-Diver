@@ -16,6 +16,7 @@ class_name Player
 @export var animation_play:AnimationPlay
 @export var ray:ShapeCast2D
 @export var super_drill_component:SuperDrillComponent
+var play_jump = false
 
 
 
@@ -102,6 +103,15 @@ func _ready() -> void:
 	input_component.super_drill_inputs.connect(super_drill_component._calculate_dash)
 	input_component.super_drill_inputs.connect(_set_last_dash)
 	
+	#Sounds
+	jump_component.jump.connect(_play_jump)
+	dash_component.dash_start.connect(_play_dash)
+	drill_detector.body_entered.connect(_play_drill)
+	drill_detector.body_exited.connect(_stop_drill)
+	drill_component.bounce.connect(_play_bounce)
+	super_drill_component.super_drill_start.connect(_play_super_drill)
+
+	
 
 
 
@@ -113,6 +123,7 @@ func _physics_process(delta: float) -> void:
 		emit_signal("on_floor_dirt",null)
 	if is_on_floor():
 		emit_signal("on_floor")
+		play_jump = true
 		
 
 
@@ -122,11 +133,18 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 	animated_sprite.position.y = -2.0
 	if health_component.current_hp == 0:
 		state_machine._enter_state("death")
+		$DeathSound.play()
+		$MovementSound.stop()
+		
 		return
 		
 	# Drill state
 	if drill_component.drill_enabled:
 		state_machine._enter_state("drill")
+		
+		
+		
+		$MovementSound.stop()
 		
 		# Set scale of the animated sprite for the drill so it's normal size
 		
@@ -148,10 +166,14 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		#return
 	
 	if dash_component.is_dashing() and not drill_component.drill_enabled:
+		$MovementSound.stop()
+		
 		state_machine._enter_state("dash")
 		return
 	
 	if super_drill_component.is_dashing() and not drill_component.drill_enabled:
+		$MovementSound.stop()
+		
 		state_machine._enter_state("superdrill")
 		return
 		
@@ -165,8 +187,12 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 		
 		if animation_play.current_animation == "dash":
 			await animation_play.animation_finished
+			
+		
 		
 		state_machine._enter_state("jump")
+		
+		$MovementSound.stop()
 		animated_sprite.rotation = 0
 		return
 	
@@ -177,6 +203,8 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 			await  animation_play.animation_finished
 		
 		state_machine._enter_state("idle")
+		
+		$MovementSound.stop()
 		idling.emit()
 		animated_sprite.rotation = 0
 		return 
@@ -189,9 +217,14 @@ func _choose_state(dir:Vector2=Vector2.ZERO, _pressed:bool=false, _delta:float=0
 			await animation_play.animation_finished
 			
 		state_machine._enter_state("run")
+		
+		if $MovementSound.playing == false:
+			$MovementSound.play()
 		animated_sprite.rotation = 0
 		return
+	
 		
+	
 	
 	
 # test harness for terrain API
@@ -229,3 +262,35 @@ func _end_level():
 	movement_component._disable_movement()
 	input_component._disable_inputs()
 	
+func _enter_dialogue():
+	state_machine._enter_state("idle")
+	movement_component._disable_movement()
+	input_component._disable_inputs()
+	
+func _leave_dialogue():
+	movement_component._enable_movement()
+	input_component._enable_inputs()
+	
+func _play_jump(vel:Vector2):
+	$JumpSound.play()
+
+func _play_dash(vel:Vector2):
+	$DashSound.play()
+	
+func _play_drill(_body):
+	$DrillStartSound.play()
+	$DirtSound.play()
+	$DrillSound.play()
+	
+func _stop_drill(_body):
+	$DrillSound.stop()
+	$DirtSound.play()
+
+func _play_bounce():
+	$BounceSound.play()
+	
+func _play_super_drill(vel:Vector2):
+	$SuperDrillSound.play()
+	
+func _play_item_collect():
+	$ItemCollect.play()

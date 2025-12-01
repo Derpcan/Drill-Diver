@@ -46,6 +46,7 @@ func load_ghost_path() -> void:
 
 
 func _ready() -> void:
+	$"Lab Ambience".play()
 	ghost_file_name = _slice_level_file_path_to_name(level_file_path)
 	set_up_folder_directory(ghost_folder_path)
 	
@@ -55,7 +56,7 @@ func _ready() -> void:
 	set_up_player_input_saver()
 	load_ghost_path()
 	load_logic(level_file_path)
-	opening._play_break_out()
+
 
 
 func set_up_player_input_saver() -> void:

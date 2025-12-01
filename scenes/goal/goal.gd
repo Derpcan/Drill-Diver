@@ -6,6 +6,7 @@ class_name Goal
 var Sranktime:float
 var blown_up:bool = false
 @export var ranking:Ranking
+@export var GeneratorSound:AudioStreamPlayer2D
 
 signal score_shown
 
@@ -14,6 +15,7 @@ signal new_time_got(new_time:float)
 func _ready():
 	#Sranktime = get_parent().s_rank_time
 	GeneratorPlayer.play("Running")
+	GeneratorSound.play()
 
 
 
@@ -30,6 +32,8 @@ func _on_area_2d_area_entered(area):
 		
 		ranking._set_complete_time(GameManager.get_current_time())
 		ExplosionPlayer.play("Blow Up")
+		GeneratorSound.stop()
+		
 		
 		get_tree().get_first_node_in_group("player")._end_level()
 		#get_parent().get_node("Player")._end_level()

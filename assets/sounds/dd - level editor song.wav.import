@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d36naft1v6phi"
+path="res://.godot/imported/dd - level editor song.wav-9737aeddedebe31c544c963cf3f6a8ce.sample"
+
+[deps]
+
+source_file="res://assets/sounds/dd - level editor song.wav"
+dest_files=["res://.godot/imported/dd - level editor song.wav-9737aeddedebe31c544c963cf3f6a8ce.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

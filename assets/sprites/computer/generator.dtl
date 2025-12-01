@@ -1,0 +1,13 @@
+join "Dr Iver" right [animation="Fade In"]
+"Dr Iver": There’s no point in continuing forward 1257!
+"Dr Iver": I’ve activated the security system powered by my Energem Generator!
+join Bit (Neutral) left [animation="Fade In"]
+Bit (Neutral): You mean that generator right there?
+join "Dr Iver" right [animation="Fade In"]
+"Dr Iver": ...
+"Dr Iver": Please don’t break it….
+Bit (A Rank): I’m gonna.
+"Dr Iver": I know….
+Bit (S Rank): Welp, See Ya Doc! I’ll miss our talks!
+"Dr Iver": 1257!!!!!!!!
+leave --All-- [animation="Fade Out"]

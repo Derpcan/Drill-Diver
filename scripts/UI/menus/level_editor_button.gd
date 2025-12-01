@@ -6,6 +6,7 @@ func _ready():
 	self.pressed.connect(_handle_on_press)
 
 func _handle_on_press():
+	get_parent().get_parent().get_node("ButtonSound").play()
 	SceneManager.change_scene("res://scenes/level editor/level_editor.tscn")
 
 func _on_mouse_entered():
