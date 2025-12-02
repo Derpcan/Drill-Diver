@@ -5,7 +5,7 @@ var entity : Node2D = null
 
 var start_position : Vector2 = Vector2.ZERO
 var random_position : Vector2 = Vector2.ZERO
-
+var can_detonate = true
 func enter() -> void:
 	start_position = entity.position
 	entity.sprites.play("idle_close")
@@ -17,7 +17,7 @@ func update(delta: float) -> void:
 	var dist = entity.to_player.length()
 	# The player moved within follow range, transition to following
 	
-	if dist <= entity.detection_range:
+	if dist <= entity.detection_range and can_detonate:
 		state_machine.change_state(state_machine.following_state)
 		return
 	

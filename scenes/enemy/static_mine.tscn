@@ -175,3 +175,6 @@ metadata/_custom_type_script = "uid://c3dxq7yaj2k6o"
 visible = false
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_y0nwa")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
