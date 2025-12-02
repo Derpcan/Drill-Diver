@@ -39,7 +39,7 @@ var in_editor:bool = false
 var line_2d:Line2D = null
 
 signal died(enemy)
-
+@onready var player : Player = get_tree().get_first_node_in_group("player")
 var visualize_hidden:bool = false
 func change_hidden_visualize(disabled:bool) -> void:
 	visualize_hidden = disabled
@@ -64,6 +64,7 @@ func _ready():
 		line_2d.width = 3
 		add_child(line_2d)
 		return
+	player.died.connect(_respawn)
 	
 	initial_x = global_position.x # Record the starting X position
 	# The enemy starts walking
@@ -136,4 +137,28 @@ func die():
 	
 	# Wait for the animation to finish and then remove the enemy
 	await sprite.animation_finished
-	queue_free() # Remove the enemy from the scene after the death animation
+	if is_dead == true:
+		visible = false
+
+func _respawn():
+	is_dead = false
+	
+	# IMMEDIATE DEACTIVATION: This is the critical change.
+	# We must instantly stop the enemy from being a threat.
+	damage_area.monitoring = true 
+	damage_area.monitorable = true
+	
+	# Also disable the body collision immediately so the player can pass through
+	set_collision_layer_value(1, true)
+	set_collision_mask_value(1, true)
+	damage_area.set_collision_layer_value(2, true)
+	damage_area.set_collision_mask_value(2, true)
+	hurtbox.set_collision_layer_value(4, true)
+	
+	
+	# Disable the hit detection area as well
+	hurtbox.monitoring = true
+	hurtbox.monitorable = true
+	sprite.play("run")
+	
+	visible = true

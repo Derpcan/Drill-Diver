@@ -16,9 +16,11 @@ func update(delta: float) -> void:
 	detonate_timeout += delta
 	
 	# The detonate timer has run out, transition to detonate
-	if detonate_timeout >= entity.evaded_lifetime:
+	if detonate_timeout >= entity.evaded_lifetime and get_parent().get_node("Idle").can_detonate:
 		state_machine.change_state(state_machine.detonate_state)
 		return
+	else:
+		state_machine.change_state(state_machine.idle_state)
 	
 	# The detonate timer is still going, stay evaded
 	# Continue moving in the direction we were going when evaded
