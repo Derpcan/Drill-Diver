@@ -21,6 +21,7 @@ signal update_timer(seconds: float)
 signal update_record(seconds: float)
 
 signal update_meter(amount: int)
+var bit_played = false
 
 
 @warning_ignore_restore("unused_signal")
