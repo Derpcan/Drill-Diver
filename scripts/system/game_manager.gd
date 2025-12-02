@@ -22,6 +22,7 @@ signal update_record(seconds: float)
 
 signal update_meter(amount: int)
 
+
 @warning_ignore_restore("unused_signal")
 
 ## Game Data and Stats ---------------------------------------------------------
@@ -121,3 +122,4 @@ func get_current_charge() -> int:
 #Restart Level
 func _restart_level():
 	get_tree().reload_current_scene()
+	

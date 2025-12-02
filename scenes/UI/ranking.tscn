@@ -229,32 +229,32 @@ scale = Vector2(2.2, 2.2)
 position = Vector2(728, 367)
 scale = Vector2(2.5, 2.5)
 
-[node name="BuildUpSound" type="AudioStreamPlayer2D" parent="."]
+[node name="BuildUpSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_rloo6")
-volume_db = 2.0
+volume_db = 10.0
 bus = &"Sound Effects"
 
-[node name="S Rank" type="AudioStreamPlayer2D" parent="."]
+[node name="S Rank" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_gqu6l")
 volume_db = 20.0
 bus = &"Music"
 
-[node name="A Rank" type="AudioStreamPlayer2D" parent="."]
+[node name="A Rank" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_o02j2")
 volume_db = 20.0
 bus = &"Music"
 
-[node name="B Rank" type="AudioStreamPlayer2D" parent="."]
+[node name="B Rank" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_tnfbg")
 volume_db = 20.0
 bus = &"Music"
 
-[node name="C Rank" type="AudioStreamPlayer2D" parent="."]
+[node name="C Rank" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_chgbd")
 volume_db = 20.0
 bus = &"Music"
 
-[node name="D Rank" type="AudioStreamPlayer2D" parent="."]
+[node name="D Rank" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_t3ie7")
 volume_db = 20.0
 bus = &"Music"

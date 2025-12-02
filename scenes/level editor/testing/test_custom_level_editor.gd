@@ -5,7 +5,7 @@ class_name TestCustomLevelEditor
 @export var s_rank_time:float = 10000
 
 @export var goal:Goal
-
+@export var music_player:AudioStreamPlayer = AudioStreamPlayer.new()
 
 @export var level_file_path:String = "":
 	set(new_path):
@@ -244,7 +244,7 @@ func load_logic(path_name:String="") -> void:
 						goal = obj
 						goal.new_time_got.connect(_relay_time_got_to_player)
 						goal.new_time_got.connect(_compare_old_and_new_times)
-					
+						goal.stop_music.connect(stop_music_playing)
 					if object_string == "Checkpoint":
 						tile_pos_to_object_dictionary[pos]["object"].add_to_group("checkpoint")
 			
@@ -255,7 +255,7 @@ func load_logic(path_name:String="") -> void:
 			
 			
 			
-			var music_player:AudioStreamPlayer = AudioStreamPlayer.new()
+			
 			music_player.autoplay = true
 			
 			#music_player.stream.loop_mode
@@ -338,3 +338,6 @@ func fix_physics_tile_map() -> void:
 
 func load_level() -> void:
 	pass
+
+func stop_music_playing():
+	music_player.playing = false

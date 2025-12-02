@@ -17,6 +17,7 @@ class_name AudioSettings
 
 
 func _ready() -> void:
+	master_audio_slider.grab_focus()
 	master_audio_slider.value_changed.connect(_update_master_audio)
 	sfx_audio_slider.value_changed.connect(_update_sfx_audio)
 	music_audio_slider.value_changed.connect(_update_music_audio)

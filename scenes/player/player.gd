@@ -266,8 +266,11 @@ func _end_level():
 	
 func _enter_dialogue():
 	state_machine._enter_state("idle")
-	movement_component._disable_movement()
 	input_component._disable_inputs()
+	movement_component.force_velocity(Vector2(0,0))
+	await on_floor
+	movement_component._disable_movement()
+	
 	
 func _leave_dialogue():
 	movement_component._enable_movement()

@@ -9,7 +9,7 @@ var blown_up:bool = false
 @export var GeneratorSound:AudioStreamPlayer2D
 
 signal score_shown
-
+signal stop_music
 signal new_time_got(new_time:float)
 
 func _ready():
@@ -29,6 +29,7 @@ func _on_area_2d_area_entered(_area):
 			ranking._set_S_rank_time(Sranktime)
 		
 		GameManager.stop_timer.emit()
+		stop_music.emit()
 		
 		ranking._set_complete_time(GameManager.get_current_time())
 		ExplosionPlayer.play("Blow Up")

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bgn5h8lqj2flo"
+path="res://.godot/imported/Phew Just Made It.wav-0ce5061f97e908247714580f6bd2590a.sample"
+
+[deps]
+
+source_file="res://assets/voices/bit/Phew Just Made It.wav"
+dest_files=["res://.godot/imported/Phew Just Made It.wav-0ce5061f97e908247714580f6bd2590a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
