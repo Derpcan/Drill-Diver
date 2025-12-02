@@ -102,6 +102,15 @@ var mouse_position:Vector2 = Vector2.ZERO:
 
 var place_held_down:bool = false:
 	set(new_value):
+		
+		# Prevents issue with clicking on the viewer and placing a bunch of blocks
+		if viewer:
+			var mouse_pos:Vector2 = get_global_mouse_position()
+			if mouse_pos.x > viewer.global_position.x and mouse_pos.x <= viewer.global_position.x + viewer.get_child(0).size.x:
+				if mouse_pos.y> viewer.global_position.y and mouse_pos.y <= viewer.global_position.y + viewer.get_child(0).size.y:
+					place_held_down = false
+					return
+		
 		if new_value == place_held_down:
 			return
 		
@@ -407,6 +416,8 @@ func set_up_bonus_parameters_viewer(tile_position:Vector2i) -> void:
 	viewer.object_name = tile_pos_to_object_dictionary[tile_position]["object_name"]
 	viewer.bonus_parameter_submitted.connect(_update_object_bonus_parameters)
 	add_child(viewer)
+
+
 
 
 func _update_object_bonus_parameters(tile_position:Vector2i, new_bonus_parameters:Dictionary) -> void:
@@ -1265,12 +1276,15 @@ func place_tile_input_logic(event:InputEvent) -> void:
 	if loading_level == true:
 		return
 	
+	
 	if event is InputEventMouse:
 		# Get the mouse position
 		mouse_position = get_global_mouse_position()
 	
 		# Get the tilemap coords that the mouse is at
 		tilemap_mouse_position = physics_tilemap.local_to_map(mouse_position)
+	
+	
 	
 	show_tile_place_preview(tilemap_mouse_position)
 	

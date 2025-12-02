@@ -19,6 +19,7 @@ offset_bottom = 96.0
 [node name="MarginContainer" type="MarginContainer" parent="Container"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+mouse_filter = 0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 10
@@ -26,17 +27,20 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer"]
 layout_mode = 2
+mouse_filter = 0
 
 [node name="HSeparator" type="HSeparator" parent="Container/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="ObjectNameLabel" type="Label" parent="Container/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 0
 text = "Example"
 horizontal_alignment = 1
 
 [node name="TilePositionLabel" type="Label" parent="Container/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 0
 text = "(0, 0)"
 
 [node name="HSeparator2" type="HSeparator" parent="Container/MarginContainer/VBoxContainer"]
@@ -46,21 +50,25 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
+mouse_filter = 0
 text = "Bonus Parameters"
 horizontal_alignment = 1
 
 [node name="BonusParametersHolder" type="BoxContainer" parent="Container/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
+mouse_filter = 0
 vertical = true
 
 [node name="HFlowContainer" type="HFlowContainer" parent="Container/MarginContainer/VBoxContainer/BonusParametersHolder"]
 visible = false
 layout_mode = 2
+mouse_filter = 0
 
 [node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer/BonusParametersHolder/HFlowContainer"]
 visible = false
 layout_mode = 2
+mouse_filter = 0
 text = "Distance: "
 
 [node name="LineEdit" type="LineEdit" parent="Container/MarginContainer/VBoxContainer/BonusParametersHolder/HFlowContainer"]

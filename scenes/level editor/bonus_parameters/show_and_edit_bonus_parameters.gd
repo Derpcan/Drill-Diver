@@ -74,6 +74,8 @@ func add_bonus_parameters(dict:Dictionary) -> void:
 			line_edit = preload("res://scenes/level editor/bonus_parameters/custom_line_edit.tscn").instantiate()
 		
 		line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		line_edit.mouse_filter = Control.MOUSE_FILTER_STOP
+		h_flow.mouse_filter = Control.MOUSE_FILTER_STOP
 		
 		h_flow.add_child(label)
 		h_flow.add_child(line_edit)
