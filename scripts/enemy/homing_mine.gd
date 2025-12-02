@@ -33,7 +33,7 @@ var line_2d:Line2D = null
 
 var in_editor:bool = false
 var prevent_visualize_range:bool = false
-
+var start_position : Vector2 = Vector2(-1.0, -1.0)
 func change_hidden_visualize(disabled:bool) -> void:
 	prevent_visualize_range = disabled
 	queue_redraw()
@@ -49,7 +49,8 @@ func _ready() -> void:
 		line_2d.z_index = -2
 		add_child(line_2d)
 		return
-	
+	player.died.connect(_respawn)
+	start_position = self.global_position
 	# Disable the explosion hitbox
 	detonation_hitbox.monitoring = false
 	
@@ -76,3 +77,16 @@ func _calc_vec_to_player() -> void:
 	#print("----------------------------")
 	#print(to_player.length())
 	#print("----------------------------")
+	
+func _respawn():
+	print("dksjdk")
+	$Timer.start()
+	await $Timer.timeout
+	visible = true
+	global_position = start_position
+	
+	
+	$States/Idle.can_detonate = true
+	state_machine.change_state(state_machine.idle_state)
+	
+	

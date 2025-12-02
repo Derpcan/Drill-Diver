@@ -40,6 +40,8 @@ func update(delta: float) -> void:
 		return
 	
 	# The player is within detonate range, transition to detonate
-	if dist <= entity.detonate_range:
+	if dist <= entity.detonate_range and get_parent().get_node("Idle").can_detonate:
 		state_machine.change_state(state_machine.detonate_state)
 		return
+	else:
+		state_machine.change_state(state_machine.idle_state)
