@@ -1413,6 +1413,10 @@ func _load_logic(path_name:String = "") -> void:
 			#var physics_tilemap_data = JSON.to_native(json["PhysicsTilemap"]) 
 			# Convert json into native Godot types
 			
+			decorative_tilemap.set_deferred("use_merged_tilemap", true)
+			decorative_tilemap.modulate = Color.TRANSPARENT # Hide temporarily
+			decorative_tilemap.set_process(false)
+			
 			# Get the decorative tilemap data if it exists
 			var decorative_tilemap_data:Dictionary[int, Array] = {}
 			if "DecorativeTilemap" in json:
@@ -1483,6 +1487,10 @@ func _load_logic(path_name:String = "") -> void:
 			print("Best Time Completed: ", best_time_completed)
 			
 			
+			
+			decorative_tilemap.set_process(true)
+			decorative_tilemap.modulate = Color.WHITE
+			decorative_tilemap.call_deferred("update_tilemaps")
 	
 	if testing_mode == false:
 		level_editor_hud.call_deferred("show")
