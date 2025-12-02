@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://xvhmd2g8ebjj"]
+[gd_scene load_steps=4 format=3 uid="uid://xvhmd2g8ebjj"]
 
 [ext_resource type="Script" uid="uid://cj1uoehvt0dbw" path="res://scripts/UI/menus/escape_options_button.gd" id="1_c2u1v"]
 [ext_resource type="Script" uid="uid://cb3ks14m5sple" path="res://scenes/keybind_button.gd" id="2_yjkok"]
+[ext_resource type="Script" uid="uid://dran6brbiunpa" path="res://scenes/UI/audio_settings/audio_button.gd" id="3_2iy26"]
 
 [node name="Options" type="Node2D"]
 
@@ -29,3 +30,12 @@ offset_bottom = 438.0
 focus_neighbor_left = NodePath("../BackButton")
 text = "Edit Keybinds"
 script = ExtResource("2_yjkok")
+
+[node name="AudioButton" type="Button" parent="."]
+offset_left = 498.0
+offset_top = 469.0
+offset_right = 628.0
+offset_bottom = 500.0
+focus_neighbor_left = NodePath("../BackButton")
+text = "Edit Audio"
+script = ExtResource("3_2iy26")

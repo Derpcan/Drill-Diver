@@ -7,7 +7,8 @@ func _ready():
 	self.pressed.connect(_handle_on_press)
 
 func _handle_on_press():
-	get_parent().get_parent().get_node("ButtonSound").play()
+	if get_parent().get_parent().get_node("ButtonSound"):
+		get_parent().get_parent().get_node("ButtonSound").play()
 	
 	SceneManager.change_scene("res://scenes/level_select.tscn")
 

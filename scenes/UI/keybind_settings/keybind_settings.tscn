@@ -1,10 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://rtcmunlcso38"]
+[gd_scene load_steps=5 format=3 uid="uid://rtcmunlcso38"]
 
 [ext_resource type="Script" uid="uid://bk5v61ghtwfuw" path="res://scenes/UI/keybind_settings/keybind_settings.gd" id="1_20yak"]
 [ext_resource type="Script" uid="uid://tg7cv7ctku4p" path="res://scenes/UI/keybind_settings/back_button.gd" id="2_8o2g5"]
+[ext_resource type="Shader" uid="uid://0x4jckkmsvb0" path="res://scenes/UI/audio_settings/blur_shader.gdshader" id="2_20yak"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_guxvm"]
+shader = ExtResource("2_20yak")
+shader_parameter/offset = 2.5
 
 [node name="KeybindSettings" type="CanvasLayer"]
 script = ExtResource("1_20yak")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_guxvm")
+offset_right = 1151.0
+offset_bottom = 647.0
 
 [node name="Panel" type="Panel" parent="."]
 offset_right = 1152.0

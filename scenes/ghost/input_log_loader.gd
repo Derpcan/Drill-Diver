@@ -212,7 +212,7 @@ func _load_key_log_json() -> void:
 		var best_time:float
 		if "BestTime" in json:
 			best_time = JSON.to_native(json["BestTime"])
-		
+			GameManager.set_record_to(best_time)
 			#
 			#for dict in native:
 				#print("move_dir = ",dict["move_dir"])

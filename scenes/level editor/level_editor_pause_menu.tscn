@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://04tplb31141v"]
+[gd_scene load_steps=27 format=3 uid="uid://04tplb31141v"]
 
 [ext_resource type="Texture2D" uid="uid://c36vsptbncd0b" path="res://assets/sprites/menu/UI_Hologram_Frame_Standard_02a-export.png" id="1_mkhpj"]
 [ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="2_d4qoj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://xxg1f1vuvk2o" path="res://assets/sprites/menu/UI_Hologram_TimeHologram.png" id="6_mkhpj"]
 [ext_resource type="AudioStream" uid="uid://trj0oi5g38j0" path="res://assets/sounds/DD - resume click (UI).wav" id="7_8lmil"]
 [ext_resource type="AudioStream" uid="uid://djmmo20hp5wwa" path="res://assets/sounds/DD - pause click (UI).wav" id="8_yjou5"]
+[ext_resource type="Shader" uid="uid://0x4jckkmsvb0" path="res://scenes/UI/audio_settings/blur_shader.gdshader" id="9_yjou5"]
 
 [sub_resource type="GDScript" id="GDScript_0a7f6"]
 script/source = "extends CanvasLayer
@@ -27,6 +28,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		SceneManager.pop_scene()
 		
 "
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3gso2"]
+shader = ExtResource("9_yjou5")
+shader_parameter/offset = 2.5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7yp4j"]
 atlas = ExtResource("1_mkhpj")
@@ -308,6 +313,11 @@ _data = {
 process_mode = 2
 process_priority = 1
 script = SubResource("GDScript_0a7f6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_3gso2")
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
