@@ -172,7 +172,7 @@ input_pickable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DrillDetector"]
 physics_interpolation_mode = 2
 position = Vector2(3, 0)
-scale = Vector2(1.8, 0.8)
+scale = Vector2(2.2, 0.8)
 shape = SubResource("CapsuleShape2D_fm80t")
 disabled = true
 debug_color = Color(0.633638, 0.528005, 5.77569e-07, 0.42)

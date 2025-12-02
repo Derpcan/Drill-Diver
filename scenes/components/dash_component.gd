@@ -40,6 +40,7 @@ func _enable_dashing() -> void:
 
 func _disable_dashing() -> void:
 	if enemy_dash==true:
+		enemy_dash = false
 		return
 	on_dash_cooldown = true
 	dash_cooldown_timer.start(dash_time_cooldown)

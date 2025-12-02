@@ -231,6 +231,7 @@ scale = Vector2(2.5, 2.5)
 
 [node name="BuildUpSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_rloo6")
+volume_db = 2.0
 bus = &"Sound Effects"
 
 [node name="S Rank" type="AudioStreamPlayer2D" parent="."]

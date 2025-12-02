@@ -211,7 +211,10 @@ func _exit_drill_state(_body) -> void:
 	#print(velocity.x, velocity.y)
 	#parent.movement_component.max_speed = abs(parent.velocity.x)
 	#parent.movement_component.exiting_ground = true
-	parent.movement_component.force_velocity(parent.velocity)
+	if allow_exit_launch:
+		parent.movement_component.force_velocity(parent.velocity)
+	else:
+		parent.movement_component.force_velocity(Vector2(0,0))
 	
 	parent.rotation=0
 	parent.dash_component.can_dash = true
@@ -219,10 +222,25 @@ func _exit_drill_state(_body) -> void:
 
 
 
+func allow_exit_launching() -> void:
+	allow_exit_launch = true
+	timer.queue_free()
+	timer = null
+
+var allow_exit_launch:bool = false
+var timer:Timer
 # Enters the drill state. Called by the drill detector _on_body_entered signal. Connected in player script
 func _enter_drill_state(_body) -> void:
 	# Check if drill is enabled, and if the parent has a health component and is alive
 	if not drill_enabled and (("health_component" in parent and parent.health_component.current_hp > 0) or not "health_component" in parent):
+		if timer == null:
+			allow_exit_launch = false
+			timer = Timer.new()
+			add_child(timer)
+			timer.start(0.05)
+			timer.timeout.connect(allow_exit_launching)
+		
+		
 		# Turn off world collision with player
 		parent.set_collision_mask_value(1, false)
 		
@@ -260,7 +278,7 @@ func _enter_drill_state(_body) -> void:
 		
 		# Give a boost in position to each dash direction
 		if last_dash.y > 0:
-			parent.global_position.y += 2
+			parent.global_position.y += 4
 		elif last_dash.y < 0:
 			parent.global_position.y -= 4
 		
@@ -276,7 +294,7 @@ func _enter_drill_state(_body) -> void:
 		parent.velocity = drill_speed*Vector2.from_angle(angle)
 		
 		#print(angle)
-		parent.move_and_slide()
+		#parent.move_and_slide()
 		
 		# Get the shape and bump
 		#var shape:CollisionShape2D = drill_detector.get_child(0)

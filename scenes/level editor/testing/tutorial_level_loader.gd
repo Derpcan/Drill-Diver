@@ -228,14 +228,12 @@ func load_logic(path_name:String="") -> void:
 					# Set the player's spawn
 					if object_string == "Spawnpoint":
 						var obj:Node2D = tile_pos_to_object_dictionary[object_string_name_to_tile_pos[object_string][0]]["object"]
-						
-						opening.global_position = obj.global_position
-						opening.global_position.y -= 5
-						$GameCamera.global_position = opening.global_position
-						$Ghost.global_position = opening.global_position
-						$CheckpointManager.last_checkpoint_position = opening.global_position
+						$OpeningScene.global_position = obj.global_position - Vector2(0,5)
+						#$OpeningScene/Player.global_position = obj.global_position
+						$GameCamera.global_position = $OpeningScene/Player.global_position
+						$Ghost.global_position = obj.global_position
+						$CheckpointManager.last_checkpoint_position = $OpeningScene/Player.global_position
 						pass
-						
 					
 					if object_string == "Goal":
 						var obj:Goal = tile_pos_to_object_dictionary[object_string_name_to_tile_pos[object_string][0]]["object"]
@@ -243,6 +241,9 @@ func load_logic(path_name:String="") -> void:
 						goal = obj
 						goal.new_time_got.connect(_relay_time_got_to_player)
 						goal.new_time_got.connect(_compare_old_and_new_times)
+					
+					if object_string == "Checkpoint":
+						tile_pos_to_object_dictionary[pos]["object"].add_to_group("checkpoint")
 			
 			
 			if "BestTimeCompleted" in json:
@@ -250,13 +251,14 @@ func load_logic(path_name:String="") -> void:
 			print(s_rank_time)
 			
 			
+			
+			
 			object_string = ""
 			selected_object = null
 			file.close()
 			BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells())
 			fix_physics_tile_map()
-			
-			
+
 
 
 

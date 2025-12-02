@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://bwjqpd1ibweqs"]
+[gd_scene load_steps=33 format=4 uid="uid://bwjqpd1ibweqs"]
 
 [ext_resource type="Script" uid="uid://cv1ardidub6eq" path="res://scenes/level editor/testing/tutorial_level_loader.gd" id="1_fah3i"]
 [ext_resource type="PackedScene" uid="uid://bjshmay3nbdaf" path="res://scenes/level editor/cave_background.tscn" id="2_hl4jw"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://xx6j5sqf5pti" path="res://assets/lab-game-tileset-pixel-art/LabTileSet.png" id="9_dparq"]
 [ext_resource type="Texture2D" uid="uid://rriysr434m0u" path="res://assets/Dirt.png" id="10_fxv4l"]
 [ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="11_lkuwv"]
+[ext_resource type="Texture2D" uid="uid://d4mh46v6twlqu" path="res://assets/superdrillable.png" id="12_kgfpq"]
 [ext_resource type="Texture2D" uid="uid://bbt2df64h3yhi" path="res://assets/cave/spritesheet.png" id="12_rsaal"]
 [ext_resource type="Script" uid="uid://ktd6250lpfu3" path="res://scenes/level editor/tilemap_link_superdrill_destruction.gd" id="13_85t1a"]
 [ext_resource type="PackedScene" uid="uid://bsv71f851sdj3" path="res://scenes/checkpoint/checkpoint_manager.tscn" id="14_1iwqk"]
@@ -18,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="17_yiw6g"]
 [ext_resource type="PackedScene" uid="uid://4qfhiuw7i8j" path="res://scenes/UI/to_level_select.tscn" id="18_427sq"]
 [ext_resource type="PackedScene" uid="uid://cx3g6mgf1m8q3" path="res://animations/Opening Cutscene/opening_scene.tscn" id="19_hl4jw"]
-[ext_resource type="Resource" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
+[ext_resource type="Resource" uid="uid://siicvn1xm4v6" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
 [ext_resource type="PackedScene" uid="uid://cuvysegbb8cm5" path="res://scenes/dialogue/dialogue.tscn" id="19_qtett"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a25ho"]
@@ -312,6 +313,8 @@ texture = ExtResource("10_fxv4l")
 0: [2],
 3: [2],
 4: [2],
+8: [0, 1],
+12: [0, 1],
 &"type": 2
 }
 1:0/0 = 0
@@ -352,9 +355,11 @@ texture = ExtResource("10_fxv4l")
 }
 5:0/0 = 0
 5:0/0/metadata/_better_terrain = {
+0: [0, 1],
 4: [2],
 7: [2],
 8: [2],
+12: [0, 1],
 &"type": 2
 }
 6:0/0 = 0
@@ -718,6 +723,8 @@ texture = ExtResource("10_fxv4l")
 0:5/0 = 0
 0:5/0/metadata/_better_terrain = {
 0: [2],
+4: [0, 1],
+8: [0, 1],
 12: [2],
 15: [2],
 &"type": 2
@@ -760,8 +767,8 @@ texture = ExtResource("10_fxv4l")
 }
 5:5/0 = 0
 5:5/0/metadata/_better_terrain = {
-0: [0],
-4: [0],
+0: [0, 1],
+4: [0, 1],
 8: [2],
 11: [2],
 12: [2],
@@ -1492,6 +1499,10 @@ texture = ExtResource("8_5vi2i")
 texture = ExtResource("11_lkuwv")
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0qn5d"]
+texture = ExtResource("12_kgfpq")
+0:0/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vqyq1"]
 texture = ExtResource("12_rsaal")
 margins = Vector2i(0, 1)
@@ -1605,8 +1616,8 @@ margins = Vector2i(0, 1)
 0:6/0/metadata/_better_terrain = {
 0: [0],
 4: [0],
-8: [2],
-12: [2],
+8: [2, 1],
+12: [2, 1],
 &"type": 0
 }
 1:6/0 = 0
@@ -1629,8 +1640,10 @@ margins = Vector2i(0, 1)
 2:6/0/terrains_peering_bit/bottom_side = 0
 2:6/0/terrains_peering_bit/left_side = 0
 2:6/0/metadata/_better_terrain = {
+0: [1, 2],
 4: [0],
 8: [0],
+12: [2, 1],
 &"type": 0
 }
 3:6/0 = 0
@@ -1688,6 +1701,8 @@ margins = Vector2i(0, 1)
 0:8/0/terrains_peering_bit/top_side = 0
 0:8/0/metadata/_better_terrain = {
 0: [0],
+4: [2, 1],
+8: [2, 1],
 12: [0],
 &"type": 0
 }
@@ -1711,6 +1726,8 @@ margins = Vector2i(0, 1)
 2:8/0/terrains_peering_bit/left_side = 0
 2:8/0/terrains_peering_bit/top_side = 0
 2:8/0/metadata/_better_terrain = {
+0: [2, 1],
+4: [2, 1],
 8: [0],
 12: [0],
 &"type": 0
@@ -1794,6 +1811,7 @@ sources/4 = SubResource("TileSetAtlasSource_e1y88")
 sources/6 = SubResource("TileSetAtlasSource_vqyq1")
 sources/11 = SubResource("TileSetAtlasSource_prn34")
 sources/12 = SubResource("TileSetAtlasSource_jqrrb")
+sources/5 = SubResource("TileSetAtlasSource_0qn5d")
 metadata/_better_terrain = {
 &"decoration": ["Decoration", Color(0.411765, 0.411765, 0.411765, 1), 3, [], {
 &"path": "res://addons/better-terrain/icons/Decoration.svg"
@@ -1829,7 +1847,7 @@ stereo = true
 [node name="TutorialLevelLoader" type="Node2D" node_paths=PackedStringArray("opening", "physics_tilemap", "decorative_tilemap", "object_node", "to_level_select")]
 script = ExtResource("1_fah3i")
 opening = NodePath("OpeningScene")
-level_file_path = "res://Tutorial/Tutorial.lvl"
+level_file_path = "res://levels/Tutorial.lvl"
 physics_tilemap = NodePath("PhysicsTileMap")
 decorative_tilemap = NodePath("DecorativeTileMap")
 object_node = NodePath("ObjectNode")
