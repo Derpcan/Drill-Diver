@@ -269,7 +269,6 @@ stream = ExtResource("20_8ydkj")
 
 [node name="SuperDrillSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("22_ioxgp")
-volume_db = -15.0
 
 [node name="ItemCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("23_cnsyf")

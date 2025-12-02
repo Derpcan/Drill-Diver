@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://bwjqpd1ibweqs"]
+[gd_scene load_steps=37 format=4 uid="uid://bwjqpd1ibweqs"]
 
 [ext_resource type="Script" uid="uid://cv1ardidub6eq" path="res://scenes/level editor/testing/tutorial_level_loader.gd" id="1_fah3i"]
 [ext_resource type="PackedScene" uid="uid://bjshmay3nbdaf" path="res://scenes/level editor/cave_background.tscn" id="2_hl4jw"]
@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://ktd6250lpfu3" path="res://scenes/level editor/tilemap_link_superdrill_destruction.gd" id="13_85t1a"]
 [ext_resource type="PackedScene" uid="uid://bsv71f851sdj3" path="res://scenes/checkpoint/checkpoint_manager.tscn" id="14_1iwqk"]
 [ext_resource type="PackedScene" uid="uid://ckobqg36uilxm" path="res://scenes/Camera/game_camera.tscn" id="16_amvrk"]
-[ext_resource type="PackedScene" uid="uid://dtdwaqv8e3mdq" path="res://scenes/ghost/ghost.tscn" id="17_yiw6g"]
 [ext_resource type="PackedScene" uid="uid://4qfhiuw7i8j" path="res://scenes/UI/to_level_select.tscn" id="18_427sq"]
 [ext_resource type="PackedScene" uid="uid://cx3g6mgf1m8q3" path="res://animations/Opening Cutscene/opening_scene.tscn" id="19_hl4jw"]
 [ext_resource type="Resource" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
@@ -1885,24 +1884,12 @@ physics_tile_map = NodePath("../PhysicsTileMap")
 [node name="ObjectNode" type="Node2D" parent="."]
 
 [node name="CheckpointManager" parent="." node_paths=PackedStringArray("ghost", "game_camera") instance=ExtResource("14_1iwqk")]
-ghost = NodePath("../Ghost")
+ghost = NodePath("")
 last_checkpoint_position = Vector2(204, 150)
 game_camera = NodePath("../GameCamera")
 
 [node name="GameCamera" parent="." instance=ExtResource("16_amvrk")]
 zoom = Vector2(4, 4)
-
-[node name="Ghost" parent="." instance=ExtResource("17_yiw6g")]
-collision_mask = 1
-input_log_file_name = ""
-
-[node name="HurtBox" parent="Ghost" index="18"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="CollisionShape2D" parent="Ghost/HurtBox" index="0"]
-shape = null
-disabled = true
 
 [node name="ToLevelSelect" parent="." instance=ExtResource("18_427sq")]
 
@@ -1944,5 +1931,3 @@ stream = SubResource("AudioStreamWAV_hl4jw")
 bus = &"Music"
 
 [connection signal="break_out_ended" from="OpeningScene" to="." method="_on_opening_scene_break_out_ended"]
-
-[editable path="Ghost"]
