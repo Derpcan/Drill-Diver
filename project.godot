@@ -86,6 +86,7 @@ audio/channel_defaults={
 
 window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
 
 [editor_plugins]
 

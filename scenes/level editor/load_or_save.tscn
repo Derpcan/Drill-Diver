@@ -255,11 +255,12 @@ shader_parameter/linesColorIntensity = 0.4
 shader_parameter/hologramTexture = ExtResource("3_sk1hb")
 shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
 
-[node name="LoadOrSave" type="CanvasLayer" node_paths=PackedStringArray("load_button", "create_button", "back_button")]
+[node name="LoadOrSave" type="CanvasLayer" node_paths=PackedStringArray("load_button", "create_button", "back_button", "import_button")]
 script = ExtResource("1_wof0u")
 load_button = NodePath("Control2/Load")
 create_button = NodePath("Control2/Create")
 back_button = NodePath("Control2/Back")
+import_button = NodePath("Control2/Import")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -443,6 +444,22 @@ button_string = "Back"
 layout_mode = 0
 offset_left = 545.0
 offset_top = 222.0
-offset_right = 641.0
+offset_right = 609.0
 offset_bottom = 254.0
 scale = Vector2(3.5, 3.5)
+
+[node name="Import" parent="Control2" instance=ExtResource("13_x01o5")]
+layout_mode = 0
+offset_left = 727.0
+offset_top = -107.0
+offset_right = 791.0
+offset_bottom = -75.0
+scale = Vector2(3.5, 3.5)
+button_string = "Import"
+
+[node name="Import" type="Button" parent="."]
+offset_left = 565.0
+offset_top = 729.0
+offset_right = 671.0
+offset_bottom = 760.0
+text = "Import Level"
