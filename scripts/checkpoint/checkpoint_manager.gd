@@ -18,6 +18,7 @@ signal player_death_animation_ended(previous_checkpoint_pos:Vector2)
 @export_category("Start Position")
 ## Keep track of the last position of the checkpoint, to start should make it the spawnpoint for the level.
 @export var last_checkpoint_position:Vector2
+@export var last_checkpoint_fill:int
 
 
 @export_category("Camera")
@@ -83,9 +84,10 @@ func _ready() -> void:
 			print_rich("[color=#66CCFF]Manager Connected to Checkpoint at: ", checkpoint.global_position, "[/color]")
 
 # Receives the new position from an activated checkpoint and updates the respawn position.
-func _update_checkpoint_position(new_position: Vector2) -> void:
+func _update_checkpoint_position(new_position: Vector2, new_fill: int) -> void:
 	print('wahts up')
 	last_checkpoint_position = new_position
+	last_checkpoint_fill = new_fill
 	print_rich("[color=#66FF66]RESPAWN POSITION UPDATED to: ", last_checkpoint_position, "[/color]")
 	
 	# Charlie: Save the current timer value when we reach a new checkpoint
@@ -109,6 +111,7 @@ func _camera_returned_restart() -> void:
 	player.state_machine._enter_state("idle")
 	# Use the dynamically updated last_checkpoint_position for respawn
 	player.global_position = last_checkpoint_position
+	GameManager.set_meter.emit(0)
 	game_camera.global_position = player.global_position
 	
 	# Tween the modulation for the player to show up overtime

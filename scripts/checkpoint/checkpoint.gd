@@ -1,6 +1,6 @@
 extends Area2D
 
-signal checkpoint_activated(new_respawn_position: Vector2)
+signal checkpoint_activated(new_respawn_position: Vector2, new_fill: int)
 
 # Reference to the visual component
 @onready var sprite = $Sprite2D 
@@ -40,7 +40,8 @@ func activate_checkpoint() -> void:
 	is_active = true
 	
 	# Emit the signal to CheckpointManager to update respawn point
-	checkpoint_activated.emit(global_position)
+	var fill = GameManager.get_current_charge()
+	checkpoint_activated.emit(global_position,fill)
 	print_rich("[color=#00FFB3]Checkpoint Activated at: ", global_position, "[/color]")
 	if sprite:
 		# Initialize tween

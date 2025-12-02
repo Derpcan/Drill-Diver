@@ -457,6 +457,13 @@ layout_mode = 2
 image = ExtResource("4_1bmts")
 text = "Gem"
 
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Gem/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+modulate = Color(0, 1, 0.156863, 1)
+texture = ExtResource("4_1bmts")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Gem/MarginContainer/VBoxContainer2" index="2"]
+text = "Gem"
+
 [node name="HSeparator" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 15
@@ -706,6 +713,7 @@ offset_right = 409.0
 offset_bottom = 639.0
 text = "Press \"X\" to toggle Delete Mode"
 
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Gem"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone"]

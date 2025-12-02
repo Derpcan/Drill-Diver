@@ -15,8 +15,8 @@ func enter() -> void:
 		get_parent().get_parent().get_node("DieSound").play()
 		
 		await get_parent().get_parent().get_node("DieSound").finished
-		if  get_parent().get_parent().can_be_hurt == false
-			get_parent().get_parent().visible = falsed
+		if get_parent().get_parent().can_be_hurt == false:
+			get_parent().get_parent().visible = false
 	
 		return
 

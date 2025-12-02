@@ -999,6 +999,8 @@ static func static_pause_enemy_tiles(
 		object.in_editor = true
 	if scene_dictionary[selected_object] == "Static Drone":
 		object.in_editor = true
+	if scene_dictionary[selected_object] == "Gem":
+		object.in_editor = true
 	
 	if not tile_position_to_bonus_parameters.has(tile_position):
 		return
