@@ -442,7 +442,6 @@ offset_top = 1.0
 offset_right = 1126.0
 offset_bottom = 600.0
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="ColorRect/ScrollContainer"]
 layout_mode = 2

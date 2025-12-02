@@ -32,10 +32,7 @@ func _ready() -> void:
 	$AnimationPlay.play(\"Scroll\")
 	
 	
-	$Button.connect(\"button_down\", _import_level)
 
-func _import_level() -> void:
-	add_child(preload(\"res://scenes/UI/import_levels/import_custom_level.tscn\").instantiate())
 
 func _copy_path_to_clipboard() -> void:
 	DisplayServer.clipboard_set(OS.get_user_data_dir() + \"/test_data/\")
@@ -570,10 +567,6 @@ repeat_times = 400
 
 [node name="Sprite2D" parent="CaveBackground/Parallax2D" index="0"]
 region_rect = Rect2(0, 0, 322, 185)
-
-[node name="Button" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
 
 [connection signal="focus_entered" from="Control/Level Select" to="Control/Level Select" method="_on_mouse_entered"]
 [connection signal="focus_exited" from="Control/Level Select" to="Control/Level Select" method="_on_mouse_exited"]
