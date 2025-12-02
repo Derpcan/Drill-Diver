@@ -19,7 +19,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_umg3e"]
 shader = ExtResource("2_8ogwd")
-shader_parameter/offset = 0.0
+shader_parameter/offset = 2.5
 
 [sub_resource type="Animation" id="Animation_qv4l2"]
 length = 0.001
@@ -81,7 +81,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_gmssj"]
@@ -226,7 +226,7 @@ tracks/5/path = NodePath("ColorRect2:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.8),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -411,10 +411,12 @@ anim_player = NodePath("AnimationPlayer")
 is_open = false
 
 [node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_umg3e")
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -586,10 +588,6 @@ bonus_parameters = Dictionary[String, int]({
 layout_mode = 2
 image = ExtResource("11_rug43")
 text = "Static Mine"
-range_parameter = true
-bonus_parameters = Dictionary[String, int]({
-"Range": 60
-})
 
 [node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
 modulate = Color(1, 0.517647, 0.992157, 1)
