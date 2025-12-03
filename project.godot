@@ -21,6 +21,7 @@ GameManager="*res://scripts/system/game_manager.gd"
 SceneManager="*res://scripts/system/scene_manager.gd"
 BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
 
 [dialogic]
 
@@ -90,7 +91,7 @@ window/stretch/scale_mode="integer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg", "res://addons/dialogic/plugin.cfg")
+enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg", "res://addons/controller_icons/plugin.cfg", "res://addons/dialogic/plugin.cfg")
 
 [input]
 

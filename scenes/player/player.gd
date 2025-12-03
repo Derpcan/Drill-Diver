@@ -258,11 +258,17 @@ func _set_last_dash(dir: Vector2):
 		last_dash = dir
 
 func _end_level():
-	
+	drill_detector.monitorable = false
+	drill_detector.monitoring = false
+	$HurtBox.monitorable = false
+	$HurtBox.monitoring = false
 	await dash_component.dash_end
 	state_machine._enter_state("idle")
 	movement_component._disable_movement()
 	input_component._disable_inputs()
+	
+	
+	rotation = 0
 	
 func _enter_dialogue():
 	state_machine._enter_state("idle")
@@ -306,3 +312,4 @@ func _on_dash_hitbox_hit_something():
 	dash_component._enable_dash()
 	dash_component._enable_dashing()
 	dash_component._enemy_dash()
+	

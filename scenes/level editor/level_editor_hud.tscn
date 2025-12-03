@@ -1,6 +1,5 @@
 [gd_scene load_steps=13 format=3 uid="uid://blnst3na25i2i"]
 
-[ext_resource type="Script" uid="uid://dgqwosol42b3a" path="res://scripts/UI/menus/pause_button.gd" id="1_qmhco"]
 [ext_resource type="PackedScene" uid="uid://be1u7dex0aqss" path="res://scenes/UI/custom_button.tscn" id="1_sj8n0"]
 [ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="2_1od31"]
 [ext_resource type="PackedScene" uid="uid://kwdjeqxdj2v" path="res://scenes/level editor/tile_selector.tscn" id="2_tnwft"]
@@ -131,6 +130,20 @@ shader_parameter/linesColorIntensity = 0.4
 shader_parameter/hologramTexture = ExtResource("2_1od31")
 shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
 
+[sub_resource type="GDScript" id="GDScript_1od31"]
+script/source = "extends TextureButton
+
+func _ready():
+	self.pressed.connect(_handle_on_press)
+
+func _handle_on_press():
+	SceneManager.push_scene(\"res://scenes/level editor/level_editor_pause_menu.tscn\")
+
+func _unhandled_input(event):
+	if event.is_action_pressed(\"game_escape\") and get_parent().visible:
+		SceneManager.push_scene(\"res://scenes/level editor/level_editor_pause_menu.tscn\")
+"
+
 [sub_resource type="LabelSettings" id="LabelSettings_ktbvt"]
 font = ExtResource("6_pbdc1")
 font_size = 96
@@ -163,7 +176,7 @@ focus_neighbor_top = NodePath("../Options")
 mouse_filter = 1
 texture_normal = ExtResource("3_sj8n0")
 texture_pressed = ExtResource("4_v8gts")
-script = ExtResource("1_qmhco")
+script = SubResource("GDScript_1od31")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Pause"]
 layout_mode = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://4qfhiuw7i8j"]
+[gd_scene load_steps=13 format=3 uid="uid://4qfhiuw7i8j"]
 
 [ext_resource type="Script" uid="uid://cw4tuxjyhynfu" path="res://scenes/UI/to_level_select.gd" id="1_jxaos"]
 [ext_resource type="Script" uid="uid://ci8mvuro6jqfh" path="res://scripts/UI/menus/level_select_button.gd" id="1_vm4vn"]
@@ -6,16 +6,138 @@
 [ext_resource type="Texture2D" uid="uid://cuemrkgn6e26i" path="res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export3.png" id="2_a3f7q"]
 [ext_resource type="Texture2D" uid="uid://b0dwfsjh4xp03" path="res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export4.png" id="3_5yme4"]
 [ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="5_0v8uv"]
+[ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="7_0v8uv"]
+
+[sub_resource type="Shader" id="Shader_hstxw"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uqaqg"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("7_0v8uv")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="GDScript" id="GDScript_no5np"]
+script/source = "extends TextureButton
+var mat = material
+var focused = false
+func _ready():
+	self.pressed.connect(_handle_on_press)
+
+func _handle_on_press():
+	if Dialogic.current_timeline != null:
+		Dialogic.end_timeline(true)
+	GameManager.retry_level.emit()
+	
+func _on_mouse_entered():
+	if focused != true:
+		mat.set_shader_parameter(\"useHologram\", true)
+		scale *= 1.1
+		focused = true
+ 
+func _on_mouse_exited():
+	if focused == true:
+		mat.set_shader_parameter(\"useHologram\", false)
+		scale /= 1.1
+		focused = false
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_o0fsc"]
+font = ExtResource("5_0v8uv")
+font_size = 96
+font_color = Color(0.533333, 1, 0.105882, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_uqaqg"]
 font = ExtResource("5_0v8uv")
 font_size = 96
 font_color = Color(0.533333, 1, 0.105882, 1)
 
-[node name="ToLevelSelect" type="CanvasLayer" node_paths=PackedStringArray("level_select")]
+[node name="ToLevelSelect" type="CanvasLayer" node_paths=PackedStringArray("level_select", "retry")]
 layer = 2
 script = ExtResource("1_jxaos")
 level_select = NodePath("Button")
+retry = NodePath("Retry")
+
+[node name="Retry" type="TextureButton" parent="."]
+visible = false
+z_index = 2
+material = SubResource("ShaderMaterial_uqaqg")
+offset_left = 587.0
+offset_top = 538.491
+offset_right = 709.0
+offset_bottom = 569.491
+scale = Vector2(2.491, 2.491)
+focus_neighbor_right = NodePath("../Button")
+disabled = true
+texture_normal = ExtResource("2_a3f7q")
+texture_pressed = ExtResource("3_5yme4")
+script = SubResource("GDScript_no5np")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Retry"]
+layout_mode = 0
+offset_left = 29.6667
+offset_top = 4.33333
+offset_right = 380.666
+offset_bottom = 100.333
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="Retry/HBoxContainer"]
+layout_mode = 2
+text = "Retry"
+label_settings = SubResource("LabelSettings_o0fsc")
 
 [node name="Button" type="TextureButton" parent="."]
 visible = false
@@ -25,6 +147,7 @@ offset_top = 536.0
 offset_right = 985.0
 offset_bottom = 567.0
 scale = Vector2(2.49068, 2.49068)
+focus_neighbor_left = NodePath("../Retry")
 disabled = true
 texture_normal = ExtResource("2_a3f7q")
 texture_pressed = ExtResource("3_5yme4")
@@ -43,6 +166,10 @@ layout_mode = 2
 text = "To Level Select"
 label_settings = SubResource("LabelSettings_uqaqg")
 
+[connection signal="focus_entered" from="Retry" to="Retry" method="_on_mouse_entered"]
+[connection signal="focus_exited" from="Retry" to="Retry" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Retry" to="Retry" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Retry" to="Retry" method="_on_mouse_exited"]
 [connection signal="focus_entered" from="Button" to="Button" method="_on_mouse_entered"]
 [connection signal="focus_exited" from="Button" to="Button" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="Button" to="Button" method="_on_mouse_entered"]

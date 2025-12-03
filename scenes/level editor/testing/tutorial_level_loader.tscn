@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://bwjqpd1ibweqs"]
+[gd_scene load_steps=40 format=4 uid="uid://bwjqpd1ibweqs"]
 
 [ext_resource type="Script" uid="uid://cv1ardidub6eq" path="res://scenes/level editor/testing/tutorial_level_loader.gd" id="1_fah3i"]
 [ext_resource type="PackedScene" uid="uid://bjshmay3nbdaf" path="res://scenes/level editor/cave_background.tscn" id="2_hl4jw"]
@@ -18,13 +18,16 @@
 [ext_resource type="PackedScene" uid="uid://ckobqg36uilxm" path="res://scenes/Camera/game_camera.tscn" id="16_amvrk"]
 [ext_resource type="PackedScene" uid="uid://4qfhiuw7i8j" path="res://scenes/UI/to_level_select.tscn" id="18_427sq"]
 [ext_resource type="PackedScene" uid="uid://cx3g6mgf1m8q3" path="res://animations/Opening Cutscene/opening_scene.tscn" id="19_hl4jw"]
-[ext_resource type="Resource" uid="uid://siicvn1xm4v6" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
+[ext_resource type="Resource" path="res://assets/sprites/computer/Jump and Dash Tutorial.dtl" id="19_kgfpq"]
 [ext_resource type="PackedScene" uid="uid://cuvysegbb8cm5" path="res://scenes/dialogue/dialogue.tscn" id="19_qtett"]
-[ext_resource type="Resource" uid="uid://cpsba5nli8ebr" path="res://assets/sprites/computer/Drill.dtl" id="21_0nim3"]
-[ext_resource type="Resource" uid="uid://cmju81e8ygkfe" path="res://assets/sprites/computer/Drill Jump.dtl" id="22_uhvm6"]
+[ext_resource type="Resource" path="res://assets/sprites/computer/Drill.dtl" id="21_0nim3"]
+[ext_resource type="Resource" path="res://assets/sprites/computer/Drill Jump.dtl" id="22_uhvm6"]
 [ext_resource type="Resource" uid="uid://k3fc3ks2sjku" path="res://assets/sprites/computer/drone.dtl" id="23_n31eu"]
 [ext_resource type="Resource" uid="uid://dda1adlafvidt" path="res://assets/sprites/computer/gem.dtl" id="24_5vi2i"]
 [ext_resource type="Resource" uid="uid://dlip24clfxdqm" path="res://assets/sprites/computer/generator.dtl" id="25_dparq"]
+[ext_resource type="PackedScene" uid="uid://bviw4ijbjrcic" path="res://Tutorial/jump hint box.tscn" id="26_dparq"]
+[ext_resource type="PackedScene" uid="uid://c8tigxqoav5fe" path="res://Tutorial/super drill hint box.tscn" id="27_lkuwv"]
+[ext_resource type="PackedScene" uid="uid://b63vrxb3q1bpo" path="res://Tutorial/dash hint box.tscn" id="28_rsaal"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a25ho"]
 texture = ExtResource("8_5vi2i")
@@ -1931,15 +1934,18 @@ stream = SubResource("AudioStreamWAV_qtett")
 volume_db = -10.0
 bus = &"Sound Effects"
 
+[node name="JHintBox" parent="." instance=ExtResource("26_dparq")]
+position = Vector2(37, -60)
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamWAV_hl4jw")
 bus = &"Music"
 
-[node name="Label" type="Label" parent="."]
-offset_left = 61.0
-offset_top = -65.0
-offset_right = 102.0
-offset_bottom = -1.0
+[node name="SDHintBox" parent="." instance=ExtResource("27_lkuwv")]
+position = Vector2(1696, 67)
+
+[node name="DHintBox" parent="." instance=ExtResource("28_rsaal")]
+position = Vector2(123, -81)
 
 [connection signal="break_out_ended" from="OpeningScene" to="." method="_on_opening_scene_break_out_ended"]
 
