@@ -1865,6 +1865,12 @@ to_level_select = NodePath("ToLevelSelect")
 
 [node name="Hud" parent="." groups=["hud"] instance=ExtResource("5_0nim3")]
 
+[node name="Your Time Background" parent="Hud" index="3"]
+visible = false
+
+[node name="BestTime" parent="Hud/Your Time Background" index="1"]
+visible = false
+
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = ExtResource("6_uhvm6")
 
@@ -1883,8 +1889,7 @@ physics_tile_map = NodePath("../PhysicsTileMap")
 
 [node name="ObjectNode" type="Node2D" parent="."]
 
-[node name="CheckpointManager" parent="." node_paths=PackedStringArray("ghost", "game_camera") instance=ExtResource("14_1iwqk")]
-ghost = NodePath("")
+[node name="CheckpointManager" parent="." node_paths=PackedStringArray("game_camera") instance=ExtResource("14_1iwqk")]
 last_checkpoint_position = Vector2(204, 150)
 game_camera = NodePath("../GameCamera")
 
@@ -1898,7 +1903,7 @@ position = Vector2(48, -16)
 dialogue = ExtResource("19_kgfpq")
 
 [node name="Drill Dialogue" parent="." instance=ExtResource("19_qtett")]
-position = Vector2(320, 8)
+position = Vector2(320, -21)
 scale = Vector2(5.58, 0.25)
 dialogue = ExtResource("21_0nim3")
 
@@ -1931,3 +1936,5 @@ stream = SubResource("AudioStreamWAV_hl4jw")
 bus = &"Music"
 
 [connection signal="break_out_ended" from="OpeningScene" to="." method="_on_opening_scene_break_out_ended"]
+
+[editable path="Hud"]
