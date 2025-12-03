@@ -53,7 +53,7 @@ func _ready() -> void:
 	set_up_player_input_saver()
 	load_ghost_path()
 	load_logic(level_file_path)
-	
+	GameManager.retry_level.connect(_retry_level)
 	await get_tree().create_timer(0.1).timeout
 	$CheckpointManager._ready()
 
@@ -341,3 +341,6 @@ func load_level() -> void:
 
 func stop_music_playing():
 	music_player.playing = false
+	
+func _retry_level():
+	SceneManager.change_scene_extra_args("res://scenes/level editor/testing/test_custom_level_editor.tscn", [level_file_path])
