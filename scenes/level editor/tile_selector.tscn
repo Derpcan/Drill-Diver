@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=32 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Shader" uid="uid://0x4jckkmsvb0" path="res://scenes/UI/audio_settings/blur_shader.gdshader" id="2_8ogwd"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://yglr46luj5sr" path="res://assets/sprites/Spikeball/Spike Ball.png" id="13_7o6a2"]
 [ext_resource type="Texture2D" uid="uid://dsdoa1foi5cma" path="res://assets/lab-game-tileset-pixel-art/layered_lab_background.png" id="13_iibak"]
 [ext_resource type="Texture2D" uid="uid://wr1myh16iilm" path="res://assets/cave/layered_cave_background.png" id="14_7o6a2"]
+[ext_resource type="Texture2D" uid="uid://xe4n818le3p8" path="res://addons/controller_icons/assets/key/e.png" id="17_umg3e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_umg3e"]
 shader = ExtResource("2_8ogwd")
@@ -244,26 +245,26 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OpenLabel:position")
+tracks/0/path = NodePath("OpenBox:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(508, 606)]
+"values": [Vector2(499, 589)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CloseLabel:position")
+tracks/1/path = NodePath("CloseBox:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(499, 3)]
 }
 
 [sub_resource type="Animation" id="Animation_s2r5n"]
@@ -272,26 +273,26 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OpenLabel:position")
+tracks/0/path = NodePath("OpenBox:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 606), Vector2(0, 596), Vector2(0, 606)]
+"values": [Vector2(499, 589), Vector2(499, 579), Vector2(499, 589)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CloseLabel:position")
-tracks/1/interp = 2
+tracks/1/path = NodePath("CloseBox:position")
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 10), Vector2(0, 0)]
+"values": [Vector2(499, -2), Vector2(499, 7), Vector2(499, -2)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n7spv"]
@@ -305,7 +306,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OpenLabel:modulate")
+tracks/0/path = NodePath("OpenBox:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -317,7 +318,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CloseLabel:modulate")
+tracks/1/path = NodePath("CloseBox:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -333,7 +334,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OpenLabel:modulate")
+tracks/0/path = NodePath("OpenBox:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -349,14 +350,14 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CloseLabel:modulate")
+tracks/0/path = NodePath("CloseBox:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.991741)]
 }
 
 [sub_resource type="Animation" id="Animation_iibak"]
@@ -365,8 +366,8 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OpenLabel:modulate")
-tracks/0/interp = 1
+tracks/0/path = NodePath("OpenBox:modulate")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
@@ -381,7 +382,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CloseLabel:modulate")
+tracks/0/path = NodePath("CloseBox:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -731,23 +732,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_qv4l2")
 }
 
-[node name="OpenLabel" type="Label" parent="."]
-layout_mode = 1
-offset_left = 508.0
-offset_top = 606.0
-offset_right = 1660.0
-offset_bottom = 629.0
-text = "Press \"E\" to open!"
-horizontal_alignment = 1
-
-[node name="CloseLabel" type="Label" parent="."]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-offset_right = 1152.0
-offset_bottom = 23.0
-text = "Press \"E\" to open!"
-horizontal_alignment = 1
-
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_n7spv")
@@ -775,6 +759,65 @@ offset_top = 616.0
 offset_right = 409.0
 offset_bottom = 639.0
 text = "Press \"X\" to toggle Delete Mode"
+
+[node name="OpenBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -662.0
+offset_right = 77.0
+offset_bottom = -622.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="OpenLabel" type="Label" parent="OpenBox"]
+layout_mode = 2
+text = "Press"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="OpenBox"]
+layout_mode = 2
+texture = ExtResource("17_umg3e")
+expand_mode = 2
+
+[node name="OpenLabel2" type="Label" parent="OpenBox"]
+layout_mode = 2
+text = "to open!"
+horizontal_alignment = 1
+
+[node name="CloseBox" type="HBoxContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -1248.0
+offset_right = 77.0
+offset_bottom = -1208.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CloseLabel" type="Label" parent="CloseBox"]
+layout_mode = 2
+text = "Press"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CloseBox"]
+layout_mode = 2
+texture = ExtResource("17_umg3e")
+expand_mode = 2
+
+[node name="CloseLabel2" type="Label" parent="CloseBox"]
+layout_mode = 2
+text = "to close!"
+horizontal_alignment = 1
 
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Gem"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine"]

@@ -1463,6 +1463,8 @@ func _load_binary(path_name:String = "") -> void:
 	var object_string_tile_pos: Dictionary = save_data.get("ObjectStringTilePos", {})
 	tile_pos_to_bonus_parameters = save_data.get("TilePosBonusParameters", {})
 	
+	selected_object = null
+	
 	# Batch tile loading
 	if decorative_tilemap_data:
 		for id:int in decorative_source_id_to_tile_name.keys():#range(len(decorative_tilemap_data)):
@@ -1486,7 +1488,9 @@ func _load_binary(path_name:String = "") -> void:
 						selected_tile = decorative_source_id_to_tile_name[id]
 						#set_tile(physics_tilemap, pos)
 						set_tile(decorative_tilemap, pos,)
-
+	
+	
+	
 	# Load objects
 	for object_key in object_string_tile_pos.keys():
 		for pos: Vector2i in object_string_tile_pos[object_key]:
@@ -1570,7 +1574,6 @@ func _load_logic(path_name:String = "") -> void:
 				object_string_tile_pos = JSON.to_native(json["ObjectStringTilePos"])
 			
 			
-			
 			#print("Decorative_tilemap_data: ", decorative_tilemap_data)
 			#print("TilePosBonusParameters: ", tile_pos_to_bonus_params)
 			#print("ObjectStringTilePos: ", object_string_tile_pos)
@@ -1612,9 +1615,10 @@ func _load_logic(path_name:String = "") -> void:
 			# Load the bonus paramaters from the JSON file
 			tile_pos_to_bonus_parameters = tile_pos_to_bonus_params
 			
+			
 			# Load Objects
 			for object_key in object_string_tile_pos.keys():
-				if object_key not in object_string_name_to_tile_pos:
+				if object_key not in object_string_tile_pos:
 					continue
 				for pos:Vector2i in object_string_tile_pos[object_key]:
 					selected_object = object_dictionary[object_key]

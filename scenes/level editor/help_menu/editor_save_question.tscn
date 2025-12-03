@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bm0ha7728etdk" path="res://scenes/level editor/help_menu/editor_save_question.gd" id="1_cqmwx"]
 
-[node name="EditorSaveQuestion" type="Control" node_paths=PackedStringArray("list_of_keybinds")]
+[node name="EditorSaveQuestion" type="Control" node_paths=PackedStringArray("list_of_keybinds", "list_of_keybinds2", "keybind_node")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cqmwx")
 list_of_keybinds = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/HBoxContainer3/List of Keybinds")
+list_of_keybinds2 = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/MarginContainer/VBoxContainer/HBoxContainer3/List of Keybinds")
+keybind_node = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -85,6 +87,33 @@ layout_mode = 2
 alignment = 1
 
 [node name="List of Keybinds" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "When you make mistakes, you can also undo your previous action!"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="List of Keybinds" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 horizontal_alignment = 1
 

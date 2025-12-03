@@ -41,9 +41,14 @@ func _ready() -> void:
 	hide_test_level_button.connect("button_down", _hide_test_level_button)
 	hide_help_button.connect("button_down", _hide_help_button)
 	
-	
-	$OpenLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to open!"
-	$CloseLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to close!"
+	var text
+	for action in InputMap.action_get_events("editor_quick_toggle_tile_selector"):
+		if action is InputEventKey:
+			text = ControllerIcons.parse_event(action)
+	$OpenBox/TextureRect2.texture = text
+	$CloseBox/TextureRect2.texture = text
+	#$OpenLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to open!"
+	#$CloseLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to close!"
 	$Label2.text = "Press \"" + InputMap.action_get_events("editor_toggle_delete_tile_mode")[0].as_text() + "\" to toggle Delete Mode!"
 
 
@@ -82,8 +87,8 @@ var times_opened_or_closed:int = 0:
 		times_opened_or_closed = new_value
 		
 		if times_opened_or_closed > 5:
-			$OpenLabel.hide()
-			$CloseLabel.hide()
+			$OpenBox.hide()
+			$CloseBox.hide()
 
 
 
