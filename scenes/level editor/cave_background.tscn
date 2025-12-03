@@ -12,7 +12,6 @@ scale = Vector2(4.5, 4.5)
 scroll_scale = Vector2(0.3, 0.1)
 scroll_offset = Vector2(0, 244)
 repeat_size = Vector2(320, 184)
-repeat_times = 200
 follow_viewport = false
 
 [node name="Sprite2D3" type="Sprite2D" parent="Parallax2D3"]

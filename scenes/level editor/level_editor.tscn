@@ -1991,6 +1991,7 @@ script = ExtResource("1_s4d5t")
 [node name="LabBackground" parent="." instance=ExtResource("2_e1y88")]
 
 [node name="CaveBackground" parent="." instance=ExtResource("3_vqyq1")]
+scroll_ignore_camera_zoom = false
 
 [node name="LoadOrSave" parent="." instance=ExtResource("5_dx1w1")]
 

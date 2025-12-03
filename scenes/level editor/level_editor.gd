@@ -1174,6 +1174,8 @@ func show_tile_place_preview(tile_position:Vector2) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if testing_mode == true: # If in testing mode
+		if player and player.global_position.y >= 1000:
+			player.health_component.take_damage(10000)
 		return
 	
 	if prevent_tile_placement == true:
