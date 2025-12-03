@@ -39,7 +39,7 @@ func change_hidden_visualize(disabled:bool) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	if in_editor and not prevent_visualize_range:
+	if in_editor and not prevent_visualize_range and max_speed > 0:
 		draw_arc(Vector2(0,0), detection_range, 0, TAU, 32, Color(1,1,1, 0.4))
 
 
