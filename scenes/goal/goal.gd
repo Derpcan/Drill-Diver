@@ -47,4 +47,5 @@ func _on_area_2d_area_entered(_area):
 		ranking._reveal_time()
 		score_shown.emit()
 		new_time_got.emit(GameManager.get_current_time())
+		GameManager.set_meter.emit(0)
 	
