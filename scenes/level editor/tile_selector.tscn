@@ -204,7 +204,7 @@ tracks/3/path = NodePath(".:is_open")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.233333),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -400,7 +400,7 @@ _data = {
 &"fade_out_close": SubResource("Animation_8ogwd")
 }
 
-[node name="TileSelector" type="Control" node_paths=PackedStringArray("open_close_button", "anim_player")]
+[node name="TileSelector" type="Control" node_paths=PackedStringArray("open_close_button", "anim_player", "visual_ranges_button", "visual_paths_button", "hide_help_button", "hide_test_level_button")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
@@ -409,6 +409,10 @@ script = ExtResource("1_gmssj")
 open_close_button = NodePath("ColorRect/OpenCloseButton")
 anim_player = NodePath("AnimationPlayer")
 is_open = false
+visual_ranges_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/VisualRanges")
+visual_paths_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/VisualPaths")
+hide_help_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/HideHelpButton")
+hide_test_level_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/HideTestLevel")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -460,11 +464,26 @@ theme_override_constants/separation = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="VisualRanges" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HideTestLevel" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Toggle Test Level Button Visibility"
+
+[node name="HideHelpButton" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Toggle Help Button Visibility"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VisualRanges" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Toggle Visual Ranges"
 
-[node name="VisualPaths" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VisualPaths" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Toggle Visual Paths"
 

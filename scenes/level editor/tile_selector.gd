@@ -8,7 +8,6 @@ class_name TileSelector
 
 
 
-
 @export var is_open:bool = true
 
 signal tile_selector_state_changed(is_open:bool)
@@ -18,6 +17,14 @@ signal tile_selector_new_tile_selected(new_tile_string:String, bonus_params:Dict
 signal toggle_visual_ranges()
 signal toggle_visual_paths()
 
+signal toggle_visible_test_button()
+signal toggle_visible_help_button()
+
+@export var visual_ranges_button:Button
+@export var visual_paths_button:Button
+
+@export var hide_help_button:Button
+@export var hide_test_level_button:Button
 
 func _ready() -> void:
 	open_close_button.pressed.connect(open_close_button_pressed)
@@ -28,13 +35,23 @@ func _ready() -> void:
 	
 	$AnimationPlayer2.play("hover")
 	
-	$ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VisualRanges.connect("button_down", visual_ranges_pressed)
-	$ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VisualPaths.connect("button_down", visual_paths_pressed)
+	visual_ranges_button.connect("button_down", visual_ranges_pressed)
+	visual_paths_button.connect("button_down", visual_paths_pressed)
+	
+	hide_test_level_button.connect("button_down", _hide_test_level_button)
+	hide_help_button.connect("button_down", _hide_help_button)
+	
 	
 	$OpenLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to open!"
 	$CloseLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to close!"
 	$Label2.text = "Press \"" + InputMap.action_get_events("editor_toggle_delete_tile_mode")[0].as_text() + "\" to toggle Delete Mode!"
 
+
+func _hide_test_level_button() -> void:
+	toggle_visible_test_button.emit()
+
+func _hide_help_button() -> void:
+	toggle_visible_help_button.emit()
 
 func visual_ranges_pressed() -> void:
 	toggle_visual_ranges.emit()

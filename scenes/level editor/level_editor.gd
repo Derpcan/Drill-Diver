@@ -1614,6 +1614,8 @@ func _load_logic(path_name:String = "") -> void:
 			
 			# Load Objects
 			for object_key in object_string_tile_pos.keys():
+				if object_key not in object_string_name_to_tile_pos:
+					continue
 				for pos:Vector2i in object_string_tile_pos[object_key]:
 					selected_object = object_dictionary[object_key]
 					object_string = object_key
