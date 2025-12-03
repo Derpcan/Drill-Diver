@@ -36,6 +36,7 @@ func _relay_time_got_to_player(new_value:float) -> void:
 
 
 func _ready() -> void:
+	GameManager.set_meter.emit(0)
 	$"Lab Ambience".play()
 	
 	set_up_player_input_saver()
@@ -128,6 +129,14 @@ var decorative_source_id_to_tile_name:Dictionary = {
 	1:"SuperDrillable",
 	2:"Dirt",
 }
+
+
+
+
+
+
+
+
 
 func load_logic(path_name:String="") -> void:
 	

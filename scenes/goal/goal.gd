@@ -29,7 +29,7 @@ func _on_area_2d_area_entered(_area):
 			ranking._set_S_rank_time(Sranktime)
 		
 		GameManager.stop_timer.emit()
-		GameManager.set_meter.emit(0)
+		
 		stop_music.emit()
 		
 		ranking._set_complete_time(GameManager.get_current_time())

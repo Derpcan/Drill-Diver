@@ -176,7 +176,7 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 					if object_string != "Goal" and object_string != "Spawnpoint":
 						undo_stack.push(Vector2i(point[0], point[1]), false)
 					set_tile(decorative_tilemap, Vector2i(point[0], point[1]))
-					
+					BetterTerrain.update_terrain_cell(decorative_tilemap, Vector2i(point[0], point[1]))
 					
 					
 					placed_tiles.append(Vector2i(point[0], point[1]))
@@ -185,7 +185,7 @@ var tilemap_mouse_position:Vector2 = Vector2.ZERO:
 				elif is_deleting == true:
 					#delete_tile(physics_tilemap, Vector2i(point[0], point[1]))
 					delete_tile(decorative_tilemap, Vector2i(point[0], point[1]))
-					
+					BetterTerrain.update_terrain_cell(decorative_tilemap, Vector2i(point[0], point[1]))
 					if viewer:
 						viewer.queue_free()
 						viewer = null
@@ -479,8 +479,8 @@ func _create_new_level_logic(nam:String) -> void:
 	
 	
 	# Open the file for writing
-	var file:FileAccess = FileAccess.open(nam+".lvl", FileAccess.WRITE)
-	file.close()
+	#var file:FileAccess = FileAccess.open(nam+".lvl", FileAccess.WRITE)
+	#file.close()
 	
 	prevent_tile_placement = false
 	loading_level = false
@@ -703,7 +703,7 @@ static func static_delete_tile(
 	
 	# Update the terrain
 	#if tilemap_type == "Decorative":
-	BetterTerrain.update_terrain_cell(tilemap, tile_position,)
+	#BetterTerrain.update_terrain_cell(tilemap, tile_position,)
 	
 	
 	# Check to see if an object exists at the tile position
@@ -1072,8 +1072,9 @@ static func static_set_tile(
 		
 		
 		# Update the terrain
-		if tilemap_type == "Decorative":
-			BetterTerrain.update_terrain_cell(tilemap, tile_position,)
+		#if tilemap_type == "Decorative":
+			#BetterTerrain.update_terrain_cell(tilemap, tile_position,)
+		
 		
 		ignore_tiles[tile_position] = true
 	else:
@@ -1335,6 +1336,9 @@ func save_beat_level() -> void:
 
 func save_logic() -> void:
 	
+	_save_binary()
+	return
+	
 	# Create the directories needed to save the file
 	DirAccess.make_dir_recursive_absolute(folder_path)
 	
@@ -1393,6 +1397,117 @@ func save_logic() -> void:
 	save_animation_player.play("save_fade_out")
 
 
+
+func _save_binary() -> void:
+	DirAccess.make_dir_recursive_absolute(folder_path)
+	#save_path = save_path.split(".")[0] + ".binlvl"
+	var file := FileAccess.open(save_path, FileAccess.WRITE)
+
+	# Gather data inside one dictionary
+	var save_data := {
+		"BestTimeCompleted": best_time_completed,
+		"BackgroundType": background_type,
+		"MusicType": music_type,
+		"DecorativeTilemap": {
+			6: decorative_tilemap.get_used_cells_by_id(6),
+			5: decorative_tilemap.get_used_cells_by_id(5),
+			12: decorative_tilemap.get_used_cells_by_id(12),
+			11: decorative_tilemap.get_used_cells_by_id(11),
+		},
+		"ObjectStringTilePos": object_string_name_to_tile_pos,
+		"TilePosBonusParameters": tile_pos_to_bonus_parameters,
+	}
+
+	if testing_mode:
+		save_data["DecorativeTilemap"] = testing_save_for_level_complete
+
+	# Just write the whole dictionary in binary
+	file.store_var(save_data)
+
+	file.close()
+
+	# Play animation if needed
+	if save_animation_player.is_playing():
+		save_animation_player.stop()
+	save_animation_player.play("save_fade_out")
+
+
+func _load_binary(path_name:String = "") -> void:
+	save_path = path_name
+	
+	if load_or_save_ui:
+		load_or_save_ui.queue_free()
+		load_or_save_ui = null
+	
+	if not FileAccess.file_exists(save_path):
+		return
+	
+	var file := FileAccess.open(save_path, FileAccess.READ)
+	
+	if file.get_length() <= 0:
+		file.close()
+		return
+	
+	# Read entire save file as dictionary
+	var save_data: Dictionary = file.get_var()
+	file.close()
+	
+	# Extract values safely
+	best_time_completed = save_data.get("BestTimeCompleted", best_time_completed)
+	background_type = save_data.get("BackgroundType", "")
+	music_type = save_data.get("MusicType", "")
+	
+	var decorative_tilemap_data: Dictionary = save_data.get("DecorativeTilemap", {})
+	var object_string_tile_pos: Dictionary = save_data.get("ObjectStringTilePos", {})
+	tile_pos_to_bonus_parameters = save_data.get("TilePosBonusParameters", {})
+	
+	# Batch tile loading
+	if decorative_tilemap_data:
+		for id:int in decorative_source_id_to_tile_name.keys():#range(len(decorative_tilemap_data)):
+			if decorative_tilemap_data.has(id):
+				if id == 6:
+					decorative_tilemap.set_cells_terrain_connect(decorative_tilemap_data[id], 0, 0)
+				elif id == 5:
+					#decorative_tilemap.set_cells_terrain_connect(decorative_tilemap_data[id], 0, 1)
+					for pos:Vector2i in decorative_tilemap_data[id]:
+						selected_tile = decorative_source_id_to_tile_name[id]
+						#set_tile(physics_tilemap, pos)
+						set_tile(decorative_tilemap, pos,)
+				elif id == 12:
+					#decorative_tilemap.set_cells_terrain_connect(decorative_tilemap_data[id], 0, 2)
+					for pos:Vector2i in decorative_tilemap_data[id]:
+						selected_tile = decorative_source_id_to_tile_name[id]
+						#set_tile(physics_tilemap, pos)
+						set_tile(decorative_tilemap, pos,)
+				elif id == 11:
+					for pos:Vector2i in decorative_tilemap_data[id]:
+						selected_tile = decorative_source_id_to_tile_name[id]
+						#set_tile(physics_tilemap, pos)
+						set_tile(decorative_tilemap, pos,)
+
+	# Load objects
+	for object_key in object_string_tile_pos.keys():
+		for pos: Vector2i in object_string_tile_pos[object_key]:
+			selected_object = object_dictionary[object_key]
+			object_string = object_key
+
+			object_bonus_parameters = tile_pos_to_bonus_parameters.get(pos, {})
+			set_tile(physics_tilemap, pos)
+
+			if object_string == "Checkpoint":
+				tile_pos_to_object_dictionary[pos]["object"].add_to_group("checkpoint")
+
+	selected_object = null
+	object_string = ""
+
+	if testing_mode == false:
+		level_editor_hud.call_deferred("show")
+
+	prevent_tile_placement = false
+	BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells(), true)
+
+	loading_level = false
+	call_deferred("emit_signal", "finished_loading")
 
 
 func _load_logic(path_name:String = "") -> void:
@@ -1461,14 +1576,34 @@ func _load_logic(path_name:String = "") -> void:
 			selected_object = null
 			object_string = ""
 			
-			
+		
 			if decorative_tilemap_data:
 				for id:int in decorative_source_id_to_tile_name.keys():#range(len(decorative_tilemap_data)):
 					if decorative_tilemap_data.has(id):
-						for pos:Vector2i in decorative_tilemap_data[id]:
-							selected_tile = decorative_source_id_to_tile_name[id]
-							#set_tile(physics_tilemap, pos)
-							set_tile(decorative_tilemap, pos,)
+						if id == 6:
+							decorative_tilemap.set_cells_terrain_connect(decorative_tilemap_data[id], 0, 0)
+						elif id == 5:
+							#decorative_tilemap.set_cells_terrain_connect(decorative_tilemap_data[id], 0, 1)
+							for pos:Vector2i in decorative_tilemap_data[id]:
+								selected_tile = decorative_source_id_to_tile_name[id]
+								#set_tile(physics_tilemap, pos)
+								set_tile(decorative_tilemap, pos,)
+						elif id == 12:
+							#decorative_tilemap.set_cells_terrain_connect(decorative_tilemap_data[id], 0, 2)
+							for pos:Vector2i in decorative_tilemap_data[id]:
+								selected_tile = decorative_source_id_to_tile_name[id]
+								#set_tile(physics_tilemap, pos)
+								set_tile(decorative_tilemap, pos,)
+						elif id == 11:
+							for pos:Vector2i in decorative_tilemap_data[id]:
+								selected_tile = decorative_source_id_to_tile_name[id]
+								#set_tile(physics_tilemap, pos)
+								set_tile(decorative_tilemap, pos,)
+						#for pos:Vector2i in decorative_tilemap_data[id]:
+							#selected_tile = decorative_source_id_to_tile_name[id]
+							##set_tile(physics_tilemap, pos)
+							#set_tile(decorative_tilemap, pos,)
+							
 			
 			selected_tile = "Ground"
 			
@@ -1513,6 +1648,7 @@ func _load_logic(path_name:String = "") -> void:
 	
 	#decorative_tilemap.changed.connect(_handle_level_changed)
 	loading_level = false
+	BetterTerrain.update_terrain_cells(decorative_tilemap, decorative_tilemap.get_used_cells(), true)
 	call_deferred("emit_signal", "finished_loading")
 
 
@@ -1526,41 +1662,24 @@ func _hide_loading_screen() -> void:
 	pass
 
 
+func is_json_file(path: String) -> bool:
+	var text := FileAccess.get_file_as_string(path)
+	var json := JSON.new()
+	var result := json.parse(text)
+	return result == OK
+
+
 var loading_thread:Thread =  null
 # Loading Level
 func load_logic(path_name:String="") -> void:
-	
-	#$LoadingScreen._start_loading()
-	
-	_load_logic(path_name)
-	
-	#_load_logic_async(path_name)
-	#if loading_thread != null and not loading_thread.is_alive():
-		#if loading_thread.is_started():
-			#loading_thread.wait_to_finish()
-		#loading_thread = Thread.new()
+	if is_json_file(path_name):
+		_load_logic(path_name)
+	else:
+		_load_binary(path_name)
+	#if path_name.ends_with("binlvl"):
 		#
-		#loading_thread.start(
-			#func() -> void:
-				#_load_logic_async(path_name)
-		#)
-	#if loading_thread == null:
-		#loading_thread = Thread.new()
-		#loading_thread.start(
-			#func() -> void:
-				#_load_logic_async(path_name)
-		#)
-	#elif loading_thread != null:
-		#loading_thread.wait_to_finish()
-		#loading_thread = Thread.new()
-		#
-		#loading_thread.start(
-			#func() -> void:
-				#_load_logic_async(path_name)
-		#)
-	
-	#thread.start(_load_logic_async, [path_name])
-	
+	#else:
+		
 	
 
 
@@ -1582,23 +1701,52 @@ func _unhandled_input(event: InputEvent) -> void:
 		if Input.is_action_pressed("editor_delete_tile"):
 			is_deleting = not is_deleting
 	
-	# Camera Zooming In and Out
-	if Input.is_action_pressed("editor_camera_scroll_out"):
-		var temp_zoom = camera.zoom - Vector2(0.5,0.5)
-		
-		camera.zoom = temp_zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
-	if Input.is_action_pressed("editor_camera_scroll_in"):
-		camera.zoom += Vector2(0.5,0.5)
-		camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
-	if Input.is_action_just_pressed("editor_camera_scroll_reset"):
-		camera.zoom = Vector2(1,1)
-	
 	
 	place_tile_input_logic(event)
 	
 	# When pause is pressed
 	if Input.is_action_just_pressed("game_escape"):
 		place_held_down = false
+	
+	
+	# Camera Zooming In and Out
+	if Input.is_action_just_pressed("editor_camera_scroll_reset"):
+		camera.zoom = Vector2.ONE
+	
+	
+	
+	var zoom_step := 0.1
+	var change := Vector2.ZERO
+	
+	if Input.is_action_just_pressed("editor_camera_scroll_out"):
+		change = Vector2(-zoom_step, -zoom_step)
+	elif Input.is_action_just_pressed("editor_camera_scroll_in"):
+		change = Vector2(zoom_step, zoom_step)
+	else:
+		return
+	
+	var before = camera.get_global_mouse_position()
+	
+	camera.zoom = (camera.zoom + change).clamp(Vector2(0.4, 0.4), Vector2(5, 5))
+	
+	var after = camera.get_global_mouse_position()
+	camera.global_position += (before - after)
+	
+
+
+	
+	#if Input.is_action_pressed("editor_camera_scroll_out"):
+		#var temp_zoom = camera.zoom - Vector2(0.2,0.2)
+		#
+		#camera.zoom = temp_zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
+	#if Input.is_action_pressed("editor_camera_scroll_in"):
+		#camera.zoom += Vector2(0.2,0.2)
+		#camera.zoom = camera.zoom.clamp(Vector2(0.5, 0.5), Vector2(5,5))
+	#if Input.is_action_just_pressed("editor_camera_scroll_reset"):
+		#camera.zoom = Vector2(1,1)
+	
+	
+
 
 
 

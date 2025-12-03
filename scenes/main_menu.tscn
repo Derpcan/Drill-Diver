@@ -25,6 +25,9 @@ func _ready() -> void:
 	$AnimationPlayer.play(\"Start\")
 	$Music.play()
 	
+	# Create the directories needed to save the file
+	DirAccess.make_dir_recursive_absolute(\"user://level_editor/levels\")
+	
 	#$TestDataPath.text = \"Test Data is found in:\\n\" + OS.get_user_data_dir() + \"/test_data/\"
 	#$CopyPath.pressed.connect(_copy_path_to_clipboard)
 	

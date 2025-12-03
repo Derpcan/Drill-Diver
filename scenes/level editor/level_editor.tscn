@@ -2031,7 +2031,7 @@ tile_set = SubResource("TileSet_cwu4w")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 limit_top = -1272
-limit_bottom = 332
+limit_bottom = 496
 limit_smoothed = true
 
 [node name="LoadDialog" type="FileDialog" parent="."]
