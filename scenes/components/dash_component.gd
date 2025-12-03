@@ -59,6 +59,10 @@ func _calculate_dash(direction:Vector2) -> void:
 		_enable_hitbox() 
 		can_dash = false
 		
+		if dash_hitbox:
+			dash_hitbox.rotation = dash_hitbox.position.direction_to(direction).angle()
+		
+		
 
 func _emit_dash_end_signal() -> void:
 	emit_signal("dash_end")

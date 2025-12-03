@@ -113,6 +113,7 @@ func _camera_returned_restart() -> void:
 	player.global_position = last_checkpoint_position
 	GameManager.set_meter.emit(0)
 	game_camera.global_position = player.global_position
+	player.animated_sprite.rotation = 0
 	
 	# Tween the modulation for the player to show up overtime
 	var tween:Tween = create_tween()
