@@ -45,6 +45,7 @@ func load_ghost_path() -> void:
 
 func _ready() -> void:
 	GameManager.set_meter.emit(0)
+	GameManager.retry_level.connect(_retry_level)
 	ghost_file_name = _slice_level_file_path_to_name(level_file_path)
 	set_up_folder_directory(ghost_folder_path)
 	
@@ -58,6 +59,10 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(0.1).timeout
 	$CheckpointManager._ready()
+
+
+func _retry_level():
+	SceneManager.change_scene_extra_args("res://scenes/level editor/testing/test_custom_level_editor.tscn", [level_file_path])
 
 
 func set_up_player_input_saver() -> void:
