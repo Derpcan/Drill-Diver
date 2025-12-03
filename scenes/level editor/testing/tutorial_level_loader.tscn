@@ -1935,6 +1935,12 @@ bus = &"Sound Effects"
 stream = SubResource("AudioStreamWAV_hl4jw")
 bus = &"Music"
 
+[node name="Label" type="Label" parent="."]
+offset_left = 61.0
+offset_top = -65.0
+offset_right = 102.0
+offset_bottom = -1.0
+
 [connection signal="break_out_ended" from="OpeningScene" to="." method="_on_opening_scene_break_out_ended"]
 
 [editable path="Hud"]

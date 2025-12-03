@@ -11,6 +11,7 @@ extends Node
 # Game Logic
 signal start_timer
 signal stop_timer
+signal retry_level
 
 signal fill_meter(amount: int)
 signal deplete_meter(amount: int)

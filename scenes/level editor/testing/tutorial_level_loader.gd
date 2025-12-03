@@ -40,7 +40,7 @@ func _ready() -> void:
 	$"Lab Ambience".play()
 	
 	set_up_player_input_saver()
-
+	GameManager.retry_level.connect(_retry_level)
 	load_logic(level_file_path)
 	await get_tree().create_timer(0.1).timeout
 	$CheckpointManager._ready()
@@ -285,3 +285,6 @@ func load_level() -> void:
 
 func stop_music_playing():
 	$OpeningScene/Music.playing = false
+	
+func _retry_level():
+	SceneManager.change_scene("res://scenes/level editor/testing/tutorial_level_loader.tscn")
