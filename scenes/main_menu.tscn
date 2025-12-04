@@ -480,7 +480,7 @@ scale = Vector2(0.219, 0.185)
 
 [node name="Label" type="Label" parent="Control/Level Editor/HBoxContainer"]
 layout_mode = 2
-text = "Level Editior"
+text = "Level Editor"
 label_settings = SubResource("LabelSettings_8egab")
 
 [node name="Options" type="TextureButton" parent="Control"]
