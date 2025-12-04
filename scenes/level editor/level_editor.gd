@@ -349,10 +349,12 @@ func _ready() -> void:
 	
 	load_or_save_ui.create_new_level.connect(_create_new_level_dialog)
 	load_or_save_ui.load_level.connect(_load_level_logic)
+	load_or_save_ui.load_import_level.connect(load_logic)
 	
 	
 	load_file_dialog.file_selected.connect(load_logic)
 	save_file_dialog.file_selected.connect(_create_new_level_logic)
+	
 	
 	$LevelEditorHud/TestLevelButton.pressed.connect(test_level)
 	$TestingHud/StopTestingButton.pressed.connect(_stop_testing)

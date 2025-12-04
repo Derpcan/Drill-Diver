@@ -6,10 +6,14 @@ signal load_level()
 
 signal create_new_level()
 
+signal load_import_level(new_path:String)
+
 @export var load_button:TextureButton
 @export var create_button:TextureButton
 @export var back_button:TextureButton
 @export var import_button:TextureButton
+
+var import_dialog:ImportCustomLevel
 
 func _ready() -> void:
 	back_button.grab_focus()
@@ -31,4 +35,11 @@ func _emit_create_new_level_signal() -> void:
 	create_new_level.emit()
 
 func _import_level() -> void:
-	add_child(preload("res://scenes/UI/import_levels/import_custom_level.tscn").instantiate())
+	if import_dialog:
+		import_dialog.queue_free()
+	import_dialog = preload("res://scenes/UI/import_levels/import_custom_level.tscn").instantiate()
+	import_dialog.file_chosen.connect(_signal_load_import)
+	add_child(import_dialog)
+
+func _signal_load_import(file_path:String) -> void:
+	load_import_level.emit(file_path)
