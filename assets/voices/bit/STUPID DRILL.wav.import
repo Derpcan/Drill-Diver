@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://btov6400bu1yp"
+path="res://.godot/imported/STUPID DRILL.wav-5722b9fe913dfa9e250daf8a4e2ff774.sample"
+
+[deps]
+
+source_file="res://assets/voices/bit/STUPID DRILL.wav"
+dest_files=["res://.godot/imported/STUPID DRILL.wav-5722b9fe913dfa9e250daf8a4e2ff774.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

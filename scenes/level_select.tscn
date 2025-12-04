@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://vofyhq2pi6dc"]
+
+[ext_resource type="Script" uid="uid://cpynp5hce3wao" path="res://scripts/UI/menus/test_level_button.gd" id="1_3shnc"]
+[ext_resource type="Script" uid="uid://bif3lw721as3v" path="res://scripts/UI/menus/escape_level_select_button.gd" id="2_p0wlc"]
+[ext_resource type="PackedScene" uid="uid://bjsuhmk5kibpv" path="res://scenes/level editor/custom_level_button.tscn" id="3_2epne"]
+[ext_resource type="Script" uid="uid://dwvdxgukv2pia" path="res://scenes/level editor/Tutorial_Level_Button.gd" id="4_rif6e"]
+[ext_resource type="Script" uid="uid://cpi22idb7n3j4" path="res://scenes/UI/level_select/level1_button.gd" id="5_chg43"]
+
+[node name="LevelSelect" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 33.0
+offset_top = 33.0
+offset_right = 73.0
+offset_bottom = 56.0
+text = "Level Select"
+
+[node name="TestLevelButton" type="Button" parent="."]
+offset_left = 442.0
+offset_top = 407.0
+offset_right = 541.0
+offset_bottom = 438.0
+text = "Test Level"
+script = ExtResource("1_3shnc")
+
+[node name="BackButton" type="Button" parent="."]
+offset_left = 577.0
+offset_top = 407.0
+offset_right = 676.0
+offset_bottom = 438.0
+text = "Back"
+script = ExtResource("2_p0wlc")
+
+[node name="Tutorial Button" parent="." instance=ExtResource("3_2epne")]
+custom_minimum_size = Vector2(20, 20)
+offset_left = 733.0
+offset_top = 565.0
+offset_right = 962.0
+offset_bottom = 596.0
+text = "Play Tutorial"
+script = ExtResource("4_rif6e")
+
+[node name="Level1" parent="." instance=ExtResource("3_2epne")]
+custom_minimum_size = Vector2(20, 20)
+offset_left = 709.0
+offset_top = 409.0
+offset_right = 938.0
+offset_bottom = 440.0
+text = "Play Level 1"
+script = ExtResource("5_chg43")
+
+[node name="CustomLevel Button2" parent="." instance=ExtResource("3_2epne")]
+custom_minimum_size = Vector2(20, 20)
+offset_left = 447.0
+offset_top = 565.0
+offset_right = 676.0
+offset_bottom = 596.0

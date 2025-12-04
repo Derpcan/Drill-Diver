@@ -1,0 +1,951 @@
+[gd_scene load_steps=35 format=3 uid="uid://kwdjeqxdj2v"]
+
+[ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
+[ext_resource type="Shader" uid="uid://0x4jckkmsvb0" path="res://scenes/UI/audio_settings/blur_shader.gdshader" id="2_8ogwd"]
+[ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
+[ext_resource type="PackedScene" uid="uid://cso12yd5vwp87" path="res://scenes/level editor/tile_selector_button.tscn" id="3_igrm3"]
+[ext_resource type="PackedScene" uid="uid://dfppbixslmyep" path="res://scenes/level editor/bonus_parameters/custom_line_edit.tscn" id="3_shrla"]
+[ext_resource type="Texture2D" uid="uid://cu2183edopvth" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/Diamond.png" id="4_1bmts"]
+[ext_resource type="Texture2D" uid="uid://dsjcog8rud0d2" path="res://assets/sprites/goal/GoalImage.png" id="4_ll7yy"]
+[ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="6_0klqo"]
+[ext_resource type="Texture2D" uid="uid://cmk1ubstgth2f" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/LabTileCenter.png" id="6_pswwc"]
+[ext_resource type="Texture2D" uid="uid://dl2yg7fvrwua7" path="res://assets/dirt_single.png" id="8_s2r5n"]
+[ext_resource type="Texture2D" uid="uid://08gh7sintjvt" path="res://assets/lab-game-tileset-pixel-art/1 Tiles/Tiles_37.png" id="9_rug43"]
+[ext_resource type="Texture2D" uid="uid://bpmb77snj2n4h" path="res://assets/sprites/dog_enemy/dog_still.png" id="10_n7spv"]
+[ext_resource type="Texture2D" uid="uid://wwdb3tu4s46t" path="res://assets/sprites/homing_mine/mine_4.png" id="11_rug43"]
+[ext_resource type="Texture2D" uid="uid://b5030oitn54xc" path="res://assets/sprites/ranged_drone/ranged_drone.png" id="12_n7spv"]
+[ext_resource type="Texture2D" uid="uid://yglr46luj5sr" path="res://assets/sprites/Spikeball/Spike Ball.png" id="13_7o6a2"]
+[ext_resource type="Texture2D" uid="uid://dsdoa1foi5cma" path="res://assets/lab-game-tileset-pixel-art/layered_lab_background.png" id="13_iibak"]
+[ext_resource type="Texture2D" uid="uid://wr1myh16iilm" path="res://assets/cave/layered_cave_background.png" id="14_7o6a2"]
+[ext_resource type="Texture2D" uid="uid://xe4n818le3p8" path="res://addons/controller_icons/assets/key/e.png" id="17_umg3e"]
+[ext_resource type="Texture2D" uid="uid://dbacrqf34mdtl" path="res://assets/sprites/bit/BitStill.png" id="17_ypehg"]
+[ext_resource type="Texture2D" uid="uid://b4ptua3jkmmrp" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_bottom_center.png" id="18_dqtfp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_umg3e"]
+shader = ExtResource("2_8ogwd")
+shader_parameter/offset = 2.5
+
+[sub_resource type="Animation" id="Animation_qv4l2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 648)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/OpenCloseButton:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5708]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect/OpenCloseButton:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(524, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:is_open")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_gmssj"]
+resource_name = "close"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 48), Vector2(0, 648)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/OpenCloseButton:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1.5708, -1.5708]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect/OpenCloseButton:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(628, -18), Vector2(524, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:is_open")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FadeInOut")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("fade_out_close", "fade_in"),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ColorRect2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1t62o"]
+resource_name = "open"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 648), Vector2(0, 48)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/OpenCloseButton:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [-1.5708, 1.5708]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect/OpenCloseButton:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(524, 0), Vector2(628, -18)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:is_open")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.233333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FadeInOut")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("fade_out", "fade_in_close"),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ColorRect2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qv4l2"]
+_data = {
+&"RESET": SubResource("Animation_qv4l2"),
+&"close": SubResource("Animation_gmssj"),
+&"open": SubResource("Animation_1t62o")
+}
+
+[sub_resource type="Animation" id="Animation_rug43"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenBox:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(499, 589)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CloseBox:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(499, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_s2r5n"]
+resource_name = "hover"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenBox:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(499, 589), Vector2(499, 579), Vector2(499, 589)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CloseBox:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(499, -2), Vector2(499, 7), Vector2(499, -2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n7spv"]
+_data = {
+&"RESET": SubResource("Animation_rug43"),
+&"hover": SubResource("Animation_s2r5n")
+}
+
+[sub_resource type="Animation" id="Animation_vvict"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenBox:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CloseBox:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n7spv"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenBox:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7o6a2"]
+resource_name = "fade_in_close"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CloseBox:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.991741)]
+}
+
+[sub_resource type="Animation" id="Animation_iibak"]
+resource_name = "fade_out"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OpenBox:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8ogwd"]
+resource_name = "fade_out_close"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CloseBox:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vvict"]
+_data = {
+&"RESET": SubResource("Animation_vvict"),
+&"fade_in": SubResource("Animation_n7spv"),
+&"fade_in_close": SubResource("Animation_7o6a2"),
+&"fade_out": SubResource("Animation_iibak"),
+&"fade_out_close": SubResource("Animation_8ogwd")
+}
+
+[node name="TileSelector" type="Control" node_paths=PackedStringArray("open_close_button", "anim_player", "visual_ranges_button", "visual_paths_button", "hide_help_button", "hide_test_level_button", "speed_up_camera_button", "slow_down_camera_button", "camera_speed_label", "camera_zoom_label", "camera_zoom_line_edit")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 1251.0
+script = ExtResource("1_gmssj")
+open_close_button = NodePath("ColorRect/OpenCloseButton")
+anim_player = NodePath("AnimationPlayer")
+is_open = false
+visual_ranges_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2/VisualRanges")
+visual_paths_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2/VisualPaths")
+hide_help_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer/HideHelpButton")
+hide_test_level_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer/HideTestLevel")
+speed_up_camera_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/SpeedUp")
+slow_down_camera_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/SlowDown")
+camera_speed_label = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/CameraSpeed")
+camera_zoom_label = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer/CameraZoom")
+camera_zoom_line_edit = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer2/CustomLineEdit")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_umg3e")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_top = 648.0
+offset_right = 1152.0
+offset_bottom = 1248.0
+color = Color(0, 0, 0, 0.619608)
+
+[node name="OpenCloseButton" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_right = -34.0
+offset_bottom = 103.0
+grow_horizontal = 2
+rotation = -1.5708
+text = ">"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect"]
+layout_mode = 2
+offset_left = 30.0
+offset_top = 1.0
+offset_right = 1126.0
+offset_bottom = 600.0
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer"]
+custom_minimum_size = Vector2(1096, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="HSeparator7" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6"]
+layout_mode = 2
+text = "Editor Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HideTestLevel" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Toggle Test Level Button Visibility"
+
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HideHelpButton" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Toggle Help Button Visibility"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer"]
+layout_mode = 2
+
+[node name="VisualRanges" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Toggle Visual Ranges"
+
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="VisualPaths" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Toggle Visual Paths"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6"]
+layout_mode = 2
+
+[node name="HSeparator8" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer7" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
+layout_mode = 2
+text = "Editor Camera Speed"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
+layout_mode = 2
+alignment = 1
+
+[node name="SlowDown" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "-"
+
+[node name="VSeparator2" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="CameraSpeed" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+text = "Camera Speed: 4"
+
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="SpeedUp" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "+"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
+layout_mode = 2
+
+[node name="HSeparator9" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer8" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8"]
+layout_mode = 2
+text = "Editor Camera Zoom"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8"]
+layout_mode = 2
+alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="CameraZoom" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer"]
+layout_mode = 2
+text = "Camera Zoom: 1.0"
+
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8"]
+layout_mode = 2
+alignment = 1
+
+[node name="CustomLineEdit" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer2" instance=ExtResource("3_shrla")]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+placeholder_text = "Set Camera Zoom"
+alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Objects"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer" groups=["tile_selector_holder"]]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="SpawnPoint" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("3_1t62o")
+text = "Spawnpoint"
+
+[node name="Goal" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("4_ll7yy")
+text = "Goal"
+
+[node name="CheckPoint" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("3_1t62o")
+text = "Checkpoint"
+
+[node name="Gem" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("4_1bmts")
+text = "Gem"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Gem/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+modulate = Color(0, 1, 0.156863, 1)
+texture = ExtResource("4_1bmts")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Gem/MarginContainer/VBoxContainer2" index="2"]
+text = "Gem"
+
+[node name="HSeparator" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Tiles"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2" groups=["tile_selector_holder"]]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Ground" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("6_0klqo")
+text = "Ground"
+
+[node name="Lab" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("6_pswwc")
+text = "Lab"
+
+[node name="Dirt" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("8_s2r5n")
+text = "Dirt"
+
+[node name="SuperDrillable" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("9_rug43")
+text = "SuperDrillable"
+
+[node name="HSeparator3" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Enemies"
+horizontal_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3" groups=["tile_selector_holder"]]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Dog" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("10_n7spv")
+text = "Dog"
+distance_parameter = true
+bonus_parameters = Dictionary[String, int]({
+"Distance": 10
+})
+
+[node name="HomingMine" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("11_rug43")
+text = "Homing Mine"
+range_parameter = true
+bonus_parameters = Dictionary[String, int]({
+"Range": 60
+})
+
+[node name="Static Mine" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("11_rug43")
+text = "Static Mine"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+modulate = Color(1, 0.517647, 0.992157, 1)
+texture = ExtResource("11_rug43")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine/MarginContainer/VBoxContainer2" index="2"]
+text = "Static Mine"
+
+[node name="RangedDron" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("12_n7spv")
+text = "Ranged Drone"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+modulate = Color(0.929412, 0.968627, 0.301961, 1)
+texture = ExtResource("12_n7spv")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron/MarginContainer/VBoxContainer2" index="2"]
+text = "Ranged Drone"
+
+[node name="Static Drone" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("12_n7spv")
+text = "Static Drone"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("12_n7spv")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone/MarginContainer/VBoxContainer2" index="2"]
+text = "Static Drone"
+
+[node name="Spike Ball" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("13_7o6a2")
+text = "Spike Ball"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Spike Ball/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("13_7o6a2")
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Spike Ball/MarginContainer/VBoxContainer2" index="2"]
+text = "Spike Ball"
+
+[node name="HSeparator4" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4"]
+layout_mode = 2
+text = "Backgrounds"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4" groups=["tile_selector_holder"]]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="LabBackground" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("13_iibak")
+text = "Lab Background"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/LabBackground/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("13_iibak")
+expand_mode = 3
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/LabBackground/MarginContainer/VBoxContainer2" index="2"]
+text = "Lab Background"
+
+[node name="CaveBackground" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("14_7o6a2")
+text = "Cave Background"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/CaveBackground/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("14_7o6a2")
+expand_mode = 3
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/CaveBackground/MarginContainer/VBoxContainer2" index="2"]
+text = "Cave Background"
+
+[node name="HSeparator6" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5"]
+layout_mode = 2
+text = "Music"
+horizontal_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5" groups=["tile_selector_holder"]]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="MainMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("17_ypehg")
+text = "Main Music"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4/MainMusic/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("17_ypehg")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4/MainMusic/MarginContainer/VBoxContainer2" index="2"]
+text = "Main Music"
+
+[node name="UndergroundMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("18_dqtfp")
+text = "Underground Music"
+
+[node name="LabMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
+layout_mode = 2
+image = ExtResource("10_n7spv")
+text = "Lab Music"
+
+[node name="HSeparator5" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qv4l2")
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_n7spv")
+}
+
+[node name="FadeInOut" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vvict")
+}
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 472.0
+offset_top = 195.0
+offset_right = 684.0
+offset_bottom = 218.0
+text = "Use WASD to move around!"
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 165.0
+offset_top = 616.0
+offset_right = 409.0
+offset_bottom = 639.0
+text = "Press \"X\" to toggle Delete Mode"
+
+[node name="OpenBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -662.0
+offset_right = 77.0
+offset_bottom = -622.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="OpenLabel" type="Label" parent="OpenBox"]
+layout_mode = 2
+text = "Press"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="OpenBox"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("17_umg3e")
+expand_mode = 2
+
+[node name="OpenLabel2" type="Label" parent="OpenBox"]
+layout_mode = 2
+text = "to open!"
+horizontal_alignment = 1
+
+[node name="CloseBox" type="HBoxContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -1248.0
+offset_right = 77.0
+offset_bottom = -1208.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="CloseLabel" type="Label" parent="CloseBox"]
+layout_mode = 2
+text = "Press"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CloseBox"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("17_umg3e")
+expand_mode = 2
+
+[node name="CloseLabel2" type="Label" parent="CloseBox"]
+layout_mode = 2
+text = "to close!"
+horizontal_alignment = 1
+
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Gem"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Mine"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/RangedDron"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Static Drone"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Spike Ball"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/LabBackground"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/CaveBackground"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4/MainMusic"]

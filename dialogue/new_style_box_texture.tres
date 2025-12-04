@@ -1,0 +1,9 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://ccxmioo24urpk"]
+
+[ext_resource type="Texture2D" uid="uid://bo4jd7j6lh3fc" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button1.png" id="1_ydvxf"]
+
+[resource]
+content_margin_left = 71.0
+content_margin_top = 19.0
+content_margin_right = 61.0
+texture = ExtResource("1_ydvxf")

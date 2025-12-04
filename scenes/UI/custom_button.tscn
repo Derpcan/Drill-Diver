@@ -1,0 +1,108 @@
+[gd_scene load_steps=11 format=3 uid="uid://be1u7dex0aqss"]
+
+[ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="1_xbydf"]
+[ext_resource type="Texture2D" uid="uid://cfcxl0okhvqfy" path="res://assets/sprites/menu/UI_Gradient_Button_Large_Lock_01a1.png" id="2_xbydf"]
+[ext_resource type="Texture2D" uid="uid://cgs7i7sdnjaxj" path="res://assets/sprites/menu/UI_Gradient_Button_Large_Lock_01a3.png" id="3_xbydf"]
+[ext_resource type="Texture2D" uid="uid://mt6812ja8ex3" path="res://assets/sprites/menu/UI_Gradient_Button_Large_Lock_01a2.png" id="4_j1gin"]
+[ext_resource type="Script" uid="uid://s3wewoj2cpm2" path="res://scenes/UI/custom_button.gd" id="4_xbydf"]
+[ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="5_k6imf"]
+[ext_resource type="AudioStream" uid="uid://djmmo20hp5wwa" path="res://assets/sounds/DD - pause click (UI).wav" id="7_axlt5"]
+
+[sub_resource type="Shader" id="Shader_j7ex8"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_axlt5"]
+resource_local_to_scene = true
+shader = SubResource("Shader_j7ex8")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.921569, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.219608, 0.25098, 0.713726, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("1_xbydf")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="LabelSettings" id="LabelSettings_u8wol"]
+font = ExtResource("5_k6imf")
+font_size = 96
+
+[node name="CustomButton" type="TextureButton"]
+material = SubResource("ShaderMaterial_axlt5")
+offset_right = 96.0
+offset_bottom = 29.0
+scale = Vector2(3.49, 3.49)
+texture_normal = ExtResource("2_xbydf")
+texture_pressed = ExtResource("3_xbydf")
+texture_hover = ExtResource("4_j1gin")
+stretch_mode = 4
+script = ExtResource("4_xbydf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 11.4613
+offset_top = 2.5788
+offset_right = 362.461
+offset_bottom = 98.5788
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_u8wol")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_axlt5")
+bus = &"Sound Effects"
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc13rtb41swhf"]
+
+[ext_resource type="Texture2D" uid="uid://yglr46luj5sr" path="res://assets/sprites/Spikeball/Spike Ball.png" id="1_kv2wc"]
+[ext_resource type="PackedScene" uid="uid://d0eealahoyijf" path="res://scenes/hitbox/hit_box.tscn" id="2_4h6gr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sqy0v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kv2wc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a0wwk"]
+radius = 16.0312
+
+[node name="Spike" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_sqy0v")
+
+[node name="HitBox" parent="." instance=ExtResource("2_4h6gr")]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_a0wwk")

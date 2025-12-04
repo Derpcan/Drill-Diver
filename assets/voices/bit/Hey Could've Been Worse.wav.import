@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c6ehci6cl55ro"
+path="res://.godot/imported/Hey Could've Been Worse.wav-003251ddbab8106bed54bcf0edca5856.sample"
+
+[deps]
+
+source_file="res://assets/voices/bit/Hey Could've Been Worse.wav"
+dest_files=["res://.godot/imported/Hey Could've Been Worse.wav-003251ddbab8106bed54bcf0edca5856.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

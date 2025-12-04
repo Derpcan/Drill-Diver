@@ -1,0 +1,9 @@
+join "Dr Iver" right [animation="Fade In"]
+"Dr Iver": As I said, you probably have no clue what to do here!
+"Dr Iver": You probably don’t even know that by hitting the dash button and any of the 8 directions
+"Dr Iver": you can air dash for extra distance or height!
+join Bit (C Rank) left [animation="Fade In"]
+Bit (C Rank): You’re right, I didn’t…well, until you just told me…
+"Dr Iver": Wait! Um-I mean, do the opposite of what I said!!!
+Bit (A Rank): Too late!!!
+leave --All-- [animation="Fade Out"]

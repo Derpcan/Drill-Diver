@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://k6b770hyytgd"
+path="res://.godot/imported/dd - cool 8bit sound 2.wav-7421c3eed66a3c6ef7bd6821c766004a.sample"
+
+[deps]
+
+source_file="res://assets/sounds/dd - cool 8bit sound 2.wav"
+dest_files=["res://.godot/imported/dd - cool 8bit sound 2.wav-7421c3eed66a3c6ef7bd6821c766004a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

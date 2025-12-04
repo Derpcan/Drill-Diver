@@ -1,0 +1,416 @@
+[gd_scene load_steps=31 format=3 uid="uid://b8sj2lbaror21"]
+
+[ext_resource type="Script" uid="uid://dcf7b5ptmy57g" path="res://scenes/level_select_map.gd" id="1_7nmk8"]
+[ext_resource type="Texture2D" uid="uid://dsdoa1foi5cma" path="res://assets/lab-game-tileset-pixel-art/layered_lab_background.png" id="2_adatl"]
+[ext_resource type="Texture2D" uid="uid://dqmtakpt8vxfo" path="res://assets/sprites/bit/Bit_Idle.png" id="2_eacx1"]
+[ext_resource type="Texture2D" uid="uid://c78xh6qn3f8a3" path="res://assets/sprites/bit/Bit_run.png" id="3_adatl"]
+[ext_resource type="Texture2D" uid="uid://wr1myh16iilm" path="res://assets/cave/layered_cave_background.png" id="3_hv2gb"]
+[ext_resource type="Texture2D" uid="uid://dt4neujtaf5oh" path="res://assets/sprites/menu/UI_Hologram_Empty.png" id="4_orbr2"]
+[ext_resource type="Texture2D" uid="uid://dfjumg161n2s7" path="res://assets/sprites/menu/UI_Hologram_Over.png" id="4_vpmtq"]
+[ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="5_tf6o5"]
+[ext_resource type="Texture2D" uid="uid://c36vsptbncd0b" path="res://assets/sprites/menu/UI_Hologram_Frame_Standard_02a-export.png" id="6_hv2gb"]
+[ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="10_0fsj6"]
+[ext_resource type="Texture2D" uid="uid://bo4jd7j6lh3fc" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button1.png" id="11_0lxwy"]
+[ext_resource type="Texture2D" uid="uid://cjf3agshmo73n" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button2.png" id="12_5vofn"]
+[ext_resource type="Script" uid="uid://tbews5xoe2lb" path="res://scenes/back.gd" id="13_0fsj6"]
+[ext_resource type="Texture2D" uid="uid://mifhrxegxpxp" path="res://assets/sprites/menu/UI_Hologram_ButtoText Hologram.png" id="14_0lxwy"]
+
+[sub_resource type="Curve2D" id="Curve2D_hv2gb"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 125, 325, 0, 0, 0, 0, 1025, 325)
+}
+point_count = 2
+
+[sub_resource type="GDScript" id="GDScript_vpmtq"]
+script/source = "extends PathFollow2D
+
+@export var move_speed: float = 200.0
+var moving := false
+var direction := 0  # -1 for left, +1 for right
+
+signal reached_stop(stop_node)
+
+func _process(delta):
+	if moving:
+		progress += direction * move_speed * delta
+
+		# Update player position:
+		get_node(\"../PlayerSprite\").global_position = global_position
+
+		# Set animations:
+		var player = get_node(\"../PlayerSprite\")
+		if direction != 0:
+			player.play(\"run\")
+			player.flip_h = direction < 0
+		else:
+			player.play(\"idle\")
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_isdox"]
+font = ExtResource("5_tf6o5")
+font_size = 40
+font_color = Color(0.533333, 1, 0.105882, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orbr2"]
+atlas = ExtResource("2_eacx1")
+region = Rect2(0, 0, 33, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tf6o5"]
+atlas = ExtResource("2_eacx1")
+region = Rect2(33, 0, 33, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isdox"]
+atlas = ExtResource("3_adatl")
+region = Rect2(0, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yw721"]
+atlas = ExtResource("3_adatl")
+region = Rect2(37, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0cqd"]
+atlas = ExtResource("3_adatl")
+region = Rect2(74, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fsj6"]
+atlas = ExtResource("3_adatl")
+region = Rect2(111, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lxwy"]
+atlas = ExtResource("3_adatl")
+region = Rect2(148, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vofn"]
+atlas = ExtResource("3_adatl")
+region = Rect2(185, 0, 37, 56)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_33xm3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orbr2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tf6o5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isdox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yw721")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p0cqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fsj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lxwy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vofn")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="Shader" id="Shader_gw5y6"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fbluf"]
+shader = SubResource("Shader_gw5y6")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("10_0fsj6")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fokym"]
+font = ExtResource("5_tf6o5")
+font_size = 96
+font_color = Color(0.533333, 1, 0.105882, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0lxwy"]
+font = ExtResource("5_tf6o5")
+font_size = 60
+font_color = Color(0.533333, 1, 0.105882, 1)
+
+[node name="LevelSelectMap" type="Node2D"]
+script = ExtResource("1_7nmk8")
+
+[node name="CaveSprite" type="Sprite2D" parent="."]
+position = Vector2(275, 0)
+scale = Vector2(3.51, 3.51)
+texture = ExtResource("3_hv2gb")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 184)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+position = Vector2(-305, -3)
+scale = Vector2(2, 2)
+texture = ExtResource("2_adatl")
+polygon = PackedVector2Array(152, 0, 152, 328, 312, 328, 296, 312, 312, 296, 296, 280, 312, 264, 296, 248, 312, 232, 296, 216, 312, 200, 296, 184, 312, 168, 296, 152, 312, 136, 296, 120, 312, 104, 296, 88, 312, 72, 296, 56, 312, 40, 296, 24, 312, 8, 296, 0)
+uv = PackedVector2Array(152, 0, 152, 328, 312, 328, 296, 312, 312, 296, 296, 280, 312, 264, 296, 248, 312, 232, 296, 216, 312, 200, 296, 184, 312, 168, 296, 152, 312, 136, 296, 120, 312, 104, 296, 88, 312, 72, 296, 56, 312, 40, 296, 24, 312, 8, 296, 0)
+
+[node name="LabSprite" type="Polygon2D" parent="."]
+position = Vector2(-100, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("2_adatl")
+polygon = PackedVector2Array(288, 320, 288, 328, 48, 328, 48, 0, 288, 0, 272, 16, 288, 32, 272, 48, 288, 64, 272, 80, 288, 96, 272, 112, 288, 128, 272, 144, 288, 160, 272, 176, 288, 192, 272, 208, 288, 224, 272, 240, 288, 256, 272, 272, 288, 288, 272, 304)
+uv = PackedVector2Array(288, 320, 288, 328, 48, 328, 48, 0, 288, 0, 272, 16, 288, 32, 272, 48, 288, 64, 272, 80, 288, 96, 272, 112, 288, 128, 272, 144, 288, 160, 272, 176, 288, 192, 272, 208, 288, 224, 272, 240, 288, 256, 272, 272, 288, 288, 272, 304)
+
+[node name="LabBackground" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-100, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("2_adatl")
+centered = false
+region_rect = Rect2(150, 0, 140, 324)
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_hv2gb")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(125, 325)
+loop = false
+script = SubResource("GDScript_vpmtq")
+
+[node name="LevelStops" type="Node2D" parent="."]
+
+[node name="Custom" type="Marker2D" parent="LevelStops"]
+position = Vector2(125, 325)
+metadata/level_name = "Custom Level"
+metadata/file_path = ""
+
+[node name="Tutorial" type="Marker2D" parent="LevelStops"]
+position = Vector2(350, 325)
+metadata/level_name = "Tutorial"
+metadata/file_path = "res://scenes/level editor/testing/tutorial_level_loader.tscn"
+
+[node name="Level1" type="Marker2D" parent="LevelStops"]
+position = Vector2(575, 325)
+metadata/level_name = "Level 1"
+metadata/file_path = "res://levels/Level_1.lvl"
+
+[node name="Level2" type="Marker2D" parent="LevelStops"]
+position = Vector2(800, 325)
+metadata/level_name = "Level 2"
+metadata/file_path = "res://levels/Level 2.lvl"
+
+[node name="Level3" type="Marker2D" parent="LevelStops"]
+position = Vector2(1025, 325)
+metadata/level_name = "Level 3"
+metadata/file_path = "res://levels/Level 3.lvl"
+
+[node name="NameLabel" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="NameLabel"]
+position = Vector2(575, 567)
+scale = Vector2(4, 4)
+texture = ExtResource("4_orbr2")
+
+[node name="Label" type="Label" parent="NameLabel"]
+offset_left = 470.0
+offset_top = 545.0
+offset_right = 685.0
+offset_bottom = 606.0
+label_settings = SubResource("LabelSettings_isdox")
+horizontal_alignment = 1
+
+[node name="LineConnector" type="Node2D" parent="."]
+
+[node name="Segment1" type="Sprite2D" parent="LineConnector"]
+position = Vector2(140, 325)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_vpmtq")
+offset = Vector2(35, 0)
+
+[node name="Segment2" type="Sprite2D" parent="LineConnector"]
+position = Vector2(225, 325)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_vpmtq")
+offset = Vector2(35, 0)
+
+[node name="Segment3" type="Sprite2D" parent="LineConnector"]
+position = Vector2(370, 325)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_vpmtq")
+offset = Vector2(35, 0)
+
+[node name="Segment4" type="Sprite2D" parent="LineConnector"]
+position = Vector2(455, 325)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_vpmtq")
+offset = Vector2(35, 0)
+
+[node name="Segment5" type="Sprite2D" parent="LineConnector"]
+position = Vector2(590, 325)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_vpmtq")
+offset = Vector2(35, 0)
+
+[node name="Segment6" type="Sprite2D" parent="LineConnector"]
+position = Vector2(675, 325)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_vpmtq")
+offset = Vector2(35, 0)
+
+[node name="Segment7" type="Sprite2D" parent="LineConnector"]
+position = Vector2(820, 325)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_vpmtq")
+offset = Vector2(35, 0)
+
+[node name="Segment8" type="Sprite2D" parent="LineConnector"]
+position = Vector2(905, 325)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_vpmtq")
+offset = Vector2(35, 0)
+
+[node name="LevelDots" type="Node2D" parent="."]
+
+[node name="CustomDot" type="Sprite2D" parent="LevelDots"]
+position = Vector2(125, 325)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_hv2gb")
+
+[node name="TutorialDot" type="Sprite2D" parent="LevelDots"]
+position = Vector2(350, 325)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_hv2gb")
+
+[node name="LevelDot1" type="Sprite2D" parent="LevelDots"]
+position = Vector2(575, 325)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_hv2gb")
+
+[node name="LevelDot2" type="Sprite2D" parent="LevelDots"]
+position = Vector2(800, 325)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_hv2gb")
+
+[node name="LevelDot3" type="Sprite2D" parent="LevelDots"]
+position = Vector2(1025, 325)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_hv2gb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(350, 325)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_33xm3")
+animation = &"idle"
+offset = Vector2(-1, -15)
+
+[node name="Back" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_fbluf")
+offset_left = 14.0
+offset_top = 594.0
+offset_right = 110.0
+offset_bottom = 623.0
+scale = Vector2(2, 2)
+focus_neighbor_top = NodePath("../Options")
+mouse_filter = 1
+texture_normal = ExtResource("11_0lxwy")
+texture_pressed = ExtResource("12_5vofn")
+script = ExtResource("13_0fsj6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Back"]
+layout_mode = 0
+offset_left = 17.5
+offset_top = -0.999992
+offset_right = 368.5
+offset_bottom = 95.0
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="Back/HBoxContainer"]
+layout_mode = 2
+text = "Back"
+label_settings = SubResource("LabelSettings_fokym")
+horizontal_alignment = 1
+
+[node name="FileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 1
+root_subfolder = "level_editor/levels/"
+use_native_dialog = true
+
+[node name="Title" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Title"]
+position = Vector2(575, 81)
+scale = Vector2(4, 4)
+texture = ExtResource("14_0lxwy")
+
+[node name="TitleLabel" type="Label" parent="Title"]
+offset_left = 470.0
+offset_top = 55.0
+offset_right = 690.0
+offset_bottom = 116.0
+text = "Level Select"
+label_settings = SubResource("LabelSettings_0lxwy")
+
+[connection signal="focus_entered" from="Back" to="Back" method="_on_mouse_entered"]
+[connection signal="focus_exited" from="Back" to="Back" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Back" to="Back" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Back" to="Back" method="_on_mouse_exited"]

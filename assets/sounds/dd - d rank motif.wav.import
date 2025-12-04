@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://0pri2mtpr1fx"
+path="res://.godot/imported/dd - d rank motif.wav-5a178f1a045784d757e0ff4522681b8b.sample"
+
+[deps]
+
+source_file="res://assets/sounds/dd - d rank motif.wav"
+dest_files=["res://.godot/imported/dd - d rank motif.wav-5a178f1a045784d757e0ff4522681b8b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

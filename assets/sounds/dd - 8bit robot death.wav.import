@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dwq6wy3kcrajs"
+path="res://.godot/imported/dd - 8bit robot death.wav-a27e949665aa80bf086fbad89a26b1b2.sample"
+
+[deps]
+
+source_file="res://assets/sounds/dd - 8bit robot death.wav"
+dest_files=["res://.godot/imported/dd - 8bit robot death.wav-a27e949665aa80bf086fbad89a26b1b2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
