@@ -219,7 +219,7 @@ shader_parameter/linesColorIntensity = 0.4
 shader_parameter/hologramTexture = ExtResource("16_j7ex8")
 shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
 
-[sub_resource type="Shader" id="Shader_7b55j"]
+[sub_resource type="Shader" id="Shader_5pajh"]
 code = "shader_type canvas_item;
 
 uniform bool useHologram = true;
@@ -271,7 +271,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hstxw"]
-shader = SubResource("Shader_7b55j")
+shader = SubResource("Shader_5pajh")
 shader_parameter/useHologram = false
 shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
 shader_parameter/speed = 0.3
@@ -280,7 +280,7 @@ shader_parameter/linesColorIntensity = 0.4
 shader_parameter/hologramTexture = ExtResource("16_j7ex8")
 shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
 
-[sub_resource type="Shader" id="Shader_gw5y6"]
+[sub_resource type="Shader" id="Shader_j7ex8"]
 code = "shader_type canvas_item;
 
 uniform bool useHologram = true;
@@ -332,7 +332,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gw5y6"]
-shader = SubResource("Shader_gw5y6")
+shader = SubResource("Shader_j7ex8")
 shader_parameter/useHologram = false
 shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
 shader_parameter/speed = 0.3
@@ -477,7 +477,7 @@ scale = Vector2(0.219, 0.185)
 
 [node name="Label" type="Label" parent="Control/Level Editor/HBoxContainer"]
 layout_mode = 2
-text = "Level Editior"
+text = "Level Editor"
 label_settings = SubResource("LabelSettings_8egab")
 
 [node name="Options" type="TextureButton" parent="Control"]

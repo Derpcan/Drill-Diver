@@ -5,7 +5,7 @@ extends Node2D
 
 # ---- STATE ----
 var stops := []                    # Stores all level stop data
-var current_index := 0             # Index of the stop you are currently at
+var current_index := 1             # Index of the stop you are currently at
 var is_moving := false             # True while walking between stops
 var target_offset := 0.0           # Where we are walking to (PathFollow2D offset)
 
@@ -22,7 +22,8 @@ var target_offset := 0.0           # Where we are walking to (PathFollow2D offse
 # ==========================================
 func _ready():
 	build_stop_list()
-	snap_to_stop(0)  # Start at first stop
+	snap_to_stop(1)  # Start at first stop
+	$FileDialog.file_selected.connect(file_selected)
 	#label_container.visible = false
 
 # Builds internal "stops" array with offset, name, and scene data.
@@ -177,8 +178,10 @@ func enter_level():
 	if lvl_path == null:
 		push_warning("No level path assigned to stop %d" % current_index)
 		return
-
+		
 	if current_index == 0:
+		$FileDialog.show()
+	elif current_index == 1:
 		SceneManager.change_scene(
 		"res://scenes/level editor/testing/tutorial_level_loader.tscn")
 	else:
@@ -187,3 +190,9 @@ func enter_level():
 			"res://scenes/level editor/testing/test_custom_level_editor.tscn",
 			[lvl_path]
 		)
+		
+func file_selected(file_path:String):
+	SceneManager.change_scene_extra_args(
+		"res://scenes/level editor/testing/test_custom_level_editor.tscn", 
+		[file_path]
+	)
