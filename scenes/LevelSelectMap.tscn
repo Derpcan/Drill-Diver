@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b8sj2lbaror21"]
+[gd_scene load_steps=31 format=3 uid="uid://b8sj2lbaror21"]
 
 [ext_resource type="Script" uid="uid://dcf7b5ptmy57g" path="res://scenes/level_select_map.gd" id="1_7nmk8"]
 [ext_resource type="Texture2D" uid="uid://dsdoa1foi5cma" path="res://assets/lab-game-tileset-pixel-art/layered_lab_background.png" id="2_adatl"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bo4jd7j6lh3fc" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button1.png" id="11_0lxwy"]
 [ext_resource type="Texture2D" uid="uid://cjf3agshmo73n" path="res://assets/sprites/menu/Spritesheet_Animation_UISmall button2.png" id="12_5vofn"]
 [ext_resource type="Script" uid="uid://tbews5xoe2lb" path="res://scenes/back.gd" id="13_0fsj6"]
+[ext_resource type="Texture2D" uid="uid://mifhrxegxpxp" path="res://assets/sprites/menu/UI_Hologram_ButtoText Hologram.png" id="14_0lxwy"]
 
 [sub_resource type="Curve2D" id="Curve2D_hv2gb"]
 _data = {
@@ -185,6 +186,11 @@ font = ExtResource("5_tf6o5")
 font_size = 96
 font_color = Color(0.533333, 1, 0.105882, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_0lxwy"]
+font = ExtResource("5_tf6o5")
+font_size = 60
+font_color = Color(0.533333, 1, 0.105882, 1)
+
 [node name="LevelSelectMap" type="Node2D"]
 script = ExtResource("1_7nmk8")
 
@@ -255,15 +261,15 @@ metadata/level_name = "Level 3"
 [node name="NameLabel" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="NameLabel"]
-position = Vector2(575, 487)
+position = Vector2(575, 567)
 scale = Vector2(4, 4)
 texture = ExtResource("4_orbr2")
 
 [node name="Label" type="Label" parent="NameLabel"]
 offset_left = 470.0
-offset_top = 465.0
+offset_top = 545.0
 offset_right = 685.0
-offset_bottom = 495.0
+offset_bottom = 606.0
 label_settings = SubResource("LabelSettings_isdox")
 horizontal_alignment = 1
 
@@ -386,6 +392,21 @@ file_mode = 0
 access = 1
 root_subfolder = "level_editor/levels/"
 use_native_dialog = true
+
+[node name="Title" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Title"]
+position = Vector2(575, 81)
+scale = Vector2(4, 4)
+texture = ExtResource("14_0lxwy")
+
+[node name="TitleLabel" type="Label" parent="Title"]
+offset_left = 470.0
+offset_top = 55.0
+offset_right = 690.0
+offset_bottom = 116.0
+text = "Level Select"
+label_settings = SubResource("LabelSettings_0lxwy")
 
 [connection signal="focus_entered" from="Back" to="Back" method="_on_mouse_entered"]
 [connection signal="focus_exited" from="Back" to="Back" method="_on_mouse_exited"]

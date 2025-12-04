@@ -72,6 +72,12 @@ func _unhandled_input(event):
 	# Enter/Confirm (keep as before)
 	elif Input.is_action_just_pressed("game_jump"):
 		enter_level()
+		
+	elif Input.is_action_just_pressed("game_dash"):
+		enter_level()
+		
+	elif Input.is_action_just_pressed("game_super_drill"):
+		enter_level()
 
 
 # ==========================================
