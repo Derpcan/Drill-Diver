@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=34 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Shader" uid="uid://0x4jckkmsvb0" path="res://scenes/UI/audio_settings/blur_shader.gdshader" id="2_8ogwd"]
@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://dsdoa1foi5cma" path="res://assets/lab-game-tileset-pixel-art/layered_lab_background.png" id="13_iibak"]
 [ext_resource type="Texture2D" uid="uid://wr1myh16iilm" path="res://assets/cave/layered_cave_background.png" id="14_7o6a2"]
 [ext_resource type="Texture2D" uid="uid://xe4n818le3p8" path="res://addons/controller_icons/assets/key/e.png" id="17_umg3e"]
+[ext_resource type="Texture2D" uid="uid://dbacrqf34mdtl" path="res://assets/sprites/bit/BitStill.png" id="17_ypehg"]
+[ext_resource type="Texture2D" uid="uid://b4ptua3jkmmrp" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_bottom_center.png" id="18_dqtfp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_umg3e"]
 shader = ExtResource("2_8ogwd")
@@ -401,7 +403,7 @@ _data = {
 &"fade_out_close": SubResource("Animation_8ogwd")
 }
 
-[node name="TileSelector" type="Control" node_paths=PackedStringArray("open_close_button", "anim_player", "visual_ranges_button", "visual_paths_button", "hide_help_button", "hide_test_level_button")]
+[node name="TileSelector" type="Control" node_paths=PackedStringArray("open_close_button", "anim_player", "visual_ranges_button", "visual_paths_button", "hide_help_button", "hide_test_level_button", "speed_up_camera_button", "slow_down_camera_button", "camera_speed_label")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
@@ -410,10 +412,13 @@ script = ExtResource("1_gmssj")
 open_close_button = NodePath("ColorRect/OpenCloseButton")
 anim_player = NodePath("AnimationPlayer")
 is_open = false
-visual_ranges_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/VisualRanges")
-visual_paths_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/VisualPaths")
-hide_help_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/HideHelpButton")
-hide_test_level_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/HideTestLevel")
+visual_ranges_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2/VisualRanges")
+visual_paths_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2/VisualPaths")
+hide_help_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer/HideHelpButton")
+hide_test_level_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer/HideTestLevel")
+speed_up_camera_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/SpeedUp")
+slow_down_camera_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/SlowDown")
+camera_speed_label = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/CameraSpeed")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -462,31 +467,92 @@ custom_minimum_size = Vector2(1096, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="HSeparator7" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6"]
+layout_mode = 2
+text = "Editor Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HideTestLevel" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="HideTestLevel" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Toggle Test Level Button Visibility"
 
-[node name="HideHelpButton" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HideHelpButton" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Toggle Help Button Visibility"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer"]
 layout_mode = 2
 
-[node name="VisualRanges" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
+[node name="VisualRanges" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Toggle Visual Ranges"
 
-[node name="VisualPaths" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="VisualPaths" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6/HBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Toggle Visual Paths"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6"]
+layout_mode = 2
+
+[node name="HSeparator8" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer7" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
+layout_mode = 2
+text = "Editor Camera Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
+layout_mode = 2
+
+[node name="SpeedUp" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+text = "Speed Up Camera Movement"
+
+[node name="VSeparator2" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="SlowDown" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+text = "Slow Down Camera Movement"
+
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="CameraSpeed" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+text = "Camera Speed: 4"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
+layout_mode = 2
 
 [node name="HSeparator2" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -710,12 +776,20 @@ alignment = 1
 
 [node name="MainMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
 layout_mode = 2
-image = ExtResource("11_rug43")
+image = ExtResource("17_ypehg")
+text = "Main Music"
+
+[node name="TextureButton" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4/MainMusic/MarginContainer/VBoxContainer2/HBoxContainer" index="0"]
+texture = ExtResource("17_ypehg")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4/MainMusic/MarginContainer/VBoxContainer2" index="2"]
 text = "Main Music"
 
 [node name="UndergroundMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
 layout_mode = 2
-image = ExtResource("11_rug43")
+image = ExtResource("18_dqtfp")
 text = "Underground Music"
 
 [node name="LabMusic" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4" instance=ExtResource("3_igrm3")]
@@ -773,6 +847,7 @@ offset_right = 77.0
 offset_bottom = -622.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="OpenLabel" type="Label" parent="OpenBox"]
 layout_mode = 2
@@ -781,6 +856,7 @@ horizontal_alignment = 1
 
 [node name="TextureRect2" type="TextureRect" parent="OpenBox"]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("17_umg3e")
 expand_mode = 2
 
@@ -803,6 +879,7 @@ offset_right = 77.0
 offset_bottom = -1208.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="CloseLabel" type="Label" parent="CloseBox"]
 layout_mode = 2
@@ -811,6 +888,7 @@ horizontal_alignment = 1
 
 [node name="TextureRect2" type="TextureRect" parent="CloseBox"]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("17_umg3e")
 expand_mode = 2
 
@@ -826,3 +904,4 @@ horizontal_alignment = 1
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3/HBoxContainer4/Spike Ball"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/LabBackground"]
 [editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4/HBoxContainer2/CaveBackground"]
+[editable path="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5/HBoxContainer4/MainMusic"]

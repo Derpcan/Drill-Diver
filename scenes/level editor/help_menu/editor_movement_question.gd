@@ -2,10 +2,11 @@ extends Control
 
 @export var list_of_keybinds:Label
 
+@export var close_button:Button
 
 func _ready() -> void:
 	_set_up_list_of_movement_keybinds()
-	$PanelContainer/MarginContainer/VBoxContainer/Button.connect("button_down", queue_free)
+	$PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Button.connect("button_down", queue_free)
 
 
 

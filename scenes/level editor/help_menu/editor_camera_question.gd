@@ -5,7 +5,7 @@ extends Control
 
 func _ready() -> void:
 	_set_up_list_of_zoom_keybinds()
-	$PanelContainer/MarginContainer/VBoxContainer/Button.connect("button_down", queue_free)
+	$PanelContainer/MarginContainer/VBoxContainer/VBoxContainer2/Button.connect("button_down", queue_free)
 
 
 

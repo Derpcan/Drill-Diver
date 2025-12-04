@@ -20,11 +20,19 @@ signal toggle_visual_paths()
 signal toggle_visible_test_button()
 signal toggle_visible_help_button()
 
+signal speed_up_camera()
+signal slow_down_camera()
+
 @export var visual_ranges_button:Button
 @export var visual_paths_button:Button
 
 @export var hide_help_button:Button
 @export var hide_test_level_button:Button
+
+@export var speed_up_camera_button:Button
+@export var slow_down_camera_button:Button
+@export var camera_speed_label:Label
+
 
 func _ready() -> void:
 	open_close_button.pressed.connect(open_close_button_pressed)
@@ -50,7 +58,19 @@ func _ready() -> void:
 	#$OpenLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to open!"
 	#$CloseLabel.text = "Press \"" + InputMap.action_get_events("editor_quick_toggle_tile_selector")[0].as_text() + "\" to close!"
 	$Label2.text = "Press \"" + InputMap.action_get_events("editor_toggle_delete_tile_mode")[0].as_text() + "\" to toggle Delete Mode!"
+	
+	speed_up_camera_button.connect("button_down", _emit_speed_up_camera)
+	slow_down_camera_button.connect("button_down", _emit_slow_down_camera)
 
+
+func _update_camera_speed(new_speed_value:int) -> void:
+	camera_speed_label.text = "Camera Speed: " + str(new_speed_value)
+
+func _emit_speed_up_camera() -> void:
+	speed_up_camera.emit()
+
+func _emit_slow_down_camera() -> void:
+	slow_down_camera.emit()
 
 func _hide_test_level_button() -> void:
 	toggle_visible_test_button.emit()

@@ -364,7 +364,24 @@ func _ready() -> void:
 	
 	tile_selector.toggle_visual_ranges.connect(toggle_visual_mine_ranges)
 	tile_selector.toggle_visual_paths.connect(toggle_visual_paths)
+	tile_selector.speed_up_camera.connect(_speed_up_camera)
+	tile_selector.slow_down_camera.connect(_slow_down_camera)
+	camera_speed_changed.connect(tile_selector._update_camera_speed)
 	#$LevelEditorHud/Button.connect("button_down", toggle_visual_mine_ranges)
+
+signal camera_speed_changed(new_value)
+
+var camera_speed:int = 4:
+	set(new_value):
+		if camera_speed != new_value:
+			camera_speed = clamp(new_value, 1, 30)
+			camera_speed_changed.emit(camera_speed)
+		
+func _slow_down_camera() -> void:
+	camera_speed = camera_speed-1
+
+func _speed_up_camera() -> void:
+	camera_speed = camera_speed+1
 
 
 static var dog_paths_disabled:bool = false
@@ -1189,8 +1206,8 @@ func _physics_process(_delta: float) -> void:
 	var dir_x:float = Input.get_action_strength("editor_move_right")-Input.get_action_strength("editor_move_left")
 	var dir_y:float = Input.get_action_strength("editor_move_down")-Input.get_action_strength("editor_move_up")
 	
-	camera.global_position.x += dir_x*4
-	camera.global_position.y += dir_y*4
+	camera.global_position.x += dir_x*camera_speed
+	camera.global_position.y += dir_y*camera_speed
 	
 	var viewport_size = get_viewport_rect().size
 	var x_offset = viewport_size.x / (2 * camera.zoom.x)
@@ -1674,21 +1691,87 @@ func is_json_file(path: String) -> bool:
 	var text := FileAccess.get_file_as_string(path)
 	var json := JSON.new()
 	var result := json.parse(text)
+	print(text)
+	print(result)
 	return result == OK
 
 
 var loading_thread:Thread =  null
 # Loading Level
 func load_logic(path_name:String="") -> void:
-	if is_json_file(path_name):
-		_load_logic(path_name)
-	else:
+	var type:String = detect_save_format(path_name)
+	if type == "binary":
 		_load_binary(path_name)
+	elif type == "json":
+		_load_logic(path_name)
+	
+	#if is_json_file(path_name) or not looks_binary(path_name):
+		#_load_logic(path_name)
+	#else:
+		#_load_binary(path_name)
 	#if path_name.ends_with("binlvl"):
 		#
 	#else:
 		
-	
+
+func looks_binary(path: String) -> bool:
+	var f := FileAccess.open(path, FileAccess.READ)
+	if not f: return false
+	var buf := f.get_buffer(512) # read first 512 bytes
+	f.close()
+	return buf.find(0) != -1  # contains NULL byte → binary
+
+
+
+# Returns one of: "binary", "json", "unknown"
+func detect_save_format(path: String) -> String:
+	var f := FileAccess.open(path, FileAccess.READ)
+	if f == null:
+		return "unknown"
+
+	# Quick cheap scan for obvious-binary bytes (NULL is a strong indicator)
+	var length := f.get_length()
+	var peek_len := int(min(1024, length)) # first chunk only
+	if peek_len > 0:
+		var buf := f.get_buffer(peek_len)
+		for b in buf:
+			if b == 0: # null byte -> almost certainly binary
+				f.close()
+				return "binary"
+
+	# Try binary deserialize first (fast when it is binary)
+	f.seek(0)
+	var value = f.get_var(true) # allow objects if needed
+	var err = f.get_error()
+	if err == OK:
+		# You can strengthen this by checking type:
+		# if typeof(value) == TYPE_DICTIONARY: ...
+		f.close()
+		return "binary"
+
+	# Fall back to JSON parse
+	f.seek(0)
+	var text := f.get_as_text()
+	f.close()
+
+	# Quick textual sanity: must start with { or [ (optional)
+	var trimmed := text.strip_edges()
+	if trimmed.length() == 0:
+		return "unknown"
+
+	if not (trimmed.begins_with("{") or trimmed.begins_with("[")):
+		# Not typical JSON form — treat as unknown (or binary)
+		return "unknown"
+
+	var json := JSON.new()
+	var res := json.parse(trimmed)
+	if res == OK:
+		return "json"
+
+	return "unknown"
+
+
+
 
 
 func _input(_event: InputEvent) -> void:
@@ -1735,7 +1818,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	var before = camera.get_global_mouse_position()
 	
-	camera.zoom = (camera.zoom + change).clamp(Vector2(0.4, 0.4), Vector2(5, 5))
+	camera.zoom = (camera.zoom + change).clamp(Vector2(0.2, 0.2), Vector2(5, 5))
 	
 	var after = camera.get_global_mouse_position()
 	camera.global_position += (before - after)
