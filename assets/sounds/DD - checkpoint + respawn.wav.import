@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d2o4sc8sf2ykd"
+path="res://.godot/imported/DD - checkpoint + respawn.wav-fc9a948b53200b9851aa6668c396f50e.sample"
+
+[deps]
+
+source_file="res://assets/sounds/DD - checkpoint + respawn.wav"
+dest_files=["res://.godot/imported/DD - checkpoint + respawn.wav-fc9a948b53200b9851aa6668c396f50e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

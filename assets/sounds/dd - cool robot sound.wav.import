@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b4i6wanxbfe86"
+path="res://.godot/imported/dd - cool robot sound.wav-a60e468e923095e53a80051753a4a9bd.sample"
+
+[deps]
+
+source_file="res://assets/sounds/dd - cool robot sound.wav"
+dest_files=["res://.godot/imported/dd - cool robot sound.wav-a60e468e923095e53a80051753a4a9bd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

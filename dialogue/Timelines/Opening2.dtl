@@ -1,0 +1,25 @@
+join Bit (C Rank) left [animation="Fade In"]
+Bit (C Rank): W-What’s going on?? Why is there a drill on my arm?
+join Computer (Error) right [animation="Fade In"]
+Computer (Error): EXPERIMENT 1257 HAS ESCAPED, ALERTING DR. IVER.
+leave Computer [animation="Fade Out"]
+Bit (C Rank): Dr. Iver? Who’s that? What’s going on!
+join "Dr Iver" right [animation="Fade In"]
+"Dr Iver" (Neutral): Erm…Ahem, can you hear me?
+Bit (D Rank): Who’s there?!
+"Dr Iver": Hello experiment 12.. -I-I mean Bit. My name is Dr.Iver, I’m talking to you over the lab intercom.
+"Dr Iver": I am but a humble scientist, conducting 100% legal and ethical work on willing test subjects such as yourself.
+"Dr Iver": Your stasis must have scrambled your memories a little.
+"Dr Iver": I can assure you, you are here completely of your own judgement.
+"Dr Iver": Now, if you could just return to your stasis pod, that would allow me to get back to my work.
+Bit (C Rank): So you want me to believe that I willingly signed up to have a drill attached to my arm,
+Bit: and to keep myself trapped in a lab…
+"Dr Iver": ….Yes?
+Bit (D Rank): Sorry Doc, I don’t trust anyone with a PHD!
+Bit (C Rank): ...
+"Dr Iver": ...
+Bit (B Rank): …Well I’m sure some of them are fine, But Either Way!
+Bit (S Rank): I’m busting out of here Doc!
+"Dr Iver": Good luck 1257, BUT your Stasis chamber was placed in front of a training
+"Dr Iver": course to assess your abilities! You’re too inexperienced, you’ll never get past it!
+leave --All-- [animation="Fade Out"]

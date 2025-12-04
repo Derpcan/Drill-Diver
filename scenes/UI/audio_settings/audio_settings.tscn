@@ -1,0 +1,174 @@
+[gd_scene load_steps=5 format=3 uid="uid://vdwadrgp7n8y"]
+
+[ext_resource type="Script" uid="uid://tg7cv7ctku4p" path="res://scenes/UI/keybind_settings/back_button.gd" id="1_erstv"]
+[ext_resource type="Script" uid="uid://h60p84px6x0s" path="res://scenes/UI/audio_settings/audio_settings.gd" id="1_skuvb"]
+[ext_resource type="Shader" uid="uid://0x4jckkmsvb0" path="res://scenes/UI/audio_settings/blur_shader.gdshader" id="2_jfiri"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oelyj"]
+shader = ExtResource("2_jfiri")
+shader_parameter/offset = 2.5
+
+[node name="AudioSettings" type="CanvasLayer" node_paths=PackedStringArray("master_audio_slider", "master_label", "sfx_audio_slider", "sfx_label", "music_audio_slider", "music_label", "typing_audio_slider", "typing_label")]
+script = ExtResource("1_skuvb")
+master_audio_slider = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/MasterAudio/HBoxContainer2/Master")
+master_label = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/MasterAudio/Label")
+sfx_audio_slider = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/SFX/HBoxContainer2/SFX")
+sfx_label = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/SFX/Label")
+music_audio_slider = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/Music/HBoxContainer2/Music")
+music_label = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/Music/Label")
+typing_audio_slider = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/Typing/HBoxContainer2/Typing")
+typing_label = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/Typing/Label")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_oelyj")
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.387)
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -262.0
+offset_top = -236.0
+offset_right = 262.0
+offset_bottom = 236.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -245.0
+offset_top = -272.5
+offset_right = 245.0
+offset_bottom = 172.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Change Audio Settings"
+
+[node name="HSeparator3" type="HSeparator" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterAudio" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/MasterAudio"]
+layout_mode = 2
+text = "Master Audio: 100%"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/MasterAudio"]
+layout_mode = 2
+alignment = 1
+
+[node name="Master" type="HSlider" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/MasterAudio/HBoxContainer2"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 200.0
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SFX" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/SFX"]
+layout_mode = 2
+text = "Sound Effects"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/SFX"]
+layout_mode = 2
+alignment = 1
+
+[node name="SFX" type="HSlider" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/SFX/HBoxContainer2"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 200.0
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Music" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/Music"]
+layout_mode = 2
+text = "Music"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/Music"]
+layout_mode = 2
+alignment = 1
+
+[node name="Music" type="HSlider" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/Music/HBoxContainer2"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 200.0
+
+[node name="HSeparator5" type="HSeparator" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Typing" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/Typing"]
+layout_mode = 2
+text = "Typing"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/Typing"]
+layout_mode = 2
+alignment = 1
+
+[node name="Typing" type="HSlider" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer/Typing/HBoxContainer2"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 200.0
+
+[node name="HSeparator4" type="HSeparator" parent="Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -50.0
+offset_right = 75.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Back"
+script = ExtResource("1_erstv")

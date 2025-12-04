@@ -1,0 +1,288 @@
+{
+	"editor_camera_scroll_in": [
+		{
+			"button_index": 4,
+			"pressed": false,
+			"type": "mouse_button"
+		},
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 80,
+			"shift": false,
+			"type": "key"
+		}
+	],
+	"editor_camera_scroll_out": [
+		{
+			"button_index": 5,
+			"pressed": false,
+			"type": "mouse_button"
+		},
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 76,
+			"shift": false,
+			"type": "key"
+		}
+	],
+	"editor_camera_scroll_reset": [
+		{
+			"button_index": 3,
+			"pressed": false,
+			"type": "mouse_button"
+		}
+	],
+	"editor_delete_tile": [
+		{
+			"button_index": 2,
+			"pressed": false,
+			"type": "mouse_button"
+		}
+	],
+	"editor_move_down": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 83,
+			"shift": false,
+			"type": "key"
+		}
+	],
+	"editor_move_left": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 65,
+			"shift": false,
+			"type": "key"
+		}
+	],
+	"editor_move_right": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 68,
+			"shift": false,
+			"type": "key"
+		}
+	],
+	"editor_move_up": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 87,
+			"shift": false,
+			"type": "key"
+		}
+	],
+	"editor_place_tile": [
+		{
+			"button_index": 1,
+			"pressed": false,
+			"type": "mouse_button"
+		},
+		{
+			"button_index": 0,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"editor_quick_toggle_tile_selector": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 69,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"button_index": 3,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"editor_save_level_editor": [
+		{
+			"alt": false,
+			"ctrl": true,
+			"meta": false,
+			"physical_keycode": 83,
+			"shift": false,
+			"type": "key"
+		}
+	],
+	"editor_toggle_delete_tile_mode": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 88,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"button_index": 2,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"editor_undo_level_editor": [
+		{
+			"alt": false,
+			"ctrl": true,
+			"meta": false,
+			"physical_keycode": 90,
+			"shift": false,
+			"type": "key"
+		}
+	],
+	"game_dash": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 4194325,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"button_index": 2,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"game_escape": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 4194305,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"button_index": 6,
+			"pressed": true,
+			"type": "joy_button"
+		}
+	],
+	"game_jump": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 32,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"button_index": 0,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"game_move_down": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 83,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"axis": 1,
+			"type": "joy_axis",
+			"value": 1.0
+		},
+		{
+			"button_index": 12,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"game_move_left": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 65,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"axis": 0,
+			"type": "joy_axis",
+			"value": -1.0
+		},
+		{
+			"button_index": 13,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"game_move_right": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 68,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"axis": 0,
+			"type": "joy_axis",
+			"value": 1.0
+		},
+		{
+			"button_index": 14,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"game_move_up": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 87,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"axis": 1,
+			"type": "joy_axis",
+			"value": -1.0
+		},
+		{
+			"button_index": 11,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	],
+	"game_super_drill": [
+		{
+			"alt": false,
+			"ctrl": false,
+			"meta": false,
+			"physical_keycode": 69,
+			"shift": false,
+			"type": "key"
+		},
+		{
+			"button_index": 3,
+			"pressed": false,
+			"type": "joy_button"
+		}
+	]
+}

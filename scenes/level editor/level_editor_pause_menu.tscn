@@ -1,0 +1,488 @@
+[gd_scene load_steps=28 format=3 uid="uid://04tplb31141v"]
+
+[ext_resource type="Texture2D" uid="uid://c36vsptbncd0b" path="res://assets/sprites/menu/UI_Hologram_Frame_Standard_02a-export.png" id="1_mkhpj"]
+[ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="2_d4qoj"]
+[ext_resource type="Texture2D" uid="uid://cuemrkgn6e26i" path="res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export3.png" id="3_8lmil"]
+[ext_resource type="Texture2D" uid="uid://b0dwfsjh4xp03" path="res://assets/sprites/menu/Spritesheet_Animation_UI_Hologram_Button_01a-export4.png" id="4_yjou5"]
+[ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="6_3gso2"]
+[ext_resource type="Texture2D" uid="uid://xxg1f1vuvk2o" path="res://assets/sprites/menu/UI_Hologram_TimeHologram.png" id="6_mkhpj"]
+[ext_resource type="AudioStream" uid="uid://trj0oi5g38j0" path="res://assets/sounds/DD - resume click (UI).wav" id="7_8lmil"]
+[ext_resource type="AudioStream" uid="uid://djmmo20hp5wwa" path="res://assets/sounds/DD - pause click (UI).wav" id="8_yjou5"]
+[ext_resource type="Shader" uid="uid://0x4jckkmsvb0" path="res://scenes/UI/audio_settings/blur_shader.gdshader" id="9_yjou5"]
+
+[sub_resource type="GDScript" id="GDScript_0a7f6"]
+script/source = "extends CanvasLayer
+
+func _ready():
+	$PauseSound.play()
+	$Animation.play(\"Open\")
+	$Container/Resume.grab_focus()
+
+func _unhandled_input(event: InputEvent) -> void:
+	
+	if event.is_action_pressed(\"game_escape\"):
+		get_viewport().set_input_as_handled()
+		$ResumeSound.play()
+		$Animation.play(\"Close\")
+		await $Animation.animation_finished
+		SceneManager.pop_scene()
+		
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3gso2"]
+shader = ExtResource("9_yjou5")
+shader_parameter/offset = 2.5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7yp4j"]
+atlas = ExtResource("1_mkhpj")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_56tj2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7yp4j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Shader" id="Shader_hstxw"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mkhpj"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("2_d4qoj")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="GDScript" id="GDScript_d4qoj"]
+script/source = "extends TextureButton
+var mat = material
+var focused = false
+
+func _ready():
+	self.pressed.connect(_handle_on_press)
+
+func _handle_on_press():
+	if Dialogic.current_timeline != null:
+		Dialogic.end_timeline(true)
+	get_parent().get_parent().get_node(\"ResumeSound\").play()
+	SceneManager.pop_scene()
+	SceneManager.change_scene(\"res://scenes/main_menu.tscn\")
+	
+func _on_mouse_entered():
+	if focused != true:
+		mat.set_shader_parameter(\"useHologram\", true)
+		
+		focused = true
+ 
+func _on_mouse_exited():
+	if focused == true:
+		mat.set_shader_parameter(\"useHologram\", false)
+		
+		focused = false
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_ifi66"]
+font = ExtResource("6_3gso2")
+font_size = 96
+font_color = Color(0.533333, 1, 0.105882, 1)
+
+[sub_resource type="Shader" id="Shader_yjou5"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0jg8"]
+resource_local_to_scene = true
+shader = SubResource("Shader_yjou5")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("2_d4qoj")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="GDScript" id="GDScript_mkhpj"]
+script/source = "extends TextureButton
+var mat = material
+var focused = false
+func _ready():
+	
+	self.pressed.connect(_handle_on_press)
+
+func _handle_on_press():
+	get_parent().get_parent().get_node(\"ResumeSound\").play()
+	get_parent().get_parent().get_node(\"Animation\").play(\"Close\")
+	await get_parent().get_parent().get_node(\"Animation\").animation_finished
+	SceneManager.pop_scene()
+
+#func _input(event):
+	#if event.is_action_pressed(\"escape\"):
+		#SceneManager.pop_scene()
+
+func _on_mouse_entered():
+	if focused != true:
+		mat.set_shader_parameter(\"useHologram\", true)
+		
+		focused = true
+ 
+func _on_mouse_exited():
+	if focused == true:
+		mat.set_shader_parameter(\"useHologram\", false)
+		
+		focused = false
+"
+
+[sub_resource type="Shader" id="Shader_3gso2"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8lmil"]
+shader = SubResource("Shader_3gso2")
+shader_parameter/useHologram = true
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("2_d4qoj")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yjou5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_mkhpj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_8lmil"]
+resource_name = "Close"
+length = 0.133337
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mkhpj"]
+resource_name = "Open"
+length = 0.133337
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1e-05), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_k0jg8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8lmil"]
+_data = {
+&"Close": SubResource("Animation_8lmil"),
+&"Open": SubResource("Animation_mkhpj"),
+&"RESET": SubResource("Animation_k0jg8")
+}
+
+[node name="LevelEditorPauseMenu" type="CanvasLayer"]
+process_mode = 2
+process_priority = 1
+script = SubResource("GDScript_0a7f6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_3gso2")
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 583.0
+offset_top = 313.0
+offset_right = 583.0
+offset_bottom = 313.0
+scale = Vector2(1, 1e-05)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Container"]
+z_index = 2
+scale = Vector2(4.64, 4.64)
+sprite_frames = SubResource("SpriteFrames_56tj2")
+
+[node name="BlockUI" type="ColorRect" parent="Container"]
+layout_mode = 2
+offset_left = -583.0
+offset_top = -313.0
+offset_right = 569.0
+offset_bottom = 335.0
+color = Color(1, 1, 1, 0)
+
+[node name="Main Menu" type="TextureButton" parent="Container"]
+z_index = 2
+material = SubResource("ShaderMaterial_mkhpj")
+layout_mode = 2
+offset_left = -138.0
+offset_top = 36.0
+offset_right = -42.0
+offset_bottom = 65.0
+scale = Vector2(3, 3)
+focus_neighbor_top = NodePath("../Resume")
+texture_normal = ExtResource("3_8lmil")
+texture_pressed = ExtResource("4_yjou5")
+script = SubResource("GDScript_d4qoj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container/Main Menu"]
+layout_mode = 0
+offset_left = 16.1175
+offset_top = 4.29799
+offset_right = 367.117
+offset_bottom = 100.298
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="Container/Main Menu/HBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+label_settings = SubResource("LabelSettings_ifi66")
+
+[node name="Resume" type="TextureButton" parent="Container"]
+z_index = 2
+material = SubResource("ShaderMaterial_k0jg8")
+layout_mode = 2
+offset_left = -136.0
+offset_top = -52.0
+offset_right = -40.0
+offset_bottom = -23.0
+scale = Vector2(3, 3)
+focus_neighbor_bottom = NodePath("../Main Menu")
+texture_normal = ExtResource("3_8lmil")
+texture_pressed = ExtResource("4_yjou5")
+script = SubResource("GDScript_mkhpj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container/Resume"]
+layout_mode = 0
+offset_left = 22.5946
+offset_top = 3.8237
+offset_right = 373.594
+offset_bottom = 99.8237
+scale = Vector2(0.219, 0.185)
+
+[node name="Label" type="Label" parent="Container/Resume/HBoxContainer"]
+layout_mode = 2
+text = "Resume"
+label_settings = SubResource("LabelSettings_ifi66")
+
+[node name="Time Background" type="AnimatedSprite2D" parent="Container"]
+z_index = 2
+material = SubResource("ShaderMaterial_8lmil")
+position = Vector2(3, -125)
+scale = Vector2(3.52, 3.52)
+sprite_frames = SubResource("SpriteFrames_yjou5")
+
+[node name="Label" type="Label" parent="Container/Time Background"]
+z_index = 2
+offset_left = -27.8409
+offset_top = -15.3409
+offset_right = 194.159
+offset_bottom = 80.6591
+scale = Vector2(0.272727, 0.272727)
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_ifi66")
+metadata/_edit_use_anchors_ = true
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Container/AnimatedSprite2D")
+libraries = {
+&"": SubResource("AnimationLibrary_8lmil")
+}
+
+[node name="ResumeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_8lmil")
+
+[node name="PauseSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_yjou5")
+
+[connection signal="focus_entered" from="Container/Main Menu" to="Container/Main Menu" method="_on_mouse_entered"]
+[connection signal="focus_exited" from="Container/Main Menu" to="Container/Main Menu" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Container/Main Menu" to="Container/Main Menu" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Container/Main Menu" to="Container/Main Menu" method="_on_mouse_exited"]
+[connection signal="focus_entered" from="Container/Resume" to="Container/Resume" method="_on_mouse_entered"]
+[connection signal="focus_exited" from="Container/Resume" to="Container/Resume" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Container/Resume" to="Container/Resume" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Container/Resume" to="Container/Resume" method="_on_mouse_exited"]

@@ -1,0 +1,10 @@
+export/Windows/Drill Diver.console.exe
+export/Windows/Drill Diver.exe
+.godot/editor/
+.godot/
+/android/
+.DS_Store
+._*
+export/
+export_presets.cfg
+*.tmp

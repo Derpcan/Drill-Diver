@@ -1,0 +1,7 @@
+join "Dr Iver" right [animation="Fade In"]
+"Dr Iver": Ok! Well, I may have helped you on the last one, but it won’t happen again!
+"Dr Iver": You’ll never find out that you can drill into dirt by dashing into it!
+join Bit (C Rank) left [animation="Fade In"]
+Bit (C Rank): You realize what you did, right?
+"Dr Iver": IT WON’T HAPPEN AGAIN!!!
+leave --All-- [animation="Fade Out"]

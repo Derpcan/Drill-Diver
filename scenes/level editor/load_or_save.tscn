@@ -1,0 +1,465 @@
+[gd_scene load_steps=33 format=3 uid="uid://dlby0tn0le6uv"]
+
+[ext_resource type="Script" uid="uid://duwvy0vgir65y" path="res://scenes/level editor/load_or_save.gd" id="1_wof0u"]
+[ext_resource type="Texture2D" uid="uid://g8ariaub018v" path="res://assets/sprites/menu/UI_Papernote_FrameStandard01.png" id="2_0xlsa"]
+[ext_resource type="Texture2D" uid="uid://dut1g3hqcnhmw" path="res://assets/sprites/bit/Bit Construction.png" id="2_5meuo"]
+[ext_resource type="PackedScene" uid="uid://be1u7dex0aqss" path="res://scenes/UI/custom_button.tscn" id="2_arkj1"]
+[ext_resource type="Texture2D" uid="uid://dmw62mluekopn" path="res://assets/sprites/menu/UI_Metalworks_Frame02b.png" id="2_ghv8j"]
+[ext_resource type="Texture2D" uid="uid://vtku2nt3lrt6" path="res://assets/WarningSign_PixyFantasy/WarningSign01.png" id="2_p1na8"]
+[ext_resource type="Texture2D" uid="uid://u5ofb4itevxh" path="res://assets/WarningSign_PixyFantasy/WarningSign02.png" id="3_arkj1"]
+[ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="3_sk1hb"]
+[ext_resource type="FontFile" uid="uid://cqtchojl03shb" path="res://assets/fonts/fs-pixel-sans-unicode-regular.ttf" id="3_v7dyo"]
+[ext_resource type="Texture2D" uid="uid://nm0t8yxjlqdm" path="res://assets/WarningSign_PixyFantasy/WarningSign03.png" id="4_sk1hb"]
+[ext_resource type="Texture2D" uid="uid://c072lp8y51ynn" path="res://assets/sprites/menu/UI_Metalworks_Frame01Bt.png" id="4_x01o5"]
+[ext_resource type="Texture2D" uid="uid://bfqcdc456uijt" path="res://assets/WarningSign_PixyFantasy/WarningSign04.png" id="5_lisxt"]
+[ext_resource type="Texture2D" uid="uid://n5vbpodkcqik" path="res://assets/WarningSign_PixyFantasy/WarningSign05.png" id="6_ghv8j"]
+[ext_resource type="Texture2D" uid="uid://vodr3wbs1n2q" path="res://assets/WarningSign_PixyFantasy/WarningSign06.png" id="7_v7dyo"]
+[ext_resource type="Texture2D" uid="uid://etvh132313mr" path="res://assets/WarningSign_PixyFantasy/WarningSign07.png" id="8_0xlsa"]
+[ext_resource type="Texture2D" uid="uid://cjnx8wkvi68hf" path="res://assets/WarningSign_PixyFantasy/WarningSign08.png" id="9_x01o5"]
+[ext_resource type="Texture2D" uid="uid://c6af2q5wvv1w3" path="res://assets/WarningSign_PixyFantasy/WarningSign09.png" id="10_5meuo"]
+[ext_resource type="PackedScene" uid="uid://byidv4a683rw2" path="res://scenes/UI/custom_button/custom_button_small.tscn" id="13_x01o5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cu643"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5meuo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cv2wr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0xlsa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5meuo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_x01o5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v7dyo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ghv8j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0xlsa"]
+font = ExtResource("3_v7dyo")
+font_size = 92
+font_color = Color(0.768627, 0.670588, 0.0980392, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_x01o5"]
+line_spacing = -30.0
+font = ExtResource("3_v7dyo")
+font_size = 92
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8w7op"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_p1na8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_arkj1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sk1hb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lisxt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ghv8j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_v7dyo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_0xlsa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_x01o5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_5meuo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_arkj1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p1na8"]
+resource_name = "loop"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sk1hb"]
+_data = {
+&"RESET": SubResource("Animation_arkj1"),
+&"loop": SubResource("Animation_p1na8")
+}
+
+[sub_resource type="Shader" id="Shader_hstxw"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lisxt"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.921569, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.219608, 0.25098, 0.713726, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("3_sk1hb")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ghv8j"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.921569, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.219608, 0.25098, 0.713726, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("3_sk1hb")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sk1hb"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hstxw")
+shader_parameter/useHologram = false
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("3_sk1hb")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[node name="LoadOrSave" type="CanvasLayer" node_paths=PackedStringArray("load_button", "create_button", "back_button", "import_button")]
+script = ExtResource("1_wof0u")
+load_button = NodePath("Control2/Load")
+create_button = NodePath("Control2/Create")
+back_button = NodePath("Control2/Back")
+import_button = NodePath("Control2/Import")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 650.0
+color = Color(0, 0, 0, 0.313726)
+
+[node name="Bit" type="AnimatedSprite2D" parent="Control/ColorRect"]
+position = Vector2(259, 339)
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_cu643")
+
+[node name="Blueprint" type="AnimatedSprite2D" parent="Control/ColorRect"]
+position = Vector2(1086, 327)
+rotation = -3.14159
+scale = Vector2(7, 7)
+sprite_frames = SubResource("SpriteFrames_cv2wr")
+
+[node name="Controller Sign" type="AnimatedSprite2D" parent="Control/ColorRect"]
+position = Vector2(592, 374)
+scale = Vector2(3.98111, 4.02894)
+sprite_frames = SubResource("SpriteFrames_5meuo")
+
+[node name="ConstructionSign" type="AnimatedSprite2D" parent="Control/ColorRect"]
+position = Vector2(664, 150.688)
+scale = Vector2(7.668, 7.668)
+sprite_frames = SubResource("SpriteFrames_v7dyo")
+
+[node name="ColorRect" type="ColorRect" parent="Control/ColorRect"]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 129.448
+offset_right = 479.9
+offset_bottom = 159.668
+scale = Vector2(11.288, -2.588)
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect"]
+layout_mode = 0
+offset_left = -18.0
+offset_top = 28.448
+offset_right = 1130.74
+offset_bottom = 517.448
+scale = Vector2(1.2, 1.2)
+theme_override_constants/separation = 396
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "DRILL DIVER"
+label_settings = SubResource("LabelSettings_0xlsa")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 96
+alignment = 1
+
+[node name="Load3" type="Button" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+text = "Load Level"
+
+[node name="Create3" type="Button" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+text = "Create New Level"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/ColorRect"]
+layout_mode = 0
+offset_left = 154.0
+offset_top = 119.0
+offset_right = 1302.74
+offset_bottom = 704.0
+scale = Vector2(0.9, 0.9)
+theme_override_constants/separation = 396
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/ColorRect/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "CONSTRUCTION
+ZONE"
+label_settings = SubResource("LabelSettings_x01o5")
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 96
+alignment = 1
+
+[node name="Load3" type="Button" parent="Control/ColorRect/VBoxContainer2/HBoxContainer2"]
+visible = false
+layout_mode = 2
+text = "Load Level"
+
+[node name="Create3" type="Button" parent="Control/ColorRect/VBoxContainer2/HBoxContainer2"]
+visible = false
+layout_mode = 2
+text = "Create New Level"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(525, 282)
+sprite_frames = SubResource("SpriteFrames_8w7op")
+
+[node name="Label" type="Label" parent="AnimatedSprite2D"]
+visible = false
+offset_left = 15.0
+offset_top = -8.0
+offset_right = 357.0
+offset_bottom = 15.0
+text = "WARNING: "
+
+[node name="Label2" type="Label" parent="AnimatedSprite2D"]
+visible = false
+offset_left = -123.0
+offset_top = 22.0
+offset_right = 219.0
+offset_bottom = 45.0
+text = "No Controllers Beyond This Point"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_sk1hb")
+}
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 189.0
+offset_top = 299.0
+offset_right = 229.0
+offset_bottom = 339.0
+
+[node name="Load" parent="Control2" instance=ExtResource("2_arkj1")]
+material = SubResource("ShaderMaterial_lisxt")
+layout_mode = 0
+offset_left = 545.0
+offset_top = 110.0
+offset_right = 641.0
+offset_bottom = 142.0
+scale = Vector2(3.5, 3.5)
+focus_neighbor_top = NodePath("../Create")
+focus_neighbor_bottom = NodePath("../Back")
+button_string = "Load"
+
+[node name="Create" parent="Control2" instance=ExtResource("2_arkj1")]
+material = SubResource("ShaderMaterial_ghv8j")
+layout_mode = 0
+offset_left = 545.0
+offset_top = -1.99999
+offset_right = 641.0
+offset_bottom = 27.0
+scale = Vector2(3.5, 3.5)
+button_string = "Create"
+
+[node name="Back2" parent="Control2" instance=ExtResource("2_arkj1")]
+visible = false
+material = SubResource("ShaderMaterial_sk1hb")
+layout_mode = 0
+offset_left = -74.0
+offset_top = 148.0
+offset_right = 22.0
+offset_bottom = 177.0
+scale = Vector2(2.5, 2.5)
+button_string = "Back"
+
+[node name="Back" parent="Control2" instance=ExtResource("13_x01o5")]
+layout_mode = 0
+offset_left = 545.0
+offset_top = 222.0
+offset_right = 609.0
+offset_bottom = 254.0
+scale = Vector2(3.5, 3.5)
+
+[node name="Import" parent="Control2" instance=ExtResource("13_x01o5")]
+layout_mode = 0
+offset_left = 727.0
+offset_top = -107.0
+offset_right = 791.0
+offset_bottom = -75.0
+scale = Vector2(3.5, 3.5)
+button_string = "Import"
+
+[node name="Import" type="Button" parent="."]
+offset_left = 565.0
+offset_top = 729.0
+offset_right = 671.0
+offset_bottom = 760.0
+text = "Import Level"
