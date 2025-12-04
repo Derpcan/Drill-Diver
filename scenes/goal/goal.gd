@@ -36,7 +36,8 @@ func _on_area_2d_area_entered(_area):
 		ExplosionPlayer.play("Blow Up")
 		GeneratorSound.stop()
 		
-		
+		var player:Player = get_tree().get_first_node_in_group("player")
+		player.animated_sprite.rotation = 0
 		get_tree().get_first_node_in_group("player")._end_level()
 		#get_parent().get_node("Player")._end_level()
 		
