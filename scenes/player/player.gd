@@ -260,8 +260,8 @@ func _set_last_dash(dir: Vector2):
 func _end_level():
 	drill_detector.monitorable = false
 	drill_detector.monitoring = false
-	$HurtBox.monitorable = false
-	$HurtBox.monitoring = false
+	$HurtBox.invicible = true
+	
 	await dash_component.dash_end
 	state_machine._enter_state("idle")
 	movement_component._disable_movement()
@@ -308,7 +308,6 @@ func _play_item_collect():
 
 
 func _on_dash_hitbox_hit_something():
-	print("mslmdls")
 	dash_component._enable_dash()
 	dash_component._enable_dashing()
 	dash_component._enemy_dash()

@@ -1,6 +1,6 @@
 extends Area2D
 class_name Hurtbox
-
+var invincible = false
 ## The health component that should lose health when taking damage
 @export var health_component:HealthComponent
 
@@ -12,7 +12,8 @@ signal got_hit
 
 
 func _take_damage(damage_value:int) -> void:
-	print("ow!")
-	if health_component:
-		health_component.current_hp -= damage_value
-	got_hit.emit()
+	if invincible == false:
+		print("ow!")
+		if health_component:
+			health_component.current_hp -= damage_value
+		got_hit.emit()

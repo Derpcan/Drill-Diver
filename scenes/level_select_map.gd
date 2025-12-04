@@ -78,6 +78,9 @@ func _unhandled_input(event):
 		
 	elif Input.is_action_just_pressed("game_super_drill"):
 		enter_level()
+		
+	if Input.is_action_just_pressed("ui_cancel"):
+		SceneManager.change_scene("res://scenes/main_menu.tscn")
 
 
 # ==========================================
@@ -99,6 +102,7 @@ func try_move_to(index):
 
 	# Animate running
 	player.play("run")
+	$MovementSound.play()
 	player.flip_h = target_offset < path_follow.progress
 
 
@@ -122,6 +126,7 @@ func try_move_to(index):
 		
 func _process(delta):
 	if not is_moving:
+		$MovementSound.stop()
 		return
 
 	var distance = target_offset - path_follow.progress
@@ -222,18 +227,30 @@ func enter_level():
 		0:
 			$FileDialog.show()
 		1:
+			$BitVoice.play()
+			$LevelEnter.play()
+			await $LevelEnter.finished
 			SceneManager.change_scene(
 				"res://scenes/level editor/testing/tutorial_level_loader.tscn")
 		_:
 		 # Safely pass the level path
 			print("Entering level with path:", lvl_path)
+			$BitVoice.play()
+			$LevelEnter.play()
+			await $LevelEnter.finished
 			SceneManager.change_scene_extra_args(
 				"res://scenes/level editor/testing/test_custom_level_editor.tscn",
 				[lvl_path]
 			)
 	
 func file_selected(file_path:String):
+	$BitVoice.play()
+	$LevelEnter.play()
+	await $LevelEnter.finished
 	SceneManager.change_scene_extra_args(
 		"res://scenes/level editor/testing/test_custom_level_editor.tscn", 
 		[file_path]
 	)
+
+
+	
