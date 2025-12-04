@@ -1820,13 +1820,14 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
-[node name="TestCustomLevelEditor" type="Node2D" node_paths=PackedStringArray("physics_tilemap", "decorative_tilemap", "object_node", "to_level_select")]
+[node name="TestCustomLevelEditor" type="Node2D" node_paths=PackedStringArray("physics_tilemap", "decorative_tilemap", "object_node", "to_level_select", "player")]
 script = ExtResource("1_ve8og")
 s_rank_time = 10.0
 physics_tilemap = NodePath("PhysicsTileMap")
 decorative_tilemap = NodePath("DecorativeTileMap")
 object_node = NodePath("ObjectNode")
 to_level_select = NodePath("ToLevelSelect")
+player = NodePath("Player")
 
 [node name="CaveBackground" parent="." instance=ExtResource("2_ug80q")]
 

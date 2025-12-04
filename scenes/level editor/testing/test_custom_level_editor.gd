@@ -20,6 +20,8 @@ class_name TestCustomLevelEditor
 
 @export var to_level_select:CanvasLayer
 
+@export var player:Player
+
 var ghost_file_name:String:
 	set(new_file_name):
 		ghost_file_name = new_file_name + ".ghst"
@@ -59,6 +61,10 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(0.1).timeout
 	$CheckpointManager._ready()
+
+func _physics_process(delta: float) -> void:
+	if player.global_position.y >= 2896+400:
+		player.health_component.take_damage(10000)
 
 
 func _retry_level():
