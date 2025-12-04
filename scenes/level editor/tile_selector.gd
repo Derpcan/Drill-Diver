@@ -33,6 +33,9 @@ signal slow_down_camera()
 @export var slow_down_camera_button:Button
 @export var camera_speed_label:Label
 
+@export var camera_zoom_label:Label
+@export var camera_zoom_line_edit:CustomLineEdit
+
 
 func _ready() -> void:
 	open_close_button.pressed.connect(open_close_button_pressed)
@@ -61,6 +64,20 @@ func _ready() -> void:
 	
 	speed_up_camera_button.connect("button_down", _emit_speed_up_camera)
 	slow_down_camera_button.connect("button_down", _emit_slow_down_camera)
+	
+	camera_zoom_line_edit.input_value_submitted.connect(_check_line_edit_is_float)
+
+
+func _set_camera_zoom_label(new_zoom:float) -> void:
+	camera_zoom_label.text = "Camera Zoom: %.2f" % new_zoom
+
+
+signal camera_zoom_force_set(new_zoom_value:float)
+
+func _check_line_edit_is_float(new_value:String, _placeholder_string:String) -> void:
+	if new_value.is_valid_float():
+		camera_zoom_force_set.emit(new_value.to_float())
+
 
 
 func _update_camera_speed(new_speed_value:int) -> void:

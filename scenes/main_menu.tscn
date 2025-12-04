@@ -563,21 +563,14 @@ libraries = {
 [node name="CaveBackground" parent="." instance=ExtResource("15_7b55j")]
 follow_viewport_enabled = true
 
-[node name="Parallax2D3" parent="CaveBackground" index="0"]
-repeat_times = 400
-
 [node name="Sprite2D3" parent="CaveBackground/Parallax2D3" index="0"]
 region_rect = Rect2(0, 0, 322, 185)
-
-[node name="Parallax2D2" parent="CaveBackground" index="1"]
-repeat_times = 400
 
 [node name="Sprite2D2" parent="CaveBackground/Parallax2D2" index="0"]
 region_rect = Rect2(0, 0, 322, 185)
 
 [node name="Parallax2D" parent="CaveBackground" index="2"]
 scroll_offset = Vector2(-1, -584)
-repeat_times = 400
 
 [node name="Sprite2D" parent="CaveBackground/Parallax2D" index="0"]
 region_rect = Rect2(0, 0, 322, 185)

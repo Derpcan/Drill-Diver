@@ -368,6 +368,18 @@ func _ready() -> void:
 	tile_selector.slow_down_camera.connect(_slow_down_camera)
 	camera_speed_changed.connect(tile_selector._update_camera_speed)
 	#$LevelEditorHud/Button.connect("button_down", toggle_visual_mine_ranges)
+	tile_selector.camera_zoom_force_set.connect(_change_camera_zoom)
+	camera_zoom_changed.connect(tile_selector._set_camera_zoom_label)
+
+
+signal camera_zoom_changed(new_zoom:float)
+
+var max_camera_zoom:float = 5
+var min_camera_zoom:float = 0.1
+func _change_camera_zoom(new_zoom:float) -> void:
+	camera.zoom = Vector2(clampf(new_zoom, min_camera_zoom, max_camera_zoom),clampf(new_zoom, min_camera_zoom, max_camera_zoom))
+	emit_signal("camera_zoom_changed", camera.zoom.x)
+
 
 signal camera_speed_changed(new_value)
 
@@ -1806,7 +1818,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	
 	
-	var zoom_step := 0.1
+	var zoom_step := 0.05
 	var change := Vector2.ZERO
 	
 	if Input.is_action_just_pressed("editor_camera_scroll_out"):
@@ -1818,7 +1830,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	var before = camera.get_global_mouse_position()
 	
-	camera.zoom = (camera.zoom + change).clamp(Vector2(0.2, 0.2), Vector2(5, 5))
+	camera.zoom = (camera.zoom + change).clamp(Vector2(min_camera_zoom, min_camera_zoom), Vector2(max_camera_zoom, max_camera_zoom))
+	emit_signal("camera_zoom_changed", camera.zoom.x)
 	
 	var after = camera.get_global_mouse_position()
 	camera.global_position += (before - after)

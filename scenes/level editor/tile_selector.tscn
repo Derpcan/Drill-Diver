@@ -1,9 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://kwdjeqxdj2v"]
+[gd_scene load_steps=35 format=3 uid="uid://kwdjeqxdj2v"]
 
 [ext_resource type="Script" uid="uid://bmyb88md773v3" path="res://scenes/level editor/tile_selector.gd" id="1_gmssj"]
 [ext_resource type="Shader" uid="uid://0x4jckkmsvb0" path="res://scenes/UI/audio_settings/blur_shader.gdshader" id="2_8ogwd"]
 [ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="3_1t62o"]
 [ext_resource type="PackedScene" uid="uid://cso12yd5vwp87" path="res://scenes/level editor/tile_selector_button.tscn" id="3_igrm3"]
+[ext_resource type="PackedScene" uid="uid://dfppbixslmyep" path="res://scenes/level editor/bonus_parameters/custom_line_edit.tscn" id="3_shrla"]
 [ext_resource type="Texture2D" uid="uid://cu2183edopvth" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/Diamond.png" id="4_1bmts"]
 [ext_resource type="Texture2D" uid="uid://dsjcog8rud0d2" path="res://assets/sprites/goal/GoalImage.png" id="4_ll7yy"]
 [ext_resource type="Texture2D" uid="uid://cvplfy6lm456p" path="res://assets/cave/super_pixel_cave/style_A/PNG/terrain_top_center.png" id="6_0klqo"]
@@ -403,7 +404,7 @@ _data = {
 &"fade_out_close": SubResource("Animation_8ogwd")
 }
 
-[node name="TileSelector" type="Control" node_paths=PackedStringArray("open_close_button", "anim_player", "visual_ranges_button", "visual_paths_button", "hide_help_button", "hide_test_level_button", "speed_up_camera_button", "slow_down_camera_button", "camera_speed_label")]
+[node name="TileSelector" type="Control" node_paths=PackedStringArray("open_close_button", "anim_player", "visual_ranges_button", "visual_paths_button", "hide_help_button", "hide_test_level_button", "speed_up_camera_button", "slow_down_camera_button", "camera_speed_label", "camera_zoom_label", "camera_zoom_line_edit")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
@@ -419,6 +420,8 @@ hide_test_level_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBo
 speed_up_camera_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/SpeedUp")
 slow_down_camera_button = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/SlowDown")
 camera_speed_label = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer/CameraSpeed")
+camera_zoom_label = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer/CameraZoom")
+camera_zoom_line_edit = NodePath("ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer2/CustomLineEdit")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -525,25 +528,19 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
 layout_mode = 2
-text = "Editor Camera Settings"
+text = "Editor Camera Speed"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
 layout_mode = 2
-
-[node name="SpeedUp" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
-layout_mode = 2
-text = "Speed Up Camera Movement"
-
-[node name="VSeparator2" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 35
+alignment = 1
 
 [node name="SlowDown" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "Slow Down Camera Movement"
+text = "-"
 
-[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+[node name="VSeparator2" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 35
 
@@ -551,8 +548,55 @@ theme_override_constants/separation = 35
 layout_mode = 2
 text = "Camera Speed: 4"
 
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="SpeedUp" type="Button" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "+"
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer7"]
 layout_mode = 2
+
+[node name="HSeparator9" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer8" type="VBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8"]
+layout_mode = 2
+text = "Editor Camera Zoom"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8"]
+layout_mode = 2
+alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="CameraZoom" type="Label" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer"]
+layout_mode = 2
+text = "Camera Zoom: 1.0"
+
+[node name="VSeparator" type="VSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8"]
+layout_mode = 2
+alignment = 1
+
+[node name="CustomLineEdit" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer8/HBoxContainer2" instance=ExtResource("3_shrla")]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+placeholder_text = "Set Camera Zoom"
+alignment = 1
 
 [node name="HSeparator2" type="HSeparator" parent="ColorRect/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

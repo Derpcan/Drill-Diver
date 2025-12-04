@@ -8,8 +8,9 @@
 shader = ExtResource("2_jfiri")
 shader_parameter/offset = 2.5
 
-[node name="AudioSettings" type="CanvasLayer" node_paths=PackedStringArray("master_audio_slider", "master_label", "sfx_audio_slider", "sfx_label", "music_audio_slider", "music_label", "typing_audio_slider", "typing_label")]
+[node name="AudioSettings" type="CanvasLayer" node_paths=PackedStringArray("audio_player", "master_audio_slider", "master_label", "sfx_audio_slider", "sfx_label", "music_audio_slider", "music_label", "typing_audio_slider", "typing_label")]
 script = ExtResource("1_skuvb")
+audio_player = NodePath("AudioStreamPlayer")
 master_audio_slider = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/MasterAudio/HBoxContainer2/Master")
 master_label = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/MasterAudio/Label")
 sfx_audio_slider = NodePath("Panel/MarginContainer/ScrollContainer/VBoxContainer/SFX/HBoxContainer2/SFX")
@@ -172,3 +173,5 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Back"
 script = ExtResource("1_erstv")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

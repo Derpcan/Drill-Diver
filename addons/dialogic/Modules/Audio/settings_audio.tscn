@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dpwhshre1n4t6" path="res://addons/dialogic/Editor/Events/Fields/field_options_dynamic.tscn" id="3_bx557"]
 [ext_resource type="PackedScene" uid="uid://kdpp3mibml33" path="res://addons/dialogic/Editor/Events/Fields/field_number.tscn" id="4_xfyvc"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m57ns"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uaowc"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -59,7 +59,7 @@ hint_text = "Default settings for named audio channels."
 
 [node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_m57ns")
+theme_override_styles/panel = SubResource("StyleBoxFlat_uaowc")
 
 [node name="VBox" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
@@ -84,8 +84,8 @@ mode = 3
 [node name="volume" parent="Panel/VBox/AudioChannelDefaultRow" instance=ExtResource("4_xfyvc")]
 layout_mode = 2
 mode = 2
-min = -80.0
-max = 6.0
+min_value = -80.0
+max_value = 6.0
 suffix = "dB"
 
 [node name="audio_bus" parent="Panel/VBox/AudioChannelDefaultRow" instance=ExtResource("3_bx557")]
@@ -95,9 +95,7 @@ mode = 2
 
 [node name="fade_length" parent="Panel/VBox/AudioChannelDefaultRow" instance=ExtResource("4_xfyvc")]
 layout_mode = 2
-mode = 0
 enforce_step = false
-min = 0.0
 
 [node name="loop" type="CheckButton" parent="Panel/VBox/AudioChannelDefaultRow"]
 layout_mode = 2
