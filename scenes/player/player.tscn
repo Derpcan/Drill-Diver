@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://bylp3hel486as"]
+[gd_scene load_steps=41 format=4 uid="uid://bylp3hel486as"]
 
 [ext_resource type="Script" uid="uid://beb7pjqhmdm2o" path="res://scenes/player/player.gd" id="1_0owmy"]
 [ext_resource type="PackedScene" uid="uid://bx843e283ny5p" path="res://scenes/animation sprite/animation_sprite.tscn" id="1_dovo2"]
@@ -25,6 +25,7 @@
 [ext_resource type="AudioStream" uid="uid://5atdejy2gs5r" path="res://assets/sounds/DD - non drillable thud.wav" id="22_yj68g"]
 [ext_resource type="AudioStream" uid="uid://caeygfckbqt1g" path="res://assets/sounds/dd - gem pickup new.wav" id="23_cnsyf"]
 [ext_resource type="AudioStream" uid="uid://ctg3oaotdhx4d" path="res://assets/sounds/dd-dirt sound.wav" id="25_007i1"]
+[ext_resource type="Script" uid="uid://cq3syobvkiuf7" path="res://scripts/player/drill_trail.gd" id="26_6cv16"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_myrg7"]
 radius = 5.0
@@ -65,6 +66,34 @@ loop_end = 531840
 mix_rate = 48000
 stereo = true
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j4nxn"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_j4nxn"]
+offsets = PackedFloat32Array(0, 0.864469, 0.989011, 1)
+colors = PackedColorArray(0.247059, 0.176471, 0.137255, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_28m0y"]
+gradient = SubResource("Gradient_j4nxn")
+width = 1
+height = 1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6cv16"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector3(0, 0, 0)
+spread = 150.0
+initial_velocity_min = 20.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 98, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6cv16"]
+
+[sub_resource type="Gradient" id="Gradient_6cv16"]
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "jump_component", "input_component", "animated_sprite", "state_machine", "gravity_component", "dash_component", "drill_detector", "drill_component", "bump_detector", "bounce_timer", "health_component", "animation_play", "ray", "super_drill_component") groups=["player"]]
 collision_layer = 128
 collision_mask = 25
@@ -86,6 +115,7 @@ ray = NodePath("ShapeCast2D")
 super_drill_component = NodePath("SuperDrillComponent")
 
 [node name="AnimationSprite" parent="." node_paths=PackedStringArray("json_loaded") instance=ExtResource("1_dovo2")]
+z_index = 1
 position = Vector2(0, -2.2)
 scale = Vector2(0.5, 0.5)
 animation = &""
@@ -281,6 +311,27 @@ volume_db = -10.0
 [node name="DirtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("25_007i1")
 volume_db = -10.0
+
+[node name="DrillTrail" type="Node2D" parent="."]
+script = ExtResource("26_6cv16")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="DrillTrail"]
+material = SubResource("CanvasItemMaterial_j4nxn")
+amount = 10
+texture = SubResource("GradientTexture2D_28m0y")
+lifetime = 0.3
+process_material = SubResource("ParticleProcessMaterial_6cv16")
+
+[node name="CanvasGroup" type="CanvasGroup" parent="DrillTrail"]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+
+[node name="Line2D" type="Line2D" parent="DrillTrail/CanvasGroup"]
+material = SubResource("CanvasItemMaterial_6cv16")
+points = PackedVector2Array(0, 0)
+default_color = Color(0.247059, 0.176471, 0.137255, 1)
+gradient = SubResource("Gradient_6cv16")
+joint_mode = 2
 
 [connection signal="timeout" from="BounceTimer" to="." method="_on_bounce_timer_timeout"]
 [connection signal="body_entered" from="BumpDetector" to="." method="_on_bump_detector_body_entered"]
