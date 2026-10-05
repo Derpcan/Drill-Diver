@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://duk6tbof86jaw"]
+
+[ext_resource type="Script" uid="uid://dhedcig5bvo5g" path="res://scenes/checkpoint/spawnpoint.gd" id="1_ybbfl"]
+[ext_resource type="Texture2D" uid="uid://bpuvhv36kqg6e" path="res://assets/development assets (temporary)/Space Runner Assets - 27-11-20/Other sprites/EnergyPack.png" id="2_7k2ad"]
+
+[node name="Spawnpoint" type="Node2D"]
+script = ExtResource("1_ybbfl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(2, 2, 1, 1)
+texture = ExtResource("2_7k2ad")

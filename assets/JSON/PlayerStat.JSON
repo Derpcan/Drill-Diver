@@ -1,0 +1,23 @@
+{
+	"player": {
+		"stats": {
+			"movement": {
+				"max_speed": 130.0,
+				"acceleration": 150.0,
+				"friction": 1.0
+			},
+			"jump": {
+				"jump_height": 260.0,
+				"input_jump_delay_forgiveness": 0.3
+			},
+			"dash": {
+				"dash_speed": 250.0,
+				"dash_time": 0.2
+			},
+			"drill": {
+				"drill_speed": 200.0,
+				"turn_speed": 0.2
+			}
+		}
+	}
+}

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bldjv2jp8etne"]
+
+[ext_resource type="Script" uid="uid://ccap7grsy14il" path="res://scenes/ghost/playback_slider.gd" id="1_7kudh"]
+
+[node name="PlaybackSlider" type="HSlider"]
+offset_right = 8.0
+offset_bottom = 16.0
+script = ExtResource("1_7kudh")

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwtn5o75yxi2j"]
+
+[ext_resource type="Script" uid="uid://b8mmd73gut507" path="res://scenes/components/drill_component.gd" id="1_3lt44"]
+
+[node name="DrillComponent" type="Node"]
+script = ExtResource("1_3lt44")
+drill_speed = 3.0

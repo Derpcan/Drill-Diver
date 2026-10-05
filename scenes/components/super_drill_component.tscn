@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwyk8dwf0iqq6"]
+
+[ext_resource type="Script" uid="uid://ca2j7t2iuei5m" path="res://scenes/components/super_drill_component.gd" id="1_jkpq5"]
+
+[node name="super_drill_component" type="Node"]
+script = ExtResource("1_jkpq5")

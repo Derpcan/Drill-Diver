@@ -1,0 +1,89 @@
+[gd_scene load_steps=3 format=3 uid="uid://cke6gmcnu7r80"]
+
+[ext_resource type="Script" uid="uid://cvfnylfjoajta" path="res://scripts/UI/menus/escape_pause_button.gd" id="1_n87rw"]
+
+[sub_resource type="GDScript" id="GDScript_n87rw"]
+script/source = "extends Button
+
+
+func _ready():
+	grab_focus()
+	self.pressed.connect(_handle_on_press)
+
+func _handle_on_press():
+	SceneManager.pop_scene()
+	SceneManager.change_scene(\"res://scenes/main_menu.tscn\")
+"
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 2
+
+[node name="BlockUI" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 332.0
+offset_top = 133.0
+offset_right = 821.0
+offset_bottom = 490.0
+color = Color(0, 0, 0, 0.313726)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 531.0
+offset_top = 176.0
+offset_right = 626.0
+offset_bottom = 199.0
+text = "Pause Menu"
+
+[node name="BackButton" type="Button" parent="."]
+offset_left = 531.0
+offset_top = 424.0
+offset_right = 630.0
+offset_bottom = 455.0
+text = "Resume"
+script = ExtResource("1_n87rw")
+
+[node name="MainMenuButton" type="Button" parent="."]
+offset_left = 531.0
+offset_top = 356.0
+offset_right = 630.0
+offset_bottom = 387.0
+text = "Main Menu"
+script = SubResource("GDScript_n87rw")
+
+[node name="ControlLabel" type="Label" parent="."]
+offset_left = 347.0
+offset_top = 203.0
+offset_right = 413.0
+offset_bottom = 226.0
+text = "Controls"
+
+[node name="Dash" type="Label" parent="."]
+offset_left = 346.0
+offset_top = 257.0
+offset_right = 687.0
+offset_bottom = 306.0
+text = "Dash: \"Shift\" or \"Left Face Button\""
+
+[node name="Movement" type="Label" parent="."]
+offset_left = 345.0
+offset_top = 236.0
+offset_right = 686.0
+offset_bottom = 285.0
+text = "Movement: \"WASD\" or \"Left Stick\""
+
+[node name="SuperDrill" type="Label" parent="."]
+offset_left = 346.0
+offset_top = 278.0
+offset_right = 687.0
+offset_bottom = 327.0
+text = "Super Drill: \"E\" or \"Top Face Button\""
+
+[node name="Jump" type="Label" parent="."]
+offset_left = 346.0
+offset_top = 300.0
+offset_right = 687.0
+offset_bottom = 349.0
+text = "Jump: \"Spacebar\" or \"Bottom Face Button\""

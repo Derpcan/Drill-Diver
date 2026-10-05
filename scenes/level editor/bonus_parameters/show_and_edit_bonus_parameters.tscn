@@ -1,0 +1,90 @@
+[gd_scene load_steps=2 format=3 uid="uid://dudojlx6kia6i"]
+
+[ext_resource type="Script" uid="uid://r441wv0pag5g" path="res://scenes/level editor/bonus_parameters/show_and_edit_bonus_parameters.gd" id="1_oyt2s"]
+
+[node name="ShowAndEditBonusParameters" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oyt2s")
+
+[node name="Container" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 96.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Container"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+mouse_filter = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer"]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="HSeparator" type="HSeparator" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ObjectNameLabel" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+text = "Example"
+horizontal_alignment = 1
+
+[node name="TilePositionLabel" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+text = "(0, 0)"
+
+[node name="HSeparator2" type="HSeparator" parent="Container/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 0
+text = "Bonus Parameters"
+horizontal_alignment = 1
+
+[node name="BonusParametersHolder" type="BoxContainer" parent="Container/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 0
+vertical = true
+
+[node name="HFlowContainer" type="HFlowContainer" parent="Container/MarginContainer/VBoxContainer/BonusParametersHolder"]
+visible = false
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer/BonusParametersHolder/HFlowContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 0
+text = "Distance: "
+
+[node name="LineEdit" type="LineEdit" parent="Container/MarginContainer/VBoxContainer/BonusParametersHolder/HFlowContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator3" type="HSeparator" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 34.0
+offset_bottom = 34.0
+scale = Vector2(0.75, 0.75)
+text = "X"

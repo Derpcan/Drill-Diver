@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dj8y6rl4r6nbp"
+path="res://.godot/imported/dd - enemy spawn 1.wav-14c94d3e36763d673516cdfc9e82b843.sample"
+
+[deps]
+
+source_file="res://assets/sounds/dd - enemy spawn 1.wav"
+dest_files=["res://.godot/imported/dd - enemy spawn 1.wav-14c94d3e36763d673516cdfc9e82b843.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

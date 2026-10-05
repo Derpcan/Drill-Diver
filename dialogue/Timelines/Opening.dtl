@@ -1,0 +1,4 @@
+join Computer (Neutral) right [animation="Fade In"]
+Computer (Neutral): EXPERIMENT 1257, CODENAME\: BIT\
+SUBJECT IS RESTLESS, CONTAINMENT UNSTABLE
+leave --All-- [animation="Fade Out"]

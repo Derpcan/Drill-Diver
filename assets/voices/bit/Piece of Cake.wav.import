@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://66g0gq3rwonl"
+path="res://.godot/imported/Piece of Cake.wav-d8d9c5f8a2e380b5b8ed4518d5c47769.sample"
+
+[deps]
+
+source_file="res://assets/voices/bit/Piece of Cake.wav"
+dest_files=["res://.godot/imported/Piece of Cake.wav-d8d9c5f8a2e380b5b8ed4518d5c47769.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

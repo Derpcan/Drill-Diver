@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://nhj2ogd508yq"]
+
+[ext_resource type="Script" uid="uid://beslcbdwoee82" path="res://scenes/level editor/tile_selector_ui/number_edit.gd" id="1_86ai6"]
+
+[node name="NumberEdit" type="LineEdit"]
+offset_right = 68.5625
+offset_bottom = 31.0
+script = ExtResource("1_86ai6")

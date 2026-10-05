@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dn7rhvwa47u2o"
+path="res://.godot/imported/Drill Diver.wav-21ceeabad1428a9bd25dd4b1bc97d950.sample"
+
+[deps]
+
+source_file="res://assets/voices/bit/Drill Diver.wav"
+dest_files=["res://.godot/imported/Drill Diver.wav-21ceeabad1428a9bd25dd4b1bc97d950.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

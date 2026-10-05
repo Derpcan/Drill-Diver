@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckhybymqyomrx"]
+
+[ext_resource type="Script" uid="uid://cedmewjb2l37j" path="res://scenes/components/player_stat_loader_component.gd" id="1_gliib"]
+[ext_resource type="PackedScene" uid="uid://s3d4wjd0wc53" path="res://scenes/components/json_loader.tscn" id="1_lhcia"]
+[ext_resource type="JSON" path="res://assets/JSON/PlayerStat.json" id="2_nujen"]
+
+[node name="PlayerStatLoaderComponent" type="Node" node_paths=PackedStringArray("json_loader")]
+script = ExtResource("1_gliib")
+json_loader = NodePath("JSONLoader")
+movement_debug_color = Color(0, 1, 0.701961, 1)
+jump_debug_color = Color(0.176471, 0.905882, 0.376471, 1)
+dash_debug_color = Color(0.886275, 0.847059, 0, 1)
+drill_debug_color = Color(0.745098, 0.635294, 0.862745, 1)
+
+[node name="JSONLoader" parent="." instance=ExtResource("1_lhcia")]
+json_file = ExtResource("2_nujen")

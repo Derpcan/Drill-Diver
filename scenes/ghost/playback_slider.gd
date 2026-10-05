@@ -1,0 +1,42 @@
+extends HSlider
+
+## Keep track of the ghost so playback can be scrubbed through
+@export var ghost:Ghost
+
+var is_being_dragged:bool = false
+
+func _ready() -> void:
+	if not ghost: # If the ghost is not set, hide and quit early
+		hide()
+		return
+	
+	# Wait until ghost is ready
+	await ghost.ready
+	# Set max value of slider
+	max_value = len(ghost.input_component.key_array)
+	step = 1 # set the step to 1
+	
+	# Connect signals necessary
+	value_changed.connect(ghost.input_component._set_replay_frame)
+	ghost.input_component.key_array_index_changed.connect(_update_slider)
+	
+	drag_started.connect(ghost.input_component._enable_pause_playback)
+	drag_ended.connect(ghost.input_component._disable_pause_playback)
+	
+	drag_started.connect(_is_dragging)
+	drag_ended.connect(_stopped_dragging)
+
+func _update_slider(new_value:int) -> void:
+	if is_being_dragged:
+		value = new_value
+	else:
+		# Make it so slider will update live and not emit signal
+		set_block_signals(true)
+		value = new_value
+		set_block_signals(false)
+
+func _is_dragging() -> void:
+	is_being_dragged = true
+
+func _stopped_dragging(any=null) -> void:
+	is_being_dragged = false

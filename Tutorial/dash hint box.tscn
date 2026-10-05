@@ -1,0 +1,534 @@
+[gd_scene load_steps=33 format=3 uid="uid://b63vrxb3q1bpo"]
+
+[ext_resource type="Script" uid="uid://duhx5ukntfj2" path="res://Tutorial/dash_hint_box.gd" id="1_nw1h5"]
+[ext_resource type="Texture2D" uid="uid://dj1yl4q6pswi7" path="res://assets/sprites/menu/hologram_lines-b1399a8d-300x300.png" id="2_1cnl3"]
+[ext_resource type="Texture2D" uid="uid://xxg1f1vuvk2o" path="res://assets/sprites/menu/UI_Hologram_TimeHologram.png" id="3_w5oue"]
+[ext_resource type="Texture2D" uid="uid://ffmhfwi80afm" path="res://assets/sprites/bit/Bit_Dash.png" id="4_kqx7t"]
+[ext_resource type="Texture2D" uid="uid://cmddoqvfkkupo" path="res://assets/sprites/bit/Bit_Jump.png" id="5_afkfu"]
+[ext_resource type="Texture2D" uid="uid://nc1g2lyuelns" path="res://assets/sprites/bit/Bit_Super_Drill.png" id="6_wegqu"]
+[ext_resource type="Script" uid="uid://ba5mh5dgiikxd" path="res://addons/controller_icons/objects/ControllerIconTexture.gd" id="7_co560"]
+
+[sub_resource type="Animation" id="Animation_x3t3r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(489, 302)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Keyboard:texture:path")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["game_jump"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Controller:texture:path")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["game_jump"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:animation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+
+[sub_resource type="Animation" id="Animation_otbgn"]
+resource_name = "dash"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Keyboard:texture:path")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["game_dash"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Controller:texture:path")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["game_dash"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dash"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-100, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_n04mv"]
+resource_name = "jump"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Keyboard:texture:path")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["game_jump"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Controller:texture:path")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["game_jump"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+
+[sub_resource type="Animation" id="Animation_s2ykh"]
+resource_name = "super_drill"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Keyboard:texture:path")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["game_super_drill"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Controller:texture:path")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["game_super_drill"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"super_dril"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qf3nb"]
+_data = {
+&"RESET": SubResource("Animation_x3t3r"),
+&"dash": SubResource("Animation_otbgn"),
+&"jump": SubResource("Animation_n04mv"),
+&"super_drill": SubResource("Animation_s2ykh")
+}
+
+[sub_resource type="Animation" id="Animation_kudb5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_i8rro"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1e-05), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7y874"]
+_data = {
+&"RESET": SubResource("Animation_kudb5"),
+&"open": SubResource("Animation_i8rro")
+}
+
+[sub_resource type="Shader" id="Shader_3gso2"]
+code = "shader_type canvas_item;
+
+uniform bool useHologram = true;
+
+uniform vec4 baseColor : source_color = vec4(0.3058, 0.835, 0.960, 1.0);
+uniform float speed = 0.5;
+
+uniform vec4 linesColor : source_color = vec4(0.633232, 0.910156, 0.555693, 1.0);
+uniform float linesColorIntensity = 5.0;
+
+uniform sampler2D hologramTexture : filter_linear, repeat_enable;
+uniform vec2 hologramTextureTiling = vec2(1.0, 5.0);
+
+vec2 tilingAndOffset(vec2 uv, vec2 tiling, vec2 offset) {
+    return mod(uv * tiling + offset, 1.0);
+}
+
+void fragment() {
+
+    // Always sample the base texture
+    vec4 baseTex = texture(TEXTURE, UV);
+    vec4 finalColor = baseTex;
+
+    if (useHologram) {
+        vec2 offset = vec2(TIME * speed);
+        vec2 tiling = tilingAndOffset(UV, hologramTextureTiling, offset);
+
+        vec4 noise = texture(hologramTexture, tiling);
+
+        float fresnel = 0.71;
+        vec4 colorLines = linesColor * vec4(vec3(linesColorIntensity), 1.0);
+        vec4 emission = colorLines * fresnel * noise;
+
+        vec4 albedo = baseColor;
+        float alpha = dot(noise.rgb, vec3(1.0));
+
+        vec4 hologram;
+        hologram.rgb = emission.rgb + (1.0 - emission.rgb) * albedo.rgb * albedo.a;
+        hologram.a   = emission.a + (1.0 - emission.a) * alpha;
+        hologram.a   = hologram.a + (1.0 - hologram.a) * albedo.a;
+        hologram.a   = clamp(hologram.a, 0.0, 1.0);
+
+        finalColor.rgb = baseTex.rgb + (1.0 - baseTex.rgb) * hologram.rgb;
+        finalColor.a   = min(baseTex.a, hologram.a);
+    }
+
+    COLOR = finalColor;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i8rro"]
+shader = SubResource("Shader_3gso2")
+shader_parameter/useHologram = true
+shader_parameter/baseColor = Color(0.227451, 0.835294, 0.396078, 0.772549)
+shader_parameter/speed = 0.3
+shader_parameter/linesColor = Color(0.633232, 0.910156, 0.555693, 1)
+shader_parameter/linesColorIntensity = 0.4
+shader_parameter/hologramTexture = ExtResource("2_1cnl3")
+shader_parameter/hologramTextureTiling = Vector2(1, 0.7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kudb5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_w5oue")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y874"]
+atlas = ExtResource("4_kqx7t")
+region = Rect2(0, 0, 55, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvaaf"]
+atlas = ExtResource("4_kqx7t")
+region = Rect2(55, 0, 55, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjbn3"]
+atlas = ExtResource("4_kqx7t")
+region = Rect2(110, 0, 55, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0ijk"]
+atlas = ExtResource("5_afkfu")
+region = Rect2(0, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utdrv"]
+atlas = ExtResource("5_afkfu")
+region = Rect2(37, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfe08"]
+atlas = ExtResource("5_afkfu")
+region = Rect2(74, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ebl8"]
+atlas = ExtResource("5_afkfu")
+region = Rect2(111, 0, 37, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kudb5"]
+atlas = ExtResource("6_wegqu")
+region = Rect2(0, 0, 55, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o138k"]
+atlas = ExtResource("6_wegqu")
+region = Rect2(55, 0, 55, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dx31w"]
+atlas = ExtResource("6_wegqu")
+region = Rect2(110, 0, 55, 56)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o138k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y874")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvaaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjbn3")
+}],
+"loop": true,
+"name": &"dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0ijk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_utdrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfe08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ebl8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kudb5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o138k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dx31w")
+}],
+"loop": true,
+"name": &"super_dril",
+"speed": 5.0
+}]
+
+[sub_resource type="Texture2D" id="Texture2D_dx31w"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("7_co560")
+path = "game_jump"
+show_mode = 0
+force_controller_icon_style = -1
+force_type = 1
+force_device = 16
+metadata/_custom_type_script = "uid://ba5mh5dgiikxd"
+
+[sub_resource type="Texture2D" id="Texture2D_s2ykh"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("7_co560")
+path = "game_jump"
+show_mode = 0
+force_controller_icon_style = -1
+force_type = 2
+force_device = 16
+metadata/_custom_type_script = "uid://ba5mh5dgiikxd"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i8rro"]
+radius = 250.0
+
+[node name="DHintBox" type="Node2D"]
+z_index = -1
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_nw1h5")
+
+[node name="DisplayPicker" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Container/Bit")
+libraries = {
+&"": SubResource("AnimationLibrary_qf3nb")
+}
+
+[node name="Open" type="AnimationPlayer" parent="."]
+root_node = NodePath("../DisplayPicker")
+libraries = {
+&"": SubResource("AnimationLibrary_7y874")
+}
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 51.95
+offset_bottom = 40.0
+scale = Vector2(1, 1e-05)
+
+[node name="Background" type="AnimatedSprite2D" parent="Container"]
+material = SubResource("ShaderMaterial_i8rro")
+position = Vector2(7.95996, 6.32001)
+scale = Vector2(3.52, 3.52)
+sprite_frames = SubResource("SpriteFrames_kudb5")
+
+[node name="Bit" type="AnimatedSprite2D" parent="Container"]
+modulate = Color(1, 1, 1, 0.635294)
+position = Vector2(489, 302)
+scale = Vector2(1.58108, 1.58108)
+sprite_frames = SubResource("SpriteFrames_o138k")
+
+[node name="Keyboard" type="TextureRect" parent="Container"]
+modulate = Color(1, 1, 1, 0.635294)
+layout_mode = 2
+offset_left = -57.04
+offset_top = -42.68
+offset_right = 42.96
+offset_bottom = 57.32
+texture = SubResource("Texture2D_dx31w")
+
+[node name="Controller" type="TextureRect" parent="Container"]
+modulate = Color(1, 1, 1, 0.635294)
+layout_mode = 2
+offset_left = 63.9601
+offset_top = -30.68
+offset_right = 163.96
+offset_bottom = 69.32
+scale = Vector2(0.8, 0.8)
+texture = SubResource("Texture2D_s2ykh")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(6, 3)
+shape = SubResource("CircleShape2D_i8rro")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

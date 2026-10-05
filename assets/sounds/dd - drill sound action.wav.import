@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cs1k4qg51mbii"
+path="res://.godot/imported/dd - drill sound action.wav-8f0afefb2f827cf7c68bf7b7b59e7311.sample"
+
+[deps]
+
+source_file="res://assets/sounds/dd - drill sound action.wav"
+dest_files=["res://.godot/imported/dd - drill sound action.wav-8f0afefb2f827cf7c68bf7b7b59e7311.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

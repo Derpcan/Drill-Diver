@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://csw8h3jkvui6i"]
+
+[ext_resource type="Script" uid="uid://cqajbjir431rm" path="res://scenes/UI/import_levels/import_custom_level.gd" id="1_i2g85"]
+
+[node name="ImportCustomLevel" type="Control" node_paths=PackedStringArray("file_dialog")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_i2g85")
+file_dialog = NodePath("FileDialog")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.lvl")
+use_native_dialog = true

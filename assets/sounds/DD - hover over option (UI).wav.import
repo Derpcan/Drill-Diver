@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://drxcpair7j4li"
+path="res://.godot/imported/DD - hover over option (UI).wav-fe4350609e760a41c4eb222e9a89000f.sample"
+
+[deps]
+
+source_file="res://assets/sounds/DD - hover over option (UI).wav"
+dest_files=["res://.godot/imported/DD - hover over option (UI).wav-fe4350609e760a41c4eb222e9a89000f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

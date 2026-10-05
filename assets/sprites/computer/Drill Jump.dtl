@@ -1,0 +1,9 @@
+join "Dr Iver" right [animation="Fade In"]
+"Dr Iver": Ok! I’m not saying anything.
+"Dr Iver": You can figure out how to conserve your drilling momentum by holding the jump button!
+join Bit (C Rank) left [animation="Fade In"]
+Bit (C Rank): I’m starting to feel bad for taking these tips…
+"Dr Iver": Then you could always ignore them…
+Bit (A Rank): Not that bad!
+"Dr Iver": Worth a shot…
+leave --All-- [animation="Fade Out"]

@@ -1,0 +1,13 @@
+join Bit (S Rank) left [animation="Fade In"]
+Bit (S Rank): Ooo, what’s that?
+join "Dr Iver" (Neutral) right [animation="Fade In"]
+"Dr Iver" (Neutral): …
+Bit (C Rank): Really, Doc, the cold shoulder?
+"Dr Iver" (Neutral): OK! I’VE GOT THIS!
+"Dr Iver" (Neutral): These are Energems! A unique source of energy that powers all my machines! Including you!
+"Dr Iver" (Neutral): In fact, collecting 5 of them allows you to perform what I call a Super Drill.
+Bit (A Rank): And this super drill wouldn’t by any chance let me break hard metal walls right?
+"Dr Iver" (Neutral): Well, actually yes! Yes it can–
+"Dr Iver" (Neutral): …WHY DON’T I LEARN!
+Bit (A Rank): No clue! But I’m more than happy to take advantage of it!
+leave --All-- [animation="Fade Out"]

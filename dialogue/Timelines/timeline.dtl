@@ -1,0 +1,10 @@
+join Bit (Neutral) left [animation="Fade In"]
+Bit (Neutral): This is an Netural test
+Bit (A Rank): This is an a rank test
+Bit (B Rank): This is a B Rank Test
+Bit (C Rank): This is a C Rank Test
+Bit (D Rank): This is a D Rank Test
+join "Dr Iver" right
+"Dr Iver": Wahoo!
+Computer: Computer Test
+leave --All-- [animation="Fade Out"]
